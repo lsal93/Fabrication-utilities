@@ -744,7 +744,7 @@ menuetchdrie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.duration_effective#{dir5}',
+                search_quantity=f'data.duration_measured#{dir5}',
                 title='effective duration',
                 unit='nm',
             ),
@@ -754,7 +754,7 @@ menuetchdrie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.depth_obtained#{dir5}',
+                search_quantity=f'data.depth_measured#{dir5}',
                 title='depth obtained',
                 unit='nm',
             ),
