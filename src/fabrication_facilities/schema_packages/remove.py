@@ -145,9 +145,9 @@ class DRIE(Chemical, FabricationProcessStep, ArchiveSection):
         type=np.float64,
         description='Temperature of the chuck',
         a_eln={
-	    'component': 'NumberEditQuantity',
-	    'defaultDisplayUnit': 'celsius',
-	},
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
         unit='celsius',
     )
     power = Quantity(

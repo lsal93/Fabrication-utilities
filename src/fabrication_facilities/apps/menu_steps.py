@@ -65,16 +65,16 @@ menuadd_icpcvd = Menu(
             type='terms',
             search_quantity=f'data.fluximeters.name#{dir1}',
         ),
-#        MenuItemHistogram(
-#            title='Chuck temperature',
-#            type='histogram',
-#            n_bins=10,
-#            x=Axis(
-#                search_quantity=f'data.chuck_temperature#{dir1}',
-#                title='chuck_temperature',
-#                unit='celsius',
-#            ),
-#        ),
+        #        MenuItemHistogram(
+        #            title='Chuck temperature',
+        #            type='histogram',
+        #            n_bins=10,
+        #            x=Axis(
+        #                search_quantity=f'data.chuck_temperature#{dir1}',
+        #                title='chuck_temperature',
+        #                unit='celsius',
+        #            ),
+        #        ),
         MenuItemHistogram(
             title='Bias',
             type='histogram',
@@ -607,16 +607,16 @@ menutrans_develop = Menu(
                 unit='minute',
             ),
         ),
-#        MenuItemHistogram(
-#            title='Developing temperature',
-#            type='histogram',
-#            n_bins=10,
-#            x=Axis(
-#                search_quantity=f'data.developing_temperature#{dir7}',
-#                title='developing temperature',
-#                unit='celsius',
-#            ),
-#        ),
+        #        MenuItemHistogram(
+        #            title='Developing temperature',
+        #            type='histogram',
+        #            n_bins=10,
+        #            x=Axis(
+        #                search_quantity=f'data.developing_temperature#{dir7}',
+        #                title='developing temperature',
+        #                unit='celsius',
+        #            ),
+        #        ),
         MenuItemTerms(
             title='Cleaning solution',
             type='terms',
