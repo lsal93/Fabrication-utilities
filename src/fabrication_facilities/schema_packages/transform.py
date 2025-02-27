@@ -433,7 +433,7 @@ class Annealing(Chemical, FabricationProcessStep, ArchiveSection):
     short_name = Quantity(
         type=str, a_eln={'component': 'StringEditQuantity', 'label': 'target material'}
     )
-    recipe_name = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+    #recipe_name = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
     temperature_start = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
@@ -444,11 +444,11 @@ class Annealing(Chemical, FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
         unit='celsius',
     )
-    oxigen_percentage = Quantity(
+    oxygen_percentage = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity'},
     )
-    oxigen_flow = Quantity(
+    oxygen_flow = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity'},
     )
@@ -504,5 +504,563 @@ class Annealing(Chemical, FabricationProcessStep, ArchiveSection):
                 print('No elements provided')
             self.material_elemental_composition = elementality
 
+class LTODensification(Chemical, FabricationProcessStep, ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'recipe_name',
+                    'densification_type',
+                    #'chemical_formula',
+                    'densification_temperature',
+                    'duration_effective',
+                    'densification_gas',
+                    'gas_flow',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    densification_type = Quantity(
+        type=str, a_eln={'component': 'StringEditQuantity', 'label': 'target material'}
+    )
+    densification_gas = Quantity(
+        type=str, a_eln={'component': 'StringEditQuantity', 'label': 'target material'}
+    )
+    #recipe_name = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+    densification_temperature = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+    gas_flow = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+    duration_effective = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute',
+    )
+
+
+    # material_elemental_composition = SubSection(
+    #     section_def=ElementalComposition, repeats=True
+    # )
+
+    # def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+    #     super().normalize(archive, logger)
+    #     if self.chemical_formula:
+    #         elements, counts = parse_chemical_formula(self.chemical_formula)
+    #         total = 0
+    #         for token in counts:
+    #             total += int(token)
+    #         if total != 0:
+    #             elemental_fraction = np.array(counts) / total
+    #             elementality = []
+    #             i = 0
+    #             for entry in elements:
+    #                 elemental_try = ElementalComposition()
+    #                 elemental_try.element = entry
+    #                 elemental_try.atomic_fraction = elemental_fraction[i]
+    #                 i += 1
+    #                 elementality.append(elemental_try)
+    #         else:
+    #             print('No elements provided')
+    #         self.material_elemental_composition = elementality
+
+class ThermalOxidation(Chemical, FabricationProcessStep, ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'recipe_name',
+                    'short_name',
+                    #'chemical_formula',
+                    'temperature_final_target',
+                    'thickness_target',
+                    'duration_measured',
+                    'thickness_measured',
+                    'thermal_oxidation_gas',
+                    'gas_flow','
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    short_name = Quantity(
+        type=str, a_eln={'component': 'StringEditQuantity', 'label': 'target material'}
+    )
+    thermal_oxidation_gas = Quantity(
+        type=str, a_eln={'component': 'StringEditQuantity', 'label': 'target material'}
+    )
+    #recipe_name = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+    temperature_final_target = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+    thickness_target = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm',
+    )
+    thickness_measured = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm',
+    )
+    duration_measured = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 's'},
+        unit='s',
+    )
+
+    # material_elemental_composition = SubSection(
+    #     section_def=ElementalComposition, repeats=True
+    # )
+
+    # def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+    #     super().normalize(archive, logger)
+    #     if self.chemical_formula:
+    #         elements, counts = parse_chemical_formula(self.chemical_formula)
+    #         total = 0
+    #         for token in counts:
+    #             total += int(token)
+    #         if total != 0:
+    #             elemental_fraction = np.array(counts) / total
+    #             elementality = []
+    #             i = 0
+    #             for entry in elements:
+    #                 elemental_try = ElementalComposition()
+    #                 elemental_try.element = entry
+    #                 elemental_try.atomic_fraction = elemental_fraction[i]
+    #                 i += 1
+    #                 elementality.append(elemental_try)
+    #         else:
+    #             print('No elements provided')
+    #         self.material_elemental_composition = elementality
+
+class Dicing(FabricationProcessStep, ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'recipe_name',
+                    'dicing_blade_name',
+                    'dicing_depth',
+                    'dicing_protective_film_required',
+                    'dicing_program_name',
+                    'dicing_spindle_speed',
+                    'dicing_feed_rate',
+                    'dicing_depth_step_1',
+                    'dicing_depth_step_2',
+                    'dicing_depth_step_3',
+                    'dicing_edge_chipping_measured',
+                    'notes',
+                ]
+            },
+        },
+    )
+    dicing_blade_name = Quantity(
+        type=str,
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
+    )
+    dicing_depth = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'um',
+        },
+        unit='um',
+    )
+    dicing_protective_film_required = Quantity(
+        type=bool,
+        a_eln={
+            'label': 'Protective film',
+            'component': 'BoolEditQuantity',
+        },
+    )
+    dicing_program_name = Quantity(
+        type=str,
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
+    )
+    dicing_spindle_speed = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'rpm',
+        },
+        unit='rpm',
+    )
+    dicing_feed_rate = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mm/s',
+        },
+        unit='mm/s',
+    )
+    dicing_depth_step_1 = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'um',
+        },
+        unit='um',
+    )
+    dicing_depth_step_2 = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'um',
+        },
+        unit='um',
+    )
+    dicing_depth_step_3 = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'um',
+        },
+        unit='um',
+    )
+    dicing_edge_chipping_measured = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'um',
+        },
+        unit='um',
+    )
+
+class Doping(FabricationProcessStep, ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'recipe_name',
+                    'doping_type',
+                    'doping_temperature',
+                    'doping_duration',
+                    'doping_surfaceresistance_measured',
+                    'notes',
+                ]
+            },
+        },
+    )
+    doping_type = Quantity(
+        type=str,
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
+    )
+    doping_temperature = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+    doping_duration = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute',
+    )
+    doping_surfaceresistance_measured = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'ohm',
+        },
+        unit='ohm',
+    )
+
+class LabelingCleaning(FabricationProcessStep, ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'recipe_name',
+                    'wafer_label_position',
+                    'wafer_label_name',
+                    'wafer_cleaning_DI_ultrasound_required',
+                    'wafer_cleaning_rca_required',
+                    'wafer_cleaning_piranha_required',
+                    'wafer_cleaning_dipHF_required',
+                    'wafer_cleaning_rinse_spin__driyer_required',
+                    'notes',
+                ]
+            },
+        },
+    )
+    wafer_label_position = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    wafer_label_name = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    wafer_cleaning_DI_ultrasound_required = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    wafer_cleaning_rca_required = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    wafer_cleaning_piranha_required = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    wafer_cleaning_dipHF_required = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    wafer_cleaning_rinse_spin__driyer_required = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+
+class SOD(Chemical, FabricationProcessStep, ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'recipe_name',
+                    'short_name',
+                    'spin_dipHF_required',
+                    'water_rinse_required',
+                    'spin_dryer_required',
+                    'peb_duration',
+                    'peb_temperature',
+                    'spin_dispensed_volume',
+                    'spin_frequency',
+                    'notes',
+                ]
+            },
+        },
+    )
+    short_name = Quantity(
+        type=str,
+        description='dopant solution',
+        a_eln={'component': 'StringEditQuantity', 'label': 'dopant solution'},
+    )
+    spin_dipHF_required = Quantity(
+        type=str,
+        description='The recipe use the hdms?',
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
+    )
+    water_rinse_required = Quantity(
+        type=str,
+        description='The recipe use the hdms?',
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
+    )
+    spin_dryer_required = Quantity(
+        type=str,
+        description='The recipe use the hdms?',
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
+    )
+    peb_duration = Quantity(
+        type=np.float64,
+        description='The duration of the peb',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
+    )
+    peb_temperature = Quantity(
+        type=np.float64,
+        description='The temperature of the peb',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+    spin_dispensed_volume = Quantity(
+        type=np.float64,
+        description='Solution dispensed',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'milliliter',
+        },
+        unit='milliliter',
+    )
+    spin_frequency = Quantity(
+        type=np.float64,
+        description='Velocity of the spinner',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'revolutions_per_minute',
+        },
+        unit='revolutions_per_minute',
+    )
+    # resist_elemental_composition = SubSection(
+    #     section_def=ElementalComposition, repeats=True
+    # )
+
+    # def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+    #     super().normalize(archive, logger)
+    #     if self.exposure_required:
+    #         self.exposure_duration = Quantity(
+    #             type=np.float64,
+    #             description='The duration of the exposure',
+    #             a_eln={
+    #                 'component': 'NumberEditQuantity',
+    #                 'defaultDisplayUnit': 'minute',
+    #             },
+    #             unit='minute',
+    #         )
+    #     if self.chemical_formula:
+    #         elements, counts = parse_chemical_formula(self.chemical_formula)
+    #         total = 0
+    #         for token in counts:
+    #             total += int(token)
+    #         if total != 0:
+    #             elemental_fraction = np.array(counts) / total
+    #             elementality = []
+    #             i = 0
+    #             for entry in elements:
+    #                 elemental_try = ElementalComposition()
+    #                 elemental_try.element = entry
+    #                 elemental_try.atomic_fraction = elemental_fraction[i]
+    #                 i += 1
+    #                 elementality.append(elemental_try)
+    #         else:
+    #             print('No elements provided')
+    #         self.resist_elemental_composition = elementality
 
 m_package.__init_metainfo__()
