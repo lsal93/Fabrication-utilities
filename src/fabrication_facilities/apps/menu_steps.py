@@ -110,7 +110,7 @@ menuadd_icpcvd = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.duration_effective#{dir1}',
+                search_quantity=f'data.duration_measured#{dir1}',
                 title='effective duration',
                 unit='minute',
             ),
@@ -120,7 +120,7 @@ menuadd_icpcvd = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.thickness_obtained#{dir1}',
+                search_quantity=f'data.thickness_measured#{dir1}',
                 title='thickness obtained',
                 unit='nm',
             ),
@@ -317,7 +317,7 @@ menuadd_spincoat = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.thickness_obtained#{dir2}',
+                search_quantity=f'data.thickness_measured#{dir2}',
                 title='thickness obtained',
                 unit='nm',
             ),

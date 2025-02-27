@@ -142,13 +142,13 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'volt'},
         unit='volt',
     )
-    thickness_obtained = Quantity(
+    thickness_measured = Quantity(
         type=np.float64,
         description='Amount of material deposited efefctively in the process',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
         unit='nm',
     )
-    duration_effective = Quantity(
+    duration_measured = Quantity(
         type=np.float64,
         description='Real time employed',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
@@ -236,7 +236,7 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
                     'spin_duration',
                     'baking_duration',
                     'baking_temperature',
-                    'thickness_obtained',
+                    'thickness_measured',
                     'notes',
                 ]
             },
@@ -393,7 +393,7 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
         },
         unit='celsius',
     )
-    thickness_obtained = Quantity(
+    thickness_measured = Quantity(
         type=np.float64,
         description='Amount of material deposited as described in the recipe',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},

@@ -66,7 +66,7 @@ processapp = App(
                 title="Author",
                 type='terms',
                 search_quantity=f'data.author#{dir}',
-            )
+            ),
             Menu(
                 title='User defined quantities',
                 items=[
