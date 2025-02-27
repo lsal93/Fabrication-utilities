@@ -623,7 +623,7 @@ class ThermalOxidation(Chemical, FabricationProcessStep, ArchiveSection):
                     'duration_measured',
                     'thickness_measured',
                     'thermal_oxidation_gas',
-                    'gas_flow','
+                    'gas_flow',
                     'notes',
                 ]
             },
