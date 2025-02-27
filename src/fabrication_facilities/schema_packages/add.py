@@ -9,9 +9,9 @@ from nomad.datamodel.data import (
 from nomad.datamodel.metainfo.basesections import ElementalComposition
 from nomad.datamodel.metainfo.eln import Chemical
 from nomad.metainfo import (
+    MEnum,
     Package,
     Quantity,
-    MEnum,
     Section,
     SubSection,
 )
@@ -825,5 +825,6 @@ class SOG(Chemical, FabricationProcessStep, ArchiveSection):
             else:
                 print('No elements provided')
             self.substrate_elemental_composition = elementality
+
 
 m_package.__init_metainfo__()

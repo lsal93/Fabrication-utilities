@@ -9,9 +9,9 @@ from nomad.datamodel.data import (
 from nomad.datamodel.metainfo.basesections import ElementalComposition
 from nomad.datamodel.metainfo.eln import Chemical
 from nomad.metainfo import (
+    MEnum,
     Package,
     Quantity,
-    MEnum,
     Section,
     SubSection,
 )
@@ -417,8 +417,7 @@ class Annealing(Chemical, FabricationProcessStep, ArchiveSection):
                     'chemical_formula',
                     'temperature_start',
                     'temperature_final_target',
-                    'gas_name'
-                    'gas_percentage',
+                    'gas_namegas_percentage',
                     'gas_flow',
                     'temperature_final_measured',
                     'duration_measured',
@@ -432,10 +431,7 @@ class Annealing(Chemical, FabricationProcessStep, ArchiveSection):
 
     short_name = Quantity(
         type=str,
-        a_eln={
-            'component': 'StringEditQuantity',
-            'label': 'target/annealed material'
-        }
+        a_eln={'component': 'StringEditQuantity', 'label': 'target/annealed material'},
     )
     temperature_start = Quantity(
         type=np.float64,
@@ -449,7 +445,9 @@ class Annealing(Chemical, FabricationProcessStep, ArchiveSection):
     )
     gas_name = Quantity(
         type=str,
-        a_eln={'component': 'StringEditQuantity',}
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
     )
     gas_percentage = Quantity(
         type=np.float64,
@@ -551,14 +549,24 @@ class LTODensification(Chemical, FabricationProcessStep, ArchiveSection):
     )
 
     densification_type = Quantity(
-        type=str, a_eln={'component': 'StringEditQuantity',}
+        type=str,
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
     )
     short_name = Quantity(
-        type=str, a_eln={'component': 'StringEditQuantity', 'label': 'densification gas'}
+        type=str,
+        a_eln={
+            'component': 'StringEditQuantity',
+            'label': 'densification gas',
+        },
     )
     densification_temperature = Quantity(
         type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
         unit='celsius',
     )
     gas_flow = Quantity(
@@ -637,13 +645,14 @@ class ThermalOxidation(Chemical, FabricationProcessStep, ArchiveSection):
     )
 
     oxidation_type = Quantity(
-        type=str, a_eln={'component': 'StringEditQuantity',}
+        type=str,
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
     )
     short_name = Quantity(
-        type=str, a_eln={
-            'component':'StringEditQuantity',
-            'label':'thermal oxidation gas'
-        }
+        type=str,
+        a_eln={'component': 'StringEditQuantity', 'label': 'thermal oxidation gas'},
     )
     thermal_oxidation_gas = Quantity(
         type=str, a_eln={'component': 'StringEditQuantity', 'label': 'target material'}
