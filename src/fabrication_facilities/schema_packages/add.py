@@ -11,6 +11,7 @@ from nomad.datamodel.metainfo.eln import Chemical
 from nomad.metainfo import (
     Package,
     Quantity,
+    MEnum,
     Section,
     SubSection,
 )
