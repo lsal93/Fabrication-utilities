@@ -22,4 +22,4 @@ step_app_entry_point = AppEntryPoint(
     app=stepapp,
 )
 
-app_entry_point = equipment_app_entry_point
+app_entry_point = step_app_entry_point
