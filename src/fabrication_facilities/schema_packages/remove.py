@@ -132,8 +132,8 @@ class DRIE(Chemical, FabricationProcessStep, ArchiveSection):
     depth_target = Quantity(
         type=np.float64,
         description='Amount of material to be etched',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'um'},
-        unit='um',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm',
     )
     chamber_pressure = Quantity(
         type=np.float64,
@@ -144,7 +144,10 @@ class DRIE(Chemical, FabricationProcessStep, ArchiveSection):
     chuck_temperature = Quantity(
         type=np.float64,
         description='Temperature of the chuck',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        a_eln={
+	    'component': 'NumberEditQuantity',
+	    'defaultDisplayUnit': 'celsius',
+	},
         unit='celsius',
     )
     power = Quantity(
@@ -162,8 +165,8 @@ class DRIE(Chemical, FabricationProcessStep, ArchiveSection):
     depth_measured = Quantity(
         type=np.float64,
         description='Amount of material ethced effectively in the process',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'um'},
-        unit='um',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm',
     )
     duration_measured = Quantity(
         type=np.float64,
@@ -174,8 +177,8 @@ class DRIE(Chemical, FabricationProcessStep, ArchiveSection):
     etching_rate_obtained = Quantity(
         type=np.float64,
         description='Etching rate as output',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'um/minute'},
-        unit='um/minute',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm/minute'},
+        unit='nm/minute',
     )
     fluximeters = SubSection(
         section_def=Massflow_controller,

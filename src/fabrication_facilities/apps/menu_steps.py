@@ -65,16 +65,16 @@ menuadd_icpcvd = Menu(
             type='terms',
             search_quantity=f'data.fluximeters.name#{dir1}',
         ),
-        MenuItemHistogram(
-            title='Chuck temperature',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.chuck_temperature#{dir1}',
-                title='chuck_temperature',
-                unit='celsius',
-            ),
-        ),
+#        MenuItemHistogram(
+#            title='Chuck temperature',
+#            type='histogram',
+#            n_bins=10,
+#            x=Axis(
+#                search_quantity=f'data.chuck_temperature#{dir1}',
+#                title='chuck_temperature',
+#                unit='celsius',
+#            ),
+#        ),
         MenuItemHistogram(
             title='Bias',
             type='histogram',
@@ -607,16 +607,16 @@ menutrans_develop = Menu(
                 unit='minute',
             ),
         ),
-        MenuItemHistogram(
-            title='Developing temperature',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.developing_temperature#{dir7}',
-                title='developing temperature',
-                unit='celsius',
-            ),
-        ),
+#        MenuItemHistogram(
+#            title='Developing temperature',
+#            type='histogram',
+#            n_bins=10,
+#            x=Axis(
+#                search_quantity=f'data.developing_temperature#{dir7}',
+#                title='developing temperature',
+#                unit='celsius',
+#            ),
+#        ),
         MenuItemTerms(
             title='Cleaning solution',
             type='terms',
@@ -680,6 +680,16 @@ menuetchdrie = Menu(
             search_quantity=f'data.material_elemental_composition.element#{dir5}',
         ),
         MenuItemHistogram(
+            title='Required duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.duration_target#{dir5}',
+                title='duration',
+                unit='minute',
+            ),
+        ),
+        MenuItemHistogram(
             title='Desired depth',
             type='histogram',
             n_bins=10,
@@ -697,7 +707,7 @@ menuetchdrie = Menu(
         MenuItemTerms(
             title='Gases formulas',
             type='terms',
-            search_quantity=f'data.fluximeters.name#{dir5}',
+            search_quantity=f'data.fluximeters.chemical_formula#{dir5}',
         ),
         MenuItemHistogram(
             title='Chuck temperature',
@@ -705,7 +715,7 @@ menuetchdrie = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.chuck_temperature#{dir5}',
-                title='chuck_temperature',
+                title='chuck temperature',
                 unit='celsius',
             ),
         ),
@@ -716,7 +726,7 @@ menuetchdrie = Menu(
             x=Axis(
                 search_quantity=f'data.bias#{dir5}',
                 title='bias',
-                unit='volt',
+                unit='V',
             ),
         ),
         MenuItemHistogram(
@@ -735,8 +745,8 @@ menuetchdrie = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.power#{dir5}',
-                title='chamber_pressure',
-                unit='watt',
+                title='power',
+                unit='W',
             ),
         ),
         MenuItemHistogram(
@@ -746,7 +756,7 @@ menuetchdrie = Menu(
             x=Axis(
                 search_quantity=f'data.duration_measured#{dir5}',
                 title='effective duration',
-                unit='nm',
+                unit='minute',
             ),
         ),
         MenuItemHistogram(

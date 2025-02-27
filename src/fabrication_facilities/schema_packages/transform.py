@@ -269,8 +269,8 @@ class FIB(FabricationProcessStep, ArchiveSection):
     alignment_max_error = Quantity(
         type=np.float64,
         description='Maximum error allowed in the alignment',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'um'},
-        unit='um',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm',
     )
     number_of_loops = Quantity(
         type=int,
