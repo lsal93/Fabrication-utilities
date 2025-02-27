@@ -482,15 +482,13 @@ class Bonding(FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'StringEditQuantity'},
     )
     alignment_required = Quantity(
-        type=str,
-        a_eln={
-            'component': 'StringEditQuantity',
-        },
+        type=MEnum('Yes', 'No', 'Other (see Note)'),
+        a_eln={'component': 'EnumEditQuantity'},
     )
     alignment_max_error = Quantity(
         type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'um'},
-        unit='um',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm',
     )
     wafer_stack_1_name = Quantity(
         type=str,
@@ -546,9 +544,8 @@ class ElectronGun(FabricationProcessStep, ArchiveSection):
                     'step_type',
                     'definition_of_process_step',
                     'recipe_name',
-                    'wafer_stack_1_name',
-                    # 'wafer_stack_2_name',
-                    # 'wafer_space_required',
+                    'short_name',
+                    'wafer_stack_name',
                     'deposition_thickness_target',
                     'deposition_duration',
                     'deposition_chamber_pressure',
@@ -560,20 +557,15 @@ class ElectronGun(FabricationProcessStep, ArchiveSection):
             },
         },
     )
-    wafer_stack_1_name = Quantity(
+    short_name = Quantity(
+        type=str,
+        description='Deposited Material',
+        a_eln={'component': 'StringEditQuantity', 'label': 'Target material'},
+    )
+    wafer_stack_name = Quantity(
         type=str,
         a_eln={'component': 'StringEditQuantity'},
     )
-    # wafer_stack_2_name = Quantity(
-    #     type=str,
-    #     a_eln={'component': 'StringEditQuantity'},
-    # )
-    # wafer_space_required = Quantity(
-    #     type=bool,
-    #     a_eln={
-    #         'component': 'BoolEditQuantity',
-    #     },
-    # )
     deposition_thickness_target = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
@@ -581,8 +573,8 @@ class ElectronGun(FabricationProcessStep, ArchiveSection):
     )
     deposition_duration = Quantity(
         type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 's'},
-        unit='s',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
     )
     deposition_chamber_pressure = Quantity(
         type=np.float64,
@@ -601,8 +593,8 @@ class ElectronGun(FabricationProcessStep, ArchiveSection):
     )
     gun_current_measured = Quantity(
         type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'A'},
-        unit='A',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mampere'},
+        unit='mampere',
     )
 
 class Sputtering(Chemical, FabricationProcessStep, ArchiveSection):
@@ -636,6 +628,7 @@ class Sputtering(Chemical, FabricationProcessStep, ArchiveSection):
                     'definition_of_process_step',
                     'recipe_name',
                     'short_name',
+                    'chemical_formula',
                     'thickness_target',
                     'duration_target',
                     'chuck_temperature',
@@ -662,8 +655,8 @@ class Sputtering(Chemical, FabricationProcessStep, ArchiveSection):
     )
     duration_target = Quantity(
         type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 's'},
-        unit='s',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
     )
     chuck_temperature = Quantity(
         type=np.float64,
@@ -679,8 +672,8 @@ class Sputtering(Chemical, FabricationProcessStep, ArchiveSection):
     )
     delay_between_stack_layers = Quantity(
         type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 's'},
-        unit='s',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
     )
     thickness_measured = Quantity(
         type=np.float64,
@@ -701,30 +694,30 @@ class Sputtering(Chemical, FabricationProcessStep, ArchiveSection):
         unit='nm/minute',
     )
 
-    # material_elemental_composition = SubSection(
-    #     section_def=ElementalComposition, repeats=True
-    # )
+    material_elemental_composition = SubSection(
+        section_def=ElementalComposition, repeats=True
+    )
 
-    # def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-    #     super().normalize(archive, logger)
-    #     if self.chemical_formula:
-    #         elements, counts = parse_chemical_formula(self.chemical_formula)
-    #         total = 0
-    #         for token in counts:
-    #             total += int(token)
-    #         if total != 0:
-    #             elemental_fraction = np.array(counts) / total
-    #             elementality = []
-    #             i = 0
-    #             for entry in elements:
-    #                 elemental_try = ElementalComposition()
-    #                 elemental_try.element = entry
-    #                 elemental_try.atomic_fraction = elemental_fraction[i]
-    #                 i += 1
-    #                 elementality.append(elemental_try)
-    #         else:
-    #             print('No elements provided')
-    #         self.material_elemental_composition = elementality
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+        if self.chemical_formula:
+            elements, counts = parse_chemical_formula(self.chemical_formula)
+            total = 0
+            for token in counts:
+                total += int(token)
+            if total != 0:
+                elemental_fraction = np.array(counts) / total
+                elementality = []
+                i = 0
+                for entry in elements:
+                    elemental_try = ElementalComposition()
+                    elemental_try.element = entry
+                    elemental_try.atomic_fraction = elemental_fraction[i]
+                    i += 1
+                    elementality.append(elemental_try)
+            else:
+                print('No elements provided')
+            self.material_elemental_composition = elementality
 
 class SOG(Chemical, FabricationProcessStep, ArchiveSection):
     m_def = Section(
@@ -753,10 +746,11 @@ class SOG(Chemical, FabricationProcessStep, ArchiveSection):
                     'definition_of_process_step',
                     'recipe_name',
                     'short_name',
+                    'chemical_formula',
                     'pre_cleaning',
                     'thickness_target',
                     'dewetting_duration',
-                    #'dewetting_temperature',
+                    'dewetting_temperature',
                     'thickness_measured',
                     'notes',
                 ]
@@ -787,15 +781,15 @@ class SOG(Chemical, FabricationProcessStep, ArchiveSection):
         },
         unit='minute',
     )
-    # dewetting_temperature = Quantity(
-    #     type=np.float64,
-    #     description='The temperaure of the dewetting',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'celsius',
-    #     },
-    #     unit='celsius',
-    # )
+    dewetting_temperature = Quantity(
+        type=np.float64,
+        description='The temperaure of the dewetting',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
     thickness_measured = Quantity(
         type=np.float64,
         description='Amount of material deposited as described in the recipe',
@@ -803,5 +797,29 @@ class SOG(Chemical, FabricationProcessStep, ArchiveSection):
         unit='um',
     )
 
+    substrate_elemental_composition = SubSection(
+        section_def=ElementalComposition, repeats=True
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+        if self.chemical_formula:
+            elements, counts = parse_chemical_formula(self.chemical_formula)
+            total = 0
+            for token in counts:
+                total += int(token)
+            if total != 0:
+                elemental_fraction = np.array(counts) / total
+                elementality = []
+                i = 0
+                for entry in elements:
+                    elemental_try = ElementalComposition()
+                    elemental_try.element = entry
+                    elemental_try.atomic_fraction = elemental_fraction[i]
+                    i += 1
+                    elementality.append(elemental_try)
+            else:
+                print('No elements provided')
+            self.substrate_elemental_composition = elementality
 
 m_package.__init_metainfo__()
