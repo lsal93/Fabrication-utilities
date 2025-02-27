@@ -511,6 +511,7 @@ class Annealing(Chemical, FabricationProcessStep, ArchiveSection):
                 print('No elements provided')
             self.material_elemental_composition = elementality
 
+
 class LTODensification(Chemical, FabricationProcessStep, ArchiveSection):
     m_def = Section(
         a_eln={
@@ -569,7 +570,6 @@ class LTODensification(Chemical, FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
     )
-
     gas_elemental_composition = SubSection(
         section_def=ElementalComposition, repeats=True
     )
@@ -594,6 +594,7 @@ class LTODensification(Chemical, FabricationProcessStep, ArchiveSection):
             else:
                 print('No elements provided')
             self.gas_elemental_composition = elementality
+
 
 class ThermalOxidation(Chemical, FabricationProcessStep, ArchiveSection):
     m_def = Section(
@@ -644,6 +645,9 @@ class ThermalOxidation(Chemical, FabricationProcessStep, ArchiveSection):
             'label':'thermal oxidation gas'
         }
     )
+    thermal_oxidation_gas = Quantity(
+        type=str, a_eln={'component': 'StringEditQuantity', 'label': 'target material'}
+    )
     temperature_final_target = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
@@ -689,6 +693,7 @@ class ThermalOxidation(Chemical, FabricationProcessStep, ArchiveSection):
             else:
                 print('No elements provided')
             self.gas_elemental_composition = elementality
+
 
 class Dicing(FabricationProcessStep, ArchiveSection):
     m_def = Section(
@@ -807,6 +812,7 @@ class Dicing(FabricationProcessStep, ArchiveSection):
         unit='um',
     )
 
+
 class Doping(FabricationProcessStep, ArchiveSection):
     m_def = Section(
         a_eln={
@@ -866,6 +872,7 @@ class Doping(FabricationProcessStep, ArchiveSection):
         },
         unit='ohm',
     )
+
 
 class LabelingCleaning(FabricationProcessStep, ArchiveSection):
     m_def = Section(
@@ -933,6 +940,7 @@ class LabelingCleaning(FabricationProcessStep, ArchiveSection):
         type=MEnum('Yes', 'No', 'Other (see Note)'),
         a_eln={'component': 'EnumEditQuantity'},
     )
+
 
 class SOD(Chemical, FabricationProcessStep, ArchiveSection):
     m_def = Section(
@@ -1060,5 +1068,6 @@ class SOD(Chemical, FabricationProcessStep, ArchiveSection):
             else:
                 print('No elements provided')
             self.doping_material_elemental_composition = elementality
+
 
 m_package.__init_metainfo__()
