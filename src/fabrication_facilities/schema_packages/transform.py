@@ -1153,7 +1153,7 @@ class Track(Chemical, FabricationProcessStep, ArchiveSection):
         type=np.float64,
         a_eln={
             'component': 'NumberEditQuantity',
-            'label':'Resist thickness'
+            'label':'Resist thickness',
             'defaultDisplayUnit': 'um',
         },
         unit='um',
