@@ -330,9 +330,9 @@ class WetEtching(Chemical, FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'short_name',
                     'chemical_formula',
-                    'depth_target',
                     'etching_solution',
                     'etching_solution_proportions',
+                    'depth_target',
                     'duration_target',
                     'depth_measured',
                     'duration_measured',
@@ -427,5 +427,107 @@ class WetEtching(Chemical, FabricationProcessStep, ArchiveSection):
             else:
                 print('No elements provided')
             self.material_elemental_composition = elementality
+
+class Stripping(Chemical, FabricationProcessStep, ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'recipe_name',
+                    'stripping_type',
+                    'short_name',
+                    'chemical_formula',
+                    'duration_target',
+                    'removing_temperature',
+                    'ultrasound_required',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    stripping_type = Quantity(
+        type=str,
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
+    )
+    short_name = Quantity(
+        type=str,
+        description='Material to remove',
+        a_eln={'component': 'StringEditQuantity', 'label': 'material to remove'},
+    )
+    chemical_formula = Quantity(
+        type=str,
+        description='Inserted only if known',
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    removing_temperature = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+    duration_target = Quantity(
+        type=np.float64,
+        description='Time prescribed by the recipe',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
+    )
+    ultrasound_required = Quantity(
+        type=bool,
+        a_eln={
+            'component': 'BoolEditQuantity',
+        },
+    )
+
+    material_elemental_composition = SubSection(
+        section_def=ElementalComposition, repeats=True
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+        if self.chemical_formula:
+            elements, counts = parse_chemical_formula(self.chemical_formula)
+            total = 0
+            for token in counts:
+                total += int(token)
+            if total != 0:
+                elemental_fraction = np.array(counts) / total
+                elementality = []
+                i = 0
+                for entry in elements:
+                    elemental_try = ElementalComposition()
+                    elemental_try.element = entry
+                    elemental_try.atomic_fraction = elemental_fraction[i]
+                    i += 1
+                    elementality.append(elemental_try)
+            else:
+                print('No elements provided')
+            self.material_elemental_composition = elementality
+
 
 m_package.__init_metainfo__()
