@@ -932,5 +932,67 @@ class StartMaterial(Chemical, FabricationProcessStep, ArchiveSection):
                 print('No elements provided')
             self.elemental_composition = elementality
 
+class ObservationMeasurements(FabricationProcessStep, ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'recipe_name',
+                    'activity_type',
+                    'short_name',
+                    'duration_target',
+                    'image_name',
+                    'thickness_measurements',
+                    'electrical_measurements',
+                    'notes',
+                ]
+            },
+        },
+    )
+    short_name = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity', 'label':'Equipment used'},
+    )
+    activity_type = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    duration_target = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute',
+    )
+    image_name = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    thickness_measurements = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    electrical_measurements = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
 
 m_package.__init_metainfo__()

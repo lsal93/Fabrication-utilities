@@ -210,6 +210,130 @@ class DRIE(Chemical, FabricationProcessStep, ArchiveSection):
                 print('No elements provided')
             self.material_elemental_composition = elementality
 
+class RIE(Chemical, FabricationProcessStep, ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'recipe_name',
+                    'short_name',
+                    'chemical_formula',
+                    'depth_target',
+                    'duration_target',
+                    'chamber_pressure',
+                    'gas_name',
+                    'depth_measured',
+                    'duration_measured',
+                    'etching_rate_obtained',
+                    'notes',
+                ]
+            },
+        },
+    )
+    short_name = Quantity(
+        type=str,
+        description='Material to be etched',
+        a_eln={'component': 'StringEditQuantity', 'label': 'target material'},
+    )
+    duration_target = Quantity(
+        type=np.float64,
+        description='Time prescribed by the recipe',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute',
+    )
+    chemical_formula = Quantity(
+        type=str,
+        description='Inserted only if known',
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    depth_target = Quantity(
+        type=np.float64,
+        description='Amount of material to be etched',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm',
+    )
+    chamber_pressure = Quantity(
+        type=np.float64,
+        description='Pressure in the chamber',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
+        unit='mbar',
+    )
+     gas_name = Quantity(
+        type=str,
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
+    )
+    depth_measured = Quantity(
+        type=np.float64,
+        description='Amount of material ethced effectively in the process',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm',
+    )
+    duration_measured = Quantity(
+        type=np.float64,
+        description='Real time of the process ad output',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute',
+    )
+    etching_rate_obtained = Quantity(
+        type=np.float64,
+        description='Etching rate as output',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm/minute'},
+        unit='nm/minute',
+    )
+    # fluximeters = SubSection(
+    #     section_def=Massflow_controller,
+    #     repeats=True,
+    # )
+
+    material_elemental_composition = SubSection(
+        section_def=ElementalComposition, repeats=True
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+        if self.chemical_formula:
+            elements, counts = parse_chemical_formula(self.chemical_formula)
+            total = 0
+            for token in counts:
+                total += int(token)
+            if total != 0:
+                elemental_fraction = np.array(counts) / total
+                elementality = []
+                i = 0
+                for entry in elements:
+                    elemental_try = ElementalComposition()
+                    elemental_try.element = entry
+                    elemental_try.atomic_fraction = elemental_fraction[i]
+                    i += 1
+                    elementality.append(elemental_try)
+            else:
+                print('No elements provided')
+            self.material_elemental_composition = elementality
+
+
 class WetCleaning(FabricationProcessStep, ArchiveSection):
     m_def = Section(
         a_eln={
