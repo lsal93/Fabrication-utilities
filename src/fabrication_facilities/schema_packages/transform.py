@@ -1122,8 +1122,15 @@ class Track(Chemical, FabricationProcessStep, ArchiveSection):
                     'exposure_duration',
                     'developing_duration',
                     'developing_rinse_spin_dryer_required',
+                    'peb_required',
                     'peb_duration',
                     'peb_temperature',
+                    'softbake_required',
+                    'softbake_duration',
+                    'softbake_temperature',
+                    'hardbake_required',
+                    'hardbake_duration',
+                    'hardbake_temperature',
                     'notes',
                 ]
             },
@@ -1222,6 +1229,13 @@ class Track(Chemical, FabricationProcessStep, ArchiveSection):
         type=MEnum('Yes', 'No', 'Other (see Note)'),
         a_eln={'component': 'EnumEditQuantity'},
     )
+    peb_required = Quantity(
+        type=bool,
+        description='The recipe use exposure?',
+        a_eln={
+            'component': 'BoolEditQuantity',
+        },
+    )
     peb_duration = Quantity(
         type=np.float64,
         description='The duration of the peb',
@@ -1234,6 +1248,50 @@ class Track(Chemical, FabricationProcessStep, ArchiveSection):
     peb_temperature = Quantity(
         type=np.float64,
         description='The temperature of the peb',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+    softbake_required = Quantity(
+        type=bool,
+        a_eln={
+            'component': 'BoolEditQuantity',
+        },
+    )
+    softbake_duration = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
+    )
+    softbake_temperature = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+    hardbake_required = Quantity(
+        type=bool,
+        a_eln={
+            'component': 'BoolEditQuantity',
+        },
+    )
+    hardbake_duration = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
+    )
+    hardbake_temperature = Quantity(
+        type=np.float64,
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'celsius',

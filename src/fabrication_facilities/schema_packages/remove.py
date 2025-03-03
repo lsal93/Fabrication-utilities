@@ -279,7 +279,7 @@ class RIE(Chemical, FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
         unit='mbar',
     )
-     gas_name = Quantity(
+    gas_name = Quantity(
         type=str,
         a_eln={
             'component': 'StringEditQuantity',
