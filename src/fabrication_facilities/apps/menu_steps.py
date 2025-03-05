@@ -334,7 +334,87 @@ menuadd_spincoat = Menu(
         ),
     ],
 )
-menuadd_bonding = Menu(title='Bonding', size='xl', items=[])
+menuadd_bonding = Menu(
+    title='Bonding',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir8}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir8}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir8}',
+        ),
+        MenuItemTerms(
+            title='Wafer bonding type',
+            type='terms',
+            search_quantity=f'data.wafer_bonding_type#{dir8}',
+        ),
+        MenuItemTerms(
+            title='Alignment required',
+            type='terms',
+            search_quantity=f'data.alignment_required#{dir8}',
+        ),
+        MenuItemHistogram(
+            title='Alignment max error',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.alignment_max_error#{dir8}',
+                title='alignment error',
+                unit='nm',
+            ),
+        ),
+        MenuItemTerms(
+            title='Wafer stack 1 name',
+            type='terms',
+            search_quantity=f'data.wafer_stack_1_name#{dir8}',
+        ),
+        MenuItemTerms(
+            title='Wafer stack 2 name',
+            type='terms',
+            search_quantity=f'data.wafer_stack_2_name#{dir8}',
+        ),
+        MenuItemTerms(
+            title='Wafer space required',
+            type='terms',
+            search_quantity=f'data.wafer_space_required#{dir8}',
+        ),
+        MenuItemTerms(
+            title='Alignment target mask name',
+            type='terms',
+            search_quantity=f'data.alignment_target_mask_name#{dir8}',
+        ),
+        MenuItemTerms(
+            title='Alignment viewfinder mask name',
+            type='terms',
+            search_quantity=f'data.alignment_viewfinder_mask_name#{dir8}',
+        ),
+        MenuItemTerms(
+            title='Wafer bonded name',
+            type='terms',
+            search_quantity=f'data.wafer_bonded_name#{dir8}',
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir8}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir8}',
+        ),
+    ],
+)
 menutrans_ebl = Menu(
     title='E-Beam Lithography',
     size='xl',
@@ -869,6 +949,130 @@ menuetchwetclean = Menu(
             title='ID equipment used',
             type='terms',
             search_quantity=f'data.instruments.id#{dir6}',
+        ),
+    ],
+)
+menutrans_annealing = Menu(
+    title='Annealing',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir9}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir9}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir9}',
+        ),
+        MenuItemTerms(
+            title='Material to be annealed',
+            type='terms',
+            search_quantity=f'data.short_name#{dir9}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements of the material',
+            type='periodic_table',
+            search_quantity=f'data.material_elemental_composition.element#{dir9}',
+        ),
+        MenuItemHistogram(
+            title='Starting temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.temperature_start#{dir9}',
+                title='starting temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Target final temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.temperature_final_target#{dir9}',
+                title='target final temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemTerms(
+            title='Gas name',
+            type='terms',
+            search_quantity=f'data.gas_name#{dir9}',
+        ),
+        MenuItemHistogram(
+            title='Gas percentage',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.gas_percentage#{dir9}',
+                title='gas percentage',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Gas flow',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.gas_flow#{dir9}',
+                title='gas flow',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Measured final temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.temperature_final_measured#{dir9}',
+                title='measured final temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Effective duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.duration_measured#{dir9}',
+                title='duration measured',
+                unit='minute',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Ramp up rate',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.temperature_ramp_up_rate#{dir9}',
+                title='ramp up rate',
+                unit='celsius/minute',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Ramp down rate',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.temperature_ramp_down_rate#{dir9}',
+                title='ramp down rate',
+                unit='celsius/minute',
+            ),
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir9}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir9}',
         ),
     ],
 )

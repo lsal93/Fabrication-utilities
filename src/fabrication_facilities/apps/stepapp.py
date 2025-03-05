@@ -15,6 +15,7 @@ from fabrication_facilities.apps.menu_steps import (
     menutrans_develop,
     menutrans_ebl,
     menutrans_fib,
+    menutrans_annealing
 )
 
 fps = 'FabricationProcessStep'
@@ -117,7 +118,9 @@ stepapp = App(
                     ),
                     Menu(
                         title='Thermal processing',
-                        items=[],
+                        items=[
+                            menutrans_annealing,
+                        ],
                     ),
                 ],
             ),
