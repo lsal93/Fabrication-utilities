@@ -7,7 +7,7 @@ from nomad.config.models.ui import (
     SearchQuantities,
 )
 
-dir = 'fabrication_facilities.schema_packages.fabrication_utilities.Equipment'
+dir0 = 'fabrication_facilities.schema_packages.fabrication_utilities.Equipment'
 Mainstr = 'data.equipmentTechniques.techniqueMainCategory'
 Substr = 'data.equipmentTechniques.techniqueSubCategory'
 gen = 'data.equipmentTechniques.genericEquipmentName'
@@ -24,42 +24,42 @@ equipmentapp = App(
     instrument's location is findable.
     """,
     search_quantities=SearchQuantities(
-        include=[f'*#{dir}'],
+        include=[f'*#{dir0}'],
     ),
     columns=[
         Column(quantity='entry_name', selected=True),
         Column(quantity='entry_type'),
         Column(
-            quantity=f'data.affiliation#{dir}',
+            quantity=f'data.affiliation#{dir0}',
             selected=True,
         ),
         Column(
-            quantity=f'data.institution#{dir}',
+            quantity=f'data.institution#{dir0}',
             selected=True,
         ),
         Column(
-            quantity=f'data.is_bookable#{dir}',
+            quantity=f'data.is_bookable#{dir0}',
             selected=True,
         ),
         Column(quantity='upload_create_time', selected=True),
     ],
-    filters_locked={'section_defs.definition_qualified_name': dir},
+    filters_locked={'section_defs.definition_qualified_name': dir0},
     menu=Menu(
         items=[
             MenuItemTerms(
                 title='Affiliation',
                 type='terms',
-                search_quantity=f'data.affiliation#{dir}',
+                search_quantity=f'data.affiliation#{dir0}',
             ),
             MenuItemTerms(
                 title='Institution',
                 type='terms',
-                search_quantity=f'data.institution#{dir}',
+                search_quantity=f'data.institution#{dir0}',
             ),
             MenuItemTerms(
                 title='Availability',
                 type='terms',
-                search_quantity=f'data.is_bookable#{dir}',
+                search_quantity=f'data.is_bookable#{dir0}',
             ),
             Menu(
                 title='Techniques',
@@ -68,17 +68,17 @@ equipmentapp = App(
                     MenuItemTerms(
                         title='Equipment class',
                         type='terms',
-                        search_quantity=f'{gen}#{dir}',
+                        search_quantity=f'{gen}#{dir0}',
                     ),
                     MenuItemTerms(
                         title='MainTechnique',
                         type='terms',
-                        search_quantity=f'{Mainstr}#{dir}',
+                        search_quantity=f'{Mainstr}#{dir0}',
                     ),
                     MenuItemTerms(
                         title='fabrication step',
                         type='terms',
-                        search_quantity=f'{Substr}#{dir}',
+                        search_quantity=f'{Substr}#{dir0}',
                     ),
                 ],
             ),

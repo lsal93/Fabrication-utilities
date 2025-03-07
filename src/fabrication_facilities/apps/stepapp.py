@@ -18,30 +18,36 @@ from fabrication_facilities.apps.menu_steps import (
     menutrans_annealing,
 )
 
-fps = 'FabricationProcessStep'
-dir = f'fabrication_facilities.schema_packages.fabrication_utilities.{fps}'
-dir1 = 'fabrication_facilities.schema_packages.add.ICP_CVD'
-dir2 = 'fabrication_facilities.schema_packages.add.Spin_Coating'
-dir3 = 'fabrication_facilities.schema_packages.transform.EBL'
-dir4 = 'fabrication_facilities.schema_packages.transform.FIB'
-dir5 = 'fabrication_facilities.schema_packages.remove.DRIE'
-dir6 = 'fabrication_facilities.schema_packages.remove.WetCleaning'
-dir7 = 'fabrication_facilities.schema_packages.transform.ResistDevelopment'
-dir8 = 'fabrication_facilities.schema_packages.add.Bonding'
-dir9 = 'fabrication_facilities.schema_packages.transform.Annealing'
+from fabrication_facilities.apps.directories import dir_path
 
-schemas = [
-    f'*#{dir}',
-    f'*#{dir1}',
-    f'*#{dir2}',
-    f'*#{dir3}',
-    f'*#{dir4}',
-    f'*#{dir5}',
-    f'*#{dir6}',
-    f'*#{dir7}',
-    f'*#{dir8}',
-    f'*#{dir9}',
-]
+
+schemas = [f"*#{path_value}" for path_value in dir_paths.values()]
+# dir1 = 'fabrication_facilities.schema_packages.add.ICP_CVD'
+# dir2 = 'fabrication_facilities.schema_packages.add.Spin_Coating'
+# dir3 = 'fabrication_facilities.schema_packages.transform.EBL'
+# dir4 = 'fabrication_facilities.schema_packages.transform.FIB'
+# dir5 = 'fabrication_facilities.schema_packages.remove.DRIE'
+# dir6 = 'fabrication_facilities.schema_packages.remove.WetCleaning'
+# dir7 = 'fabrication_facilities.schema_packages.transform.ResistDevelopment'
+# dir8 = 'fabrication_facilities.schema_packages.add.Bonding'
+# dir9 = 'fabrication_facilities.schema_packages.transform.Annealing'
+
+# schemas = [
+#     f'*#{dir}',
+#     f'*#{dir1}',
+#     f'*#{dir2}',
+#     f'*#{dir3}',
+#     f'*#{dir4}',
+#     f'*#{dir5}',
+#     f'*#{dir6}',
+#     f'*#{dir7}',
+#     f'*#{dir8}',
+#     f'*#{dir9}',
+# ]
+fps = 'FabricationProcessStep'
+dir0 = f'fabrication_facilities.schema_packages.fabrication_utilities.{fps}'
+schemas.append(f'*#{dir0}')
+
 stepapp = App(
     label='Fabrication steps',
     path='stepapp',
@@ -58,16 +64,16 @@ stepapp = App(
         Column(quantity='entry_name', selected=True),
         Column(quantity='entry_type', selected=True),
         Column(
-            quantity=f'data.affiliation#{dir}',
+            quantity=f'data.affiliation#{dir0}',
             selected=True,
         ),
         Column(
-            quantity=f'data.location#{dir}',
+            quantity=f'data.location#{dir0}',
             selected=True,
         ),
         Column(quantity='upload_create_time', selected=True),
     ],
-    filters_locked={'section_defs.definition_qualified_name': dir},
+    filters_locked={'section_defs.definition_qualified_name': dir0},
     menu=Menu(
         items=[
             Menu(

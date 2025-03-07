@@ -6,15 +6,7 @@ from nomad.config.models.ui import (
     MenuItemTerms,
 )
 
-dir1 = 'fabrication_facilities.schema_packages.add.ICP_CVD'
-dir2 = 'fabrication_facilities.schema_packages.add.Spin_Coating'
-dir3 = 'fabrication_facilities.schema_packages.transform.EBL'
-dir4 = 'fabrication_facilities.schema_packages.transform.FIB'
-dir5 = 'fabrication_facilities.schema_packages.remove.DRIE'
-dir6 = 'fabrication_facilities.schema_packages.remove.WetCleaning'
-dir7 = 'fabrication_facilities.schema_packages.transform.ResistDevelopment'
-dir8 = 'fabrication_facilities.schema_packages.add.Bonding'
-dir9 = 'fabrication_facilities.schema_packages.transform.Annealing'
+from fabrication_facilities.apps.directories import dir_path
 
 menuadd_icpcvd = Menu(
     title='ICP-CVD',
@@ -23,34 +15,34 @@ menuadd_icpcvd = Menu(
         MenuItemTerms(
             title='Lab location',
             type='terms',
-            search_quantity=f'data.location#{dir1}',
+            search_quantity=f'data.location#{dir_path["dir1"]}',
         ),
         MenuItemTerms(
             title='ID item processed',
             type='terms',
-            search_quantity=f'data.id_item_processed#{dir1}',
+            search_quantity=f'data.id_item_processed#{dir_path["dir1"]}',
         ),
         MenuItemTerms(
             title='Name of the recipe',
             type='terms',
-            search_quantity=f'data.recipe_name#{dir1}',
+            search_quantity=f'data.recipe_name#{dir_path["dir1"]}',
         ),
         MenuItemTerms(
             title='Material to be deposited',
             type='terms',
-            search_quantity=f'data.short_name#{dir1}',
+            search_quantity=f'data.short_name#{dir_path["dir1"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements deposited',
             type='periodic_table',
-            search_quantity=f'data.material_elemental_composition.element#{dir1}',
+            search_quantity=f'data.material_elemental_composition.element#{dir_path["dir1"]}',
         ),
         MenuItemHistogram(
             title='Desired thickness',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.thickness_target#{dir1}',
+                search_quantity=f'data.thickness_target#{dir_path["dir1"]}',
                 title='thickness',
                 unit='nm',
             ),
@@ -58,19 +50,19 @@ menuadd_icpcvd = Menu(
         MenuItemPeriodicTable(
             title='Elements of gases employed',
             type='periodic_table',
-            search_quantity=f'data.fluximeters.elemental_composition.element#{dir1}',
+            search_quantity=f'data.fluximeters.elemental_composition.element#{dir_path["dir1"]}',
         ),
         MenuItemTerms(
             title='Gases formulas',
             type='terms',
-            search_quantity=f'data.fluximeters.name#{dir1}',
+            search_quantity=f'data.fluximeters.name#{dir_path["dir1"]}',
         ),
         MenuItemHistogram(
             title='Chuck temperature',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.chuck_temperature#{dir1}',
+                search_quantity=f'data.chuck_temperature#{dir_path["dir1"]}',
                 title='chuck_temperature',
                 unit='celsius',
             ),
@@ -80,7 +72,7 @@ menuadd_icpcvd = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.bias#{dir1}',
+                search_quantity=f'data.bias#{dir_path["dir1"]}',
                 title='bias',
                 unit='volt',
             ),
@@ -90,7 +82,7 @@ menuadd_icpcvd = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.chamber_pressure#{dir1}',
+                search_quantity=f'data.chamber_pressure#{dir_path["dir1"]}',
                 title='chamber_pressure',
                 unit='mbar',
             ),
@@ -100,7 +92,7 @@ menuadd_icpcvd = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.power#{dir1}',
+                search_quantity=f'data.power#{dir_path["dir1"]}',
                 title='chamber_pressure',
                 unit='watt',
             ),
@@ -110,7 +102,7 @@ menuadd_icpcvd = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.duration_measured#{dir1}',
+                search_quantity=f'data.duration_measured#{dir_path["dir1"]}',
                 title='effective duration',
                 unit='minute',
             ),
@@ -120,7 +112,7 @@ menuadd_icpcvd = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.thickness_measured#{dir1}',
+                search_quantity=f'data.thickness_measured#{dir_path["dir1"]}',
                 title='thickness obtained',
                 unit='nm',
             ),
@@ -130,7 +122,7 @@ menuadd_icpcvd = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.deposition_rate_obtained#{dir1}',
+                search_quantity=f'data.deposition_rate_obtained#{dir_path["dir1"]}',
                 title='deposition rate obtained',
                 unit='nm/minute',
             ),
@@ -138,12 +130,12 @@ menuadd_icpcvd = Menu(
         MenuItemTerms(
             title='Name equipment used',
             type='terms',
-            search_quantity=f'data.instruments.name#{dir1}',
+            search_quantity=f'data.instruments.name#{dir_path["dir1"]}',
         ),
         MenuItemTerms(
             title='ID equipment used',
             type='terms',
-            search_quantity=f'data.instruments.id#{dir1}',
+            search_quantity=f'data.instruments.id#{dir_path["dir1"]}',
         ),
     ],
 )
@@ -155,34 +147,34 @@ menuadd_spincoat = Menu(
         MenuItemTerms(
             title='Lab location',
             type='terms',
-            search_quantity=f'data.location#{dir2}',
+            search_quantity=f'data.location#{dir_path["dir2"]}',
         ),
         MenuItemTerms(
             title='ID item processed',
             type='terms',
-            search_quantity=f'data.id_item_processed#{dir2}',
+            search_quantity=f'data.id_item_processed#{dir_path["dir2"]}',
         ),
         MenuItemTerms(
             title='Name of the recipe',
             type='terms',
-            search_quantity=f'data.recipe_name#{dir2}',
+            search_quantity=f'data.recipe_name#{dir_path["dir2"]}',
         ),
         MenuItemTerms(
             title='Resist to be deposited',
             type='terms',
-            search_quantity=f'data.short_name#{dir2}',
+            search_quantity=f'data.short_name#{dir_path["dir2"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements of the resist deposited',
             type='periodic_table',
-            search_quantity=f'data.resist_elemental_composition.element#{dir2}',
+            search_quantity=f'data.resist_elemental_composition.element#{dir_path["dir2"]}',
         ),
         MenuItemHistogram(
             title='Desired thickness',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.thickness_target#{dir2}',
+                search_quantity=f'data.thickness_target#{dir_path["dir2"]}',
                 title='thickness',
                 unit='nm',
             ),
@@ -190,19 +182,19 @@ menuadd_spincoat = Menu(
         MenuItemTerms(
             title='HDMS',
             type='terms',
-            search_quantity=f'data.hdms_required#{dir2}',
+            search_quantity=f'data.hdms_required#{dir_path["dir2"]}',
         ),
         MenuItemTerms(
             title='PEB',
             type='terms',
-            search_quantity=f'data.peb_required#{dir2}',
+            search_quantity=f'data.peb_required#{dir_path["dir2"]}',
         ),
         MenuItemHistogram(
             title='PEB duration',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.peb_duration#{dir2}',
+                search_quantity=f'data.peb_duration#{dir_path["dir2"]}',
                 title='peb duration',
                 unit='minute',
             ),
@@ -212,7 +204,7 @@ menuadd_spincoat = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.peb_temperature#{dir2}',
+                search_quantity=f'data.peb_temperature#{dir_path["dir2"]}',
                 title='peb temperature',
                 unit='celsius',
             ),
@@ -220,14 +212,14 @@ menuadd_spincoat = Menu(
         MenuItemTerms(
             title='Exposure',
             type='terms',
-            search_quantity=f'data.exposure_required#{dir2}',
+            search_quantity=f'data.exposure_required#{dir_path["dir2"]}',
         ),
         MenuItemHistogram(
             title='Exposure duration',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.exposure_duration#{dir2}',
+                search_quantity=f'data.exposure_duration#{dir_path["dir2"]}',
                 title='exposure duration',
                 unit='sec',
             ),
@@ -237,7 +229,7 @@ menuadd_spincoat = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.dewetting_duration#{dir2}',
+                search_quantity=f'data.dewetting_duration#{dir_path["dir2"]}',
                 title='de-wetting duration',
                 unit='minute',
             ),
@@ -247,7 +239,7 @@ menuadd_spincoat = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.dewetting_temperature#{dir2}',
+                search_quantity=f'data.dewetting_temperature#{dir_path["dir2"]}',
                 title='De-wetting temperature',
                 unit='celsius',
             ),
@@ -257,7 +249,7 @@ menuadd_spincoat = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.spin_dispensed_volume#{dir2}',
+                search_quantity=f'data.spin_dispensed_volume#{dir_path["dir2"]}',
                 title='volume dispensed',
                 unit='milliliter',
             ),
@@ -267,7 +259,7 @@ menuadd_spincoat = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.spin_duration#{dir2}',
+                search_quantity=f'data.spin_duration#{dir_path["dir2"]}',
                 title='spin duration',
                 unit='sec',
             ),
@@ -277,7 +269,7 @@ menuadd_spincoat = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.spin_frequency#{dir2}',
+                search_quantity=f'data.spin_frequency#{dir_path["dir2"]}',
                 title='frequency',
                 unit='rpm',
             ),
@@ -287,7 +279,7 @@ menuadd_spincoat = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.spin_angular_acceleration#{dir2}',
+                search_quantity=f'data.spin_angular_acceleration#{dir_path["dir2"]}',
                 title='angular acceleration',
                 unit='rpm/sec',
             ),
@@ -297,7 +289,7 @@ menuadd_spincoat = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.baking_duration#{dir2}',
+                search_quantity=f'data.baking_duration#{dir_path["dir2"]}',
                 title='baking duration',
                 unit='minute',
             ),
@@ -307,7 +299,7 @@ menuadd_spincoat = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.baking_temperature#{dir2}',
+                search_quantity=f'data.baking_temperature#{dir_path["dir2"]}',
                 title='baking temperature',
                 unit='celsius',
             ),
@@ -317,7 +309,7 @@ menuadd_spincoat = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.thickness_measured#{dir2}',
+                search_quantity=f'data.thickness_measured#{dir_path["dir2"]}',
                 title='thickness obtained',
                 unit='nm',
             ),
@@ -325,12 +317,12 @@ menuadd_spincoat = Menu(
         MenuItemTerms(
             title='Name equipment used',
             type='terms',
-            search_quantity=f'data.instruments.name#{dir2}',
+            search_quantity=f'data.instruments.name#{dir_path["dir2"]}',
         ),
         MenuItemTerms(
             title='ID equipment used',
             type='terms',
-            search_quantity=f'data.instruments.id#{dir2}',
+            search_quantity=f'data.instruments.id#{dir_path["dir2"]}',
         ),
     ],
 )
@@ -341,34 +333,34 @@ menuadd_bonding = Menu(
         MenuItemTerms(
             title='Lab location',
             type='terms',
-            search_quantity=f'data.location#{dir8}',
+            search_quantity=f'data.location#{dir_path["dir8"]}',
         ),
         MenuItemTerms(
             title='ID item processed',
             type='terms',
-            search_quantity=f'data.id_item_processed#{dir8}',
+            search_quantity=f'data.id_item_processed#{dir_path["dir8"]}',
         ),
         MenuItemTerms(
             title='Name of the recipe',
             type='terms',
-            search_quantity=f'data.recipe_name#{dir8}',
+            search_quantity=f'data.recipe_name#{dir_path["dir8"]}',
         ),
         MenuItemTerms(
             title='Wafer bonding type',
             type='terms',
-            search_quantity=f'data.wafer_bonding_type#{dir8}',
+            search_quantity=f'data.wafer_bonding_type#{dir_path["dir8"]}',
         ),
         MenuItemTerms(
             title='Alignment required',
             type='terms',
-            search_quantity=f'data.alignment_required#{dir8}',
+            search_quantity=f'data.alignment_required#{dir_path["dir8"]}',
         ),
         MenuItemHistogram(
             title='Alignment max error',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.alignment_max_error#{dir8}',
+                search_quantity=f'data.alignment_max_error#{dir_path["dir8"]}',
                 title='alignment error',
                 unit='nm',
             ),
@@ -376,42 +368,42 @@ menuadd_bonding = Menu(
         MenuItemTerms(
             title='Wafer stack 1 name',
             type='terms',
-            search_quantity=f'data.wafer_stack_1_name#{dir8}',
+            search_quantity=f'data.wafer_stack_1_name#{dir_path["dir8"]}',
         ),
         MenuItemTerms(
             title='Wafer stack 2 name',
             type='terms',
-            search_quantity=f'data.wafer_stack_2_name#{dir8}',
+            search_quantity=f'data.wafer_stack_2_name#{dir_path["dir8"]}',
         ),
         MenuItemTerms(
             title='Wafer space required',
             type='terms',
-            search_quantity=f'data.wafer_space_required#{dir8}',
+            search_quantity=f'data.wafer_space_required#{dir_path["dir8"]}',
         ),
         MenuItemTerms(
             title='Alignment target mask name',
             type='terms',
-            search_quantity=f'data.alignment_target_mask_name#{dir8}',
+            search_quantity=f'data.alignment_target_mask_name#{dir_path["dir8"]}',
         ),
         MenuItemTerms(
             title='Alignment viewfinder mask name',
             type='terms',
-            search_quantity=f'data.alignment_viewfinder_mask_name#{dir8}',
+            search_quantity=f'data.alignment_viewfinder_mask_name#{dir_path["dir8"]}',
         ),
         MenuItemTerms(
             title='Wafer bonded name',
             type='terms',
-            search_quantity=f'data.wafer_bonded_name#{dir8}',
+            search_quantity=f'data.wafer_bonded_name#{dir_path["dir8"]}',
         ),
         MenuItemTerms(
             title='Name equipment used',
             type='terms',
-            search_quantity=f'data.instruments.name#{dir8}',
+            search_quantity=f'data.instruments.name#{dir_path["dir8"]}',
         ),
         MenuItemTerms(
             title='ID equipment used',
             type='terms',
-            search_quantity=f'data.instruments.id#{dir8}',
+            search_quantity=f'data.instruments.id#{dir_path["dir8"]}',
         ),
     ],
 )
@@ -422,23 +414,23 @@ menutrans_ebl = Menu(
         MenuItemTerms(
             title='Lab location',
             type='terms',
-            search_quantity=f'data.location#{dir3}',
+            search_quantity=f'data.location#{dir_path["dir3"]}',
         ),
         MenuItemTerms(
             title='ID item processed',
             type='terms',
-            search_quantity=f'data.id_item_processed#{dir3}',
+            search_quantity=f'data.id_item_processed#{dir_path["dir3"]}',
         ),
         MenuItemTerms(
             title='Name of the recipe',
             type='terms',
-            search_quantity=f'data.recipe_name#{dir3}',
+            search_quantity=f'data.recipe_name#{dir_path["dir3"]}',
         ),
         MenuItemHistogram(
             title='Dose',
             type='histogram',
             n_bins=10,
-            x=Axis(title='dose', unit='uC/cm^2', search_quantity=f'data.dose#{dir3}'),
+            x=Axis(title='dose', unit='uC/cm^2', search_quantity=f'data.dose#{dir_path["dir3"]}'),
         ),
         MenuItemHistogram(
             title='Writing field dimension',
@@ -447,7 +439,7 @@ menutrans_ebl = Menu(
             x=Axis(
                 title='writing field dimension',
                 unit='um^2',
-                search_quantity=f'data.writing_field_dimension#{dir3}',
+                search_quantity=f'data.writing_field_dimension#{dir_path["dir3"]}',
             ),
         ),
         MenuItemHistogram(
@@ -457,7 +449,7 @@ menutrans_ebl = Menu(
             x=Axis(
                 title='address size',
                 unit='nm',
-                search_quantity=f'data.address_size#{dir3}',
+                search_quantity=f'data.address_size#{dir_path["dir3"]}',
             ),
         ),
         MenuItemHistogram(
@@ -467,7 +459,7 @@ menutrans_ebl = Menu(
             x=Axis(
                 title='clock',
                 unit='MHz',
-                search_quantity=f'data.clock#{dir3}',
+                search_quantity=f'data.clock#{dir_path["dir3"]}',
             ),
         ),
         MenuItemHistogram(
@@ -477,7 +469,7 @@ menutrans_ebl = Menu(
             x=Axis(
                 title='current',
                 unit='pA',
-                search_quantity=f'data.current#{dir3}',
+                search_quantity=f'data.current#{dir_path["dir3"]}',
             ),
         ),
         MenuItemHistogram(
@@ -487,7 +479,7 @@ menutrans_ebl = Menu(
             x=Axis(
                 title='chamber pressure',
                 unit='mbar',
-                search_quantity=f'data.chamber_pressure#{dir3}',
+                search_quantity=f'data.chamber_pressure#{dir_path["dir3"]}',
             ),
         ),
         MenuItemHistogram(
@@ -497,13 +489,13 @@ menutrans_ebl = Menu(
             x=Axis(
                 title='tension',
                 unit='V',
-                search_quantity=f'data.tension#{dir3}',
+                search_quantity=f'data.tension#{dir_path["dir3"]}',
             ),
         ),
         MenuItemTerms(
             title='Alignment required',
             type='terms',
-            search_quantity=f'data.alignment_required#{dir3}',
+            search_quantity=f'data.alignment_required#{dir_path["dir3"]}',
         ),
         MenuItemHistogram(
             title='Max alignment error',
@@ -512,18 +504,18 @@ menutrans_ebl = Menu(
             x=Axis(
                 title='max alignment error',
                 unit='nm',
-                search_quantity=f'data.alignment_max_error#{dir3}',
+                search_quantity=f'data.alignment_max_error#{dir_path["dir3"]}',
             ),
         ),
         MenuItemTerms(
             title='Name equipment used',
             type='terms',
-            search_quantity=f'data.instruments.name#{dir3}',
+            search_quantity=f'data.instruments.name#{dir_path["dir3"]}',
         ),
         MenuItemTerms(
             title='ID equipment used',
             type='terms',
-            search_quantity=f'data.instruments.id#{dir3}',
+            search_quantity=f'data.instruments.id#{dir_path["dir3"]}',
         ),
     ],
 )
@@ -534,23 +526,23 @@ menutrans_fib = Menu(
         MenuItemTerms(
             title='Lab location',
             type='terms',
-            search_quantity=f'data.location#{dir4}',
+            search_quantity=f'data.location#{dir_path["dir4"]}',
         ),
         MenuItemTerms(
             title='ID item processed',
             type='terms',
-            search_quantity=f'data.id_item_processed#{dir4}',
+            search_quantity=f'data.id_item_processed#{dir_path["dir4"]}',
         ),
         MenuItemTerms(
             title='Name of the recipe',
             type='terms',
-            search_quantity=f'data.recipe_name#{dir4}',
+            search_quantity=f'data.recipe_name#{dir_path["dir4"]}',
         ),
         MenuItemHistogram(
             title='Dose',
             type='histogram',
             n_bins=10,
-            x=Axis(title='dose', unit='uC/cm^2', search_quantity=f'data.dose#{dir4}'),
+            x=Axis(title='dose', unit='uC/cm^2', search_quantity=f'data.dose#{dir_path["dir4"]}'),
         ),
         MenuItemHistogram(
             title='Writing field dimension',
@@ -559,7 +551,7 @@ menutrans_fib = Menu(
             x=Axis(
                 title='writing field dimension',
                 unit='um^2',
-                search_quantity=f'data.writing_field_dimension#{dir4}',
+                search_quantity=f'data.writing_field_dimension#{dir_path["dir4"]}',
             ),
         ),
         MenuItemHistogram(
@@ -569,7 +561,7 @@ menutrans_fib = Menu(
             x=Axis(
                 title='address size',
                 unit='nm',
-                search_quantity=f'data.address_size#{dir4}',
+                search_quantity=f'data.address_size#{dir_path["dir4"]}',
             ),
         ),
         MenuItemHistogram(
@@ -579,7 +571,7 @@ menutrans_fib = Menu(
             x=Axis(
                 title='clock',
                 unit='MHz',
-                search_quantity=f'data.clock#{dir4}',
+                search_quantity=f'data.clock#{dir_path["dir4"]}',
             ),
         ),
         MenuItemHistogram(
@@ -589,7 +581,7 @@ menutrans_fib = Menu(
             x=Axis(
                 title='current',
                 unit='pA',
-                search_quantity=f'data.current#{dir4}',
+                search_quantity=f'data.current#{dir_path["dir4"]}',
             ),
         ),
         MenuItemHistogram(
@@ -599,7 +591,7 @@ menutrans_fib = Menu(
             x=Axis(
                 title='chamber pressure',
                 unit='mbar',
-                search_quantity=f'data.chamber_pressure#{dir4}',
+                search_quantity=f'data.chamber_pressure#{dir_path["dir4"]}',
             ),
         ),
         MenuItemHistogram(
@@ -609,13 +601,13 @@ menutrans_fib = Menu(
             x=Axis(
                 title='tension',
                 unit='V',
-                search_quantity=f'data.tension#{dir4}',
+                search_quantity=f'data.tension#{dir_path["dir4"]}',
             ),
         ),
         MenuItemTerms(
             title='Alignment required',
             type='terms',
-            search_quantity=f'data.alignment_required#{dir4}',
+            search_quantity=f'data.alignment_required#{dir_path["dir4"]}',
         ),
         MenuItemHistogram(
             title='Max alignment error',
@@ -624,7 +616,7 @@ menutrans_fib = Menu(
             x=Axis(
                 title='max alignment error',
                 unit='nm',
-                search_quantity=f'data.alignment_max_error#{dir3}',
+                search_quantity=f'data.alignment_max_error#{dir_path["dir3"]}',
             ),
         ),
         MenuItemHistogram(
@@ -633,18 +625,18 @@ menutrans_fib = Menu(
             n_bins=10,
             x=Axis(
                 title='n° of loops',
-                search_quantity=f'data.number_of_loops#{dir4}',
+                search_quantity=f'data.number_of_loops#{dir_path["dir4"]}',
             ),
         ),
         MenuItemTerms(
             title='Name equipment used',
             type='terms',
-            search_quantity=f'data.instruments.name#{dir4}',
+            search_quantity=f'data.instruments.name#{dir_path["dir4"]}',
         ),
         MenuItemTerms(
             title='ID equipment used',
             type='terms',
-            search_quantity=f'data.instruments.id#{dir4}',
+            search_quantity=f'data.instruments.id#{dir_path["dir4"]}',
         ),
     ],
 )
@@ -655,34 +647,34 @@ menutrans_develop = Menu(
         MenuItemTerms(
             title='Lab location',
             type='terms',
-            search_quantity=f'data.location#{dir7}',
+            search_quantity=f'data.location#{dir_path["dir7"]}',
         ),
         MenuItemTerms(
             title='ID item processed',
             type='terms',
-            search_quantity=f'data.id_item_processed#{dir7}',
+            search_quantity=f'data.id_item_processed#{dir_path["dir7"]}',
         ),
         MenuItemTerms(
             title='Name of the recipe',
             type='terms',
-            search_quantity=f'data.recipe_name#{dir7}',
+            search_quantity=f'data.recipe_name#{dir_path["dir7"]}',
         ),
         MenuItemTerms(
             title='Developing solution',
             type='terms',
-            search_quantity=f'data.developing_solution#{dir7}',
+            search_quantity=f'data.developing_solution#{dir_path["dir7"]}',
         ),
         MenuItemTerms(
             title='Removing solution proportions',
             type='terms',
-            search_quantity=f'data.developing_solution_proportions#{dir7}',
+            search_quantity=f'data.developing_solution_proportions#{dir_path["dir7"]}',
         ),
         MenuItemHistogram(
             title='Developing duration',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.developing_duration#{dir7}',
+                search_quantity=f'data.developing_duration#{dir_path["dir7"]}',
                 title='developing duration',
                 unit='minute',
             ),
@@ -692,7 +684,7 @@ menutrans_develop = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.developing_temperature#{dir7}',
+                search_quantity=f'data.developing_temperature#{dir_path["dir7"]}',
                 title='developing temperature',
                 unit='celsius',
             ),
@@ -700,19 +692,19 @@ menutrans_develop = Menu(
         MenuItemTerms(
             title='Cleaning solution',
             type='terms',
-            search_quantity=f'data.cleaning_solution#{dir7}',
+            search_quantity=f'data.cleaning_solution#{dir_path["dir7"]}',
         ),
         MenuItemTerms(
             title='Cleaning solution proportions',
             type='terms',
-            search_quantity=f'data.cleaning_solution_proportions#{dir7}',
+            search_quantity=f'data.cleaning_solution_proportions#{dir_path["dir7"]}',
         ),
         MenuItemHistogram(
             title='Cleaning duration',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.cleaning_duration#{dir7}',
+                search_quantity=f'data.cleaning_duration#{dir_path["dir7"]}',
                 title='cleaning duration',
                 unit='minute',
             ),
@@ -720,12 +712,12 @@ menutrans_develop = Menu(
         MenuItemTerms(
             title='Name equipment used',
             type='terms',
-            search_quantity=f'data.instruments.name#{dir7}',
+            search_quantity=f'data.instruments.name#{dir_path["dir7"]}',
         ),
         MenuItemTerms(
             title='ID equipment used',
             type='terms',
-            search_quantity=f'data.instruments.id#{dir7}',
+            search_quantity=f'data.instruments.id#{dir_path["dir7"]}',
         ),
     ],
 )
@@ -737,34 +729,34 @@ menuetchdrie = Menu(
         MenuItemTerms(
             title='Lab location',
             type='terms',
-            search_quantity=f'data.location#{dir5}',
+            search_quantity=f'data.location#{dir_path["dir5"]}',
         ),
         MenuItemTerms(
             title='ID item processed',
             type='terms',
-            search_quantity=f'data.id_item_processed#{dir5}',
+            search_quantity=f'data.id_item_processed#{dir_path["dir5"]}',
         ),
         MenuItemTerms(
             title='Name of the recipe',
             type='terms',
-            search_quantity=f'data.recipe_name#{dir5}',
+            search_quantity=f'data.recipe_name#{dir_path["dir5"]}',
         ),
         MenuItemTerms(
             title='Material to be deposited',
             type='terms',
-            search_quantity=f'data.short_name#{dir5}',
+            search_quantity=f'data.short_name#{dir_path["dir5"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements deposited',
             type='periodic_table',
-            search_quantity=f'data.material_elemental_composition.element#{dir5}',
+            search_quantity=f'data.material_elemental_composition.element#{dir_path["dir5"]}',
         ),
         MenuItemHistogram(
             title='Required duration',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.duration_target#{dir5}',
+                search_quantity=f'data.duration_target#{dir_path["dir5"]}',
                 title='duration',
                 unit='minute',
             ),
@@ -774,7 +766,7 @@ menuetchdrie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.depth_target#{dir5}',
+                search_quantity=f'data.depth_target#{dir_path["dir5"]}',
                 title='depth',
                 unit='nm',
             ),
@@ -782,19 +774,19 @@ menuetchdrie = Menu(
         MenuItemPeriodicTable(
             title='Elements of gases employed',
             type='periodic_table',
-            search_quantity=f'data.fluximeters.elemental_composition.element#{dir5}',
+            search_quantity=f'data.fluximeters.elemental_composition.element#{dir_path["dir5"]}',
         ),
         MenuItemTerms(
             title='Gases formulas',
             type='terms',
-            search_quantity=f'data.fluximeters.chemical_formula#{dir5}',
+            search_quantity=f'data.fluximeters.chemical_formula#{dir_path["dir5"]}',
         ),
         MenuItemHistogram(
             title='Chuck temperature',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.chuck_temperature#{dir5}',
+                search_quantity=f'data.chuck_temperature#{dir_path["dir5"]}',
                 title='chuck temperature',
                 unit='celsius',
             ),
@@ -804,7 +796,7 @@ menuetchdrie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.bias#{dir5}',
+                search_quantity=f'data.bias#{dir_path["dir5"]}',
                 title='bias',
                 unit='V',
             ),
@@ -814,7 +806,7 @@ menuetchdrie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.chamber_pressure#{dir5}',
+                search_quantity=f'data.chamber_pressure#{dir_path["dir5"]}',
                 title='chamber_pressure',
                 unit='mbar',
             ),
@@ -824,7 +816,7 @@ menuetchdrie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.power#{dir5}',
+                search_quantity=f'data.power#{dir_path["dir5"]}',
                 title='power',
                 unit='W',
             ),
@@ -834,7 +826,7 @@ menuetchdrie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.duration_measured#{dir5}',
+                search_quantity=f'data.duration_measured#{dir_path["dir5"]}',
                 title='effective duration',
                 unit='minute',
             ),
@@ -844,7 +836,7 @@ menuetchdrie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.depth_measured#{dir5}',
+                search_quantity=f'data.depth_measured#{dir_path["dir5"]}',
                 title='depth obtained',
                 unit='nm',
             ),
@@ -854,7 +846,7 @@ menuetchdrie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_rate_obtained#{dir5}',
+                search_quantity=f'data.etching_rate_obtained#{dir_path["dir5"]}',
                 title='etching rate obtained',
                 unit='nm/minute',
             ),
@@ -862,12 +854,12 @@ menuetchdrie = Menu(
         MenuItemTerms(
             title='Name equipment used',
             type='terms',
-            search_quantity=f'data.instruments.name#{dir5}',
+            search_quantity=f'data.instruments.name#{dir_path["dir5"]}',
         ),
         MenuItemTerms(
             title='ID equipment used',
             type='terms',
-            search_quantity=f'data.instruments.id#{dir5}',
+            search_quantity=f'data.instruments.id#{dir_path["dir5"]}',
         ),
     ],
 )
@@ -878,34 +870,34 @@ menuetchwetclean = Menu(
         MenuItemTerms(
             title='Lab location',
             type='terms',
-            search_quantity=f'data.location#{dir6}',
+            search_quantity=f'data.location#{dir_path["dir6"]}',
         ),
         MenuItemTerms(
             title='ID item processed',
             type='terms',
-            search_quantity=f'data.id_item_processed#{dir6}',
+            search_quantity=f'data.id_item_processed#{dir_path["dir6"]}',
         ),
         MenuItemTerms(
             title='Name of the recipe',
             type='terms',
-            search_quantity=f'data.recipe_name#{dir6}',
+            search_quantity=f'data.recipe_name#{dir_path["dir6"]}',
         ),
         MenuItemTerms(
             title='Removing solution',
             type='terms',
-            search_quantity=f'data.removing_solution#{dir6}',
+            search_quantity=f'data.removing_solution#{dir_path["dir6"]}',
         ),
         MenuItemTerms(
             title='Removing solution proportions',
             type='terms',
-            search_quantity=f'data.removing_solution_proportions#{dir6}',
+            search_quantity=f'data.removing_solution_proportions#{dir_path["dir6"]}',
         ),
         MenuItemHistogram(
             title='Removing duration',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.removing_duration#{dir6}',
+                search_quantity=f'data.removing_duration#{dir_path["dir6"]}',
                 title='removing duration',
                 unit='minute',
             ),
@@ -915,7 +907,7 @@ menuetchwetclean = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.removing_temperature#{dir6}',
+                search_quantity=f'data.removing_temperature#{dir_path["dir6"]}',
                 title='removing temperature',
                 unit='celsius',
             ),
@@ -923,19 +915,19 @@ menuetchwetclean = Menu(
         MenuItemTerms(
             title='Rising solution',
             type='terms',
-            search_quantity=f'data.rising_solution#{dir6}',
+            search_quantity=f'data.rising_solution#{dir_path["dir6"]}',
         ),
         MenuItemTerms(
             title='Rising solution proportions',
             type='terms',
-            search_quantity=f'data.rising_solution_proportions#{dir6}',
+            search_quantity=f'data.rising_solution_proportions#{dir_path["dir6"]}',
         ),
         MenuItemHistogram(
             title='Rising duration',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.rising_duration#{dir6}',
+                search_quantity=f'data.rising_duration#{dir_path["dir6"]}',
                 title='rising duration',
                 unit='minute',
             ),
@@ -943,12 +935,12 @@ menuetchwetclean = Menu(
         MenuItemTerms(
             title='Name equipment used',
             type='terms',
-            search_quantity=f'data.instruments.name#{dir6}',
+            search_quantity=f'data.instruments.name#{dir_path["dir6"]}',
         ),
         MenuItemTerms(
             title='ID equipment used',
             type='terms',
-            search_quantity=f'data.instruments.id#{dir6}',
+            search_quantity=f'data.instruments.id#{dir_path["dir6"]}',
         ),
     ],
 )
@@ -959,34 +951,34 @@ menutrans_annealing = Menu(
         MenuItemTerms(
             title='Lab location',
             type='terms',
-            search_quantity=f'data.location#{dir9}',
+            search_quantity=f'data.location#{dir_path["dir9"]}',
         ),
         MenuItemTerms(
             title='ID item processed',
             type='terms',
-            search_quantity=f'data.id_item_processed#{dir9}',
+            search_quantity=f'data.id_item_processed#{dir_path["dir9"]}',
         ),
         MenuItemTerms(
             title='Name of the recipe',
             type='terms',
-            search_quantity=f'data.recipe_name#{dir9}',
+            search_quantity=f'data.recipe_name#{dir_path["dir9"]}',
         ),
         MenuItemTerms(
             title='Material to be annealed',
             type='terms',
-            search_quantity=f'data.short_name#{dir9}',
+            search_quantity=f'data.short_name#{dir_path["dir9"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements of the material',
             type='periodic_table',
-            search_quantity=f'data.material_elemental_composition.element#{dir9}',
+            search_quantity=f'data.material_elemental_composition.element#{dir_path["dir9"]}',
         ),
         MenuItemHistogram(
             title='Starting temperature',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.temperature_start#{dir9}',
+                search_quantity=f'data.temperature_start#{dir_path["dir9"]}',
                 title='starting temperature',
                 unit='celsius',
             ),
@@ -996,7 +988,7 @@ menutrans_annealing = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.temperature_final_target#{dir9}',
+                search_quantity=f'data.temperature_final_target#{dir_path["dir9"]}',
                 title='target final temperature',
                 unit='celsius',
             ),
@@ -1004,14 +996,14 @@ menutrans_annealing = Menu(
         MenuItemTerms(
             title='Gas name',
             type='terms',
-            search_quantity=f'data.gas_name#{dir9}',
+            search_quantity=f'data.gas_name#{dir_path["dir9"]}',
         ),
         MenuItemHistogram(
             title='Gas percentage',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.gas_percentage#{dir9}',
+                search_quantity=f'data.gas_percentage#{dir_path["dir9"]}',
                 title='gas percentage',
             ),
         ),
@@ -1020,7 +1012,7 @@ menutrans_annealing = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.gas_flow#{dir9}',
+                search_quantity=f'data.gas_flow#{dir_path["dir9"]}',
                 title='gas flow',
             ),
         ),
@@ -1029,7 +1021,7 @@ menutrans_annealing = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.temperature_final_measured#{dir9}',
+                search_quantity=f'data.temperature_final_measured#{dir_path["dir9"]}',
                 title='measured final temperature',
                 unit='celsius',
             ),
@@ -1039,7 +1031,7 @@ menutrans_annealing = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.duration_measured#{dir9}',
+                search_quantity=f'data.duration_measured#{dir_path["dir9"]}',
                 title='duration measured',
                 unit='minute',
             ),
@@ -1049,7 +1041,7 @@ menutrans_annealing = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.temperature_ramp_up_rate#{dir9}',
+                search_quantity=f'data.temperature_ramp_up_rate#{dir_path["dir9"]}',
                 title='ramp up rate',
                 unit='celsius/minute',
             ),
@@ -1059,7 +1051,7 @@ menutrans_annealing = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.temperature_ramp_down_rate#{dir9}',
+                search_quantity=f'data.temperature_ramp_down_rate#{dir_path["dir9"]}',
                 title='ramp down rate',
                 unit='celsius/minute',
             ),
@@ -1067,12 +1059,12 @@ menutrans_annealing = Menu(
         MenuItemTerms(
             title='Name equipment used',
             type='terms',
-            search_quantity=f'data.instruments.name#{dir9}',
+            search_quantity=f'data.instruments.name#{dir_path["dir9"]}',
         ),
         MenuItemTerms(
             title='ID equipment used',
             type='terms',
-            search_quantity=f'data.instruments.id#{dir9}',
+            search_quantity=f'data.instruments.id#{dir_path["dir9"]}',
         ),
     ],
 )

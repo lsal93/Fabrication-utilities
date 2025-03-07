@@ -7,7 +7,7 @@ from nomad.config.models.ui import (
     SearchQuantities,
 )
 
-dir = 'fabrication_facilities.schema_packages.fabrication_utilities.FabricationProcess'
+dir0 = 'fabrication_facilities.schema_packages.fabrication_utilities.FabricationProcess'
 processapp = App(
     label='Processes',
     path='processesapp',
@@ -17,55 +17,55 @@ processapp = App(
     This research app allows to search general information about fabrication processes.
     You can search products, affiliation of the project and the item processed
     """,
-    search_quantities=SearchQuantities(include=[f'*#{dir}']),
+    search_quantities=SearchQuantities(include=[f'*#{dir0}']),
     columns=[
         Column(quantity='entry_name', selected=True),
         Column(quantity='entry_type'),
         Column(
-            quantity=f'data.affiliation#{dir}',
+            quantity=f'data.affiliation#{dir0}',
             selected=True,
         ),
         Column(
-            quantity=f'data.id_proposal#{dir}',
+            quantity=f'data.id_proposal#{dir0}',
             selected=True,
         ),
         Column(
-            quantity=f'data.generic_product_name#{dir}',
+            quantity=f'data.generic_product_name#{dir0}',
             selected=True,
         ),
         Column(
-            quantity=f'data.id_item_processed#{dir}',
+            quantity=f'data.id_item_processed#{dir0}',
             selected=True,
         ),
         Column(quantity='upload_create_time', selected=True),
     ],
-    filters_locked={'section_defs.definition_qualified_name': dir},
+    filters_locked={'section_defs.definition_qualified_name': dir0},
     menu=Menu(
         items=[
             MenuItemTerms(
                 title='Affiliation',
                 type='terms',
-                search_quantity=f'data.affiliation#{dir}',
+                search_quantity=f'data.affiliation#{dir0}',
             ),
             MenuItemTerms(
                 title='ID proposal',
                 type='terms',
-                search_quantity=f'data.id_proposal#{dir}',
+                search_quantity=f'data.id_proposal#{dir0}',
             ),
             MenuItemTerms(
                 title='Product Type',
                 type='terms',
-                search_quantity=f'data.generic_product_name#{dir}',
+                search_quantity=f'data.generic_product_name#{dir0}',
             ),
             MenuItemTerms(
                 title='ID item processed',
                 type='terms',
-                search_quantity=f'data.id_item_processed#{dir}',
+                search_quantity=f'data.id_item_processed#{dir0}',
             ),
             MenuItemTerms(
                 title='Author',
                 type='terms',
-                search_quantity=f'data.author#{dir}',
+                search_quantity=f'data.author#{dir0}',
             ),
             Menu(
                 title='User defined quantities',
