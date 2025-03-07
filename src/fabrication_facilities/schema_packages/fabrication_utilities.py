@@ -39,6 +39,7 @@ from nomad.metainfo import (
 )
 
 from fabrication_facilities.schema_packages.Items import ItemPropertyDefinition, Item
+from fabrication_facilities.schema_packages.utils import parse_chemical_formula
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (
@@ -1018,8 +1019,6 @@ class SampleParentingLink(Link, ArchiveSection):
         type=SampleParenting,
         a_eln={'component': 'ReferenceEditQuantity'},
     )
-
-
 
 class ObservationMeasurements(FabricationProcessStep, ArchiveSection):
     m_def = Section(
