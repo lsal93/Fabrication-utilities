@@ -472,7 +472,7 @@ class Annealing(Chemical, FabricationProcessStep, ArchiveSection):
         type=np.float64,
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius/minunte',
+            'defaultDisplayUnit': 'celsius/minute',
         },
         unit='celsius/minute',
     )
@@ -480,7 +480,7 @@ class Annealing(Chemical, FabricationProcessStep, ArchiveSection):
         type=np.float64,
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius/minunte',
+            'defaultDisplayUnit': 'celsius/minute',
         },
         unit='celsius/minute',
     )

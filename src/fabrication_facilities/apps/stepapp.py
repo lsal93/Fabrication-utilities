@@ -15,7 +15,7 @@ from fabrication_facilities.apps.menu_steps import (
     menutrans_develop,
     menutrans_ebl,
     menutrans_fib,
-    menutrans_annealing
+    menutrans_annealing,
 )
 
 fps = 'FabricationProcessStep'
