@@ -1,4 +1,4 @@
-dir_paths = {
+dir_path = {
     "dir1": "fabrication_facilities.schema_packages.add.ICP_CVD",
     "dir2": "fabrication_facilities.schema_packages.add.Spin_Coating",
     "dir3": "fabrication_facilities.schema_packages.transform.EBL",
