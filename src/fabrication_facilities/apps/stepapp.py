@@ -20,8 +20,7 @@ from fabrication_facilities.apps.menu_steps import (
 
 from fabrication_facilities.apps.directories import dir_path
 
-
-schemas = [f"*#{path_value}" for path_value in dir_paths.values()]
+schemas = [f"*#{path_value}" for path_value in dir_path.values()]
 # dir1 = 'fabrication_facilities.schema_packages.add.ICP_CVD'
 # dir2 = 'fabrication_facilities.schema_packages.add.Spin_Coating'
 # dir3 = 'fabrication_facilities.schema_packages.transform.EBL'
