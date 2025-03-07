@@ -37,6 +37,7 @@ from nomad.metainfo import (
     Section,
     SubSection,
 )
+from nomad.datamodel.metainfo.basesections import ElementalComposition
 from nomad.datamodel.metainfo.eln import Chemical
 from fabrication_facilities.schema_packages.Items import ItemPropertyDefinition, Item
 from fabrication_facilities.schema_packages.utils import parse_chemical_formula
