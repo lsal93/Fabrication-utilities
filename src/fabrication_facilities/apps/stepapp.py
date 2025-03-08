@@ -23,6 +23,10 @@ from fabrication_facilities.apps.menu_steps import (
     menutrans_labelingcleaning,
     menutrans_sod,
     menutrans_track,
+    menuadd_electrongun,
+    menuadd_sputtering,
+    menuadd_sog,
+    menuremove_rie,
 )
 
 from fabrication_facilities.apps.directories import dir_path
@@ -77,6 +81,9 @@ stepapp = App(
                         items=[
                             menuadd_icpcvd,
                             menuadd_spincoat,
+                            menuadd_electrongun,
+                            menuadd_sputtering,
+                            menuadd_sog,
                         ],
                     ),
                 ],
@@ -87,9 +94,7 @@ stepapp = App(
                 items=[
                     Menu(
                         title='Dicing',
-                        items=[
-                            menutrans_dicing,
-                        ],
+                        items=[menutrans_dicing],
                     ),
                     Menu(
                         title='Doping',
@@ -138,6 +143,7 @@ stepapp = App(
                         items=[
                             menuetchdrie,
                             menuetchwetclean,
+                            menuremove_rie,
                         ],
                     ),
                 ],

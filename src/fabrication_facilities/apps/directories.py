@@ -15,4 +15,8 @@ dir_path = {
     "dir14": "fabrication_facilities.schema_packages.transform.LabelingCleaning",
     "dir15": "fabrication_facilities.schema_packages.transform.SOD",
     "dir16": "fabrication_facilities.schema_packages.transform.Track",
+    "dir17": "fabrication_facilities.schema_packages.add.ElectronGun",
+    "dir18": "fabrication_facilities.schema_packages.add.Sputtering",
+    "dir19": "fabrication_facilities.schema_packages.add.SOG",
+    "dir20": "fabrication_facilities.schema_packages.remove.RIE",
 }

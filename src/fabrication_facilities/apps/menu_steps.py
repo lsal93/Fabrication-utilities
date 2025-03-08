@@ -1808,3 +1808,417 @@ menutrans_track = Menu(
         ),
     ],
 )
+menuadd_electrongun = Menu(
+    title='Electron Gun',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir17"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir17"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir17"]}',
+        ),
+        MenuItemTerms(
+            title='Target material (short name)',
+            type='terms',
+            search_quantity=f'data.short_name#{dir_path["dir17"]}',
+        ),
+        MenuItemTerms(
+            title='Wafer stack name',
+            type='terms',
+            search_quantity=f'data.wafer_stack_name#{dir_path["dir17"]}',
+        ),
+        MenuItemHistogram(
+            title='Deposition thickness (target)',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.deposition_thickness_target#{dir_path["dir17"]}',
+                title='thickness target',
+                unit='nm',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Deposition duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.deposition_duration#{dir_path["dir17"]}',
+                title='duration',
+                unit='sec',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Deposition chamber pressure',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.deposition_chamber_pressure#{dir_path["dir17"]}',
+                title='chamber pressure',
+                unit='mbar',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Deposition thickness (measured)',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.deposition_thickness_measured#{dir_path["dir17"]}',
+                title='thickness measured',
+                unit='nm',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Gun voltage measured',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.gun_voltage_measured#{dir_path["dir17"]}',
+                title='gun voltage',
+                unit='V',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Gun current measured',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.gun_current_measured#{dir_path["dir17"]}',
+                title='gun current',
+                unit='mampere',
+            ),
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir17"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir17"]}',
+        ),
+    ],
+)
+menuadd_sputtering = Menu(
+    title='Sputtering',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir18"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir18"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir18"]}',
+        ),
+        MenuItemTerms(
+            title='Material to be deposited',
+            type='terms',
+            search_quantity=f'data.short_name#{dir_path["dir18"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements deposited',
+            type='periodic_table',
+            search_quantity=f'data.material_elemental_composition.element#{dir_path["dir18"]}',
+        ),
+        MenuItemHistogram(
+            title='Desired thickness',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.thickness_target#{dir_path["dir18"]}',
+                title='thickness target',
+                unit='nm',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Duration target',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.duration_target#{dir_path["dir18"]}',
+                title='duration target',
+                unit='sec',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chuck temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.chuck_temperature#{dir_path["dir18"]}',
+                title='chuck temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Power',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.power#{dir_path["dir18"]}',
+                title='power',
+                unit='watt',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Delay between stack layers',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.delay_between_stack_layers#{dir_path["dir18"]}',
+                title='delay between stack layers',
+                unit='sec',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Thickness obtained',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.thickness_measured#{dir_path["dir18"]}',
+                title='thickness obtained',
+                unit='um',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Effective duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.duration_measured#{dir_path["dir18"]}',
+                title='duration measured',
+                unit='minute',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Deposition rate obtained',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.deposition_rate_obtained#{dir_path["dir18"]}',
+                title='deposition rate obtained',
+                unit='nm/minute',
+            ),
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir18"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir18"]}',
+        ),
+    ],
+)
+menuadd_sog = Menu(
+    title='SOG',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir19"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir19"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir19"]}',
+        ),
+        MenuItemTerms(
+            title='Substrate material (short name)',
+            type='terms',
+            search_quantity=f'data.short_name#{dir_path["dir19"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements of the substrate',
+            type='periodic_table',
+            search_quantity=f'data.substrate_elemental_composition.element#{dir_path["dir19"]}',
+        ),
+        MenuItemTerms(
+            title='Pre-cleaning method',
+            type='terms',
+            search_quantity=f'data.pre_cleaning#{dir_path["dir19"]}',
+        ),
+        MenuItemHistogram(
+            title='Target thickness',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.thickness_target#{dir_path["dir19"]}',
+                title='thickness target',
+                unit='um',
+            ),
+        ),
+        MenuItemHistogram(
+            title='De-wetting duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.dewetting_duration#{dir_path["dir19"]}',
+                title='de-wetting duration',
+                unit='minute',
+            ),
+        ),
+        MenuItemHistogram(
+            title='De-wetting temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.dewetting_temperature#{dir_path["dir19"]}',
+                title='de-wetting temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Measured thickness',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.thickness_measured#{dir_path["dir19"]}',
+                title='thickness measured',
+                unit='um',
+            ),
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir19"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir19"]}',
+        ),
+    ],
+)
+menuremove_rie = Menu(
+    title='RIE',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir20"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir20"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir20"]}',
+        ),
+        MenuItemTerms(
+            title='Material to be etched',
+            type='terms',
+            search_quantity=f'data.short_name#{dir_path["dir20"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements of the material',
+            type='periodic_table',
+            search_quantity=f'data.material_elemental_composition.element#{dir_path["dir20"]}',
+        ),
+        MenuItemHistogram(
+            title='Desired depth',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.depth_target#{dir_path["dir20"]}',
+                title='depth target',
+                unit='nm',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Desired duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.duration_target#{dir_path["dir20"]}',
+                title='duration target',
+                unit='minute',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chamber pressure',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.chamber_pressure#{dir_path["dir20"]}',
+                title='chamber pressure',
+                unit='mbar',
+            ),
+        ),
+        MenuItemTerms(
+            title='Gas name',
+            type='terms',
+            search_quantity=f'data.gas_name#{dir_path["dir20"]}',
+        ),
+        MenuItemHistogram(
+            title='Depth obtained',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.depth_measured#{dir_path["dir20"]}',
+                title='depth measured',
+                unit='nm',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Effective duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.duration_measured#{dir_path["dir20"]}',
+                title='duration measured',
+                unit='minute',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Etching rate obtained',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_rate_obtained#{dir_path["dir20"]}',
+                title='etching rate obtained',
+                unit='nm/minute',
+            ),
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir20"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir20"]}',
+        ),
+    ],
+)
