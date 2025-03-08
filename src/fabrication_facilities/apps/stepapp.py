@@ -16,33 +16,14 @@ from fabrication_facilities.apps.menu_steps import (
     menutrans_ebl,
     menutrans_fib,
     menutrans_annealing,
+    menutrans_ltodensification,
+    menutrans_thermaloxidation,
+    menutrans_dicing,
 )
 
 from fabrication_facilities.apps.directories import dir_path
 
 schemas = [f"*#{path_value}" for path_value in dir_path.values()]
-# dir1 = 'fabrication_facilities.schema_packages.add.ICP_CVD'
-# dir2 = 'fabrication_facilities.schema_packages.add.Spin_Coating'
-# dir3 = 'fabrication_facilities.schema_packages.transform.EBL'
-# dir4 = 'fabrication_facilities.schema_packages.transform.FIB'
-# dir5 = 'fabrication_facilities.schema_packages.remove.DRIE'
-# dir6 = 'fabrication_facilities.schema_packages.remove.WetCleaning'
-# dir7 = 'fabrication_facilities.schema_packages.transform.ResistDevelopment'
-# dir8 = 'fabrication_facilities.schema_packages.add.Bonding'
-# dir9 = 'fabrication_facilities.schema_packages.transform.Annealing'
-
-# schemas = [
-#     f'*#{dir}',
-#     f'*#{dir1}',
-#     f'*#{dir2}',
-#     f'*#{dir3}',
-#     f'*#{dir4}',
-#     f'*#{dir5}',
-#     f'*#{dir6}',
-#     f'*#{dir7}',
-#     f'*#{dir8}',
-#     f'*#{dir9}',
-# ]
 fps = 'FabricationProcessStep'
 dir0 = f'fabrication_facilities.schema_packages.fabrication_utilities.{fps}'
 schemas.append(f'*#{dir0}')
@@ -102,7 +83,9 @@ stepapp = App(
                 items=[
                     Menu(
                         title='Dicing',
-                        items=[],
+                        items=[
+                            menutrans_dicing,
+                        ],
                     ),
                     Menu(
                         title='Doping',
@@ -125,6 +108,8 @@ stepapp = App(
                         title='Thermal processing',
                         items=[
                             menutrans_annealing,
+                            menutrans_ltodensification,
+                            menutrans_thermaloxidation,
                         ],
                     ),
                 ],

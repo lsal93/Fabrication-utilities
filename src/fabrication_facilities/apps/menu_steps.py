@@ -1068,3 +1068,289 @@ menutrans_annealing = Menu(
         ),
     ],
 )
+menutrans_ltodensification = Menu(
+    title='LTO Densification',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir10"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir10"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir10"]}',
+        ),
+        MenuItemTerms(
+            title='Densification type',
+            type='terms',
+            search_quantity=f'data.densification_type#{dir_path["dir10"]}',
+        ),
+        MenuItemTerms(
+            title='Densification gas',
+            type='terms',
+            search_quantity=f'data.short_name#{dir_path["dir10"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements of the gas',
+            type='periodic_table',
+            search_quantity=f'data.gas_elemental_composition.element#{dir_path["dir10"]}',
+        ),
+        MenuItemHistogram(
+            title='Densification temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.densification_temperature#{dir_path["dir10"]}',
+                title='densification temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Gas flow',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.gas_flow#{dir_path["dir10"]}',
+                title='gas flow',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Effective duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.duration_measured#{dir_path["dir10"]}',
+                title='duration measured',
+                unit='minute',
+            ),
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir10"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir10"]}',
+        ),
+    ],
+)
+menutrans_thermaloxidation = Menu(
+    title='Thermal Oxidation',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir11"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir11"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir11"]}',
+        ),
+        MenuItemTerms(
+            title='Oxidation type',
+            type='terms',
+            search_quantity=f'data.oxidation_type#{dir_path["dir11"]}',
+        ),
+        MenuItemTerms(
+            title='Thermal oxidation gas',
+            type='terms',
+            search_quantity=f'data.short_name#{dir_path["dir11"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements of the gas',
+            type='periodic_table',
+            search_quantity=f'data.gas_elemental_composition.element#{dir_path["dir11"]}',
+        ),
+        MenuItemHistogram(
+            title='Target final temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.temperature_final_target#{dir_path["dir11"]}',
+                title='target final temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Desired thickness (target)',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.thickness_target#{dir_path["dir11"]}',
+                title='thickness target',
+                unit='nm',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Process duration (measured)',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.duration_measured#{dir_path["dir11"]}',
+                title='duration measured',
+                unit='s',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Thickness obtained',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.thickness_measured#{dir_path["dir11"]}',
+                title='thickness measured',
+                unit='nm',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Gas flow',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.gas_flow#{dir_path["dir11"]}',
+                title='gas flow',
+            ),
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir11"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir11"]}',
+        ),
+    ],
+)
+menutrans_dicing = Menu(
+    title='Dicing',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir12"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir12"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir12"]}',
+        ),
+        MenuItemTerms(
+            title='Blade name',
+            type='terms',
+            search_quantity=f'data.dicing_blade_name#{dir_path["dir12"]}',
+        ),
+        MenuItemHistogram(
+            title='Depth target',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.depth_target#{dir_path["dir12"]}',
+                title='depth target',
+                unit='um',
+            ),
+        ),
+        MenuItemTerms(
+            title='Protective film required',
+            type='terms',
+            search_quantity=f'data.protective_film_required#{dir_path["dir12"]}',
+        ),
+        MenuItemTerms(
+            title='File name',
+            type='terms',
+            search_quantity=f'data.file_name#{dir_path["dir12"]}',
+        ),
+        MenuItemHistogram(
+            title='Spindle frequency',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.spindle_frequency#{dir_path["dir12"]}',
+                title='spindle frequency',
+                unit='rpm',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Dicing feed rate',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.dicing_feed_rate#{dir_path["dir12"]}',
+                title='feed rate',
+                unit='mm/s',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Depth step 1',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.depth_step_1#{dir_path["dir12"]}',
+                title='depth step 1',
+                unit='um',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Depth step 2',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.depth_step_2#{dir_path["dir12"]}',
+                title='depth step 2',
+                unit='um',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Depth step 3',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.depth_step_3#{dir_path["dir12"]}',
+                title='depth step 3',
+                unit='um',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Dicing edge chipping measured',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.dicing_edge_chipping_measured#{dir_path["dir12"]}',
+                title='edge chipping measured',
+                unit='um',
+            ),
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir12"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir12"]}',
+        ),
+    ],
+)

@@ -8,4 +8,7 @@ dir_path = {
     "dir7": "fabrication_facilities.schema_packages.transform.ResistDevelopment",
     "dir8": "fabrication_facilities.schema_packages.add.Bonding",
     "dir9": "fabrication_facilities.schema_packages.transform.Annealing",
+    "dir10": "fabrication_facilities.schema_packages.transform.LTODensification",
+    "dir11": "fabrication_facilities.schema_packages.transform.ThermalOxidation",
+    "dir12": "fabrication_facilities.schema_packages.transform.Dicing",
 }

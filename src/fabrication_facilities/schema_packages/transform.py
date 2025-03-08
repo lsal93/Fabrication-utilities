@@ -655,9 +655,9 @@ class ThermalOxidation(Chemical, FabricationProcessStep, ArchiveSection):
         type=str,
         a_eln={'component': 'StringEditQuantity', 'label': 'thermal oxidation gas'},
     )
-    thermal_oxidation_gas = Quantity(
-        type=str, a_eln={'component': 'StringEditQuantity', 'label': 'target material'}
-    )
+    # thermal_oxidation_gas = Quantity(
+    #     type=str, a_eln={'component': 'StringEditQuantity', 'label': 'target material'}
+    # )
     temperature_final_target = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
