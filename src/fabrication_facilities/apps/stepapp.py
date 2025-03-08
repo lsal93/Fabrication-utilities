@@ -19,6 +19,10 @@ from fabrication_facilities.apps.menu_steps import (
     menutrans_ltodensification,
     menutrans_thermaloxidation,
     menutrans_dicing,
+    menutrans_doping,
+    menutrans_labelingcleaning,
+    menutrans_sod,
+    menutrans_track,
 )
 
 from fabrication_facilities.apps.directories import dir_path
@@ -89,13 +93,17 @@ stepapp = App(
                     ),
                     Menu(
                         title='Doping',
-                        items=[],
+                        items=[
+                            menutrans_doping,
+                            menutrans_sod,
+                        ],
                     ),
                     Menu(
                         title='Lithography',
                         items=[
                             menutrans_ebl,
                             menutrans_fib,
+                            menutrans_track,
                         ],
                     ),
                     Menu(
@@ -112,6 +120,13 @@ stepapp = App(
                             menutrans_thermaloxidation,
                         ],
                     ),
+                    Menu(
+                        title='Others',
+                        items=[
+                            menutrans_labelingcleaning,
+                        ],
+                    ),
+
                 ],
             ),
             Menu(

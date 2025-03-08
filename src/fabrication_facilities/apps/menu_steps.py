@@ -1354,3 +1354,457 @@ menutrans_dicing = Menu(
         ),
     ],
 )
+menutrans_doping = Menu(
+    title='Doping',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir13"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir13"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir13"]}',
+        ),
+        MenuItemTerms(
+            title='Doping type',
+            type='terms',
+            search_quantity=f'data.doping_type#{dir_path["dir13"]}',
+        ),
+        MenuItemHistogram(
+            title='Doping temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.doping_temperature#{dir_path["dir13"]}',
+                title='doping temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Doping duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.doping_duration#{dir_path["dir13"]}',
+                title='doping duration',
+                unit='minute',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Surface resistance measured',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.doping_surfaceresistance_measured#{dir_path["dir13"]}',
+                title='surface resistance measured',
+                unit='ohm',
+            ),
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir13"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir13"]}',
+        ),
+    ],
+)
+menutrans_labelingcleaning = Menu(
+    title='Labeling & Cleaning',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir14"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir14"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir14"]}',
+        ),
+        MenuItemTerms(
+            title='Wafer label position',
+            type='terms',
+            search_quantity=f'data.wafer_label_position#{dir_path["dir14"]}',
+        ),
+        MenuItemTerms(
+            title='Wafer label name',
+            type='terms',
+            search_quantity=f'data.wafer_label_name#{dir_path["dir14"]}',
+        ),
+        MenuItemTerms(
+            title='Cleaning with DI ultrasound?',
+            type='terms',
+            search_quantity=f'data.wafer_cleaning_DI_ultrasound_required#{dir_path["dir14"]}',
+        ),
+        MenuItemTerms(
+            title='RCA cleaning?',
+            type='terms',
+            search_quantity=f'data.wafer_cleaning_rca_required#{dir_path["dir14"]}',
+        ),
+        MenuItemTerms(
+            title='Piranha cleaning?',
+            type='terms',
+            search_quantity=f'data.wafer_cleaning_piranha_required#{dir_path["dir14"]}',
+        ),
+        MenuItemTerms(
+            title='Dip HF cleaning?',
+            type='terms',
+            search_quantity=f'data.wafer_cleaning_dipHF_required#{dir_path["dir14"]}',
+        ),
+        MenuItemTerms(
+            title='Rinse spin dryer required?',
+            type='terms',
+            search_quantity=f'data.wafer_cleaning_rinse_spin_dryer_required#{dir_path["dir14"]}',
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir14"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir14"]}',
+        ),
+    ],
+)
+menutrans_sod = Menu(
+    title='SOD',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir15"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir15"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir15"]}',
+        ),
+        MenuItemTerms(
+            title='Dopant solution (short name)',
+            type='terms',
+            search_quantity=f'data.short_name#{dir_path["dir15"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements of the solution',
+            type='periodic_table',
+            search_quantity=f'data.doping_material_elemental_composition.element#{dir_path["dir15"]}',
+        ),
+        MenuItemHistogram(
+            title='Volume dispensed',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.spin_dispensed_volume#{dir_path["dir15"]}',
+                title='spin dispensed volume',
+                unit='milliliter',
+            ),
+        ),
+        MenuItemTerms(
+            title='Dipping HF proportions',
+            type='terms',
+            search_quantity=f'data.dipping_HFsolution_proportions#{dir_path["dir15"]}',
+        ),
+        MenuItemHistogram(
+            title='Dip HF duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.spin_dipHF_duration#{dir_path["dir15"]}',
+                title='dip HF duration',
+                unit='sec',
+            ),
+        ),
+        MenuItemTerms(
+            title='Water rinse required?',
+            type='terms',
+            search_quantity=f'data.water_rinse_required#{dir_path["dir15"]}',
+        ),
+        MenuItemTerms(
+            title='Spin dryer required?',
+            type='terms',
+            search_quantity=f'data.spin_dryer_required#{dir_path["dir15"]}',
+        ),
+        MenuItemHistogram(
+            title='PEB duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.peb_duration#{dir_path["dir15"]}',
+                title='peb duration',
+                unit='sec',
+            ),
+        ),
+        MenuItemHistogram(
+            title='PEB temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.peb_temperature#{dir_path["dir15"]}',
+                title='peb temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Spin frequency',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.spin_frequency#{dir_path["dir15"]}',
+                title='spin frequency',
+                unit='revolutions_per_minute',
+            ),
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir15"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir15"]}',
+        ),
+    ],
+)
+menutrans_track = Menu(
+    title='Track',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir16"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir16"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir16"]}',
+        ),
+        MenuItemTerms(
+            title='Resist name',
+            type='terms',
+            search_quantity=f'data.short_name#{dir_path["dir16"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements of the resist',
+            type='periodic_table',
+            search_quantity=f'data.resist_elemental_composition.element#{dir_path["dir16"]}',
+        ),
+        MenuItemHistogram(
+            title='Resist thickness (target)',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.thickness_target#{dir_path["dir16"]}',
+                title='resist thickness',
+                unit='um',
+            ),
+        ),
+        MenuItemHistogram(
+            title='De-wetting duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.dewetting_duration#{dir_path["dir16"]}',
+                title='de-wetting duration',
+                unit='minute',
+            ),
+        ),
+        MenuItemHistogram(
+            title='De-wetting temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.dewetting_temperature#{dir_path["dir16"]}',
+                title='de-wetting temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemTerms(
+            title='HDMS',
+            type='terms',
+            search_quantity=f'data.hdms_required#{dir_path["dir16"]}',
+        ),
+        MenuItemTerms(
+            title='Mask set name',
+            type='terms',
+            search_quantity=f'data.mask_set_name#{dir_path["dir16"]}',
+        ),
+        MenuItemTerms(
+            title='Mask name',
+            type='terms',
+            search_quantity=f'data.mask_name#{dir_path["dir16"]}',
+        ),
+        MenuItemTerms(
+            title='Mask aligner name',
+            type='terms',
+            search_quantity=f'data.mask_aligner_name#{dir_path["dir16"]}',
+        ),
+        MenuItemTerms(
+            title='Alignment type',
+            type='terms',
+            search_quantity=f'data.alignment_type#{dir_path["dir16"]}',
+        ),
+        MenuItemTerms(
+            title='Mask target',
+            type='terms',
+            search_quantity=f'data.mask_target#{dir_path["dir16"]}',
+        ),
+        MenuItemTerms(
+            title='Exposure mask contact type',
+            type='terms',
+            search_quantity=f'data.exposure_mask_contact_type#{dir_path["dir16"]}',
+        ),
+        MenuItemHistogram(
+            title='Exposure power density',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.exposure_power_density#{dir_path["dir16"]}',
+                title='exposure power density',
+                unit='eV/cm^2',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Exposure duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.exposure_duration#{dir_path["dir16"]}',
+                title='exposure duration',
+                unit='sec',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Developing duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.developing_duration#{dir_path["dir16"]}',
+                title='developing duration',
+                unit='sec',
+            ),
+        ),
+        MenuItemTerms(
+            title='Developing rinse spin dryer required?',
+            type='terms',
+            search_quantity=f'data.developing_rinse_spin_dryer_required#{dir_path["dir16"]}',
+        ),
+        MenuItemTerms(
+            title='PEB required?',
+            type='terms',
+            search_quantity=f'data.peb_required#{dir_path["dir16"]}',
+        ),
+        MenuItemHistogram(
+            title='PEB duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.peb_duration#{dir_path["dir16"]}',
+                title='peb duration',
+                unit='sec',
+            ),
+        ),
+        MenuItemHistogram(
+            title='PEB temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.peb_temperature#{dir_path["dir16"]}',
+                title='peb temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemTerms(
+            title='Softbake required?',
+            type='terms',
+            search_quantity=f'data.softbake_required#{dir_path["dir16"]}',
+        ),
+        MenuItemHistogram(
+            title='Softbake duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.softbake_duration#{dir_path["dir16"]}',
+                title='softbake duration',
+                unit='sec',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Softbake temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.softbake_temperature#{dir_path["dir16"]}',
+                title='softbake temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemTerms(
+            title='Hardbake required?',
+            type='terms',
+            search_quantity=f'data.hardbake_required#{dir_path["dir16"]}',
+        ),
+        MenuItemHistogram(
+            title='Hardbake duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.hardbake_duration#{dir_path["dir16"]}',
+                title='hardbake duration',
+                unit='sec',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Hardbake temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.hardbake_temperature#{dir_path["dir16"]}',
+                title='hardbake temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir16"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir16"]}',
+        ),
+    ],
+)

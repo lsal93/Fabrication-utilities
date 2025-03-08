@@ -11,4 +11,8 @@ dir_path = {
     "dir10": "fabrication_facilities.schema_packages.transform.LTODensification",
     "dir11": "fabrication_facilities.schema_packages.transform.ThermalOxidation",
     "dir12": "fabrication_facilities.schema_packages.transform.Dicing",
+    "dir13": "fabrication_facilities.schema_packages.transform.Doping",
+    "dir14": "fabrication_facilities.schema_packages.transform.LabelingCleaning",
+    "dir15": "fabrication_facilities.schema_packages.transform.SOD",
+    "dir16": "fabrication_facilities.schema_packages.transform.Track",
 }
