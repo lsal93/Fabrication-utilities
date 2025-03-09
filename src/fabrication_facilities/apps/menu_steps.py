@@ -2399,3 +2399,169 @@ menuremove_stripping = Menu(
         ),
     ],
 )
+menuutils_obsmeasurements = Menu(
+    title='Observation Measurements',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir23"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir23"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir23"]}',
+        ),
+        MenuItemTerms(
+            title='Equipment used',
+            type='terms',
+            search_quantity=f'data.short_name#{dir_path["dir23"]}',
+        ),
+        MenuItemTerms(
+            title='Activity type',
+            type='terms',
+            search_quantity=f'data.activity_type#{dir_path["dir23"]}',
+        ),
+        MenuItemHistogram(
+            title='Target duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.duration_target#{dir_path["dir23"]}',
+                title='duration target',
+                unit='minute',
+            ),
+        ),
+        MenuItemTerms(
+            title='Image name',
+            type='terms',
+            search_quantity=f'data.image_name#{dir_path["dir23"]}',
+        ),
+        MenuItemTerms(
+            title='Thickness measurements',
+            type='terms',
+            search_quantity=f'data.thickness_measurements#{dir_path["dir23"]}',
+        ),
+        MenuItemTerms(
+            title='Electrical measurements',
+            type='terms',
+            search_quantity=f'data.electrical_measurements#{dir_path["dir23"]}',
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir23"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir23"]}',
+        ),
+    ],
+)
+menuutils_startingmaterial = Menu(
+    title='Starting Material',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir24"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir24"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir24"]}',
+        ),
+        MenuItemTerms(
+            title='Wafer material (short name)',
+            type='terms',
+            search_quantity=f'data.short_name#{dir_path["dir24"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements in the wafer',
+            type='periodic_table',
+            search_quantity=f'data.elemental_composition.element#{dir_path["dir24"]}',
+        ),
+        MenuItemTerms(
+            title='Manufacturer name',
+            type='terms',
+            search_quantity=f'data.manufacturer_name#{dir_path["dir24"]}',
+        ),
+        MenuItemHistogram(
+            title='Wafer quantity',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.wafer_quantity#{dir_path["dir24"]}',
+                title='quantity',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Wafer resistivity',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.wafer_resistivity#{dir_path["dir24"]}',
+                title='wafer resistivity',
+                unit='ohm*cm',
+            ),
+        ),
+        MenuItemTerms(
+            title='Wafer orientation',
+            type='terms',
+            search_quantity=f'data.wafer_orientation#{dir_path["dir24"]}',
+        ),
+        MenuItemHistogram(
+            title='Wafer thickness',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.wafer_thickness#{dir_path["dir24"]}',
+                title='wafer thickness',
+                unit='um',
+            ),
+        ),
+        MenuItemTerms(
+            title='Wafer surface finish',
+            type='terms',
+            search_quantity=f'data.wafer_surface_finish#{dir_path["dir24"]}',
+        ),
+        MenuItemHistogram(
+            title='Wafer diameter',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.wafer_diameter#{dir_path["dir24"]}',
+                title='wafer diameter',
+                unit='mm',
+            ),
+        ),
+        MenuItemTerms(
+            title='Wafer doping',
+            type='terms',
+            search_quantity=f'data.wafer_doping#{dir_path["dir24"]}',
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir24"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir24"]}',
+        ),
+    ],
+)

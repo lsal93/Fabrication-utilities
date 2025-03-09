@@ -21,4 +21,6 @@ dir_path = {
     "dir20": "fabrication_facilities.schema_packages.remove.RIE",
     "dir21": "fabrication_facilities.schema_packages.remove.WetEtching",
     "dir22": "fabrication_facilities.schema_packages.remove.Stripping",
+    "dir23": "fabrication_facilities.schema_packages.fabrication_utilities.ObservationMeasurements",
+    "dir24": "fabrication_facilities.schema_packages.fabrication_utilities.StartingMaterial",
 }

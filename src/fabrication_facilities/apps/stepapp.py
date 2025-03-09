@@ -29,6 +29,8 @@ from fabrication_facilities.apps.menu_steps import (
     menuremove_rie,
     menuremove_wetetching,
     menuremove_stripping,
+    menuutils_obsmeasurements,
+    menuutils_startingmaterial,
 )
 
 from fabrication_facilities.apps.directories import dir_path
@@ -149,6 +151,20 @@ stepapp = App(
                             menuremove_wetetching,
                             menuremove_stripping,
                         ],
+                    ),
+                ],
+            ),
+            Menu(
+                title='Others',
+                indentation=0,
+                items=[
+                    Menu(
+                        title='Measurements',
+                        items=[menuutils_obsmeasurements],
+                    ),
+                    Menu(
+                        title='Starting material',
+                        items=[menuutils_startingmaterial],
                     ),
                 ],
             ),
