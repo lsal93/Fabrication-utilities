@@ -2222,3 +2222,180 @@ menuremove_rie = Menu(
         ),
     ],
 )
+menuremove_wetetching = Menu(
+    title='Wet Etching',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir21"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir21"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir21"]}',
+        ),
+        MenuItemTerms(
+            title='Material to be etched',
+            type='terms',
+            search_quantity=f'data.short_name#{dir_path["dir21"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements of the material',
+            type='periodic_table',
+            search_quantity=f'data.material_elemental_composition.element#{dir_path["dir21"]}',
+        ),
+        MenuItemTerms(
+            title='Etching solution',
+            type='terms',
+            search_quantity=f'data.etching_solution#{dir_path["dir21"]}',
+        ),
+        MenuItemTerms(
+            title='Etching solution proportions',
+            type='terms',
+            search_quantity=f'data.etching_solution_proportions#{dir_path["dir21"]}',
+        ),
+        MenuItemHistogram(
+            title='Desired depth',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.depth_target#{dir_path["dir21"]}',
+                title='depth target',
+                unit='nm',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Desired duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.duration_target#{dir_path["dir21"]}',
+                title='duration target',
+                unit='sec',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Depth obtained',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.depth_measured#{dir_path["dir21"]}',
+                title='depth measured',
+                unit='nm',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Effective duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.duration_measured#{dir_path["dir21"]}',
+                title='duration measured',
+                unit='minute',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Etching rate obtained',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_rate_obtained#{dir_path["dir21"]}',
+                title='etching rate obtained',
+                unit='nm/minute',
+            ),
+        ),
+        MenuItemTerms(
+            title='Etching type',
+            type='terms',
+            search_quantity=f'data.etching_type#{dir_path["dir21"]}',
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir21"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir21"]}',
+        ),
+    ],
+)
+menuremove_stripping = Menu(
+    title='Stripping',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir22"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir22"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir22"]}',
+        ),
+        MenuItemTerms(
+            title='Stripping type',
+            type='terms',
+            search_quantity=f'data.stripping_type#{dir_path["dir22"]}',
+        ),
+        MenuItemTerms(
+            title='Material to remove',
+            type='terms',
+            search_quantity=f'data.short_name#{dir_path["dir22"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements of the material',
+            type='periodic_table',
+            search_quantity=f'data.material_elemental_composition.element#{dir_path["dir22"]}',
+        ),
+        MenuItemHistogram(
+            title='Target duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.duration_target#{dir_path["dir22"]}',
+                title='duration target',
+                unit='sec',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Removing temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.removing_temperature#{dir_path["dir22"]}',
+                title='removing temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemTerms(
+            title='Ultrasound required?',
+            type='terms',
+            search_quantity=f'data.ultrasound_required#{dir_path["dir22"]}',
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir22"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir22"]}',
+        ),
+    ],
+)

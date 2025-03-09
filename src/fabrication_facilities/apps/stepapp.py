@@ -27,6 +27,8 @@ from fabrication_facilities.apps.menu_steps import (
     menuadd_sputtering,
     menuadd_sog,
     menuremove_rie,
+    menuremove_wetetching,
+    menuremove_stripping,
 )
 
 from fabrication_facilities.apps.directories import dir_path
@@ -144,6 +146,8 @@ stepapp = App(
                             menuetchdrie,
                             menuetchwetclean,
                             menuremove_rie,
+                            menuremove_wetetching,
+                            menuremove_stripping,
                         ],
                     ),
                 ],

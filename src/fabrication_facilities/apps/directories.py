@@ -19,4 +19,6 @@ dir_path = {
     "dir18": "fabrication_facilities.schema_packages.add.Sputtering",
     "dir19": "fabrication_facilities.schema_packages.add.SOG",
     "dir20": "fabrication_facilities.schema_packages.remove.RIE",
+    "dir21": "fabrication_facilities.schema_packages.remove.WetEtching",
+    "dir22": "fabrication_facilities.schema_packages.remove.Stripping",
 }
