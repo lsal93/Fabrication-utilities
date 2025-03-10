@@ -66,12 +66,11 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
                     'step_type',
                     'definition_of_process_step',
                     'recipe_name',
-                    'thickness_from_recipe',
-                    'duration_from_recipe',
-                    'deposition_rate_from_recipe',
+                    'recipe_file',
                     'short_name',
                     'chemical_formula',
                     'thickness_target',
+                    'deposition_rate_target',
                     'chamber_pressure',
                     'chuck_temperature',
                     'power',
@@ -84,21 +83,9 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
             },
         },
     )
-    thickness_from_recipe = Quantity(
+    deposition_rate_target = Quantity(
         type=np.float64,
-        description='Total material deposited as described in the recipe',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
-        unit='nm',
-    )
-    duration_from_recipe = Quantity(
-        type=np.float64,
-        description='Time prescribed by the recipe',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
-        unit='minute',
-    )
-    deposition_rate_from_recipe = Quantity(
-        type=np.float64,
-        description='Deposition rate provided in the recipe',
+        description='Deposition rate desired',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm/minute'},
         unit='nm/minute',
     )
@@ -234,6 +221,7 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
                     'spin_frequency',
                     'spin_angular_acceleration',
                     'spin_duration',
+                    'baking_required',
                     'baking_duration',
                     'baking_temperature',
                     'thickness_measured',
@@ -297,7 +285,7 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     )
     peb_required = Quantity(
         type=bool,
-        description='The recipe use exposure?',
+        description='The recipe needs PEB?',
         a_eln={
             'component': 'BoolEditQuantity',
         },
@@ -374,6 +362,13 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
             'defaultDisplayUnit': 'sec',
         },
         unit='sec',
+    )
+    baking_required = Quantity(
+        type=bool,
+        description='The recipe use exposure?',
+        a_eln={
+            'component': 'BoolEditQuantity',
+        },
     )
     baking_duration = Quantity(
         type=np.float64,

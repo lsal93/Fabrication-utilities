@@ -1046,6 +1046,7 @@ class ObservationMeasurements(FabricationProcessStep, ArchiveSection):
                 'duration',
                 'end_time',
                 'start_time',
+                'recipe_name',
             ],
             'properties': {
                 'order': [
@@ -1060,7 +1061,6 @@ class ObservationMeasurements(FabricationProcessStep, ArchiveSection):
                     'ending_date',
                     'step_type',
                     'definition_of_process_step',
-                    'recipe_name',
                     'activity_type',
                     'short_name',
                     'duration_target',

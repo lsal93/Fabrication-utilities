@@ -284,6 +284,11 @@ menuadd_spincoat = Menu(
                 unit='rpm/sec',
             ),
         ),
+        MenuItemTerms(
+            title='Bake',
+            type='terms',
+            search_quantity=f'data.baking_required#{dir_path["dir2"]}',
+        ),
         MenuItemHistogram(
             title='Baking duration',
             type='histogram',
