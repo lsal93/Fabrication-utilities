@@ -454,14 +454,17 @@ class FabricationProcessStepBase(ProcessStep, EntryData, ArchiveSection):
                     'job_number',
                     'name',
                     'description',
+                    'affiliation',
                     'location',
                     'operator',
                     'room',
+                    'id_item_processed',
                     'starting_date',
                     'ending_date',
                     'step_type',
                     'definition_of_process_step',
                     'recipe_name',
+                    'recipe_file',
                     'notes',
                 ],
             },
@@ -479,6 +482,9 @@ class FabricationProcessStepBase(ProcessStep, EntryData, ArchiveSection):
         type=str,
         a_eln={'component': 'RichTextEditQuantity'},
     )
+    affiliation = Quantity(
+        type=MEnum('NFFA-DI', 'iENTRANCE@ENL'), a_eln={'component': 'EnumEditQuantity'}
+    )
     operator = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
     location = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
     room = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
@@ -491,6 +497,7 @@ class FabricationProcessStepBase(ProcessStep, EntryData, ArchiveSection):
         a_eln={'component': 'DateTimeEditQuantity'},
     )
     step_type = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+    id_item_processed = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
     definition_of_process_step = Quantity(
         type=EquipmentTechnique,
         a_eln={'component': 'ReferenceEditQuantity'},
@@ -498,6 +505,10 @@ class FabricationProcessStepBase(ProcessStep, EntryData, ArchiveSection):
     recipe_name = Quantity(
         type=str,
         a_eln={'component': 'StringEditQuantity'},
+    )
+    recipe_file = Quantity(
+        type=str,
+        a_eln={'component': 'FileEditQuantity'},
     )
     notes = Quantity(
         type=str,
@@ -597,7 +608,7 @@ class Equipment(Instrument, EntryData, ArchiveSection):
                     'affiliation',
                     'product_model',
                     'institution',
-                    'manufacturer',
+                    'manufacturer_name',
                     'is_bookable',
                     'automatic_loading',
                     'description',
@@ -617,7 +628,7 @@ class Equipment(Instrument, EntryData, ArchiveSection):
         type=str,
         a_eln={'component': 'StringEditQuantity'},
     )
-    manufacturer = Quantity(
+    manufacturer_name = Quantity(
         type=str,
         a_eln={'component': 'StringEditQuantity'},
     )
@@ -698,56 +709,58 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
                     'location',
                     'operator',
                     'room',
-                    'id_item_processedstarting_date',
+                    'id_item_processed',
+                    'starting_date',
                     'ending_date',
                     'step_type',
                     'definition_of_process_step',
                     'recipe_name',
+                    'recipe_file',
                     'notes',
                 ],
             },
         },
     )
-    job_number = Quantity(
-        type=int,
-        a_eln={'component': 'NumberEditQuantity'},
-    )
-    name = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    description = Quantity(
-        type=str,
-        a_eln={'component': 'RichTextEditQuantity'},
-    )
-    affiliation = Quantity(
-        type=MEnum('NFFA-DI', 'iENTRANCE@ENL'), a_eln={'component': 'EnumEditQuantity'}
-    )
-    operator = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
-    location = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
-    room = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
-    id_item_processed = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
-    starting_date = Quantity(
-        type=Datetime,
-        a_eln={'component': 'DateTimeEditQuantity'},
-    )
-    ending_date = Quantity(
-        type=Datetime,
-        a_eln={'component': 'DateTimeEditQuantity'},
-    )
-    step_type = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
-    definition_of_process_step = Quantity(
-        type=EquipmentTechnique,
-        a_eln={'component': 'ReferenceEditQuantity'},
-    )
-    recipe_name = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    notes = Quantity(
-        type=str,
-        a_eln={'component': 'RichTextEditQuantity'},
-    )
+    # job_number = Quantity(
+    #     type=int,
+    #     a_eln={'component': 'NumberEditQuantity'},
+    # )
+    # name = Quantity(
+    #     type=str,
+    #     a_eln={'component': 'StringEditQuantity'},
+    # )
+    # description = Quantity(
+    #     type=str,
+    #     a_eln={'component': 'RichTextEditQuantity'},
+    # )
+    # affiliation = Quantity(
+    #     type=MEnum('NFFA-DI', 'iENTRANCE@ENL'), a_eln={'component': 'EnumEditQuantity'}
+    # )
+    # operator = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+    # location = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+    # room = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+    # id_item_processed = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+    # starting_date = Quantity(
+    #     type=Datetime,
+    #     a_eln={'component': 'DateTimeEditQuantity'},
+    # )
+    # ending_date = Quantity(
+    #     type=Datetime,
+    #     a_eln={'component': 'DateTimeEditQuantity'},
+    # )
+    # step_type = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+    # definition_of_process_step = Quantity(
+    #     type=EquipmentTechnique,
+    #     a_eln={'component': 'ReferenceEditQuantity'},
+    # )
+    # recipe_name = Quantity(
+    #     type=str,
+    #     a_eln={'component': 'StringEditQuantity'},
+    # )
+    # notes = Quantity(
+    #     type=str,
+    #     a_eln={'component': 'RichTextEditQuantity'},
+    # )
 
     instruments = SubSection(
         section_def=EquipmentReference,
@@ -885,6 +898,7 @@ class StartingMaterial(Chemical, FabricationProcessStep, ArchiveSection):
                 'duration',
                 'end_time',
                 'start_time',
+                'recipe_name',
             ],
             'properties': {
                 'order': [
@@ -899,7 +913,6 @@ class StartingMaterial(Chemical, FabricationProcessStep, ArchiveSection):
                     'ending_date',
                     'step_type',
                     'definition_of_process_step',
-                    'recipe_name',
                     'short_name',
                     'chemical_formula',
                     'manufacturer_name',
