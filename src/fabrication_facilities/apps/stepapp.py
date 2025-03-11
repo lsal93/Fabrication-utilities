@@ -15,22 +15,22 @@ from fabrication_facilities.apps.menu_steps import (
     menutrans_develop,
     menutrans_ebl,
     menutrans_fib,
-    menutrans_annealing,
-    menutrans_ltodensification,
-    menutrans_thermaloxidation,
-    menutrans_dicing,
-    menutrans_doping,
-    menutrans_labelingcleaning,
-    menutrans_sod,
-    menutrans_track,
-    menuadd_electrongun,
-    menuadd_sputtering,
-    menuadd_sog,
-    menuremove_rie,
-    menuremove_wetetching,
-    menuremove_stripping,
-    menuutils_obsmeasurements,
-    menuutils_startingmaterial,
+    # menutrans_annealing,
+    # menutrans_ltodensification,
+    # menutrans_thermaloxidation,
+    # menutrans_dicing,
+    # menutrans_doping,
+    # menutrans_labelingcleaning,
+    # menutrans_sod,
+    # menutrans_track,
+    # menuadd_electrongun,
+    # menuadd_sputtering,
+    # menuadd_sog,
+    # menuremove_rie,
+    # menuremove_wetetching,
+    # menuremove_stripping,
+    # menuutils_obsmeasurements,
+    # menuutils_startingmaterial,
 )
 
 from fabrication_facilities.apps.directories import dir_path
@@ -85,9 +85,9 @@ stepapp = App(
                         items=[
                             menuadd_icpcvd,
                             menuadd_spincoat,
-                            menuadd_electrongun,
-                            menuadd_sputtering,
-                            menuadd_sog,
+                            # menuadd_electrongun,
+                            # menuadd_sputtering,
+                            # menuadd_sog,
                         ],
                     ),
                 ],
@@ -98,13 +98,15 @@ stepapp = App(
                 items=[
                     Menu(
                         title='Dicing',
-                        items=[menutrans_dicing],
+                        items=[
+                            # menutrans_dicing
+                        ],
                     ),
                     Menu(
                         title='Doping',
                         items=[
-                            menutrans_doping,
-                            menutrans_sod,
+                            # menutrans_doping,
+                            # menutrans_sod,
                         ],
                     ),
                     Menu(
@@ -112,7 +114,7 @@ stepapp = App(
                         items=[
                             menutrans_ebl,
                             menutrans_fib,
-                            menutrans_track,
+                            # menutrans_track,
                         ],
                     ),
                     Menu(
@@ -124,17 +126,17 @@ stepapp = App(
                     Menu(
                         title='Thermal processing',
                         items=[
-                            menutrans_annealing,
-                            menutrans_ltodensification,
-                            menutrans_thermaloxidation,
+                            # menutrans_annealing,
+                            # menutrans_ltodensification,
+                            # menutrans_thermaloxidation,
                         ],
                     ),
-                    Menu(
-                        title='Others',
-                        items=[
-                            menutrans_labelingcleaning,
-                        ],
-                    ),
+                    # Menu(
+                    #     title='Others',
+                    #     items=[
+                    #         menutrans_labelingcleaning,
+                    #     ],
+                    # ),
 
                 ],
             ),
@@ -147,27 +149,27 @@ stepapp = App(
                         items=[
                             menuetchdrie,
                             menuetchwetclean,
-                            menuremove_rie,
-                            menuremove_wetetching,
-                            menuremove_stripping,
+                            # menuremove_rie,
+                            # menuremove_wetetching,
+                            # menuremove_stripping,
                         ],
                     ),
                 ],
             ),
-            Menu(
-                title='Others',
-                indentation=0,
-                items=[
-                    Menu(
-                        title='Measurements',
-                        items=[menuutils_obsmeasurements],
-                    ),
-                    Menu(
-                        title='Starting material',
-                        items=[menuutils_startingmaterial],
-                    ),
-                ],
-            ),
+            # Menu(
+            #     title='Others',
+            #     indentation=0,
+            #     items=[
+            #         Menu(
+            #             title='Measurements',
+            #             items=[menuutils_obsmeasurements],
+            #         ),
+            #         Menu(
+            #             title='Starting material',
+            #             items=[menuutils_startingmaterial],
+            #         ),
+            #     ],
+            # ),
             Menu(
                 title='User defined quantities',
                 items=[
