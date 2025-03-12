@@ -644,7 +644,10 @@ class ThermalOxidation(Chemical, FabricationProcessStep, ArchiveSection):
             },
         },
     )
-
+    gas_flow = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
     oxidation_type = Quantity(
         type=str,
         a_eln={
