@@ -73,7 +73,9 @@ stepapp = App(
                 items=[
                     Menu(
                         title='Bonding',
-                        items=[menuadd_bonding],
+                        items=[
+                            menuadd_bonding,
+                        ],
                     ),
                     Menu(
                         title='Integration',
@@ -84,9 +86,9 @@ stepapp = App(
                         items=[
                             menuadd_icpcvd,
                             menuadd_spincoat,
-                            menuadd_electrongun,
-                            menuadd_sputtering,
-                            menuadd_sog,
+#                            menuadd_electrongun,
+#                            menuadd_sputtering,
+#                            menuadd_sog,
                         ],
                     ),
                 ],
@@ -97,13 +99,15 @@ stepapp = App(
                 items=[
                     Menu(
                         title='Dicing',
-                        items=[menutrans_dicing],
+                        items=[
+#                            menutrans_dicing,
+                        ],
                     ),
                     Menu(
                         title='Doping',
                         items=[
-                            menutrans_doping,
-                            menutrans_sod,
+#                            menutrans_doping,
+#                            menutrans_sod,
                         ],
                     ),
                     Menu(
@@ -111,27 +115,27 @@ stepapp = App(
                         items=[
                             menutrans_ebl,
                             menutrans_fib,
-                            menutrans_track,
+#                            menutrans_track,
                         ],
                     ),
                     Menu(
                         title='Solution modification',
                         items=[
-                            menutrans_develop,
+#                            menutrans_develop,
                         ],
                     ),
                     Menu(
                         title='Thermal processing',
                         items=[
-                            menutrans_annealing,
-                            menutrans_ltodensification,
-                            menutrans_thermaloxidation,
+#                            menutrans_annealing,
+#                            menutrans_ltodensification,
+#                            menutrans_thermaloxidation,
                         ],
                     ),
                     Menu(
                         title='Others',
                         items=[
-                            menutrans_labelingcleaning,
+#                            menutrans_labelingcleaning,
                         ],
                     ),
                 ],
@@ -145,9 +149,9 @@ stepapp = App(
                         items=[
                             menuetchdrie,
                             menuetchwetclean,
-                            menuremove_rie,
-                            menuremove_wetetching,
-                            menuremove_stripping,
+#                            menuremove_rie,
+#                            menuremove_wetetching,
+#                            menuremove_stripping,
                         ],
                     ),
                 ],
@@ -158,11 +162,15 @@ stepapp = App(
                 items=[
                     Menu(
                         title='Measurements',
-                        items=[menuutils_obsmeasurements],
+                        items=[
+#                            menuutils_obsmeasurements
+                        ],
                     ),
                     Menu(
                         title='Starting material',
-                        items=[menuutils_startingmaterial],
+                        items=[
+#                            menuutils_startingmaterial
+                        ],
                     ),
                 ],
             ),
