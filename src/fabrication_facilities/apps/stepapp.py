@@ -135,7 +135,7 @@ stepapp = App(
                     Menu(
                         title='Others',
                         items=[
-#                            menutrans_labelingcleaning,
+                            menutrans_labelingcleaning,
                         ],
                     ),
                 ],
