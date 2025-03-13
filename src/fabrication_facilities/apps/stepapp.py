@@ -100,7 +100,7 @@ stepapp = App(
                     Menu(
                         title='Dicing',
                         items=[
-#                            menutrans_dicing,
+                            menutrans_dicing,
                         ],
                     ),
                     Menu(
