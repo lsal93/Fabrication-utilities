@@ -127,9 +127,9 @@ stepapp = App(
                     Menu(
                         title='Thermal processing',
                         items=[
-#                            menutrans_annealing,
-#                            menutrans_ltodensification,
-#                            menutrans_thermaloxidation,
+                            menutrans_annealing,
+                            menutrans_ltodensification,
+                            menutrans_thermaloxidation,
                         ],
                     ),
                     Menu(
