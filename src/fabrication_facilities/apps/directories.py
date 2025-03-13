@@ -1,3 +1,6 @@
+obm='fabrication_utilities.ObservationMeasurements'
+sm='StartingMaterial'
+
 dir_path = {
     'dir1': 'fabrication_facilities.schema_packages.add.ICP_CVD',
     'dir2': 'fabrication_facilities.schema_packages.add.Spin_Coating',
@@ -21,6 +24,6 @@ dir_path = {
     'dir20': 'fabrication_facilities.schema_packages.remove.RIE',
     'dir21': 'fabrication_facilities.schema_packages.remove.WetEtching',
     'dir22': 'fabrication_facilities.schema_packages.remove.Stripping',
-    'dir23': 'fabrication_facilities.schema_packages.fabrication_utilities.ObservationMeasurements',
-    'dir24': 'fabrication_facilities.schema_packages.fabrication_utilities.StartingMaterial',
+    'dir23': f'fabrication_facilities.schema_packages.{obm}',
+    'dir24': f'fabrication_facilities.schema_packages.fabrication_utilities.{sm}',
 }
