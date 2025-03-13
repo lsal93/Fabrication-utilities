@@ -2165,7 +2165,7 @@ menuremove_rie = Menu(
         MenuItemPeriodicTable(
             title='Elements of the material',
             type='periodic_table',
-            search_quantity=f'{mec}.element#{dir_path["dir20"]}',
+            search_quantity=f'{mec}#{dir_path["dir20"]}',
         ),
         MenuItemHistogram(
             title='Desired depth',
