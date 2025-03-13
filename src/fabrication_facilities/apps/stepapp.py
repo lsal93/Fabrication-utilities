@@ -86,9 +86,9 @@ stepapp = App(
                         items=[
                             menuadd_icpcvd,
                             menuadd_spincoat,
-#                            menuadd_electrongun,
-#                            menuadd_sputtering,
-#                            menuadd_sog,
+                            menuadd_electrongun,
+                            menuadd_sputtering,
+                            menuadd_sog,
                         ],
                     ),
                 ],

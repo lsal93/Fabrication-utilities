@@ -13,7 +13,7 @@ flux = 'data.fluximeters.elemental_composition.element'
 rec = 'data.resist_elemental_composition.element'
 gec = 'data.gas_elemental_composition.element'
 dmec = 'data.doping_material_elemntal_composition.element'
-sec = 'data.substrate_material_elemental_composition.element'
+sec = 'data.substrate_elemental_composition.element'
 wc = 'wafer_cleaning'
 dev = 'developing'
 
