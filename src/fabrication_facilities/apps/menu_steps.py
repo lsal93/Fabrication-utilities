@@ -13,7 +13,7 @@ flux = 'data.fluximeters.elemental_composition.element'
 rec = 'data.resist_elemental_composition.element'
 gec = 'data.gas_elemental_composition.element'
 dmec = 'data.doping_material_elemntal_composition.element'
-sec = 'data.substrate_material_elemental_composition'
+sec = 'data.substrate_material_elemental_composition.element'
 wc = 'wafer_cleaning'
 dev = 'developing'
 
@@ -41,11 +41,11 @@ menuadd_icpcvd = Menu(
             type='terms',
             search_quantity=f'data.short_name#{dir_path["dir1"]}',
         ),
-#        MenuItemPeriodicTable(
-#            title='Elements deposited',
-#            type='periodic_table',
-#            search_quantity=f'{mec}#{dir_path["dir1"]}',
-#        ),
+        MenuItemPeriodicTable(
+            title='Elements deposited',
+            type='periodic_table',
+            search_quantity=f'{mec}#{dir_path["dir1"]}',
+        ),
         MenuItemHistogram(
             title='Desired thickness',
             type='histogram',
@@ -56,11 +56,11 @@ menuadd_icpcvd = Menu(
                 unit='nm',
             ),
         ),
-#        MenuItemPeriodicTable(
-#            title='Elements of gases employed',
-#            type='periodic_table',
-#            search_quantity=f'{flux}#{dir_path["dir1"]}',
-#        ),
+        MenuItemPeriodicTable(
+            title='Elements of gases employed',
+            type='periodic_table',
+            search_quantity=f'{flux}#{dir_path["dir1"]}',
+        ),
         MenuItemTerms(
             title='Gases formulas',
             type='terms',
