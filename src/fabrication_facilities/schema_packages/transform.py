@@ -746,7 +746,7 @@ class Dicing(FabricationProcessStep, ArchiveSection):
                     'depth_step_1',
                     'depth_step_2',
                     'depth_step_3',
-                    'dicing_edge_chipping_measured',
+                    'edge_chipping_measured',
                     'notes',
                 ]
             },
@@ -819,7 +819,7 @@ class Dicing(FabricationProcessStep, ArchiveSection):
         },
         unit='um',
     )
-    dicing_edge_chipping_measured = Quantity(
+    edge_chipping_measured = Quantity(
         type=np.float64,
         a_eln={
             'component': 'NumberEditQuantity',
@@ -858,7 +858,7 @@ class Doping(FabricationProcessStep, ArchiveSection):
                     'doping_type',
                     'doping_temperature',
                     'doping_duration',
-                    'doping_surfaceresistance_measured',
+                    'surface_resistance_measured',
                     'notes',
                 ]
             },
@@ -880,7 +880,7 @@ class Doping(FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
     )
-    doping_surfaceresistance_measured = Quantity(
+    surface_resistance_measured = Quantity(
         type=np.float64,
         a_eln={
             'component': 'NumberEditQuantity',
