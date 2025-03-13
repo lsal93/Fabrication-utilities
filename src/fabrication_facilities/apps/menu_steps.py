@@ -41,11 +41,11 @@ menuadd_icpcvd = Menu(
             type='terms',
             search_quantity=f'data.short_name#{dir_path["dir1"]}',
         ),
-        MenuItemPeriodicTable(
-            title='Elements deposited',
-            type='periodic_table',
-            search_quantity=f'{mec}#{dir_path["dir1"]}',
-        ),
+#        MenuItemPeriodicTable(
+#            title='Elements deposited',
+#            type='periodic_table',
+#            search_quantity=f'{mec}#{dir_path["dir1"]}',
+#        ),
         MenuItemHistogram(
             title='Desired thickness',
             type='histogram',
@@ -56,11 +56,11 @@ menuadd_icpcvd = Menu(
                 unit='nm',
             ),
         ),
-        MenuItemPeriodicTable(
-            title='Elements of gases employed',
-            type='periodic_table',
-            search_quantity=f'{flux}#{dir_path["dir1"]}',
-        ),
+#        MenuItemPeriodicTable(
+#            title='Elements of gases employed',
+#            type='periodic_table',
+#            search_quantity=f'{flux}#{dir_path["dir1"]}',
+#        ),
         MenuItemTerms(
             title='Gases formulas',
             type='terms',
@@ -92,7 +92,7 @@ menuadd_icpcvd = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.chamber_pressure#{dir_path["dir1"]}',
-                title='chamber_pressure',
+                title='chamber pressure',
                 unit='mbar',
             ),
         ),
@@ -102,7 +102,7 @@ menuadd_icpcvd = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.power#{dir_path["dir1"]}',
-                title='chamber_pressure',
+                title='power',
                 unit='watt',
             ),
         ),
