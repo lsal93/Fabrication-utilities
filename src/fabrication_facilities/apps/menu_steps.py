@@ -14,6 +14,8 @@ rec='data.resist_elemental_composition.element'
 gec= 'data.gas_elemental_composition.element'
 dmec='data.doping_material_elemntal_composition.element'
 sec= 'data.substrate_material_elemental_composition'
+wc='wafer_cleaning'
+dev='developing'
 
 menuadd_icpcvd = Menu(
     title='ICP-CVD',
@@ -1472,27 +1474,27 @@ menutrans_labelingcleaning = Menu(
         MenuItemTerms(
             title='Cleaning with DI ultrasound?',
             type='terms',
-            search_quantity=f'data.wafer_cleaning_DI_ultrasound_required#{dir_path["dir14"]}',
+            search_quantity=f'data.{wc}_DI_ultrasound_required#{dir_path["dir14"]}',
         ),
         MenuItemTerms(
             title='RCA cleaning?',
             type='terms',
-            search_quantity=f'data.wafer_cleaning_rca_required#{dir_path["dir14"]}',
+            search_quantity=f'data.{wc}_rca_required#{dir_path["dir14"]}',
         ),
         MenuItemTerms(
             title='Piranha cleaning?',
             type='terms',
-            search_quantity=f'data.wafer_cleaning_piranha_required#{dir_path["dir14"]}',
+            search_quantity=f'data.{wc}_piranha_required#{dir_path["dir14"]}',
         ),
         MenuItemTerms(
             title='Dip HF cleaning?',
             type='terms',
-            search_quantity=f'data.wafer_cleaning_dipHF_required#{dir_path["dir14"]}',
+            search_quantity=f'data.{wc}_dipHF_required#{dir_path["dir14"]}',
         ),
         MenuItemTerms(
             title='Rinse spin dryer required?',
             type='terms',
-            search_quantity=f'data.wafer_cleaning_rinse_spin_dryer_required#{dir_path["dir14"]}',
+            search_quantity=f'data.{wc}_rinse_spin_dryer_required#{dir_path["dir14"]}',
         ),
         MenuItemTerms(
             title='Name equipment used',
@@ -1739,7 +1741,7 @@ menutrans_track = Menu(
         MenuItemTerms(
             title='Developing rinse spin dryer required?',
             type='terms',
-            search_quantity=f'data.developing_rinse_spin_dryer_required#{dir_path["dir16"]}',
+            search_quantity=f'data.{dev}_rinse_spin_dryer_required#{dir_path["dir16"]}',
         ),
         MenuItemTerms(
             title='PEB required?',
