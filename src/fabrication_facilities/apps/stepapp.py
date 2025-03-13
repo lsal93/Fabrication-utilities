@@ -106,8 +106,8 @@ stepapp = App(
                     Menu(
                         title='Doping',
                         items=[
-#                            menutrans_doping,
-#                            menutrans_sod,
+                            menutrans_doping,
+                            menutrans_sod,
                         ],
                     ),
                     Menu(
