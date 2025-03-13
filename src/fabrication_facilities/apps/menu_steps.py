@@ -1535,7 +1535,7 @@ menutrans_sod = Menu(
         MenuItemPeriodicTable(
             title='Elements of the solution',
             type='periodic_table',
-            search_quantity=f'data.{dmec}.element#{dir_path["dir15"]}',
+            search_quantity=f'{dmec}.element#{dir_path["dir15"]}',
         ),
         MenuItemHistogram(
             title='Volume dispensed',
