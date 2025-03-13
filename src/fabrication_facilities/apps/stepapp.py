@@ -149,9 +149,9 @@ stepapp = App(
                         items=[
                             menuremove_drie,
                             menuremove_wetclean,
-#                            menuremove_rie,
-#                            menuremove_wetetching,
-#                            menuremove_stripping,
+                            menuremove_rie,
+                            menuremove_wetetching,
+                            menuremove_stripping,
                         ],
                     ),
                 ],
