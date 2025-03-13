@@ -14,8 +14,8 @@ from fabrication_facilities.apps.menu_steps import (
     menuadd_sog,
     menuadd_spincoat,
     menuadd_sputtering,
-    menuetchdrie,
-    menuetchwetclean,
+    menuremove_drie,
+    menuremove_wetclean,
     menuremove_rie,
     menuremove_stripping,
     menuremove_wetetching,
@@ -147,8 +147,8 @@ stepapp = App(
                     Menu(
                         title='Etching',
                         items=[
-#                            menuetchdrie,
-#                            menuetchwetclean,
+                            menuremove_drie,
+                            menuremove_wetclean,
 #                            menuremove_rie,
 #                            menuremove_wetetching,
 #                            menuremove_stripping,

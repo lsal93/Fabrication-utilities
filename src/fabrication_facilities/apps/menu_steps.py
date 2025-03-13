@@ -744,7 +744,7 @@ menutrans_develop = Menu(
     ],
 )
 
-menuetchdrie = Menu(
+menuremove_drie = Menu(
     title='DRIE',
     size='xl',
     items=[
@@ -885,7 +885,7 @@ menuetchdrie = Menu(
         ),
     ],
 )
-menuetchwetclean = Menu(
+menuremove_wetclean = Menu(
     title='Wet cleaning',
     size='xl',
     items=[
