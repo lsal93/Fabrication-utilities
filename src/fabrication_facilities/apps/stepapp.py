@@ -84,7 +84,7 @@ stepapp = App(
                     Menu(
                         title='Sinthesys',
                         items=[
-#                            menuadd_icpcvd,
+                            menuadd_icpcvd,
 #                            menuadd_spincoat,
 #                            menuadd_electrongun,
 #                            menuadd_sputtering,
