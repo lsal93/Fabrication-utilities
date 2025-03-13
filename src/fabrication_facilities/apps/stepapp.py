@@ -115,13 +115,13 @@ stepapp = App(
                         items=[
                             menutrans_ebl,
                             menutrans_fib,
-#                            menutrans_track,
+                            menutrans_track,
                         ],
                     ),
                     Menu(
                         title='Solution modification',
                         items=[
-#                            menutrans_develop,
+                            menutrans_develop,
                         ],
                     ),
                     Menu(
