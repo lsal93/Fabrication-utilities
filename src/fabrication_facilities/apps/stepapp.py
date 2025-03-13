@@ -15,9 +15,9 @@ from fabrication_facilities.apps.menu_steps import (
     menuadd_spincoat,
     menuadd_sputtering,
     menuremove_drie,
-    menuremove_wetclean,
     menuremove_rie,
     menuremove_stripping,
+    menuremove_wetclean,
     menuremove_wetetching,
     menutrans_annealing,
     menutrans_develop,
@@ -30,8 +30,8 @@ from fabrication_facilities.apps.menu_steps import (
     menutrans_sod,
     menutrans_thermaloxidation,
     menutrans_track,
-#    menuutils_obsmeasurements,
-#    menuutils_startingmaterial,
+    #    menuutils_obsmeasurements,
+    #    menuutils_startingmaterial,
 )
 
 schemas = [f'*#{path_value}' for path_value in dir_path.values()]
