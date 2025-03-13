@@ -822,4 +822,5 @@ class SOG(Chemical, FabricationProcessStep, ArchiveSection):
                 print('No elements provided')
             self.substrate_elemental_composition = elementality
 
+
 m_package.__init_metainfo__()

@@ -25,11 +25,11 @@ from nomad.datamodel.data import (
     EntryData,
 )
 from nomad.datamodel.metainfo.basesections import (
-    ProcessStep,
-    Entity,
     ElementalComposition,
+    Entity,
+    ProcessStep,
 )
-from nomad.datamodel.metainfo.eln import Instrument
+from nomad.datamodel.metainfo.eln import Chemical, Instrument
 from nomad.datamodel.metainfo.workflow import Link
 from nomad.metainfo import (
     Datetime,
@@ -39,8 +39,8 @@ from nomad.metainfo import (
     Section,
     SubSection,
 )
-from nomad.datamodel.metainfo.eln import Chemical
-from fabrication_facilities.schema_packages.Items import ItemPropertyDefinition, Item
+
+from fabrication_facilities.schema_packages.Items import Item, ItemPropertyDefinition
 from fabrication_facilities.schema_packages.utils import parse_chemical_formula
 
 if TYPE_CHECKING:
@@ -734,7 +734,12 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
     #     a_eln={'component': 'RichTextEditQuantity'},
     # )
     # affiliation = Quantity(
-    #     type=MEnum('NFFA-DI', 'iENTRANCE@ENL'), a_eln={'component': 'EnumEditQuantity'}
+    #     type=MEnum(
+    #        'NFFA-DI',
+    #        'iENTRANCE@ENL'
+    #     ),
+    #     a_eln={
+    #     'component': 'EnumEditQuantity'}
     # )
     # operator = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
     # location = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
@@ -887,6 +892,7 @@ class FabricationProcess(EntryData, ArchiveSection):
         """
         super().normalize(archive, logger)
 
+
 class StartingMaterial(Chemical, FabricationProcessStep, ArchiveSection):
     m_def = Section(
         a_eln={
@@ -930,7 +936,7 @@ class StartingMaterial(Chemical, FabricationProcessStep, ArchiveSection):
     )
     short_name = Quantity(
         type=str,
-        a_eln={'component': 'StringEditQuantity', 'label':'wafer material'},
+        a_eln={'component': 'StringEditQuantity', 'label': 'wafer material'},
     )
     manufacturer_name = Quantity(
         type=str,
@@ -1027,6 +1033,7 @@ class SampleParenting(Entity, EntryData, ArchiveSection):
         repeats=True,
     )
 
+
 class SampleParentingLink(Link, ArchiveSection):
     m_def = Section()
 
@@ -1034,6 +1041,7 @@ class SampleParentingLink(Link, ArchiveSection):
         type=SampleParenting,
         a_eln={'component': 'ReferenceEditQuantity'},
     )
+
 
 class ObservationMeasurements(FabricationProcessStep, ArchiveSection):
     m_def = Section(
@@ -1074,7 +1082,7 @@ class ObservationMeasurements(FabricationProcessStep, ArchiveSection):
     )
     short_name = Quantity(
         type=str,
-        a_eln={'component': 'StringEditQuantity', 'label':'Equipment used'},
+        a_eln={'component': 'StringEditQuantity', 'label': 'Equipment used'},
     )
     activity_type = Quantity(
         type=str,
@@ -1097,5 +1105,6 @@ class ObservationMeasurements(FabricationProcessStep, ArchiveSection):
         type=str,
         a_eln={'component': 'StringEditQuantity'},
     )
+
 
 m_package.__init_metainfo__()

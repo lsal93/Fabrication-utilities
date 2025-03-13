@@ -6,36 +6,35 @@ from nomad.config.models.ui import (
     SearchQuantities,
 )
 
+from fabrication_facilities.apps.directories import dir_path
 from fabrication_facilities.apps.menu_steps import (
     menuadd_bonding,
+    menuadd_electrongun,
     menuadd_icpcvd,
+    menuadd_sog,
     menuadd_spincoat,
-    menuetchdrie,
-    menuetchwetclean,
-    menutrans_develop,
-    menutrans_ebl,
-    menutrans_fib,
+    menuadd_sputtering,
+    menuremove_drie,
+    menuremove_rie,
+    menuremove_stripping,
+    menuremove_wetclean,
+    menuremove_wetetching,
     menutrans_annealing,
-    menutrans_ltodensification,
-    menutrans_thermaloxidation,
+    menutrans_develop,
     menutrans_dicing,
     menutrans_doping,
+    menutrans_ebl,
+    menutrans_fib,
     menutrans_labelingcleaning,
+    menutrans_ltodensification,
     menutrans_sod,
+    menutrans_thermaloxidation,
     menutrans_track,
-    menuadd_electrongun,
-    menuadd_sputtering,
-    menuadd_sog,
-    menuremove_rie,
-    menuremove_wetetching,
-    menuremove_stripping,
-    menuutils_obsmeasurements,
-    menuutils_startingmaterial,
+    #    menuutils_obsmeasurements,
+    #    menuutils_startingmaterial,
 )
 
-from fabrication_facilities.apps.directories import dir_path
-
-schemas = [f"*#{path_value}" for path_value in dir_path.values()]
+schemas = [f'*#{path_value}' for path_value in dir_path.values()]
 fps = 'FabricationProcessStep'
 dir0 = f'fabrication_facilities.schema_packages.fabrication_utilities.{fps}'
 schemas.append(f'*#{dir0}')
@@ -74,7 +73,9 @@ stepapp = App(
                 items=[
                     Menu(
                         title='Bonding',
-                        items=[menuadd_bonding],
+                        items=[
+                            menuadd_bonding,
+                        ],
                     ),
                     Menu(
                         title='Integration',
@@ -98,7 +99,9 @@ stepapp = App(
                 items=[
                     Menu(
                         title='Dicing',
-                        items=[menutrans_dicing],
+                        items=[
+                            menutrans_dicing,
+                        ],
                     ),
                     Menu(
                         title='Doping',
@@ -135,7 +138,6 @@ stepapp = App(
                             menutrans_labelingcleaning,
                         ],
                     ),
-
                 ],
             ),
             Menu(
@@ -145,8 +147,8 @@ stepapp = App(
                     Menu(
                         title='Etching',
                         items=[
-                            menuetchdrie,
-                            menuetchwetclean,
+                            menuremove_drie,
+                            menuremove_wetclean,
                             menuremove_rie,
                             menuremove_wetetching,
                             menuremove_stripping,
@@ -160,11 +162,15 @@ stepapp = App(
                 items=[
                     Menu(
                         title='Measurements',
-                        items=[menuutils_obsmeasurements],
+                        items=[
+#                            menuutils_obsmeasurements
+                        ],
                     ),
                     Menu(
                         title='Starting material',
-                        items=[menuutils_startingmaterial],
+                        items=[
+#                            menuutils_startingmaterial
+                        ],
                     ),
                 ],
             ),

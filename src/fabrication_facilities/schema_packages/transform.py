@@ -644,7 +644,10 @@ class ThermalOxidation(Chemical, FabricationProcessStep, ArchiveSection):
             },
         },
     )
-
+    gas_flow = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
     oxidation_type = Quantity(
         type=str,
         a_eln={
@@ -743,7 +746,7 @@ class Dicing(FabricationProcessStep, ArchiveSection):
                     'depth_step_1',
                     'depth_step_2',
                     'depth_step_3',
-                    'dicing_edge_chipping_measured',
+                    'edge_chipping_measured',
                     'notes',
                 ]
             },
@@ -816,7 +819,7 @@ class Dicing(FabricationProcessStep, ArchiveSection):
         },
         unit='um',
     )
-    dicing_edge_chipping_measured = Quantity(
+    edge_chipping_measured = Quantity(
         type=np.float64,
         a_eln={
             'component': 'NumberEditQuantity',
@@ -855,7 +858,7 @@ class Doping(FabricationProcessStep, ArchiveSection):
                     'doping_type',
                     'doping_temperature',
                     'doping_duration',
-                    'doping_surfaceresistance_measured',
+                    'surface_resistance_measured',
                     'notes',
                 ]
             },
@@ -877,7 +880,7 @@ class Doping(FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
     )
-    doping_surfaceresistance_measured = Quantity(
+    surface_resistance_measured = Quantity(
         type=np.float64,
         a_eln={
             'component': 'NumberEditQuantity',
@@ -1082,6 +1085,7 @@ class SOD(Chemical, FabricationProcessStep, ArchiveSection):
                 print('No elements provided')
             self.doping_material_elemental_composition = elementality
 
+
 class Track(Chemical, FabricationProcessStep, ArchiveSection):
     m_def = Section(
         a_eln={
@@ -1141,11 +1145,15 @@ class Track(Chemical, FabricationProcessStep, ArchiveSection):
     )
     mask_set_name = Quantity(
         type=str,
-        a_eln={'component': 'StringEditQuantity',},
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
     )
     mask_name = Quantity(
         type=str,
-        a_eln={'component': 'StringEditQuantity',},
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
     )
     short_name = Quantity(
         type=str,
@@ -1163,7 +1171,7 @@ class Track(Chemical, FabricationProcessStep, ArchiveSection):
         type=np.float64,
         a_eln={
             'component': 'NumberEditQuantity',
-            'label':'Resist thickness',
+            'label': 'Resist thickness',
             'defaultDisplayUnit': 'um',
         },
         unit='um',
@@ -1195,19 +1203,27 @@ class Track(Chemical, FabricationProcessStep, ArchiveSection):
     )
     mask_aligner_name = Quantity(
         type=str,
-        a_eln={'component': 'StringEditQuantity',},
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
     )
     alignment_type = Quantity(
         type=str,
-        a_eln={'component': 'StringEditQuantity',},
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
     )
     mask_target = Quantity(
         type=str,
-        a_eln={'component': 'StringEditQuantity',},
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
     )
     exposure_mask_contact_type = Quantity(
         type=str,
-        a_eln={'component': 'StringEditQuantity',},
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
     )
     exposure_power_density = Quantity(
         type=np.float64,

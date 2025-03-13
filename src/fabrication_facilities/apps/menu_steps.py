@@ -8,6 +8,15 @@ from nomad.config.models.ui import (
 
 from fabrication_facilities.apps.directories import dir_path
 
+mec = 'data.material_elemental_composition.element'
+flux = 'data.fluximeters.elemental_composition.element'
+rec = 'data.resist_elemental_composition.element'
+gec = 'data.gas_elemental_composition.element'
+dmec = 'data.doping_material_elemental_composition.element'
+sec = 'data.substrate_elemental_composition.element'
+wc = 'wafer_cleaning'
+dev = 'developing'
+
 menuadd_icpcvd = Menu(
     title='ICP-CVD',
     size='xl',
@@ -35,7 +44,7 @@ menuadd_icpcvd = Menu(
         MenuItemPeriodicTable(
             title='Elements deposited',
             type='periodic_table',
-            search_quantity=f'data.material_elemental_composition.element#{dir_path["dir1"]}',
+            search_quantity=f'{mec}#{dir_path["dir1"]}',
         ),
         MenuItemHistogram(
             title='Desired thickness',
@@ -50,7 +59,7 @@ menuadd_icpcvd = Menu(
         MenuItemPeriodicTable(
             title='Elements of gases employed',
             type='periodic_table',
-            search_quantity=f'data.fluximeters.elemental_composition.element#{dir_path["dir1"]}',
+            search_quantity=f'{flux}#{dir_path["dir1"]}',
         ),
         MenuItemTerms(
             title='Gases formulas',
@@ -83,7 +92,7 @@ menuadd_icpcvd = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.chamber_pressure#{dir_path["dir1"]}',
-                title='chamber_pressure',
+                title='chamber pressure',
                 unit='mbar',
             ),
         ),
@@ -93,7 +102,7 @@ menuadd_icpcvd = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.power#{dir_path["dir1"]}',
-                title='chamber_pressure',
+                title='power',
                 unit='watt',
             ),
         ),
@@ -167,7 +176,7 @@ menuadd_spincoat = Menu(
         MenuItemPeriodicTable(
             title='Elements of the resist deposited',
             type='periodic_table',
-            search_quantity=f'data.resist_elemental_composition.element#{dir_path["dir2"]}',
+            search_quantity=f'{rec}#{dir_path["dir2"]}',
         ),
         MenuItemHistogram(
             title='Desired thickness',
@@ -435,7 +444,11 @@ menutrans_ebl = Menu(
             title='Dose',
             type='histogram',
             n_bins=10,
-            x=Axis(title='dose', unit='uC/cm^2', search_quantity=f'data.dose#{dir_path["dir3"]}'),
+            x=Axis(
+                title='dose',
+                unit='uC/cm^2',
+                search_quantity=f'data.dose#{dir_path["dir3"]}',
+            ),
         ),
         MenuItemHistogram(
             title='Writing field dimension',
@@ -547,7 +560,11 @@ menutrans_fib = Menu(
             title='Dose',
             type='histogram',
             n_bins=10,
-            x=Axis(title='dose', unit='uC/cm^2', search_quantity=f'data.dose#{dir_path["dir4"]}'),
+            x=Axis(
+                title='dose',
+                unit='uC/cm^2',
+                search_quantity=f'data.dose#{dir_path["dir4"]}',
+            ),
         ),
         MenuItemHistogram(
             title='Writing field dimension',
@@ -727,7 +744,7 @@ menutrans_develop = Menu(
     ],
 )
 
-menuetchdrie = Menu(
+menuremove_drie = Menu(
     title='DRIE',
     size='xl',
     items=[
@@ -747,14 +764,14 @@ menuetchdrie = Menu(
             search_quantity=f'data.recipe_name#{dir_path["dir5"]}',
         ),
         MenuItemTerms(
-            title='Material to be deposited',
+            title='Material to be etched',
             type='terms',
             search_quantity=f'data.short_name#{dir_path["dir5"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements deposited',
             type='periodic_table',
-            search_quantity=f'data.material_elemental_composition.element#{dir_path["dir5"]}',
+            search_quantity=f'{mec}#{dir_path["dir5"]}',
         ),
         MenuItemHistogram(
             title='Required duration',
@@ -779,7 +796,7 @@ menuetchdrie = Menu(
         MenuItemPeriodicTable(
             title='Elements of gases employed',
             type='periodic_table',
-            search_quantity=f'data.fluximeters.elemental_composition.element#{dir_path["dir5"]}',
+            search_quantity=f'{flux}#{dir_path["dir5"]}',
         ),
         MenuItemTerms(
             title='Gases formulas',
@@ -868,7 +885,7 @@ menuetchdrie = Menu(
         ),
     ],
 )
-menuetchwetclean = Menu(
+menuremove_wetclean = Menu(
     title='Wet cleaning',
     size='xl',
     items=[
@@ -976,7 +993,7 @@ menutrans_annealing = Menu(
         MenuItemPeriodicTable(
             title='Elements of the material',
             type='periodic_table',
-            search_quantity=f'data.material_elemental_composition.element#{dir_path["dir9"]}',
+            search_quantity=f'{mec}#{dir_path["dir9"]}',
         ),
         MenuItemHistogram(
             title='Starting temperature',
@@ -1105,7 +1122,7 @@ menutrans_ltodensification = Menu(
         MenuItemPeriodicTable(
             title='Elements of the gas',
             type='periodic_table',
-            search_quantity=f'data.gas_elemental_composition.element#{dir_path["dir10"]}',
+            search_quantity=f'{gec}#{dir_path["dir10"]}',
         ),
         MenuItemHistogram(
             title='Densification temperature',
@@ -1180,7 +1197,7 @@ menutrans_thermaloxidation = Menu(
         MenuItemPeriodicTable(
             title='Elements of the gas',
             type='periodic_table',
-            search_quantity=f'data.gas_elemental_composition.element#{dir_path["dir11"]}',
+            search_quantity=f'{gec}#{dir_path["dir11"]}',
         ),
         MenuItemHistogram(
             title='Target final temperature',
@@ -1342,7 +1359,7 @@ menutrans_dicing = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.dicing_edge_chipping_measured#{dir_path["dir12"]}',
+                search_quantity=f'data.edge_chipping_measured#{dir_path["dir12"]}',
                 title='edge chipping measured',
                 unit='um',
             ),
@@ -1408,7 +1425,7 @@ menutrans_doping = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.doping_surfaceresistance_measured#{dir_path["dir13"]}',
+                search_quantity=f'data.surface_resistance_measured#{dir_path["dir13"]}',
                 title='surface resistance measured',
                 unit='ohm',
             ),
@@ -1457,27 +1474,27 @@ menutrans_labelingcleaning = Menu(
         MenuItemTerms(
             title='Cleaning with DI ultrasound?',
             type='terms',
-            search_quantity=f'data.wafer_cleaning_DI_ultrasound_required#{dir_path["dir14"]}',
+            search_quantity=f'data.{wc}_DI_ultrasound_required#{dir_path["dir14"]}',
         ),
         MenuItemTerms(
             title='RCA cleaning?',
             type='terms',
-            search_quantity=f'data.wafer_cleaning_rca_required#{dir_path["dir14"]}',
+            search_quantity=f'data.{wc}_rca_required#{dir_path["dir14"]}',
         ),
         MenuItemTerms(
             title='Piranha cleaning?',
             type='terms',
-            search_quantity=f'data.wafer_cleaning_piranha_required#{dir_path["dir14"]}',
+            search_quantity=f'data.{wc}_piranha_required#{dir_path["dir14"]}',
         ),
         MenuItemTerms(
             title='Dip HF cleaning?',
             type='terms',
-            search_quantity=f'data.wafer_cleaning_dipHF_required#{dir_path["dir14"]}',
+            search_quantity=f'data.{wc}_dipHF_required#{dir_path["dir14"]}',
         ),
         MenuItemTerms(
             title='Rinse spin dryer required?',
             type='terms',
-            search_quantity=f'data.wafer_cleaning_rinse_spin_dryer_required#{dir_path["dir14"]}',
+            search_quantity=f'data.{wc}_rinse_spin_dryer_required#{dir_path["dir14"]}',
         ),
         MenuItemTerms(
             title='Name equipment used',
@@ -1518,7 +1535,7 @@ menutrans_sod = Menu(
         MenuItemPeriodicTable(
             title='Elements of the solution',
             type='periodic_table',
-            search_quantity=f'data.doping_material_elemental_composition.element#{dir_path["dir15"]}',
+            search_quantity=f'{dmec}#{dir_path["dir15"]}',
         ),
         MenuItemHistogram(
             title='Volume dispensed',
@@ -1624,7 +1641,7 @@ menutrans_track = Menu(
         MenuItemPeriodicTable(
             title='Elements of the resist',
             type='periodic_table',
-            search_quantity=f'data.resist_elemental_composition.element#{dir_path["dir16"]}',
+            search_quantity=f'{rec}#{dir_path["dir16"]}',
         ),
         MenuItemHistogram(
             title='Resist thickness (target)',
@@ -1724,7 +1741,7 @@ menutrans_track = Menu(
         MenuItemTerms(
             title='Developing rinse spin dryer required?',
             type='terms',
-            search_quantity=f'data.developing_rinse_spin_dryer_required#{dir_path["dir16"]}',
+            search_quantity=f'data.{dev}_rinse_spin_dryer_required#{dir_path["dir16"]}',
         ),
         MenuItemTerms(
             title='PEB required?',
@@ -1941,7 +1958,7 @@ menuadd_sputtering = Menu(
         MenuItemPeriodicTable(
             title='Elements deposited',
             type='periodic_table',
-            search_quantity=f'data.material_elemental_composition.element#{dir_path["dir18"]}',
+            search_quantity=f'{mec}#{dir_path["dir18"]}',
         ),
         MenuItemHistogram(
             title='Desired thickness',
@@ -2062,7 +2079,7 @@ menuadd_sog = Menu(
         MenuItemPeriodicTable(
             title='Elements of the substrate',
             type='periodic_table',
-            search_quantity=f'data.substrate_elemental_composition.element#{dir_path["dir19"]}',
+            search_quantity=f'{sec}#{dir_path["dir19"]}',
         ),
         MenuItemTerms(
             title='Pre-cleaning method',
@@ -2148,7 +2165,7 @@ menuremove_rie = Menu(
         MenuItemPeriodicTable(
             title='Elements of the material',
             type='periodic_table',
-            search_quantity=f'data.material_elemental_composition.element#{dir_path["dir20"]}',
+            search_quantity=f'{mec}#{dir_path["dir20"]}',
         ),
         MenuItemHistogram(
             title='Desired depth',
@@ -2254,7 +2271,7 @@ menuremove_wetetching = Menu(
         MenuItemPeriodicTable(
             title='Elements of the material',
             type='periodic_table',
-            search_quantity=f'data.material_elemental_composition.element#{dir_path["dir21"]}',
+            search_quantity=f'{mec}#{dir_path["dir21"]}',
         ),
         MenuItemTerms(
             title='Etching solution',
@@ -2365,7 +2382,7 @@ menuremove_stripping = Menu(
         MenuItemPeriodicTable(
             title='Elements of the material',
             type='periodic_table',
-            search_quantity=f'data.material_elemental_composition.element#{dir_path["dir22"]}',
+            search_quantity=f'{mec}#{dir_path["dir22"]}',
         ),
         MenuItemHistogram(
             title='Target duration',
