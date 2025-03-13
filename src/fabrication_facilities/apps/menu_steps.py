@@ -8,14 +8,14 @@ from nomad.config.models.ui import (
 
 from fabrication_facilities.apps.directories import dir_path
 
-mec='data.material_elemental_composition.element'
-flux= 'data.fluximeters.elemental_composition_element'
-rec='data.resist_elemental_composition.element'
-gec= 'data.gas_elemental_composition.element'
-dmec='data.doping_material_elemntal_composition.element'
-sec= 'data.substrate_material_elemental_composition'
-wc='wafer_cleaning'
-dev='developing'
+mec = 'data.material_elemental_composition.element'
+flux = 'data.fluximeters.elemental_composition_element'
+rec = 'data.resist_elemental_composition.element'
+gec = 'data.gas_elemental_composition.element'
+dmec = 'data.doping_material_elemntal_composition.element'
+sec = 'data.substrate_material_elemental_composition'
+wc = 'wafer_cleaning'
+dev = 'developing'
 
 menuadd_icpcvd = Menu(
     title='ICP-CVD',
@@ -153,32 +153,32 @@ menuadd_spincoat = Menu(
     title='Spin Coating',
     size='xl',
     items=[
-         MenuItemTerms(
+        MenuItemTerms(
             title='Lab location',
             type='terms',
             search_quantity=f'data.location#{dir_path["dir2"]}',
-         ),
-         MenuItemTerms(
+        ),
+        MenuItemTerms(
             title='ID item processed',
             type='terms',
             search_quantity=f'data.id_item_processed#{dir_path["dir2"]}',
-         ),
-         MenuItemTerms(
+        ),
+        MenuItemTerms(
             title='Name of the recipe',
             type='terms',
             search_quantity=f'data.recipe_name#{dir_path["dir2"]}',
-         ),
-         MenuItemTerms(
+        ),
+        MenuItemTerms(
             title='Resist to be deposited',
             type='terms',
             search_quantity=f'data.short_name#{dir_path["dir2"]}',
-         ),
-         MenuItemPeriodicTable(
+        ),
+        MenuItemPeriodicTable(
             title='Elements of the resist deposited',
             type='periodic_table',
             search_quantity=f'{rec}#{dir_path["dir2"]}',
-         ),
-         MenuItemHistogram(
+        ),
+        MenuItemHistogram(
             title='Desired thickness',
             type='histogram',
             n_bins=10,
@@ -187,17 +187,17 @@ menuadd_spincoat = Menu(
                 title='thickness',
                 unit='nm',
             ),
-         ),
-         MenuItemTerms(
+        ),
+        MenuItemTerms(
             title='HDMS',
             type='terms',
             search_quantity=f'data.hdms_required#{dir_path["dir2"]}',
-         ),
-         MenuItemTerms(
+        ),
+        MenuItemTerms(
             title='PEB',
             type='terms',
             search_quantity=f'data.peb_required#{dir_path["dir2"]}',
-         ),
+        ),
         MenuItemHistogram(
             title='PEB duration',
             type='histogram',

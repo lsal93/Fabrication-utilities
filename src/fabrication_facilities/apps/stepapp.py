@@ -6,36 +6,35 @@ from nomad.config.models.ui import (
     SearchQuantities,
 )
 
+from fabrication_facilities.apps.directories import dir_path
 from fabrication_facilities.apps.menu_steps import (
     menuadd_bonding,
+    menuadd_electrongun,
     menuadd_icpcvd,
+    menuadd_sog,
     menuadd_spincoat,
+    menuadd_sputtering,
     menuetchdrie,
     menuetchwetclean,
-    menutrans_develop,
-    menutrans_ebl,
-    menutrans_fib,
+    menuremove_rie,
+    menuremove_stripping,
+    menuremove_wetetching,
     menutrans_annealing,
-    menutrans_ltodensification,
-    menutrans_thermaloxidation,
+    menutrans_develop,
     menutrans_dicing,
     menutrans_doping,
+    menutrans_ebl,
+    menutrans_fib,
     menutrans_labelingcleaning,
+    menutrans_ltodensification,
     menutrans_sod,
+    menutrans_thermaloxidation,
     menutrans_track,
-    menuadd_electrongun,
-    menuadd_sputtering,
-    menuadd_sog,
-    menuremove_rie,
-    menuremove_wetetching,
-    menuremove_stripping,
     menuutils_obsmeasurements,
     menuutils_startingmaterial,
 )
 
-from fabrication_facilities.apps.directories import dir_path
-
-schemas = [f"*#{path_value}" for path_value in dir_path.values()]
+schemas = [f'*#{path_value}' for path_value in dir_path.values()]
 fps = 'FabricationProcessStep'
 dir0 = f'fabrication_facilities.schema_packages.fabrication_utilities.{fps}'
 schemas.append(f'*#{dir0}')
@@ -98,9 +97,7 @@ stepapp = App(
                 items=[
                     Menu(
                         title='Dicing',
-                        items=[
-                            menutrans_dicing
-                        ],
+                        items=[menutrans_dicing],
                     ),
                     Menu(
                         title='Doping',
@@ -137,7 +134,6 @@ stepapp = App(
                             menutrans_labelingcleaning,
                         ],
                     ),
-
                 ],
             ),
             Menu(
