@@ -1641,7 +1641,7 @@ menutrans_track = Menu(
         MenuItemPeriodicTable(
             title='Elements of the resist',
             type='periodic_table',
-            search_quantity=f'{rec}.element#{dir_path["dir16"]}',
+            search_quantity=f'{rec}#{dir_path["dir16"]}',
         ),
         MenuItemHistogram(
             title='Resist thickness (target)',
