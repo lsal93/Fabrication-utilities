@@ -84,8 +84,8 @@ stepapp = App(
                     Menu(
                         title='Sinthesys',
                         items=[
-                            menuadd_icpcvd,
-                            menuadd_spincoat,
+#                            menuadd_icpcvd,
+#                            menuadd_spincoat,
 #                            menuadd_electrongun,
 #                            menuadd_sputtering,
 #                            menuadd_sog,
@@ -147,8 +147,8 @@ stepapp = App(
                     Menu(
                         title='Etching',
                         items=[
-                            menuetchdrie,
-                            menuetchwetclean,
+#                            menuetchdrie,
+#                            menuetchwetclean,
 #                            menuremove_rie,
 #                            menuremove_wetetching,
 #                            menuremove_stripping,
