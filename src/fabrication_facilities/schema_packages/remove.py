@@ -83,8 +83,7 @@ class DRIE(Chemical, FabricationProcessStep, ArchiveSection):
                     'step_type',
                     'definition_of_process_step',
                     'recipe_name',
-                    # 'depth_from_recipe',
-                    # 'etching_rate_from_recipe',
+                    'recipe_file',
                     'short_name',
                     'chemical_formula',
                     'depth_target',
@@ -101,24 +100,12 @@ class DRIE(Chemical, FabricationProcessStep, ArchiveSection):
             },
         },
     )
-    # depth_from_recipe = Quantity(
-    #     type=np.float64,
-    #     description='Amount of material etched as described in the recipe',
-    #     a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'um'},
-    #     unit='um',
-    # )
     duration_target = Quantity(
         type=np.float64,
         description='Time prescribed by the recipe',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
     )
-    # etching_rate_from_recipe = Quantity(
-    #     type=np.float64,
-    #     description='Etching rate provided in the recipe',
-    #     a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'um/minute'},
-    #     unit='um/minute',
-    # )
     short_name = Quantity(
         type=str,
         description='Material to be etched',
@@ -184,7 +171,6 @@ class DRIE(Chemical, FabricationProcessStep, ArchiveSection):
         section_def=Massflow_controller,
         repeats=True,
     )
-
     material_elemental_composition = SubSection(
         section_def=ElementalComposition, repeats=True
     )
@@ -209,7 +195,6 @@ class DRIE(Chemical, FabricationProcessStep, ArchiveSection):
             else:
                 print('No elements provided')
             self.material_elemental_composition = elementality
-
 
 class RIE(Chemical, FabricationProcessStep, ArchiveSection):
     m_def = Section(
@@ -238,6 +223,7 @@ class RIE(Chemical, FabricationProcessStep, ArchiveSection):
                     'step_type',
                     'definition_of_process_step',
                     'recipe_name',
+                    'recipe_file',
                     'short_name',
                     'chemical_formula',
                     'depth_target',
@@ -304,10 +290,10 @@ class RIE(Chemical, FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm/minute'},
         unit='nm/minute',
     )
-    # fluximeters = SubSection(
-    #     section_def=Massflow_controller,
-    #     repeats=True,
-    # )
+    fluximeters = SubSection(
+        section_def=Massflow_controller,
+        repeats=True,
+    )
 
     material_elemental_composition = SubSection(
         section_def=ElementalComposition, repeats=True
@@ -362,6 +348,7 @@ class WetCleaning(FabricationProcessStep, ArchiveSection):
                     'step_type',
                     'definition_of_process_step',
                     'recipe_name',
+                    'recipe_file',
                     'removing_solution',
                     'removing_solution_proportions',
                     'removing_duration',
@@ -374,7 +361,6 @@ class WetCleaning(FabricationProcessStep, ArchiveSection):
             },
         },
     )
-
     removing_solution = Quantity(
         type=str,
         a_eln={'component': 'StringEditQuantity'},
@@ -389,9 +375,9 @@ class WetCleaning(FabricationProcessStep, ArchiveSection):
         type=np.float64,
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
+            'defaultDisplayUnit': 'minute',
         },
-        unit='sec',
+        unit='minute',
     )
     removing_temperature = Quantity(
         type=np.float64,
@@ -417,11 +403,10 @@ class WetCleaning(FabricationProcessStep, ArchiveSection):
         type=np.float64,
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
+            'defaultDisplayUnit': 'minute',
         },
-        unit='sec',
+        unit='minute',
     )
-
 
 class WetEtching(Chemical, FabricationProcessStep, ArchiveSection):
     """
@@ -454,6 +439,7 @@ class WetEtching(Chemical, FabricationProcessStep, ArchiveSection):
                     'step_type',
                     'definition_of_process_step',
                     'recipe_name',
+                    'recipe_file',
                     'short_name',
                     'chemical_formula',
                     'etching_solution',
@@ -468,7 +454,6 @@ class WetEtching(Chemical, FabricationProcessStep, ArchiveSection):
             },
         },
     )
-
     short_name = Quantity(
         type=str,
         description='Material to be etched',
@@ -553,7 +538,6 @@ class WetEtching(Chemical, FabricationProcessStep, ArchiveSection):
                 print('No elements provided')
             self.material_elemental_composition = elementality
 
-
 class Stripping(Chemical, FabricationProcessStep, ArchiveSection):
     m_def = Section(
         a_eln={
@@ -581,6 +565,7 @@ class Stripping(Chemical, FabricationProcessStep, ArchiveSection):
                     'step_type',
                     'definition_of_process_step',
                     'recipe_name',
+                    'recipe_file',
                     'stripping_type',
                     'short_name',
                     'chemical_formula',
@@ -592,7 +577,6 @@ class Stripping(Chemical, FabricationProcessStep, ArchiveSection):
             },
         },
     )
-
     stripping_type = Quantity(
         type=str,
         a_eln={
@@ -602,7 +586,7 @@ class Stripping(Chemical, FabricationProcessStep, ArchiveSection):
     short_name = Quantity(
         type=str,
         description='Material to remove',
-        a_eln={'component': 'StringEditQuantity', 'label': 'material to remove'},
+        a_eln={'component': 'StringEditQuantity', 'label': 'Target material'},
     )
     chemical_formula = Quantity(
         type=str,

@@ -69,6 +69,7 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
                     'recipe_file',
                     'short_name',
                     'chemical_formula',
+                    'duration_target',
                     'thickness_target',
                     'deposition_rate_target',
                     'chamber_pressure',
@@ -134,6 +135,11 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
         description='Amount of material deposited efefctively in the process',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
         unit='nm',
+    )
+    duration_target = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute',
     )
     duration_measured = Quantity(
         type=np.float64,
@@ -204,8 +210,7 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
                     'step_type',
                     'definition_of_process_step',
                     'recipe_name',
-                    'thickness_from_recipe',
-                    'duration_from_recipe',
+                    'recipe_file',
                     'short_name',
                     'chemical_formula',
                     'thickness_target',
@@ -229,18 +234,6 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
                 ]
             },
         },
-    )
-    thickness_from_recipe = Quantity(
-        type=np.float64,
-        description='Amount of material deposited as described in the recipe',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
-        unit='nm',
-    )
-    duration_from_recipe = Quantity(
-        type=np.float64,
-        description='Time prescribed by the recipe',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
-        unit='minute',
     )
     short_name = Quantity(
         type=str,
@@ -308,7 +301,6 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
         },
         unit='celsius',
     )
-
     dewetting_duration = Quantity(
         type=np.float64,
         description='The duration of the dewetting',
@@ -458,6 +450,7 @@ class Bonding(FabricationProcessStep, ArchiveSection):
                     'step_type',
                     'definition_of_process_step',
                     'recipe_name',
+                    'recipe_file',
                     'wafer_bonding_type',
                     'alignment_required',
                     'alignment_max_error',
@@ -472,7 +465,6 @@ class Bonding(FabricationProcessStep, ArchiveSection):
             },
         },
     )
-
     wafer_bonding_type = Quantity(
         type=str,
         a_eln={'component': 'StringEditQuantity'},
@@ -540,12 +532,13 @@ class ElectronGun(FabricationProcessStep, ArchiveSection):
                     'step_type',
                     'definition_of_process_step',
                     'recipe_name',
+                    'recipe_file',
                     'short_name',
                     'wafer_stack_name',
-                    'deposition_thickness_target',
-                    'deposition_duration',
-                    'deposition_chamber_pressure',
-                    'deposition_thickness_measured',
+                    'thickness_target',
+                    'duration_target',
+                    'chamber_pressure',
+                    'thickness_measured',
                     'gun_voltage_measured',
                     'gun_current_measured',
                     'notes',
@@ -562,22 +555,22 @@ class ElectronGun(FabricationProcessStep, ArchiveSection):
         type=str,
         a_eln={'component': 'StringEditQuantity'},
     )
-    deposition_thickness_target = Quantity(
+    thickness_target = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
         unit='nm',
     )
-    deposition_duration = Quantity(
+    duration_target = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
     )
-    deposition_chamber_pressure = Quantity(
+    chamber_pressure = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
         unit='mbar',
     )
-    deposition_thickness_measured = Quantity(
+    thickness_measured = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
         unit='nm',
@@ -624,6 +617,7 @@ class Sputtering(Chemical, FabricationProcessStep, ArchiveSection):
                     'step_type',
                     'definition_of_process_step',
                     'recipe_name',
+                    'recipe_file',
                     'short_name',
                     'chemical_formula',
                     'thickness_target',
@@ -743,6 +737,7 @@ class SOG(Chemical, FabricationProcessStep, ArchiveSection):
                     'step_type',
                     'definition_of_process_step',
                     'recipe_name',
+                    'recipe_file',
                     'short_name',
                     'chemical_formula',
                     'pre_cleaning',
@@ -755,7 +750,6 @@ class SOG(Chemical, FabricationProcessStep, ArchiveSection):
             },
         },
     )
-
     short_name = Quantity(
         type=str,
         a_eln={'component': 'StringEditQuantity', 'label': 'Substrate Material'},
@@ -769,8 +763,8 @@ class SOG(Chemical, FabricationProcessStep, ArchiveSection):
     thickness_target = Quantity(
         type=np.float64,
         description='Amount of material to be deposited',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'um'},
-        unit='um',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm',
     )
     dewetting_duration = Quantity(
         type=np.float64,
@@ -793,8 +787,8 @@ class SOG(Chemical, FabricationProcessStep, ArchiveSection):
     thickness_measured = Quantity(
         type=np.float64,
         description='Amount of material deposited as described in the recipe',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'um'},
-        unit='um',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm',
     )
 
     substrate_elemental_composition = SubSection(
