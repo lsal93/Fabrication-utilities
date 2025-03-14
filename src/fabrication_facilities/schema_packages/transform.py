@@ -487,7 +487,7 @@ class Annealing(Chemical, FabricationProcessStep, ArchiveSection):
                 print('No elements provided')
             self.material_elemental_composition = elementality
         if self.gas_formula:
-            elements, counts = parse_gas_formula(self.gas_formula)
+            elements, counts = parse_chemical_formula(self.gas_formula)
             total = 0
             for token in counts:
                 total += int(token)
