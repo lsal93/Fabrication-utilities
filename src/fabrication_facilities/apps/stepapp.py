@@ -163,13 +163,13 @@ stepapp = App(
                     Menu(
                         title='Measurements',
                         items=[
-#                            menuutils_obsmeasurements
+                            #                            menuutils_obsmeasurements
                         ],
                     ),
                     Menu(
                         title='Starting material',
                         items=[
-#                            menuutils_startingmaterial
+                            #                            menuutils_startingmaterial
                         ],
                     ),
                 ],
