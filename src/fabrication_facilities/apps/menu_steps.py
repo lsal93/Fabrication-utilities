@@ -56,6 +56,26 @@ menuadd_icpcvd = Menu(
                 unit='nm',
             ),
         ),
+        MenuItemHistogram(
+            title='Required duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.duration_target#{dir_path["dir1"]}',
+                title='duration',
+                unit='minute',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Deposition rate target',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.deposition_rate_target#{dir_path["dir1"]}',
+                title='deposition rate target',
+                unit='nm/minute',
+            ),
+        ),
         MenuItemPeriodicTable(
             title='Elements of gases employed',
             type='periodic_table',
@@ -793,6 +813,16 @@ menuremove_drie = Menu(
                 unit='nm',
             ),
         ),
+        MenuItemHistogram(
+            title='etching rate target',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_rate_target#{dir_path["dir5"]}',
+                title='etching rate target',
+                unit='nm/minute',
+            ),
+        ),
         MenuItemPeriodicTable(
             title='Elements of gases employed',
             type='periodic_table',
@@ -1016,9 +1046,9 @@ menutrans_annealing = Menu(
             ),
         ),
         MenuItemTerms(
-            title='Gas name',
+            title='Gas formula',
             type='terms',
-            search_quantity=f'data.gas_name#{dir_path["dir9"]}',
+            search_quantity=f'data.gas_formula#{dir_path["dir9"]}',
         ),
         MenuItemHistogram(
             title='Gas percentage',
@@ -1026,7 +1056,7 @@ menutrans_annealing = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.gas_percentage#{dir_path["dir9"]}',
-                title='gas percentage',
+                title='gas percentage (%)',
             ),
         ),
         MenuItemHistogram(
@@ -1036,6 +1066,7 @@ menutrans_annealing = Menu(
             x=Axis(
                 search_quantity=f'data.gas_flow#{dir_path["dir9"]}',
                 title='gas flow',
+                unit='centimeter^3/minute',
             ),
         ),
         MenuItemHistogram(
@@ -1141,6 +1172,7 @@ menutrans_ltodensification = Menu(
             x=Axis(
                 search_quantity=f'data.gas_flow#{dir_path["dir10"]}',
                 title='gas flow',
+                unit='centimeter^3/minute',
             ),
         ),
         MenuItemHistogram(
@@ -1246,6 +1278,7 @@ menutrans_thermaloxidation = Menu(
             x=Axis(
                 search_quantity=f'data.gas_flow#{dir_path["dir11"]}',
                 title='gas flow',
+                unit='centimeter^3/minute',
             ),
         ),
         MenuItemTerms(

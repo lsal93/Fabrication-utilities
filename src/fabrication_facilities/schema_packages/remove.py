@@ -88,6 +88,7 @@ class DRIE(Chemical, FabricationProcessStep, ArchiveSection):
                     'chemical_formula',
                     'depth_target',
                     'duration_target',
+                    'etching_rate_target',
                     'chamber_pressure',
                     'chuck_temperature',
                     'power',
@@ -99,6 +100,12 @@ class DRIE(Chemical, FabricationProcessStep, ArchiveSection):
                 ]
             },
         },
+    )
+    etching_rate_target = Quantity(
+        type=np.float64,
+        description='etching rate desired',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm/minute'},
+        unit='nm/minute',
     )
     duration_target = Quantity(
         type=np.float64,
