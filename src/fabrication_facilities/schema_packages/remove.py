@@ -458,7 +458,8 @@ class WetEtching(Chemical, FabricationProcessStep, ArchiveSection):
                     'depth_measured',
                     'duration_measured',
                     'etching_rate_obtained',
-                    'etching_typenotes',
+                    'etching_type',
+                    'notes',
                 ]
             },
         },
