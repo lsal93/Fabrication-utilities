@@ -254,8 +254,8 @@ class RIE(Chemical, FabricationProcessStep, ArchiveSection):
     duration_target = Quantity(
         type=np.float64,
         description='Time prescribed by the recipe',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
-        unit='minute',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
     )
     chemical_formula = Quantity(
         type=str,
@@ -289,8 +289,8 @@ class RIE(Chemical, FabricationProcessStep, ArchiveSection):
     duration_measured = Quantity(
         type=np.float64,
         description='Real time of the process ad output',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
-        unit='minute',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
     )
     etching_rate_obtained = Quantity(
         type=np.float64,

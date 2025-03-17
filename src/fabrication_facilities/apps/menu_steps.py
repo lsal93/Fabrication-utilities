@@ -2217,7 +2217,7 @@ menuremove_rie = Menu(
             x=Axis(
                 search_quantity=f'data.duration_target#{dir_path["dir20"]}',
                 title='duration target',
-                unit='minute',
+                unit='sec',
             ),
         ),
         MenuItemHistogram(
@@ -2252,7 +2252,7 @@ menuremove_rie = Menu(
             x=Axis(
                 search_quantity=f'data.duration_measured#{dir_path["dir20"]}',
                 title='duration measured',
-                unit='minute',
+                unit='sec',
             ),
         ),
         MenuItemHistogram(
