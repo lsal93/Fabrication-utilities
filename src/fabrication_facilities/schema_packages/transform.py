@@ -1231,8 +1231,8 @@ class Track(Chemical, FabricationProcessStep, ArchiveSection):
     )
     exposure_power_density = Quantity(
         type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'eV/cm^2'},
-        unit='eV/cm^2',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mwatt/cm^2'},
+        unit='mwatt/cm^2',
     )
     exposure_duration = Quantity(
         type=np.float64,

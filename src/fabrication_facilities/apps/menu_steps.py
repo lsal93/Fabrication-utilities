@@ -1748,7 +1748,7 @@ menutrans_track = Menu(
             x=Axis(
                 search_quantity=f'data.exposure_power_density#{dir_path["dir16"]}',
                 title='exposure power density',
-                unit='eV/cm^2',
+                unit='mwatt/cm^2',
             ),
         ),
         MenuItemHistogram(
