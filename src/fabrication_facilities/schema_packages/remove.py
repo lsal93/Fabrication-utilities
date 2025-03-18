@@ -495,8 +495,8 @@ class WetEtching(Chemical, FabricationProcessStep, ArchiveSection):
     duration_target = Quantity(
         type=np.float64,
         description='Time prescribed by the recipe',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
-        unit='sec',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute',
     )
     depth_measured = Quantity(
         type=np.float64,

@@ -2333,7 +2333,7 @@ menuremove_wetetching = Menu(
             x=Axis(
                 search_quantity=f'data.duration_target#{dir_path["dir21"]}',
                 title='duration target',
-                unit='sec',
+                unit='minute',
             ),
         ),
         MenuItemHistogram(
