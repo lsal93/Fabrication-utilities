@@ -2040,7 +2040,7 @@ menuadd_sputtering = Menu(
             x=Axis(
                 search_quantity=f'data.delay_between_stack_layers#{dir_path["dir18"]}',
                 title='delay between stack layers',
-                unit='sec',
+                unit='minute',
             ),
         ),
         MenuItemHistogram(
@@ -2050,7 +2050,7 @@ menuadd_sputtering = Menu(
             x=Axis(
                 search_quantity=f'data.thickness_measured#{dir_path["dir18"]}',
                 title='thickness obtained',
-                unit='um',
+                unit='nm',
             ),
         ),
         MenuItemHistogram(
@@ -2060,7 +2060,7 @@ menuadd_sputtering = Menu(
             x=Axis(
                 search_quantity=f'data.duration_measured#{dir_path["dir18"]}',
                 title='duration measured',
-                unit='minute',
+                unit='sec',
             ),
         ),
         MenuItemHistogram(
