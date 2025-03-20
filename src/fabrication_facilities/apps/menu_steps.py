@@ -2033,6 +2033,21 @@ menuadd_sputtering = Menu(
             type='periodic_table',
             search_quantity=f'{mec}#{dir_path["dir18"]}',
         ),
+        MenuItemTerms(
+            title='Sample Movement',
+            type='terms',
+            search_quantity=f'data.sample_movement#{dir_path["dir18"]}',
+        ),
+        MenuItemHistogram(
+            title='Movement frequency',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.spin_frequency#{dir_path["dir18"]}',
+                title='frequency',
+                unit='rpm',
+            ),
+        ),
         MenuItemHistogram(
             title='Desired thickness',
             type='histogram',

@@ -636,6 +636,9 @@ class Sputtering(Chemical, FabricationProcessStep, ArchiveSection):
                     'recipe_file',
                     'short_name',
                     'chemical_formula',
+                    'index',
+                    'sample_movement',
+                    'spin_frequency',
                     'thickness_target',
                     'duration_target',
                     'chuck_temperature',
@@ -653,6 +656,26 @@ class Sputtering(Chemical, FabricationProcessStep, ArchiveSection):
         type=str,
         description='Material to be deposited',
         a_eln={'component': 'StringEditQuantity', 'label': 'target material'},
+    )
+    sample_movement = Quantity(
+        type=str,
+        description='Movimentation the sample is exposed to',
+        a_eln={'component': 'StringEditQuantity',},
+    )
+    spin_frequency = Quantity(
+        type=np.float64,
+        description='Velocity of the spinner',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'revolutions_per_minute',
+            'label': 'Movimentation frequency'
+        },
+        unit='revolutions_per_minute',
+    )
+    index = Quantity(
+        type=int,
+        description='Deposition step index',
+        a_eln={'component': 'NumberEditQuantity',},
     )
     thickness_target = Quantity(
         type=np.float64,
