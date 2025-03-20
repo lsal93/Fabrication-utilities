@@ -30,8 +30,8 @@ from fabrication_facilities.apps.menu_steps import (
     menutrans_sod,
     menutrans_thermaloxidation,
     menutrans_track,
-    #    menuutils_obsmeasurements,
-    #    menuutils_startingmaterial,
+    menuutils_obsmeasurements,
+    menuutils_startingmaterial,
 )
 
 schemas = [f'*#{path_value}' for path_value in dir_path.values()]
