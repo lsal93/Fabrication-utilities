@@ -740,7 +740,6 @@ class Dicing(FabricationProcessStep, ArchiveSection):
                     'blade_name',
                     'depth_target',
                     'protective_film_required',
-                    'file_name',
                     'spindle_frequency',
                     'dicing_feed_rate',
                     'depth_step_1',
@@ -771,12 +770,6 @@ class Dicing(FabricationProcessStep, ArchiveSection):
         a_eln={
             'label': 'Protective film',
             'component': 'BoolEditQuantity',
-        },
-    )
-    file_name = Quantity(
-        type=str,
-        a_eln={
-            'component': 'StringEditQuantity',
         },
     )
     spindle_frequency = Quantity(
