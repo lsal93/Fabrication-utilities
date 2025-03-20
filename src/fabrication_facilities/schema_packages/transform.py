@@ -990,6 +990,8 @@ class SOD(Chemical, FabricationProcessStep, ArchiveSection):
                     'peb_duration',
                     'peb_temperature',
                     'spin_frequency',
+                    'spin_angular_acceleration',
+                    'spin_duration',
                     'notes',
                 ]
             },
@@ -1057,6 +1059,24 @@ class SOD(Chemical, FabricationProcessStep, ArchiveSection):
             'defaultDisplayUnit': 'revolutions_per_minute',
         },
         unit='revolutions_per_minute',
+    )
+    spin_angular_acceleration = Quantity(
+        type=np.float64,
+        description='Acceleration of the spinner',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'revolutions_per_minute/sec',
+        },
+        unit='revolutions_per_minute/sec',
+    )
+    spin_duration = Quantity(
+        type=np.float64,
+        description='Acceleration of the spinner',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
     )
     doping_material_elemental_composition = SubSection(
         section_def=ElementalComposition, repeats=True

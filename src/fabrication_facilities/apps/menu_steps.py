@@ -244,6 +244,16 @@ menuadd_spincoat = Menu(
             search_quantity=f'data.exposure_required#{dir_path["dir2"]}',
         ),
         MenuItemHistogram(
+            title='Exposure power density',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.exposure_intensity#{dir_path["dir2"]}',
+                title='exposure power density',
+                unit='mwatt/cm^2',
+            ),
+        ),
+        MenuItemHistogram(
             title='Exposure duration',
             type='histogram',
             n_bins=10,
@@ -1050,6 +1060,11 @@ menutrans_annealing = Menu(
             type='terms',
             search_quantity=f'data.gas_formula#{dir_path["dir9"]}',
         ),
+        MenuItemPeriodicTable(
+            title='Elements of the gas',
+            type='periodic_table',
+            search_quantity=f'{gec}#{dir_path["dir9"]}',
+        ),
         MenuItemHistogram(
             title='Gas percentage',
             type='histogram',
@@ -1160,7 +1175,7 @@ menutrans_ltodensification = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.densification_temperature#{dir_path["dir10"]}',
+                search_quantity=f'data.temperature_target#{dir_path["dir10"]}',
                 title='densification temperature',
                 unit='kelvin',
             ),
@@ -1332,11 +1347,6 @@ menutrans_dicing = Menu(
             type='terms',
             search_quantity=f'data.protective_film_required#{dir_path["dir12"]}',
         ),
-        MenuItemTerms(
-            title='File name',
-            type='terms',
-            search_quantity=f'data.file_name#{dir_path["dir12"]}',
-        ),
         MenuItemHistogram(
             title='Spindle frequency',
             type='histogram',
@@ -1438,7 +1448,7 @@ menutrans_doping = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.doping_temperature#{dir_path["dir13"]}',
+                search_quantity=f'data.temperature_target#{dir_path["dir13"]}',
                 title='doping temperature',
                 unit='kelvin',
             ),
@@ -1448,7 +1458,7 @@ menutrans_doping = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.doping_duration#{dir_path["dir13"]}',
+                search_quantity=f'data.duration_target#{dir_path["dir13"]}',
                 title='doping duration',
                 unit='minute',
             ),
@@ -1626,6 +1636,16 @@ menutrans_sod = Menu(
             ),
         ),
         MenuItemHistogram(
+            title='Spin duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.spin_duration#{dir_path["dir15"]}',
+                title='spin duration',
+                unit='sec',
+            ),
+        ),
+        MenuItemHistogram(
             title='Spin frequency',
             type='histogram',
             n_bins=10,
@@ -1633,6 +1653,16 @@ menutrans_sod = Menu(
                 search_quantity=f'data.spin_frequency#{dir_path["dir15"]}',
                 title='spin frequency',
                 unit='revolutions_per_minute',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Spin angular acceleration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.spin_angular_acceleration#{dir_path["dir15"]}',
+                title='angular acceleration',
+                unit='rpm/sec',
             ),
         ),
         MenuItemTerms(
@@ -1742,11 +1772,11 @@ menutrans_track = Menu(
             search_quantity=f'data.exposure_mask_contact_type#{dir_path["dir16"]}',
         ),
         MenuItemHistogram(
-            title='Exposure power density',
+            title='Exposure intensity',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.exposure_power_density#{dir_path["dir16"]}',
+                search_quantity=f'data.exposure_intensity#{dir_path["dir16"]}',
                 title='exposure power density',
                 unit='mwatt/cm^2',
             ),
@@ -1897,7 +1927,7 @@ menuadd_electrongun = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.deposition_thickness_target#{dir_path["dir17"]}',
+                search_quantity=f'data.thickness_target#{dir_path["dir17"]}',
                 title='thickness target',
                 unit='nm',
             ),
@@ -1907,7 +1937,7 @@ menuadd_electrongun = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.deposition_duration#{dir_path["dir17"]}',
+                search_quantity=f'data.duration_target#{dir_path["dir17"]}',
                 title='duration',
                 unit='sec',
             ),
@@ -1917,7 +1947,7 @@ menuadd_electrongun = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.deposition_chamber_pressure#{dir_path["dir17"]}',
+                search_quantity=f'data.chamber_pressure#{dir_path["dir17"]}',
                 title='chamber pressure',
                 unit='mbar',
             ),
@@ -1927,7 +1957,7 @@ menuadd_electrongun = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.deposition_thickness_measured#{dir_path["dir17"]}',
+                search_quantity=f'data.thickness_measured#{dir_path["dir17"]}',
                 title='thickness measured',
                 unit='nm',
             ),
@@ -2105,7 +2135,7 @@ menuadd_sog = Menu(
             search_quantity=f'data.recipe_name#{dir_path["dir19"]}',
         ),
         MenuItemTerms(
-            title='Substrate material (short name)',
+            title='Substrate material',
             type='terms',
             search_quantity=f'data.short_name#{dir_path["dir19"]}',
         ),

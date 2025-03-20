@@ -133,7 +133,7 @@ stepapp = App(
                         ],
                     ),
                     Menu(
-                        title='Others',
+                        title='Labeling',
                         items=[
                             menutrans_labelingcleaning,
                         ],
@@ -157,21 +157,15 @@ stepapp = App(
                 ],
             ),
             Menu(
-                title='Others',
-                indentation=0,
+                title='Starting material',
                 items=[
-                    Menu(
-                        title='Measurements',
-                        items=[
-                            #                            menuutils_obsmeasurements
-                        ],
-                    ),
-                    Menu(
-                        title='Starting material',
-                        items=[
-                            #                            menuutils_startingmaterial
-                        ],
-                    ),
+                    menuutils_startingmaterial,
+                ],
+            ),
+            Menu(
+                title='Measurements',
+                items=[
+                    menuutils_obsmeasurements,
                 ],
             ),
             Menu(
