@@ -2220,6 +2220,16 @@ menuremove_rie = Menu(
                 unit='sec',
             ),
         ),
+        MenuItemPeriodicTable(
+            title='Elements of gases employed',
+            type='periodic_table',
+            search_quantity=f'{flux}#{dir_path["dir20"]}',
+        ),
+        MenuItemTerms(
+            title='Gases formulas',
+            type='terms',
+            search_quantity=f'data.fluximeters.chemical_formula#{dir_path["dir20"]}',
+        ),
         MenuItemHistogram(
             title='Chamber pressure',
             type='histogram',
