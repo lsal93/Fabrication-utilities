@@ -216,6 +216,7 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
                     'thickness_target',
                     'hdms_required',
                     'exposure_required',
+                    'exposure_intensity',
                     'exposure_duration',
                     'peb_required',
                     'peb_duration',
@@ -266,6 +267,11 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
         a_eln={
             'component': 'BoolEditQuantity',
         },
+    )
+    exposure_intensity = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mwatt/cm^2'},
+        unit='mwatt/cm^2',
     )
     exposure_duration = Quantity(
         type=np.float64,

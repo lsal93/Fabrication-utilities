@@ -1010,7 +1010,9 @@ class SOD(Chemical, FabricationProcessStep, ArchiveSection):
         type=int,
         a_eln={
             'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
         },
+        unit= 'sec',
     )
     water_rinse_required = Quantity(
         type=MEnum('Yes', 'No', 'Other (see Note)'),
@@ -1122,7 +1124,7 @@ class Track(Chemical, FabricationProcessStep, ArchiveSection):
                     'alignment_type',
                     'mask_target',
                     'exposure_mask_contact_type',
-                    'exposure_power_density',
+                    'exposure_intensity',
                     'exposure_duration',
                     'developing_duration',
                     'developing_rinse_spin_dryer_required',
@@ -1222,7 +1224,7 @@ class Track(Chemical, FabricationProcessStep, ArchiveSection):
             'component': 'StringEditQuantity',
         },
     )
-    exposure_power_density = Quantity(
+    exposure_intensity = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mwatt/cm^2'},
         unit='mwatt/cm^2',
