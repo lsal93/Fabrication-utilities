@@ -544,6 +544,7 @@ class ElectronGun(FabricationProcessStep, ArchiveSection):
                     'thickness_target',
                     'duration_target',
                     'chamber_pressure',
+                    'spin_frequency',
                     'thickness_measured',
                     'gun_voltage_measured',
                     'gun_current_measured',
@@ -560,6 +561,15 @@ class ElectronGun(FabricationProcessStep, ArchiveSection):
     wafer_stack_name = Quantity(
         type=str,
         a_eln={'component': 'StringEditQuantity'},
+    )
+    spin_frequency = Quantity(
+        type=np.float64,
+        description='Velocity of the spinner',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'revolutions_per_minute',
+        },
+        unit='revolutions_per_minute',
     )
     thickness_target = Quantity(
         type=np.float64,

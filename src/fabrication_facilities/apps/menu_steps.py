@@ -1953,6 +1953,16 @@ menuadd_electrongun = Menu(
             ),
         ),
         MenuItemHistogram(
+            title='Spin frequency',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.spin_frequency#{dir_path["dir17"]}',
+                title='frequency',
+                unit='rpm',
+            ),
+        ),
+        MenuItemHistogram(
             title='Deposition thickness (measured)',
             type='histogram',
             n_bins=10,
