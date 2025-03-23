@@ -1345,16 +1345,16 @@ class Track(Chemical, FabricationProcessStep, ArchiveSection):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        if self.exposure_required:
-            self.exposure_duration = Quantity(
-                type=np.float64,
-                description='The duration of the exposure',
-                a_eln={
-                    'component': 'NumberEditQuantity',
-                    'defaultDisplayUnit': 'minute',
-                },
-                unit='minute',
-            )
+        # if self.exposure_required:
+        #     self.exposure_duration = Quantity(
+        #         type=np.float64,
+        #         description='The duration of the exposure',
+        #         a_eln={
+        #             'component': 'NumberEditQuantity',
+        #             'defaultDisplayUnit': 'minute',
+        #         },
+        #         unit='minute',
+        #     )
         if self.chemical_formula:
             elements, counts = parse_chemical_formula(self.chemical_formula)
             total = 0
