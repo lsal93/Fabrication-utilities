@@ -1218,10 +1218,9 @@ class Track(Chemical, FabricationProcessStep, ArchiveSection):
         unit='celsius',
     )
     hdms_required = Quantity(
-        type=bool,
-        description='The recipe use the hdms?',
+        type=str,
         a_eln={
-            'component': 'BoolEditQuantity',
+            'component': 'StringEditQuantity',
         },
     )
     mask_aligner_name = Quantity(
@@ -1272,10 +1271,9 @@ class Track(Chemical, FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'EnumEditQuantity'},
     )
     peb_required = Quantity(
-        type=bool,
-        description='The recipe use exposure?',
+        type=str,
         a_eln={
-            'component': 'BoolEditQuantity',
+            'component': 'StringEditQuantity',
         },
     )
     peb_duration = Quantity(
@@ -1297,9 +1295,9 @@ class Track(Chemical, FabricationProcessStep, ArchiveSection):
         unit='celsius',
     )
     softbake_required = Quantity(
-        type=bool,
+        type=str,
         a_eln={
-            'component': 'BoolEditQuantity',
+            'component': 'StringEditQuantity',
         },
     )
     softbake_duration = Quantity(
@@ -1319,9 +1317,9 @@ class Track(Chemical, FabricationProcessStep, ArchiveSection):
         unit='celsius',
     )
     hardbake_required = Quantity(
-        type=bool,
+        type=str,
         a_eln={
-            'component': 'BoolEditQuantity',
+            'component': 'StringEditQuantity',
         },
     )
     hardbake_duration = Quantity(
