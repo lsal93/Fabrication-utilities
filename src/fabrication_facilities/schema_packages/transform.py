@@ -924,8 +924,10 @@ class LabelingCleaning(FabricationProcessStep, ArchiveSection):
         },
     )
     wafer_label_position = Quantity(
-        type=MEnum('Yes', 'No', 'Other (see Note)'),
-        a_eln={'component': 'EnumEditQuantity'},
+        type=str,
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
     )
     wafer_label_name = Quantity(
         type=MEnum('Yes', 'No', 'Other (see Note)'),
