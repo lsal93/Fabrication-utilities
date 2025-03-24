@@ -619,10 +619,8 @@ class Stripping(Chemical, FabricationProcessStep, ArchiveSection):
         unit='sec',
     )
     ultrasound_required = Quantity(
-        type=bool,
-        a_eln={
-            'component': 'BoolEditQuantity',
-        },
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
     )
 
     material_elemental_composition = SubSection(
