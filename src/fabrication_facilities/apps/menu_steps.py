@@ -84,7 +84,7 @@ menuadd_icpcvd = Menu(
         MenuItemTerms(
             title='Gases formulas',
             type='terms',
-            search_quantity=f'data.fluximeters.name#{dir_path["dir1"]}',
+            search_quantity=f'data.fluximeters.chemical_formula#{dir_path["dir1"]}',
         ),
         MenuItemHistogram(
             title='Chuck temperature',
@@ -117,12 +117,22 @@ menuadd_icpcvd = Menu(
             ),
         ),
         MenuItemHistogram(
-            title='Power',
+            title='Chuck Power',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.power#{dir_path["dir1"]}',
-                title='power',
+                search_quantity=f'data.chuck_power#{dir_path["dir1"]}',
+                title='chuck power',
+                unit='watt',
+            ),
+        ),
+        MenuItemHistogram(
+            title='ICP Power',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.icp_power#{dir_path["dir1"]}',
+                title='icp power',
                 unit='watt',
             ),
         ),
@@ -874,12 +884,22 @@ menuremove_drie = Menu(
             ),
         ),
         MenuItemHistogram(
-            title='Power',
+            title='Chuck Power',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.power#{dir_path["dir5"]}',
+                search_quantity=f'data.chuck_power#{dir_path["dir5"]}',
                 title='power',
+                unit='W',
+            ),
+        ),
+        MenuItemHistogram(
+            title='ICP Power',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.icp_power#{dir_path["dir5"]}',
+                title='icp power',
                 unit='W',
             ),
         ),

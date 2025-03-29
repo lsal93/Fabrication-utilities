@@ -74,7 +74,8 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
                     'deposition_rate_target',
                     'chamber_pressure',
                     'chuck_temperature',
-                    'power',
+                    'chuck_power',
+                    'icp_power',
                     'bias',
                     'thickness_measured',
                     'duration_measured',
@@ -87,7 +88,10 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
     deposition_rate_target = Quantity(
         type=np.float64,
         description='Deposition rate desired',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm/minute'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm/minute',
+        },
         unit='nm/minute',
     )
     short_name = Quantity(
@@ -118,9 +122,15 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
         unit='celsius',
     )
-    power = Quantity(
+    chuck_power = Quantity(
         type=np.float64,
-        description='Power erogated',
+        description='Power erogated on the chuck',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'watt'},
+        unit='watt',
+    )
+    icp_power = Quantity(
+        type=np.float64,
+        description='Power erogated in the region of the plasma',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'watt'},
         unit='watt',
     )

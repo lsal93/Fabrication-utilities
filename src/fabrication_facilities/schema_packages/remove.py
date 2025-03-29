@@ -91,7 +91,8 @@ class DRIE(Chemical, FabricationProcessStep, ArchiveSection):
                     'etching_rate_target',
                     'chamber_pressure',
                     'chuck_temperature',
-                    'power',
+                    'chuck_power',
+                    'icp_power',
                     'bias',
                     'depth_measured',
                     'duration_measured',
@@ -144,9 +145,15 @@ class DRIE(Chemical, FabricationProcessStep, ArchiveSection):
         },
         unit='celsius',
     )
-    power = Quantity(
+    chuck_power = Quantity(
         type=np.float64,
-        description='Power erogated',
+        description='Power erogated on the chuck',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'watt'},
+        unit='watt',
+    )
+    icp_power = Quantity(
+        type=np.float64,
+        description='Power erogated in the region of the plasma',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'watt'},
         unit='watt',
     )
