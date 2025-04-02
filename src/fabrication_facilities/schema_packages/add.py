@@ -77,7 +77,9 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
                     'chamber_pressure',
                     'chuck_temperature',
                     'chuck_power',
+                    'chuck_frequency',
                     'icp_power',
+                    'icp_frequency',
                     'bias',
                     'thickness_measured',
                     'duration_measured',
@@ -99,7 +101,10 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
     short_name = Quantity(
         type=str,
         description='Material to be deposited',
-        a_eln={'component': 'StringEditQuantity', 'label': 'target material'},
+        a_eln={
+            'component': 'StringEditQuantity',
+            'label': 'target material',
+        },
     )
     chemical_formula = Quantity(
         type=str,
@@ -109,73 +114,109 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
     thickness_target = Quantity(
         type=np.float64,
         description='Amount of material to be deposited',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
         unit='nm',
     )
     chamber_pressure = Quantity(
         type=np.float64,
         description='Pressure in the chamber',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
         unit='mbar',
     )
     chuck_temperature = Quantity(
         type=np.float64,
         description='Temperature of the chuck',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
         unit='celsius',
     )
     chuck_power = Quantity(
         type=np.float64,
         description='Power erogated on the chuck',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'watt'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
         unit='watt',
     )
     chuck_frequency = Quantity(
         type=np.float64,
         description='Frequency of current on the chuck',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'MHz'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
         unit='MHz',
     )
     icp_power = Quantity(
         type=np.float64,
         description='Power erogated in the region of the plasma',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'watt'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
         unit='watt',
     )
     icp_frequency = Quantity(
         type=np.float64,
         description='Frequency of current on the gases area',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'MHz'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
         unit='MHz',
     )
     bias = Quantity(
         type=np.float64,
         description='Bias voltage in the chamber',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'volt'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'volt',
+        },
         unit='volt',
     )
     thickness_measured = Quantity(
         type=np.float64,
         description='Actual amount of material deposited in the process',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
         unit='nm',
     )
     duration_target = Quantity(
         type=np.float64,
-	description='Duration required of the process',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+	    description='Duration required of the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'minute',
+        },
         unit='minute',
     )
     duration_measured = Quantity(
         type=np.float64,
         description='Real time employed',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'minute',
+        },
         unit='minute',
     )
     deposition_rate_obtained = Quantity(
         type=np.float64,
         description='Deposition rate as output',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm/minute'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm/minute',
+        },
         unit='nm/minute',
     )
     fluximeters = SubSection(
@@ -267,39 +308,42 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     short_name = Quantity(
         type=str,
         description='Type of resist to be deposited',
-        a_eln={'component': 'StringEditQuantity', 'label': 'resist name'},
+        a_eln={
+            'component': 'StringEditQuantity',
+            'label': 'resist name',
+        },
     )
     chemical_formula = Quantity(
         type=str,
         description='Resist formula. Insert only if known',
-        a_eln={
-            'component': 'StringEditQuantity',
-        },
+        a_eln={'component': 'StringEditQuantity'},
     )
     thickness_target = Quantity(
         type=np.float64,
         description='Amount of resist to be deposited',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
         unit='nm',
     )
     hdms_required = Quantity(
         type=bool,
         description='The recipe use the hdms?',
-        a_eln={
-            'component': 'BoolEditQuantity',
-        },
+        a_eln={'component': 'BoolEditQuantity'},
     )
     exposure_required = Quantity(
         type=bool,
         description='The recipe use exposure?',
-        a_eln={
-            'component': 'BoolEditQuantity',
-        },
+        a_eln={'component': 'BoolEditQuantity'},
     )
     exposure_intensity = Quantity(
         type=np.float64,
-	description='Power per area in the exposure',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mwatt/cm^2'},
+	    description='Power per area in the exposure',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mwatt/cm^2',
+        },
         unit='mwatt/cm^2',
     )
     exposure_duration = Quantity(
@@ -314,9 +358,7 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     peb_required = Quantity(
         type=bool,
         description='The recipe needs PEB?',
-        a_eln={
-            'component': 'BoolEditQuantity',
-        },
+        a_eln={'component': 'BoolEditQuantity'},
     )
     peb_duration = Quantity(
         type=np.float64,
@@ -418,7 +460,10 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     thickness_measured = Quantity(
         type=np.float64,
         description='Actual amount of resist deposited',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
         unit='nm',
     )
 

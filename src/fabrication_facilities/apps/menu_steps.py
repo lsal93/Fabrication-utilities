@@ -571,6 +571,16 @@ menutrans_ebl = Menu(
             ),
         ),
         MenuItemHistogram(
+            title='Chuck temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                title='chuck temperature',
+                unit='kelvin',
+                search_quantity=f'data.chuck_temperature#{dir_path["dir3"]}',
+            ),
+        ),
+        MenuItemHistogram(
             title='Tension',
             type='histogram',
             n_bins=10,
@@ -684,6 +694,16 @@ menutrans_fib = Menu(
                 title='chamber pressure',
                 unit='mbar',
                 search_quantity=f'data.chamber_pressure#{dir_path["dir4"]}',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chuck temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                title='chuck temperature',
+                unit='kelvin',
+                search_quantity=f'data.chuck_temperature#{dir_path["dir4"]}',
             ),
         ),
         MenuItemHistogram(
@@ -838,8 +858,13 @@ menuremove_drie = Menu(
             type='terms',
             search_quantity=f'data.short_name#{dir_path["dir5"]}',
         ),
+        MenuItemTerms(
+            title='Formulas of the etched material',
+            type='terms',
+            search_quantity=f'data.chemical_formula#{dir_path["dir5"]}',
+        ),
         MenuItemPeriodicTable(
-            title='Elements deposited',
+            title='Elements etched',
             type='periodic_table',
             search_quantity=f'{mec}#{dir_path["dir5"]}',
         ),
@@ -919,8 +944,18 @@ menuremove_drie = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.chuck_power#{dir_path["dir5"]}',
-                title='power',
-                unit='W',
+                title='chuck power',
+                unit='watt',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chuck Frequency',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.chuck_frequency#{dir_path["dir5"]}',
+                title='chuck frequency',
+                unit='MHz',
             ),
         ),
         MenuItemHistogram(
@@ -930,7 +965,17 @@ menuremove_drie = Menu(
             x=Axis(
                 search_quantity=f'data.icp_power#{dir_path["dir5"]}',
                 title='icp power',
-                unit='W',
+                unit='watt',
+            ),
+        ),
+        MenuItemHistogram(
+            title='ICP Frequency',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.icp_frequency#{dir_path["dir5"]}',
+                title='icp frequency',
+                unit='MHz',
             ),
         ),
         MenuItemHistogram(
