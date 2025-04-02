@@ -1,9 +1,10 @@
 from typing import (
     TYPE_CHECKING,
 )
+
+import numpy as np
 from ase.data import atomic_masses as am
 from ase.data import atomic_numbers as an
-import numpy as np
 from nomad.datamodel.data import (
     ArchiveSection,
 )
