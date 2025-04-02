@@ -41,6 +41,11 @@ menuadd_icpcvd = Menu(
             type='terms',
             search_quantity=f'data.short_name#{dir_path["dir1"]}',
         ),
+        MenuItemTerms(
+            title='Formula of the material to be deposited',
+            type='terms',
+            search_quantity=f'data.chemical_formula#{dir_path["dir1"]}',
+        ),
         MenuItemPeriodicTable(
             title='Elements deposited',
             type='periodic_table',
@@ -127,6 +132,16 @@ menuadd_icpcvd = Menu(
             ),
         ),
         MenuItemHistogram(
+            title='Chuck Frequency',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.chuck_frequency#{dir_path["dir1"]}',
+                title='chuck frequency',
+                unit='MHz',
+            ),
+        ),
+        MenuItemHistogram(
             title='ICP Power',
             type='histogram',
             n_bins=10,
@@ -134,6 +149,16 @@ menuadd_icpcvd = Menu(
                 search_quantity=f'data.icp_power#{dir_path["dir1"]}',
                 title='icp power',
                 unit='watt',
+            ),
+        ),
+        MenuItemHistogram(
+            title='ICP Frequency',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.icp_frequency#{dir_path["dir1"]}',
+                title='icp frequency',
+                unit='MHz',
             ),
         ),
         MenuItemHistogram(
@@ -202,6 +227,11 @@ menuadd_spincoat = Menu(
             title='Resist to be deposited',
             type='terms',
             search_quantity=f'data.short_name#{dir_path["dir2"]}',
+        ),
+        MenuItemTerms(
+            title='Formulas of the resist',
+            type='terms',
+            search_quantity=f'data.chemical_formula#{dir_path["dir2"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements of the resist deposited',

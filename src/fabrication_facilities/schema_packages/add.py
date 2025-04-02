@@ -1,7 +1,8 @@
 from typing import (
     TYPE_CHECKING,
 )
-
+from ase.data import atomic_masses as am
+from ase.data import atomic_numbers as an
 import numpy as np
 from nomad.datamodel.data import (
     ArchiveSection,
@@ -101,7 +102,7 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
     )
     chemical_formula = Quantity(
         type=str,
-        description='Inserted only if known',
+        description='Formula of the material target. Insert only if known',
         a_eln={'component': 'StringEditQuantity'},
     )
     thickness_target = Quantity(
@@ -128,11 +129,23 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'watt'},
         unit='watt',
     )
+    chuck_frequency = Quantity(
+        type=np.float64,
+        description='Frequency of current on the chuck',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'MHz'},
+        unit='MHz',
+    )
     icp_power = Quantity(
         type=np.float64,
         description='Power erogated in the region of the plasma',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'watt'},
         unit='watt',
+    )
+    icp_frequency = Quantity(
+        type=np.float64,
+        description='Frequency of current on the gases area',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'MHz'},
+        unit='MHz',
     )
     bias = Quantity(
         type=np.float64,
@@ -142,12 +155,13 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
     )
     thickness_measured = Quantity(
         type=np.float64,
-        description='Amount of material deposited efefctively in the process',
+        description='Actual amount of material deposited in the process',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
         unit='nm',
     )
     duration_target = Quantity(
         type=np.float64,
+	description='Duration required of the process',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
     )
@@ -178,6 +192,7 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
             total = 0
             for token in counts:
                 total += int(token)
+            mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
             if total != 0:
                 elemental_fraction = np.array(counts) / total
                 elementality = []
@@ -186,6 +201,8 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
                     elemental_try = ElementalComposition()
                     elemental_try.element = entry
                     elemental_try.atomic_fraction = elemental_fraction[i]
+                    mass_frac = (am[an[entry]] * counts[i]) / mass
+                    elemental_try.mass_fraction = mass_frac
                     i += 1
                     elementality.append(elemental_try)
             else:
@@ -248,19 +265,19 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     )
     short_name = Quantity(
         type=str,
-        description='Material to be deposited',
+        description='Type of resist to be deposited',
         a_eln={'component': 'StringEditQuantity', 'label': 'resist name'},
     )
     chemical_formula = Quantity(
         type=str,
-        description='Inserted only if known',
+        description='Resist formula. Insert only if known',
         a_eln={
             'component': 'StringEditQuantity',
         },
     )
     thickness_target = Quantity(
         type=np.float64,
-        description='Amount of material to be deposited',
+        description='Amount of resist to be deposited',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
         unit='nm',
     )
@@ -280,6 +297,7 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     )
     exposure_intensity = Quantity(
         type=np.float64,
+	description='Power per area in the exposure',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mwatt/cm^2'},
         unit='mwatt/cm^2',
     )
@@ -373,14 +391,14 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     )
     baking_required = Quantity(
         type=bool,
-        description='The recipe use exposure?',
+        description='The recipe use baking?',
         a_eln={
             'component': 'BoolEditQuantity',
         },
     )
     baking_duration = Quantity(
         type=np.float64,
-        description='The duration of the dewetting',
+        description='The duration of the baking',
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'minute',
@@ -389,7 +407,7 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     )
     baking_temperature = Quantity(
         type=np.float64,
-        description='The temperaure of the dewetting',
+        description='The temperaure of the baking',
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'celsius',
@@ -398,7 +416,7 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     )
     thickness_measured = Quantity(
         type=np.float64,
-        description='Amount of material deposited as described in the recipe',
+        description='Actual amount of resist deposited',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
         unit='nm',
     )
@@ -409,21 +427,12 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        if self.exposure_required:
-            self.exposure_duration = Quantity(
-                type=np.float64,
-                description='The duration of the exposure',
-                a_eln={
-                    'component': 'NumberEditQuantity',
-                    'defaultDisplayUnit': 'minute',
-                },
-                unit='minute',
-            )
         if self.chemical_formula:
             elements, counts = parse_chemical_formula(self.chemical_formula)
             total = 0
             for token in counts:
                 total += int(token)
+            mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
             if total != 0:
                 elemental_fraction = np.array(counts) / total
                 elementality = []
@@ -432,6 +441,8 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
                     elemental_try = ElementalComposition()
                     elemental_try.element = entry
                     elemental_try.atomic_fraction = elemental_fraction[i]
+                    mass_frac = (am[an[entry]] * counts[i]) / mass
+                    elemental_try.mass_fraction = mass_frac
                     i += 1
                     elementality.append(elemental_try)
             else:
