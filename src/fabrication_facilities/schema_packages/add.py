@@ -194,7 +194,7 @@ class ICP_CVD(Chemical, FabricationProcessStep, ArchiveSection):
     )
     duration_target = Quantity(
         type=np.float64,
-	    description='Duration required of the process',
+        description='Duration required of the process',
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'minute',
@@ -339,7 +339,7 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     )
     exposure_intensity = Quantity(
         type=np.float64,
-	    description='Power per area in the exposure',
+        description='Power per area in the exposure',
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'mwatt/cm^2',
