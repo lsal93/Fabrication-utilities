@@ -475,7 +475,7 @@ class Baking(FabricationProcessStep, ArchiveSection):
 
     duration=Quantity(
         type=np.float64,
-        a_eln{'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
     )
 
