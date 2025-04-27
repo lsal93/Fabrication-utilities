@@ -2828,7 +2828,7 @@ menutrans_baking = Menu(
                 title='chuck temperature',
                 unit='K',
             ),
-        )
+        ),
         MenuItemHistogram(
             title='Duration',
             type='histogram',
