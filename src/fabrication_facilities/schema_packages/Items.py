@@ -164,14 +164,14 @@ class DopingProperties(ItemPropertyDefinition):
         ),
         a_eln={'component': 'EnumEditQuantity'},
     )
-    value = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'ppm',
-        },
-        unit='ppm',
-    )
+#    value = Quantity(
+#        type=np.float64,
+#        a_eln={
+#            'component': 'NumberEditQuantity',
+#            'defaultDisplayUnit': 'ppm',
+#        },
+#        unit='ppm',
+#    )
 
 
 class ItemShapeType(ArchiveSection):

@@ -131,6 +131,15 @@ class EBL(FabricationProcessStep, ArchiveSection):
         },
         unit='pampere',
     )
+    duration = Quantity(
+        type=np.float64,
+        description='Duration of the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'minutes',
+        },
+        unit='minutes',
+    )
     chamber_pressure = Quantity(
         type=np.float64,
         description='Pressure in the chamber',
@@ -353,6 +362,9 @@ class ResistDevelopment(FabricationProcessStep, ArchiveSection):
                     'developing_solution_proportions',
                     'developing_duration',
                     'developing_temperature',
+                    'stopping_solution',
+                    'stopping_solution_proportions',
+                    'stopping_duration',
                     'cleaning_solution',
                     'cleaning_solution_proportions',
                     'cleaning_duration',
@@ -385,6 +397,22 @@ class ResistDevelopment(FabricationProcessStep, ArchiveSection):
         },
         unit='celsius',
     )
+    stopping_solution = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    stopping_solution_proportions = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    stopping_duration = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
+    )
     cleaning_solution = Quantity(
         type=str,
         a_eln={'component': 'StringEditQuantity'},
@@ -399,6 +427,55 @@ class ResistDevelopment(FabricationProcessStep, ArchiveSection):
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'sec',
         },
+        unit='sec',
+    )
+
+
+class Baking(FabricationProcessStep, ArchiveSection):
+    m_def= Section(
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'recipe_name',
+                    'recipe_file',
+                    'chuck_temperature',
+                    'duration',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    chuck_temperature = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+
+    duration=Quantity(
+        type=np.float64,
+        a_eln{'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
     )
 
