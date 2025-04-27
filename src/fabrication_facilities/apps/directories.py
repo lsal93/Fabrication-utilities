@@ -26,4 +26,5 @@ dir_path = {
     'dir22': 'fabrication_facilities.schema_packages.remove.Stripping',
     'dir23': f'fabrication_facilities.schema_packages.{obm}',
     'dir24': f'fabrication_facilities.schema_packages.fabrication_utilities.{sm}',
+    'dir25': 'fabrication_facilities.schema_packages.transform.Baking'
 }

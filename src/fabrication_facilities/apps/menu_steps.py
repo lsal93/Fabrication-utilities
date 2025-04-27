@@ -777,7 +777,7 @@ menutrans_develop = Menu(
             search_quantity=f'data.developing_solution#{dir_path["dir7"]}',
         ),
         MenuItemTerms(
-            title='Removing solution proportions',
+            title='Developing solution proportions',
             type='terms',
             search_quantity=f'data.developing_solution_proportions#{dir_path["dir7"]}',
         ),
@@ -799,6 +799,26 @@ menutrans_develop = Menu(
                 search_quantity=f'data.developing_temperature#{dir_path["dir7"]}',
                 title='developing temperature',
                 unit='kelvin',
+            ),
+        ),
+        MenuItemTerms(
+            title='Stopping solution',
+            type='terms',
+            search_quantity=f'data.stopping_solution#{dir_path["dir7"]}',
+        ),
+        MenuItemTerms(
+            title='Stopping solution proportions',
+            type='terms',
+            search_quantity=f'data.stopping_solution_proportions#{dir_path["dir7"]}',
+        ),
+        MenuItemHistogram(
+            title='Stopping duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.stopping_duration#{dir_path["dir7"]}',
+                title='stopping duration',
+                unit='sec',
             ),
         ),
         MenuItemTerms(
@@ -2779,4 +2799,45 @@ menuutils_startingmaterial = Menu(
             search_quantity=f'data.instruments.id#{dir_path["dir24"]}',
         ),
     ],
+)
+menutrans_baking = Menu(
+    title='Baking',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir25"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir25"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir25"]}',
+        ),
+        MenuItemHistogram(
+            title='Chuck temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.chuck_temperature#{dir_path["dir25"]}',
+                title='chuck temperature',
+                unit='K',
+            ),
+        )
+        MenuItemHistogram(
+            title='Duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.duration#{dir_path["dir25"]}',
+                title='duration',
+                unit='sec',
+            ),
+        )
+    ]
 )

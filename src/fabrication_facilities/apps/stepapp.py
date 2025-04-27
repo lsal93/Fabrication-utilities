@@ -21,6 +21,7 @@ from fabrication_facilities.apps.menu_steps import (
     menuremove_wetetching,
     menutrans_annealing,
     menutrans_develop,
+    menutrans_baking,
     menutrans_dicing,
     menutrans_doping,
     menutrans_ebl,
@@ -130,6 +131,7 @@ stepapp = App(
                             menutrans_annealing,
                             menutrans_ltodensification,
                             menutrans_thermaloxidation,
+                            menutrans_baking
                         ],
                     ),
                     Menu(
