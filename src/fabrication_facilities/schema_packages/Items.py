@@ -164,6 +164,8 @@ class DopingProperties(ItemPropertyDefinition):
         ),
         a_eln={'component': 'EnumEditQuantity'},
     )
+
+
     value = Quantity(
         type=np.float64,
         a_eln={

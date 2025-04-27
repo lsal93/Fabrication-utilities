@@ -727,7 +727,9 @@ class Sputtering(Chemical, FabricationProcessStep, ArchiveSection):
     sample_movement = Quantity(
         type=str,
         description='Movimentation the sample is exposed to',
-        a_eln={'component': 'StringEditQuantity',},
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
     )
     spin_frequency = Quantity(
         type=np.float64,
@@ -735,14 +737,16 @@ class Sputtering(Chemical, FabricationProcessStep, ArchiveSection):
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'revolutions_per_minute',
-            'label': 'Movimentation frequency'
+            'label': 'Movimentation frequency',
         },
         unit='revolutions_per_minute',
     )
     index = Quantity(
         type=int,
         description='Deposition step index',
-        a_eln={'component': 'NumberEditQuantity',},
+        a_eln={
+            'component': 'NumberEditQuantity',
+        },
     )
     thickness_target = Quantity(
         type=np.float64,

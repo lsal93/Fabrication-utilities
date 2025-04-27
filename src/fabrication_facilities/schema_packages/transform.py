@@ -35,7 +35,6 @@ m_package = Package(name='Add processes schema')
 
 
 class EBL(FabricationProcessStep, ArchiveSection):
-
     m_def = Section(
         a_eln={
             'hide': [
@@ -184,7 +183,6 @@ class EBL(FabricationProcessStep, ArchiveSection):
 
 
 class FIB(FabricationProcessStep, ArchiveSection):
-
     m_def = Section(
         a_eln={
             'hide': [
@@ -330,7 +328,6 @@ class FIB(FabricationProcessStep, ArchiveSection):
 
 
 class ResistDevelopment(FabricationProcessStep, ArchiveSection):
-
     m_def = Section(
         a_eln={
             'hide': [
@@ -432,7 +429,7 @@ class ResistDevelopment(FabricationProcessStep, ArchiveSection):
 
 
 class Baking(FabricationProcessStep, ArchiveSection):
-    m_def= Section(
+    m_def = Section(
         a_eln={
             'hide': [
                 'description',
@@ -473,7 +470,7 @@ class Baking(FabricationProcessStep, ArchiveSection):
         unit='celsius',
     )
 
-    duration=Quantity(
+    duration = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
@@ -1143,7 +1140,7 @@ class SOD(Chemical, FabricationProcessStep, ArchiveSection):
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'sec',
         },
-        unit= 'sec',
+        unit='sec',
     )
     water_rinse_required = Quantity(
         type=MEnum('Yes', 'No', 'Other (see Note)'),

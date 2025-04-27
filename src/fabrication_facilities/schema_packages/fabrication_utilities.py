@@ -55,7 +55,6 @@ m_package = Package(name='General organization and equipment for fabrication')
 
 
 class TechniqueSubCategory(ArchiveSection):
-
     m_def = Section(
         a_eln={'properties': {'order': ['name', 'id', 'description']}},
     )
@@ -74,7 +73,6 @@ class TechniqueSubCategory(ArchiveSection):
 
 
 class TechniqueMainCategory(ArchiveSection):
-
     m_def = Section(
         a_eln={'properties': {'order': ['name', 'id', 'description']}},
     )
@@ -97,7 +95,6 @@ class TechniqueMainCategory(ArchiveSection):
 
 
 class TechniqueGeneralCategory(ArchiveSection):
-
     m_def = Section(
         a_eln={'properties': {'order': ['name', 'id', 'description']}},
     )
@@ -120,7 +117,6 @@ class TechniqueGeneralCategory(ArchiveSection):
 
 
 class TechniqueCategories(EntryData, ArchiveSection):
-
     m_def = Section(
         a_eln={'properties': {'order': ['name', 'description']}},
     )
@@ -139,7 +135,6 @@ class TechniqueCategories(EntryData, ArchiveSection):
 
 
 class EquipmentTechnique(ArchiveSection):
-
     m_def = Section(
         a_eln={
             'properties': {
@@ -209,7 +204,6 @@ class EquipmentTechnique(ArchiveSection):
 
 
 class ItemPermittedPropertyDefinition(ItemPropertyDefinition, ArchiveSection):
-
     m_def = Section(
         a_eln={
             'hide': ['value'],
@@ -248,7 +242,6 @@ class ItemPermittedPropertyDefinition(ItemPropertyDefinition, ArchiveSection):
 
 
 class EquipmentHasPermittedItemPropertyData(ArchiveSection):
-
     m_def = Section(
         a_eln={'properties': {'order': ['id', 'ItemShapeType']}},
     )
@@ -290,7 +283,6 @@ class EquipmentHasPermittedItemPropertyData(ArchiveSection):
 
 
 class EquipmentParameterData(ItemPermittedPropertyDefinition, ArchiveSection):
-
     m_def = Section(
         a_eln={
             'hide': ['value'],
@@ -320,7 +312,6 @@ class EquipmentParameterData(ItemPermittedPropertyDefinition, ArchiveSection):
 
 
 class FabricationProductType(EntryData, ArchiveSection):
-
     m_def = Section(
         a_eln={'properties': {'order': ['name', 'description', 'id']}},
     )
@@ -367,7 +358,6 @@ class ListofProductType(EntryData, ArchiveSection):
 
 
 class FabricationProcessStepBase(ProcessStep, ArchiveSection):
-
     m_def = Section(
         a_eln={
             'hide': [
@@ -459,7 +449,6 @@ class FabricationProcessStepBase(ProcessStep, ArchiveSection):
 
 
 class Jobdone(ArchiveSection):
-
     m_def = Section(
         a_eln={
             'properties': {
@@ -508,7 +497,6 @@ class Jobdone(ArchiveSection):
 
 
 class Equipment(Instrument, EntryData, ArchiveSection):
-
     m_def = Section(
         a_eln={
             'hide': [
@@ -598,7 +586,6 @@ class EquipmentReference(Link, ArchiveSection):
 
 
 class FabricationProcessStep(FabricationProcessStepBase, EntryData):
-
     m_def = Section(
         a_eln={
             'hide': [
@@ -635,7 +622,6 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
 
 
 class FabricationProcess(EntryData, ArchiveSection):
-
     m_def = Section(
         a_eln={
             'properties': {
@@ -851,7 +837,6 @@ class StartingMaterial(Chemical, FabricationProcessStep, ArchiveSection):
 
 
 class SampleParenting(Entity, EntryData, ArchiveSection):
-
     m_def = Section(
         a_eln={
             'hide': ['lab_id'],

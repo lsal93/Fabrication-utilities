@@ -42,7 +42,6 @@ m_package = Package(name='Etching workflow schema')
 
 
 class DRIE(Chemical, FabricationProcessStep, ArchiveSection):
-
     m_def = Section(
         a_eln={
             'hide': [
