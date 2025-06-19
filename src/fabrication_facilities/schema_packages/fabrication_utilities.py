@@ -379,8 +379,10 @@ class FabricationProcessStepBase(ProcessStep, ArchiveSection):
                     'ending_date',
                     'step_type',
                     'definition_of_process_step',
+                    'keywords',
                     'recipe_name',
                     'recipe_file',
+                    'recipe_preview',
                     'notes',
                 ],
             },
@@ -434,6 +436,10 @@ class FabricationProcessStepBase(ProcessStep, ArchiveSection):
         type=EquipmentTechnique,
         a_eln={'component': 'ReferenceEditQuantity'},
     )
+    keywords = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
     recipe_name = Quantity(
         type=str,
         a_eln={'component': 'StringEditQuantity'},
@@ -441,6 +447,10 @@ class FabricationProcessStepBase(ProcessStep, ArchiveSection):
     recipe_file = Quantity(
         type=str,
         a_eln={'component': 'FileEditQuantity'},
+    )
+    recipe_preview = Quantity(
+        type=str,
+        a_eln={'component': 'RichTextEditQuantity'},
     )
     notes = Quantity(
         type=str,
@@ -607,8 +617,10 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
                     'ending_date',
                     'step_type',
                     'definition_of_process_step',
+                    'keywords',
                     'recipe_name',
                     'recipe_file',
+                    'recipe_preview',
                     'notes',
                 ],
             },
