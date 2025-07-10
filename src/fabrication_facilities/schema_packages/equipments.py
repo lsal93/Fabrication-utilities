@@ -30,10 +30,11 @@ from nomad.metainfo import (
     Package,
     Quantity,
     Section,
-#    SubSection,
+    SubSection,
 )
 
 from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
+from fabrication_facilities.schema_packages.utils import Massflow_controller
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (
@@ -44,6 +45,32 @@ if TYPE_CHECKING:
     )
 
 m_package = Package(name='Equipments specific definitions ')
+
+class Massflow_parameter(Massflow_controller, ArchiveSection):
+    m_def=Section(
+        a_eln={
+            'hide': ['lab_id', 'datetime','massflow']
+        }
+    )
+
+    min_massflow = Quantity(
+        type=np.float64,
+        description='Minimum rate at which the gas flows',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'centimeter^3/minute',
+        },
+        unit='centimeter^3/minute',
+    )
+    max_massflow=Quantity(
+        type=np.float64,
+        description='Minimum rate at which the gas flows',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'centimeter^3/minute',
+        },
+        unit='centimeter^3/minute',
+    )
 
 class ICP_Etcher(Equipment, ArchiveSection):
     m_def=Section(
@@ -64,7 +91,7 @@ class ICP_Etcher(Equipment, ArchiveSection):
                     'automatic_loading',
                     'description',
                     'min_chamber_pressure',
-                    'max_cambher_pressure',
+                    'max_chamber_pressure',
                     'min_chuck_temperature',
                     'max_chuck_temperature',
                     'min_chuck_power',
@@ -221,6 +248,14 @@ class ICP_Etcher(Equipment, ArchiveSection):
         unit='volt',
     )
 
+    gases=SubSection(
+        section_def=Massflow_parameter,
+        repeats=True,
+    )
+###############
+#In futuro si deve aggiungere una sezione per gli items permessi ma per farlo
+#bisogna prima lavorare sugli items stessi...
+###############
 
 # class ElectronBeamLithographer(Equipment, ArchiveSection):
 
