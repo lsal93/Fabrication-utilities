@@ -282,33 +282,33 @@ class EquipmentTechnique(ArchiveSection):
 #        super().normalize(archive, logger)
 
 
-#class EquipmentParameterData(ItemPermittedPropertyDefinition, ArchiveSection):
-#    m_def = Section(
-#        a_eln={
-#            'hide': ['value'],
-#            'properties': {
-#                'order': [
-#                    'name',
-#                    'id',
-#                    'description',
-#                    'unit',
-#                    'value_min',
-#                    'value_max',
-#                ]
-#            },
-#        }
-#    )
-#
-#    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-#        """
-#        The normalizer for the `EquipmentParameterData` class.
-#
-#        Args:
-#            archive (EntryArchive): The archive containing the section that is being
-#            normalized.
-#            logger (BoundLogger): A structlog logger.
-#        """
-#        super().normalize(archive, logger)
+##class EquipmentParameterData(ItemPermittedPropertyDefinition, ArchiveSection):
+##    m_def = Section(
+##        a_eln={
+##            'hide': ['value'],
+##            'properties': {
+##                'order': [
+##                    'name',
+##                    'id',
+##                    'description',
+##                    'unit',
+##                    'value_min',
+##                    'value_max',
+##                ]
+##            },
+##        }
+##    )
+##
+##    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+##        """
+##        The normalizer for the `EquipmentParameterData` class.
+##
+##        Args:
+##            archive (EntryArchive): The archive containing the section that is being
+##            normalized.
+##            logger (BoundLogger): A structlog logger.
+##        """
+##        super().normalize(archive, logger)
 
 
 class FabricationProductType(EntryData, ArchiveSection):

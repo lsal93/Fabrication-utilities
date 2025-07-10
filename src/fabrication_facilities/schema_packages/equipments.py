@@ -27,12 +27,10 @@ from nomad.datamodel.data import (
 )
 
 from nomad.metainfo import (
-    Datetime,
-    MEnum,
     Package,
     Quantity,
     Section,
-    SubSection,
+#    SubSection,
 )
 
 from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
@@ -47,7 +45,7 @@ if TYPE_CHECKING:
 
 m_package = Package(name='Equipments specific definitions ')
 
-class Etcher(Equipment, ArchiveSection):
+class ICP_Etcher(Equipment, ArchiveSection):
     m_def=Section(
         a_eln={
             'hide': [
@@ -65,6 +63,20 @@ class Etcher(Equipment, ArchiveSection):
                     'is_bookable',
                     'automatic_loading',
                     'description',
+                    'min_chamber_pressure',
+                    'max_cambher_pressure',
+                    'min_chuck_temperature',
+                    'max_chuck_temperature',
+                    'min_chuck_power',
+                    'max_chuck_power',
+                    'min_chuck_frequency',
+                    'max_chuck_frequency',
+                    'min_icp_power',
+                    'max_icp_power',
+                    'min_icp_frequency',
+                    'max_icp_frequency',
+                    'min_bias',
+                    'max_bias',
                 ],
             },
         }
@@ -208,3 +220,22 @@ class Etcher(Equipment, ArchiveSection):
         },
         unit='volt',
     )
+
+
+class ElectronBeamLithographer(Equipment, ArchiveSection):
+
+
+class FocusedIonBeamLithographer(Equipment, ArchiveSection):
+
+
+class BakingFurnace(Equipment, ArchiveSection):
+
+
+class ResistDeveloper(Equipment, ArchiveSection):
+
+
+class Spinner(Equipment, ArchiveSection):
+
+
+class Rinser(Equipment, ArchiveSection):
+
