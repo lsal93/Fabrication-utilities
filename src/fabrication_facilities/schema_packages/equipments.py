@@ -15,6 +15,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+import numpy as np
+
 from typing import (
     TYPE_CHECKING,
 )
@@ -65,4 +68,143 @@ class Etcher(Equipment, ArchiveSection):
                 ],
             },
         }
+    )
+
+    min_chamber_pressure = Quantity(
+        type=np.float64,
+        description='Minimal pressure available',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
+
+    max_chamber_pressure = Quantity(
+        type=np.float64,
+        description='Maximal pressure available',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
+
+    min_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Minimal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    max_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Maximal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    min_chuck_power = Quantity(
+        type=np.float64,
+        description='Minimal power erogated on the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    max_chuck_power = Quantity(
+        type=np.float64,
+        description='Maximal power erogated on the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    min_chuck_frequency = Quantity(
+        type=np.float64,
+        description='Minimal frequency of current on the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+    max_chuck_frequency = Quantity(
+        type=np.float64,
+        description='Maximal frequency of current on the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+
+    min_icp_power = Quantity(
+        type=np.float64,
+        description='Minimal power erogated in the region of the plasma',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    max_icp_power = Quantity(
+        type=np.float64,
+        description='Maximal power erogated in the region of the plasma',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    min_icp_frequency = Quantity(
+        type=np.float64,
+        description='Minimal frequency of current on the gases area',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+
+    max_icp_frequency = Quantity(
+        type=np.float64,
+        description='Maximal frequency of current on the gases area',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+
+    min_bias = Quantity(
+        type=np.float64,
+        description='Minimal bias voltage in the chamber',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'volt',
+        },
+        unit='volt',
+    )
+
+    max_bias = Quantity(
+        type=np.float64,
+        description='Maximal bias voltage in the chamber',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'volt',
+        },
+        unit='volt',
     )
