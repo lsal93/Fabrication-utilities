@@ -203,112 +203,112 @@ class EquipmentTechnique(ArchiveSection):
         super().normalize(archive, logger)
 
 
-class ItemPermittedPropertyDefinition(ItemPropertyDefinition, ArchiveSection):
-    m_def = Section(
-        a_eln={
-            'hide': ['value'],
-            'properties': {
-                'order': [
-                    'name',
-                    'id',
-                    'description',
-                    'unit',
-                    'value_min',
-                    'value_max',
-                ]
-            },
-        }
-    )
+#class ItemPermittedPropertyDefinition(ItemPropertyDefinition, ArchiveSection):
+#    m_def = Section(
+#        a_eln={
+#            'hide': ['value'],
+#            'properties': {
+#                'order': [
+#                    'name',
+#                    'id',
+#                    'description',
+#                    'unit',
+#                    'value_min',
+#                    'value_max',
+#                ]
+#            },
+#        }
+#    )
 
-    value_max = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity'},
-    )
-    value_min = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity'},
-    )
-
-    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        """
-        The normalizer for the `ItemPermittedPropertyDefinition` class.
-
-        Args:
-            archive (EntryArchive): The archive containing the section that is being
-            normalized.
-            logger (BoundLogger): A structlog logger.
-        """
-        super().normalize(archive, logger)
-
-
-class EquipmentHasPermittedItemPropertyData(ArchiveSection):
-    m_def = Section(
-        a_eln={'properties': {'order': ['id', 'ItemShapeType']}},
-    )
-    id = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    itemShapeType = Quantity(
-        type=MEnum(
-            [
-                'Wafer with flat standard',
-                'Wafer with flat JEIDA',
-                'Rectangle shape',
-                '1/2 wafer',
-                '1/4 wafer',
-                'Fragment',
-                'Square shape',
-                'Powder',
-                'Wafer with Notch standard',
-            ]
-        ),
-        a_eln={'component': 'EnumEditQuantity'},
-    )
-    properties = SubSection(
-        section_def=ItemPermittedPropertyDefinition,
-        repeats=True,
-    )
-
-    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        """
-        The normalizer for the `EquipmentHasPermittedItemPropertyData` class.
-
-        Args:
-            archive (EntryArchive): The archive containing the section that is being
-            normalized.
-            logger (BoundLogger): A structlog logger.
-        """
-        super().normalize(archive, logger)
+#    value_max = Quantity(
+#        type=np.float64,
+#        a_eln={'component': 'NumberEditQuantity'},
+#    )
+#    value_min = Quantity(
+#        type=np.float64,
+#        a_eln={'component': 'NumberEditQuantity'},
+#    )
+#
+#    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+#        """
+#        The normalizer for the `ItemPermittedPropertyDefinition` class.
+#
+#        Args:
+#            archive (EntryArchive): The archive containing the section that is being
+#            normalized.
+#            logger (BoundLogger): A structlog logger.
+#        """
+#        super().normalize(archive, logger)
 
 
-class EquipmentParameterData(ItemPermittedPropertyDefinition, ArchiveSection):
-    m_def = Section(
-        a_eln={
-            'hide': ['value'],
-            'properties': {
-                'order': [
-                    'name',
-                    'id',
-                    'description',
-                    'unit',
-                    'value_min',
-                    'value_max',
-                ]
-            },
-        }
-    )
+#class EquipmentHasPermittedItemPropertyData(ArchiveSection):
+#    m_def = Section(
+#        a_eln={'properties': {'order': ['id', 'ItemShapeType']}},
+#    )
+#    id = Quantity(
+#        type=str,
+#        a_eln={'component': 'StringEditQuantity'},
+#    )
+#    itemShapeType = Quantity(
+#        type=MEnum(
+#            [
+#                'Wafer with flat standard',
+#                'Wafer with flat JEIDA',
+#                'Rectangle shape',
+#                '1/2 wafer',
+#                '1/4 wafer',
+#                'Fragment',
+#                'Square shape',
+#                'Powder',
+#                'Wafer with Notch standard',
+#            ]
+#        ),
+#        a_eln={'component': 'EnumEditQuantity'},
+#    )
+#    properties = SubSection(
+#        section_def=ItemPermittedPropertyDefinition,
+#        repeats=True,
+#    )
 
-    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        """
-        The normalizer for the `EquipmentParameterData` class.
+#    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+#        """
+#        The normalizer for the `EquipmentHasPermittedItemPropertyData` class.
+#
+#        Args:
+#            archive (EntryArchive): The archive containing the section that is being
+#            normalized.
+#            logger (BoundLogger): A structlog logger.
+#        """
+#        super().normalize(archive, logger)
 
-        Args:
-            archive (EntryArchive): The archive containing the section that is being
-            normalized.
-            logger (BoundLogger): A structlog logger.
-        """
-        super().normalize(archive, logger)
+
+#class EquipmentParameterData(ItemPermittedPropertyDefinition, ArchiveSection):
+#    m_def = Section(
+#        a_eln={
+#            'hide': ['value'],
+#            'properties': {
+#                'order': [
+#                    'name',
+#                    'id',
+#                    'description',
+#                    'unit',
+#                    'value_min',
+#                    'value_max',
+#                ]
+#            },
+#        }
+#    )
+#
+#    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+#        """
+#        The normalizer for the `EquipmentParameterData` class.
+#
+#        Args:
+#            archive (EntryArchive): The archive containing the section that is being
+#            normalized.
+#            logger (BoundLogger): A structlog logger.
+#        """
+#        super().normalize(archive, logger)
 
 
 class FabricationProductType(EntryData, ArchiveSection):
@@ -559,18 +559,18 @@ class Equipment(Instrument, EntryData, ArchiveSection):
         type=bool,
         a_eln={'component': 'BoolEditQuantity'},
     )
-    capabilities = SubSection(
-        section_def=EquipmentParameterData,
-        repeats=True,
-    )
+#    capabilities = SubSection(
+#        section_def=EquipmentParameterData,
+#        repeats=True,
+#    )
     equipmentTechniques = SubSection(
         section_def=EquipmentTechnique,
         repeats=True,
     )
-    permittedItems = SubSection(
-        section_def=EquipmentHasPermittedItemPropertyData,
-        repeats=True,
-    )
+#    permittedItems = SubSection(
+#        section_def=EquipmentHasPermittedItemPropertyData,
+#        repeats=True,
+#    )
     equipmentLogBook = SubSection(
         section_def=Jobdone,
         repeats=True,
