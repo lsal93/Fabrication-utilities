@@ -222,20 +222,20 @@ class ICP_Etcher(Equipment, ArchiveSection):
     )
 
 
-class ElectronBeamLithographer(Equipment, ArchiveSection):
+# class ElectronBeamLithographer(Equipment, ArchiveSection):
 
 
-class FocusedIonBeamLithographer(Equipment, ArchiveSection):
+# class FocusedIonBeamLithographer(Equipment, ArchiveSection):
 
 
-class BakingFurnace(Equipment, ArchiveSection):
+# class BakingFurnace(Equipment, ArchiveSection):
 
 
-class ResistDeveloper(Equipment, ArchiveSection):
+# class ResistDeveloper(Equipment, ArchiveSection):
 
 
-class Spinner(Equipment, ArchiveSection):
+# class Spinner(Equipment, ArchiveSection):
 
 
-class Rinser(Equipment, ArchiveSection):
+# class Rinser(Equipment, ArchiveSection):
 
