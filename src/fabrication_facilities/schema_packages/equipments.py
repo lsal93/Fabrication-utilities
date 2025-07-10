@@ -252,25 +252,576 @@ class ICP_Etcher(Equipment, ArchiveSection):
         section_def=Massflow_parameter,
         repeats=True,
     )
+
 ###############
 #In futuro si deve aggiungere una sezione per gli items permessi ma per farlo
 #bisogna prima lavorare sugli items stessi...
 ###############
+class BakingFurnace(Equipment, ArchiveSection):
+    m_def=Section(
+        a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'inventary_code',
+                    'affiliation',
+                    'product_model',
+                    'institution',
+                    'manufacturer_name',
+                    'is_bookable',
+                    'automatic_loading',
+                    'description',
+                    'min_chuck_temperature',
+                    'max_chuck_temperature',
+                ],
+            },
+        }
+    )
 
-# class ElectronBeamLithographer(Equipment, ArchiveSection):
+    min_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Minimal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
 
+    max_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Maximal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
 
-# class FocusedIonBeamLithographer(Equipment, ArchiveSection):
+  
+class ElectronBeamLithographer(Equipment, ArchiveSection):
+    m_def=Section(
+        a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'inventary_code',
+                    'affiliation',
+                    'product_model',
+                    'institution',
+                    'manufacturer_name',
+                    'is_bookable',
+                    'automatic_loading',
+                    'description',
+                    'min_chuck_temperature',
+                    'max_chuck_temperature',
+                    'min_dose',
+                    'max_dose',
+                    'min_writing_field_dimension',
+                    'max_writing_field_dimension',
+                    'min_address_size',
+                    'max_address_size',
+                    'min_clock',
+                    'max_clock',
+                    'min_chamber_pressure',
+                    'max_chamber_pressure',
+                    'min_tension',
+                    'max_tension',
+                    'min_current',
+                    'max_current',
+                ],
+            },
+        }
+    )
 
+    min_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Minimal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
 
-# class BakingFurnace(Equipment, ArchiveSection):
+    max_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Maximal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
 
+    min_tension = Quantity(
+        type=np.float64,
+        description='Minimal voltage in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'volt',
+        },
+        unit='volt',
+    )
 
-# class ResistDeveloper(Equipment, ArchiveSection):
+    max_tension = Quantity(
+        type=np.float64,
+        description='Maximal voltage in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'volt',
+        },
+        unit='volt',
+    )
 
+    min_chamber_pressure = Quantity(
+        type=np.float64,
+        description='Minimal pressure available',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
 
-# class Spinner(Equipment, ArchiveSection):
+    max_chamber_pressure = Quantity(
+        type=np.float64,
+        description='Maximal pressure available',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
 
+    min_dose = Quantity(
+        type=np.float64,
+        description='Minimal dose to use in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'uC/centimeter^2',
+        },
+        unit='uC/centimeter^2',
+    )
 
-# class Rinser(Equipment, ArchiveSection):
+    max_dose = Quantity(
+        type=np.float64,
+        description='Maximal dose to use in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'uC/centimeter^2',
+        },
+        unit='uC/centimeter^2',
+    )
 
+    min_writing_field_dimension = Quantity(
+        type=np.float64,
+        description='Lower area covered globally in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'um^2',
+        },
+        unit='um^2',
+    )
+
+    max_writing_field_dimension = Quantity(
+        type=np.float64,
+        description='Maximum area covered globally in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'um^2',
+        },
+        unit='um^2',
+    )
+    min_address_size = Quantity(
+        type=np.float64,
+        description='The minimum distance covered per step in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
+        unit='nm',
+    )
+
+    max_address_size = Quantity(
+        type=np.float64,
+        description='The minimum distance covered per step in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
+        unit='nm',
+    )
+    min_clock = Quantity(
+        type=np.float64,
+        description='Minimum frequency at disposal',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+    max_clock = Quantity(
+        type=np.float64,
+        description='Maximum frequency at disposal',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+    min_current = Quantity(
+        type=np.float64,
+        description='Current provided',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'pampere',
+        },
+        unit='pampere',
+    )
+    max_current = Quantity(
+        type=np.float64,
+        description='Current provided',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'pampere',
+        },
+        unit='pampere',
+    )
+
+class FocusedIonBeamLithographer(Equipment, ArchiveSection):
+    m_def=Section(
+        a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'inventary_code',
+                    'affiliation',
+                    'product_model',
+                    'institution',
+                    'manufacturer_name',
+                    'is_bookable',
+                    'automatic_loading',
+                    'description',
+                    'min_chuck_temperature',
+                    'max_chuck_temperature',
+                    'min_dose',
+                    'max_dose',
+                    'min_writing_field_dimension',
+                    'max_writing_field_dimension',
+                    'min_address_size',
+                    'max_address_size',
+                    'min_clock',
+                    'max_clock',
+                    'min_chamber_pressure',
+                    'max_chamber_pressure',
+                    'min_tension',
+                    'max_tension',
+                    'min_current',
+                    'max_current',
+                ],
+            },
+        }
+    )
+
+    min_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Minimal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    max_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Maximal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    min_tension = Quantity(
+        type=np.float64,
+        description='Minimal voltage in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'volt',
+        },
+        unit='volt',
+    )
+
+    max_tension = Quantity(
+        type=np.float64,
+        description='Maximal voltage in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'volt',
+        },
+        unit='volt',
+    )
+
+    min_chamber_pressure = Quantity(
+        type=np.float64,
+        description='Minimal pressure available',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
+
+    max_chamber_pressure = Quantity(
+        type=np.float64,
+        description='Maximal pressure available',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
+
+    min_dose = Quantity(
+        type=np.float64,
+        description='Minimal dose to use in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'uC/centimeter^2',
+        },
+        unit='uC/centimeter^2',
+    )
+
+    max_dose = Quantity(
+        type=np.float64,
+        description='Maximal dose to use in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'uC/centimeter^2',
+        },
+        unit='uC/centimeter^2',
+    )
+
+    min_writing_field_dimension = Quantity(
+        type=np.float64,
+        description='Lower area covered globally in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'um^2',
+        },
+        unit='um^2',
+    )
+
+    max_writing_field_dimension = Quantity(
+        type=np.float64,
+        description='Maximum area covered globally in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'um^2',
+        },
+        unit='um^2',
+    )
+    min_address_size = Quantity(
+        type=np.float64,
+        description='The minimum distance covered per step in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
+        unit='nm',
+    )
+
+    max_address_size = Quantity(
+        type=np.float64,
+        description='The minimum distance covered per step in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
+        unit='nm',
+    )
+    min_clock = Quantity(
+        type=np.float64,
+        description='Minimum frequency at disposal',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+    max_clock = Quantity(
+        type=np.float64,
+        description='Maximum frequency at disposal',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+    min_current = Quantity(
+        type=np.float64,
+        description='Current provided',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'pampere',
+        },
+        unit='pampere',
+    )
+    max_current = Quantity(
+        type=np.float64,
+        description='Current provided',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'pampere',
+        },
+        unit='pampere',
+    )
+
+class ResistDeveloper(Equipment, ArchiveSection):
+    m_def=Section(
+        a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'inventary_code',
+                    'affiliation',
+                    'product_model',
+                    'institution',
+                    'manufacturer_name',
+                    'is_bookable',
+                    'automatic_loading',
+                    'description',
+                    'min_chuck_temperature',
+                    'max_chuck_temperature',
+                ],
+            },
+        }
+    )
+
+    min_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Minimal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    max_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Maximal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+class Spinner(Equipment, ArchiveSection):
+    m_def=Section(
+        a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'inventary_code',
+                    'affiliation',
+                    'product_model',
+                    'institution',
+                    'manufacturer_name',
+                    'is_bookable',
+                    'automatic_loading',
+                    'description',
+                    'min_chuck_temperature',
+                    'max_chuck_temperature',
+                ],
+            },
+        }
+    )
+
+    min_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Minimal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    max_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Maximal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+class Rinser(Equipment, ArchiveSection):
+    m_def=Section(
+        a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'inventary_code',
+                    'affiliation',
+                    'product_model',
+                    'institution',
+                    'manufacturer_name',
+                    'is_bookable',
+                    'automatic_loading',
+                    'description',
+                    'min_chuck_temperature',
+                    'max_chuck_temperature',
+                ],
+            },
+        }
+    )
+
+    min_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Minimal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    max_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Maximal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
