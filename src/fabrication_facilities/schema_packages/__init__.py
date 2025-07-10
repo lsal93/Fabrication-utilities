@@ -24,8 +24,8 @@ class UtilitiesEntryPoint(SchemaPackageEntryPoint):
 
 
 Utilities_entry_point = UtilitiesEntryPoint(
-    name='FabricationEquipments&Steps',
-    description='Schema package for describing equipments and steps in fabrication.',
+    name='FabricationBaseExtension',
+    description='Schema package for describing base classes and steps in fabrication.',
 )
 
 
@@ -65,4 +65,18 @@ class RemoveEntryPoint(SchemaPackageEntryPoint):
 Remove_entry_point = RemoveEntryPoint(
     name='Add processes',
     description='Schema package for describing add steps in fabrications.',
+)
+
+class EquipmentsEntryPoint(SchemaPackageEntryPoint):
+    def load(self):
+        from fabrication_facilities.schema_packages.equipment import (
+            m_package,
+        )
+
+        return m_package
+
+
+Equipments_entry_point = EquipmentsEntryPoint(
+    name='FabricationEquipments',
+    description='Schema package for describing various equipments for fabrication.',
 )

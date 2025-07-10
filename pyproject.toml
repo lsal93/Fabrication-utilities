@@ -120,6 +120,7 @@ Utilities_entry_point = "fabrication_facilities.schema_packages:Utilities_entry_
 Add_entry_point = "fabrication_facilities.schema_packages:Add_entry_point"
 Transform_entry_point = "fabrication_facilities.schema_packages:Transform_entry_point"
 Remove_entry_point = "fabrication_facilities.schema_packages:Remove_entry_point"
+Equipments_entry_point = "fabrication_facilities.schema_packages:Equipments_entry_point"
 
 [tool.cruft]
 # Avoid updating workflow files, this leads to permissions issues
