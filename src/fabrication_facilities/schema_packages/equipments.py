@@ -41,7 +41,12 @@ m_package = Package(name='Equipments specific definitions ')
 
 
 class Massflow_parameter(Massflow_controller, ArchiveSection):
-    m_def = Section(a_eln={'hide': ['lab_id', 'datetime', 'massflow']})
+    m_def = Section(
+        description='Class to describe flux of gases in fluximeters',
+        a_eln={
+            'hide': ['lab_id', 'datetime', 'massflow']
+            }
+        )
 
     min_massflow = Quantity(
         type=np.float64,
@@ -54,7 +59,7 @@ class Massflow_parameter(Massflow_controller, ArchiveSection):
     )
     max_massflow = Quantity(
         type=np.float64,
-        description='Minimum rate at which the gas flows',
+        description='Macimum rate at which the gas flows',
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'centimeter^3/minute',
@@ -96,10 +101,10 @@ class RIE_Etcher(Equipment, ArchiveSection):
                     'max_bias',
                     'mechanical_clamping',
                     'electrostatic_clamping',
-                    'min_cooling_helium_massflow',
-                    'max_cooling_helium_massflow',
-                    'min_cooling_helium_temperature',
-                    'max_cooling_helium_temperature',
+                    # 'min_cooling_helium_massflow',
+                    # 'max_cooling_helium_massflow',
+                    # 'min_cooling_helium_temperature',
+                    # 'max_cooling_helium_temperature',
                 ],
             },
         },
@@ -339,6 +344,45 @@ class ICP_Etcher(RIE_Etcher, ArchiveSection):
             'defaultDisplayUnit': 'MHz',
         },
         unit='MHz',
+    )
+
+    min_cooling_helium_massflow = Quantity(
+        type=np.float64,
+        description='Minimum rate at which the helium for cooling the chuck flows',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'centimeter^3/minute',
+        },
+        unit='centimeter^3/minute',
+    )
+    max_cooling_helium_massflow = Quantity(
+        type=np.float64,
+        description='Maximum rate at which the helium for cooling the chuck flows',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'centimeter^3/minute',
+        },
+        unit='centimeter^3/minute',
+    )
+
+    min_cooling_helium_temperature = Quantity(
+        type=np.float64,
+        description='Minimal temperature of the cooling helium on the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    max_cooling_helium_temperature = Quantity(
+        type=np.float64,
+        description='Maximal temperature of the cooling helium on the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
     )
 
     # electrostatic_clamping = Quantity(
