@@ -83,6 +83,9 @@ class ICP_Etcher(Equipment, ArchiveSection):
                     'description',
                     'min_chamber_pressure',
                     'max_chamber_pressure',
+                    'vacuum_system_name',
+                    'min_wall_temperature',
+                    'max_wall_temperature',
                     'min_chuck_temperature',
                     'max_chuck_temperature',
                     'min_chuck_power',
@@ -95,9 +98,23 @@ class ICP_Etcher(Equipment, ArchiveSection):
                     'max_icp_frequency',
                     'min_bias',
                     'max_bias',
+                    'mechanical_clamping',
+                    'electrostatic_clamping',
+                    'min_cooling_helium_massflow',
+                    'max_cooling_helium_massflow',
+                    'min_cooling_helium_temperature',
+                    'max_cooling_helium_temperature',
                 ],
             },
         }
+    )
+
+    vacuum_system_name= Quantity(
+        type=str,
+        description='Type of vacuum pump adopted',
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
     )
 
     min_chamber_pressure = Quantity(
@@ -239,6 +256,22 @@ class ICP_Etcher(Equipment, ArchiveSection):
         unit='volt',
     )
 
+    electrostatic_clamping = Quantity(
+        type=bool,
+        description = 'Is electrostatic clamping available',
+        a_eln={
+            'component': 'BoolEditQuantity',
+        },
+    )
+
+    mechanical_clamping = Quantity(
+        type=bool,
+        description = 'Is mechanical clamping available',
+        a_eln={
+            'component': 'BoolEditQuantity',
+        },
+    )
+
     gases = SubSection(
         section_def=Massflow_parameter,
         repeats=True,
@@ -249,6 +282,9 @@ class ICP_Etcher(Equipment, ArchiveSection):
 # In futuro si deve aggiungere una sezione per gli items permessi ma per farlo
 # bisogna prima lavorare sugli items stessi...
 ###############
+
+class DRIE (ICP_Etcher, ArchiveSection):
+
 class BakingFurnace(Equipment, ArchiveSection):
     m_def = Section(
         a_eln={
