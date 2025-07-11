@@ -67,6 +67,7 @@ Remove_entry_point = RemoveEntryPoint(
     description='Schema package for describing add steps in fabrications.',
 )
 
+
 class EquipmentsEntryPoint(SchemaPackageEntryPoint):
     def load(self):
         from fabrication_facilities.schema_packages.equipments import (

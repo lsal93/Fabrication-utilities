@@ -16,16 +16,14 @@
 # limitations under the License.
 #
 
-import numpy as np
-
 from typing import (
     TYPE_CHECKING,
 )
 
+import numpy as np
 from nomad.datamodel.data import (
     ArchiveSection,
 )
-
 from nomad.metainfo import (
     Package,
     Quantity,
@@ -37,21 +35,13 @@ from fabrication_facilities.schema_packages.fabrication_utilities import Equipme
 from fabrication_facilities.schema_packages.utils import Massflow_controller
 
 if TYPE_CHECKING:
-    from nomad.datamodel.datamodel import (
-        EntryArchive,
-    )
-    from structlog.stdlib import (
-        BoundLogger,
-    )
+    pass
 
 m_package = Package(name='Equipments specific definitions ')
 
+
 class Massflow_parameter(Massflow_controller, ArchiveSection):
-    m_def=Section(
-        a_eln={
-            'hide': ['lab_id', 'datetime','massflow']
-        }
-    )
+    m_def = Section(a_eln={'hide': ['lab_id', 'datetime', 'massflow']})
 
     min_massflow = Quantity(
         type=np.float64,
@@ -62,7 +52,7 @@ class Massflow_parameter(Massflow_controller, ArchiveSection):
         },
         unit='centimeter^3/minute',
     )
-    max_massflow=Quantity(
+    max_massflow = Quantity(
         type=np.float64,
         description='Minimum rate at which the gas flows',
         a_eln={
@@ -72,8 +62,9 @@ class Massflow_parameter(Massflow_controller, ArchiveSection):
         unit='centimeter^3/minute',
     )
 
+
 class ICP_Etcher(Equipment, ArchiveSection):
-    m_def=Section(
+    m_def = Section(
         a_eln={
             'hide': [
                 'lab_id',
@@ -248,17 +239,18 @@ class ICP_Etcher(Equipment, ArchiveSection):
         unit='volt',
     )
 
-    gases=SubSection(
+    gases = SubSection(
         section_def=Massflow_parameter,
         repeats=True,
     )
 
+
 ###############
-#In futuro si deve aggiungere una sezione per gli items permessi ma per farlo
-#bisogna prima lavorare sugli items stessi...
+# In futuro si deve aggiungere una sezione per gli items permessi ma per farlo
+# bisogna prima lavorare sugli items stessi...
 ###############
 class BakingFurnace(Equipment, ArchiveSection):
-    m_def=Section(
+    m_def = Section(
         a_eln={
             'hide': [
                 'lab_id',
@@ -302,9 +294,9 @@ class BakingFurnace(Equipment, ArchiveSection):
         unit='celsius',
     )
 
-  
+
 class ElectronBeamLithographer(Equipment, ArchiveSection):
-    m_def=Section(
+    m_def = Section(
         a_eln={
             'hide': [
                 'lab_id',
@@ -496,9 +488,10 @@ class ElectronBeamLithographer(Equipment, ArchiveSection):
         },
         unit='pampere',
     )
+
 
 class FocusedIonBeamLithographer(Equipment, ArchiveSection):
-    m_def=Section(
+    m_def = Section(
         a_eln={
             'hide': [
                 'lab_id',
@@ -691,8 +684,9 @@ class FocusedIonBeamLithographer(Equipment, ArchiveSection):
         unit='pampere',
     )
 
+
 class ResistDeveloper(Equipment, ArchiveSection):
-    m_def=Section(
+    m_def = Section(
         a_eln={
             'hide': [
                 'lab_id',
@@ -735,9 +729,10 @@ class ResistDeveloper(Equipment, ArchiveSection):
         },
         unit='celsius',
     )
+
 
 class Spinner(Equipment, ArchiveSection):
-    m_def=Section(
+    m_def = Section(
         a_eln={
             'hide': [
                 'lab_id',
@@ -781,8 +776,9 @@ class Spinner(Equipment, ArchiveSection):
         unit='celsius',
     )
 
+
 class Rinser(Equipment, ArchiveSection):
-    m_def=Section(
+    m_def = Section(
         a_eln={
             'hide': [
                 'lab_id',

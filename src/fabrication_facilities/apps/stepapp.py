@@ -131,7 +131,7 @@ stepapp = App(
                             menutrans_annealing,
                             menutrans_ltodensification,
                             menutrans_thermaloxidation,
-                            menutrans_baking
+                            menutrans_baking,
                         ],
                     ),
                     Menu(

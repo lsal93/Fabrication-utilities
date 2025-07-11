@@ -2838,6 +2838,6 @@ menutrans_baking = Menu(
                 title='duration',
                 unit='sec',
             ),
-        )
-    ]
+        ),
+    ],
 )

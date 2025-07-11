@@ -40,7 +40,7 @@ from nomad.metainfo import (
     SubSection,
 )
 
-from fabrication_facilities.schema_packages.Items import Item, ItemPropertyDefinition
+from fabrication_facilities.schema_packages.Items import Item
 from fabrication_facilities.schema_packages.utils import parse_chemical_formula
 
 if TYPE_CHECKING:
@@ -203,7 +203,7 @@ class EquipmentTechnique(ArchiveSection):
         super().normalize(archive, logger)
 
 
-#class ItemPermittedPropertyDefinition(ItemPropertyDefinition, ArchiveSection):
+# class ItemPermittedPropertyDefinition(ItemPropertyDefinition, ArchiveSection):
 #    m_def = Section(
 #        a_eln={
 #            'hide': ['value'],
@@ -241,7 +241,7 @@ class EquipmentTechnique(ArchiveSection):
 #        super().normalize(archive, logger)
 
 
-#class EquipmentHasPermittedItemPropertyData(ArchiveSection):
+# class EquipmentHasPermittedItemPropertyData(ArchiveSection):
 #    m_def = Section(
 #        a_eln={'properties': {'order': ['id', 'ItemShapeType']}},
 #    )
@@ -559,18 +559,18 @@ class Equipment(Instrument, EntryData, ArchiveSection):
         type=bool,
         a_eln={'component': 'BoolEditQuantity'},
     )
-#    capabilities = SubSection(
-#        section_def=EquipmentParameterData,
-#        repeats=True,
-#    )
+    #    capabilities = SubSection(
+    #        section_def=EquipmentParameterData,
+    #        repeats=True,
+    #    )
     equipmentTechniques = SubSection(
         section_def=EquipmentTechnique,
         repeats=True,
     )
-#    permittedItems = SubSection(
-#        section_def=EquipmentHasPermittedItemPropertyData,
-#        repeats=True,
-#    )
+    #    permittedItems = SubSection(
+    #        section_def=EquipmentHasPermittedItemPropertyData,
+    #        repeats=True,
+    #    )
     equipmentLogBook = SubSection(
         section_def=Jobdone,
         repeats=True,
