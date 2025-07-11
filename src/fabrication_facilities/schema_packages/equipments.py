@@ -62,8 +62,8 @@ class Massflow_parameter(Massflow_controller, ArchiveSection):
         unit='centimeter^3/minute',
     )
 
+class RIE_Etcher(Equipment, ArchiveSection):
 
-class ICP_Etcher(Equipment, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -92,10 +92,6 @@ class ICP_Etcher(Equipment, ArchiveSection):
                     'max_chuck_power',
                     'min_chuck_frequency',
                     'max_chuck_frequency',
-                    'min_icp_power',
-                    'max_icp_power',
-                    'min_icp_frequency',
-                    'max_icp_frequency',
                     'min_bias',
                     'max_bias',
                     'mechanical_clamping',
@@ -106,7 +102,8 @@ class ICP_Etcher(Equipment, ArchiveSection):
                     'max_cooling_helium_temperature',
                 ],
             },
-        }
+        },
+        description = 'Base classes for etching instruments'
     )
 
     vacuum_system_name= Quantity(
@@ -135,6 +132,26 @@ class ICP_Etcher(Equipment, ArchiveSection):
             'defaultDisplayUnit': 'mbar',
         },
         unit='mbar',
+    )
+
+    min_wall_temperature = Quantity(
+        type=np.float64,
+        description='Minimal temperature at disposal for the wall',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    max_wall_temperature = Quantity(
+        type=np.float64,
+        description='Maximal temperature of the wall',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
     )
 
     min_chuck_temperature = Quantity(
@@ -196,46 +213,6 @@ class ICP_Etcher(Equipment, ArchiveSection):
         unit='MHz',
     )
 
-    min_icp_power = Quantity(
-        type=np.float64,
-        description='Minimal power erogated in the region of the plasma',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
-
-    max_icp_power = Quantity(
-        type=np.float64,
-        description='Maximal power erogated in the region of the plasma',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
-
-    min_icp_frequency = Quantity(
-        type=np.float64,
-        description='Minimal frequency of current on the gases area',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
-    )
-
-    max_icp_frequency = Quantity(
-        type=np.float64,
-        description='Maximal frequency of current on the gases area',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
-    )
-
     min_bias = Quantity(
         type=np.float64,
         description='Minimal bias voltage in the chamber',
@@ -277,13 +254,213 @@ class ICP_Etcher(Equipment, ArchiveSection):
         repeats=True,
     )
 
+class ICP_Etcher(RIE_Etcher, ArchiveSection):
+    m_def = Section(
+        description='Dry etching class for instruments where a plasma is involved',
+        a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'inventary_code',
+                    'affiliation',
+                    'product_model',
+                    'institution',
+                    'manufacturer_name',
+                    'is_bookable',
+                    'automatic_loading',
+                    'description',
+                    'min_chamber_pressure',
+                    'max_chamber_pressure',
+                    'vacuum_system_name',
+                    'min_wall_temperature',
+                    'max_wall_temperature',
+                    'min_chuck_temperature',
+                    'max_chuck_temperature',
+                    'min_chuck_power',
+                    'max_chuck_power',
+                    'min_chuck_frequency',
+                    'max_chuck_frequency',
+                    'min_icp_power',
+                    'max_icp_power',
+                    'min_icp_frequency',
+                    'max_icp_frequency',
+                    'min_bias',
+                    'max_bias',
+                    'mechanical_clamping',
+                    'electrostatic_clamping',
+                    'min_cooling_helium_massflow',
+                    'max_cooling_helium_massflow',
+                    'min_cooling_helium_temperature',
+                    'max_cooling_helium_temperature',
+                ],
+            },
+        }
+    )
+
+    min_icp_power = Quantity(
+        type=np.float64,
+        description='Minimal power erogated in the region of the plasma',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    max_icp_power = Quantity(
+        type=np.float64,
+        description='Maximal power erogated in the region of the plasma',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    min_icp_frequency = Quantity(
+        type=np.float64,
+        description='Minimal frequency of current on the gases area',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+
+    max_icp_frequency = Quantity(
+        type=np.float64,
+        description='Maximal frequency of current on the gases area',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+
+    # electrostatic_clamping = Quantity(
+    #     type=bool,
+    #     description = 'Is electrostatic clamping available',
+    #     a_eln={
+    #         'component': 'BoolEditQuantity',
+    #     },
+    # )
+
+    # mechanical_clamping = Quantity(
+    #     type=bool,
+    #     description = 'Is mechanical clamping available',
+    #     a_eln={
+    #         'component': 'BoolEditQuantity',
+    #     },
+    # )
+
+    # gases = SubSection(
+    #     section_def=Massflow_parameter,
+    #     repeats=True,
+    # )
+
 
 ###############
 # In futuro si deve aggiungere una sezione per gli items permessi ma per farlo
 # bisogna prima lavorare sugli items stessi...
 ###############
 
-class DRIE (ICP_Etcher, ArchiveSection):
+class DRIE_Etcher (ICP_Etcher, ArchiveSection):
+    m_def = Section(
+        description='Dry etching instrument for deep geometries',
+        a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'inventary_code',
+                    'affiliation',
+                    'product_model',
+                    'institution',
+                    'manufacturer_name',
+                    'is_bookable',
+                    'automatic_loading',
+                    'description',
+                    'min_chamber_pressure',
+                    'max_chamber_pressure',
+                    'vacuum_system_name',
+                    'min_wall_temperature',
+                    'max_wall_temperature',
+                    'min_chuck_temperature',
+                    'max_chuck_temperature',
+                    'min_chuck_power',
+                    'max_chuck_power',
+                    'min_chuck_frequency',
+                    'max_chuck_frequency',
+                    'min_icp_power',
+                    'max_icp_power',
+                    'min_icp_frequency',
+                    'max_icp_frequency',
+                    'min_bias',
+                    'max_bias',
+                    'mechanical_clamping',
+                    'electrostatic_clamping',
+                    'min_cooling_helium_massflow',
+                    'max_cooling_helium_massflow',
+                    'min_cooling_helium_temperature',
+                    'max_cooling_helium_temperature',
+                ],
+            },
+        }
+    )
+
+class DRIE_BOSCH_Etcher (DRIE_Etcher, ArchiveSection):
+    m_def = Section(
+        description='Dry etching instrument for deep geometries with BOSCH technology',
+        a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'inventary_code',
+                    'affiliation',
+                    'product_model',
+                    'institution',
+                    'manufacturer_name',
+                    'is_bookable',
+                    'automatic_loading',
+                    'description',
+                    'min_chamber_pressure',
+                    'max_chamber_pressure',
+                    'vacuum_system_name',
+                    'min_wall_temperature',
+                    'max_wall_temperature',
+                    'min_chuck_temperature',
+                    'max_chuck_temperature',
+                    'min_chuck_power',
+                    'max_chuck_power',
+                    'min_chuck_frequency',
+                    'max_chuck_frequency',
+                    'min_icp_power',
+                    'max_icp_power',
+                    'min_icp_frequency',
+                    'max_icp_frequency',
+                    'min_bias',
+                    'max_bias',
+                    'mechanical_clamping',
+                    'electrostatic_clamping',
+                    'min_cooling_helium_massflow',
+                    'max_cooling_helium_massflow',
+                    'min_cooling_helium_temperature',
+                    'max_cooling_helium_temperature',
+                ],
+            },
+        }
+    )
 
 class BakingFurnace(Equipment, ArchiveSection):
     m_def = Section(
