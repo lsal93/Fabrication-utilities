@@ -111,7 +111,7 @@ package-dir = { "" = "src" }
 where = ["src"]
 
 [project.entry-points.'nomad.plugin']
-normalizer_entry_point = "fabrication_facilities.normalizers:normalizer_entry_point"
+#normalizer_entry_point = "fabrication_facilities.normalizers:normalizer_entry_point"
 equipmentapp = "fabrication_facilities.apps:equipment_app_entry_point"
 processapp = "fabrication_facilities.apps:process_app_entry_point"
 stepapp = "fabrication_facilities.apps:step_app_entry_point"
