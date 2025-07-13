@@ -8,7 +8,7 @@ from nomad.datamodel.data import (
     EntryData,
 )
 from nomad.datamodel.metainfo.basesections import (
-    Entity,
+    System,
 )
 from nomad.metainfo import (
     Package,
@@ -100,4 +100,8 @@ class Material(EntryData, ArchiveSection):
         },
     )
 
-    
+    material=SubSection(
+        section_def=System,
+        repeats=True,
+    )
+
