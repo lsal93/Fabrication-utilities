@@ -2,6 +2,8 @@ from typing import (
     TYPE_CHECKING,
 )
 
+from ase.data import atomic_masses as am
+from ase.data import atomic_numbers as an
 import numpy as np
 from nomad.datamodel.data import (
     ArchiveSection,
@@ -105,6 +107,7 @@ class FabricationChemical(Chemical, ArchiveSection):
             total = 0
             for token in counts:
                 total += int(token)
+            mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
             if total != 0:
                 elemental_fraction = np.array(counts) / total
                 elementality = []
@@ -113,6 +116,8 @@ class FabricationChemical(Chemical, ArchiveSection):
                     elemental_try = ElementalComposition()
                     elemental_try.element = entry
                     elemental_try.atomic_fraction = elemental_fraction[i]
+                    mass_frac = (am[an[entry]] * counts[i]) / mass
+                    elemental_try.mass_fraction = mass_frac
                     i += 1
                     elementality.append(elemental_try)
             else:
