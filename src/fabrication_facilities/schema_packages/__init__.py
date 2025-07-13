@@ -81,3 +81,17 @@ Equipments_entry_point = EquipmentsEntryPoint(
     name='FabricationEquipments',
     description='Schema package for describing various equipments for fabrication.',
 )
+
+class MaterialEntryPoint(SchemaPackageEntryPoint):
+    def load(self):
+        from fabrication_facilities.schema_packages.materials import (
+            m_package,
+        )
+
+        return m_package
+
+
+materials_entry_point = MaterialEntryPoint(
+    name='Fabrication Materials',
+    description='Schema package for describing various raw materials properties.',
+)
