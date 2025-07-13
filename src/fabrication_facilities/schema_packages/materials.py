@@ -16,7 +16,9 @@ from nomad.metainfo import (
     Section,
     SubSection,
 )
-
+from fabrication_facilities.schema_packages.utils import (
+    parse_chemical_formula,
+)
 from fabrication_facilities.schema_packages.fabrication_utilities import(
     EquipmentReference,
     FabricationProcessStep,
