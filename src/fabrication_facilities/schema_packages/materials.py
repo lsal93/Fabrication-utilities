@@ -8,6 +8,7 @@ from nomad.datamodel.data import (
     EntryData,
 )
 from nomad.datamodel.metainfo.eln import Chemical
+from nomad.datamodel.metainfo.basesections import ElementalComposition
 
 from nomad.metainfo import (
     Package,
@@ -90,6 +91,11 @@ class FabricationChemical(Chemical, ArchiveSection):
         }
     )
 
+    elemental_composition = SubSection(
+        section_def= ElementalComposition,
+        repeats= True,
+    )
+
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
         if self.chemical_formula:
@@ -109,7 +115,7 @@ class FabricationChemical(Chemical, ArchiveSection):
                     elementality.append(elemental_try)
             else:
                 print('No elements provided')
-            self.material_elemental_composition = elementality
+            self.elemental_composition = elementality
 
 class Material(EntryData, ArchiveSection):
 
