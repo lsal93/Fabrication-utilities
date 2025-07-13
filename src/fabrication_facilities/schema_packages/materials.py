@@ -17,10 +17,10 @@ from nomad.metainfo import (
     SubSection,
 )
 
-from fabrication_facilities.schema_packages.fabrication_utilities import{
+from fabrication_facilities.schema_packages.fabrication_utilities import(
     EquipmentReference,
     FabricationProcessStep,
-}
+)
 
 if TYPE_CHECKING:
     pass
