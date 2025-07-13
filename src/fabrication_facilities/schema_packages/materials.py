@@ -7,9 +7,8 @@ from nomad.datamodel.data import (
     ArchiveSection,
     EntryData,
 )
-from nomad.datamodel.metainfo.eln.Chemical import (
-    Chemical,
-)
+from nomad.datamodel.metainfo.eln import Chemical
+
 from nomad.metainfo import (
     Package,
     Quantity,
