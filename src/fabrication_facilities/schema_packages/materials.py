@@ -33,7 +33,7 @@ m_package = Package(
 class Etching_Properties(ArchiveSection):
 
     m_def = Section(
-        description='Class describing etching properties characterized for materials'
+        description='Class describing etching properties characterized for materials',
         a_eln={
             'properties': {
                 'order': [
