@@ -18,9 +18,11 @@ from nomad.metainfo import (
     Section,
     SubSection,
 )
+
 from fabrication_facilities.schema_packages.utils import (
-    parse_chemical_formula,
+    FabricationChemical
 )
+
 from fabrication_facilities.schema_packages.fabrication_utilities import(
     EquipmentReference,
     FabricationProcessStep,
@@ -79,52 +81,31 @@ class EtchingProperties(ArchiveSection):
         repeats=False,
     )
 
-class FabricationChemical(Chemical, ArchiveSection):
+    # def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+    #     super().normalize(archive, logger)
+    #     if self.chemical_formula:
+    #         elements, counts = parse_chemical_formula(self.chemical_formula)
+    #         total = 0
+    #         for token in counts:
+    #             total += int(token)
+    #         mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
+    #         if total != 0:
+    #             elemental_fraction = np.array(counts) / total
+    #             elementality = []
+    #             i = 0
+    #             for entry in elements:
+    #                 elemental_try = ElementalComposition()
+    #                 elemental_try.element = entry
+    #                 elemental_try.atomic_fraction = elemental_fraction[i]
+    #                 mass_frac = (am[an[entry]] * counts[i]) / mass
+    #                 elemental_try.mass_fraction = mass_frac
+    #                 i += 1
+    #                 elementality.append(elemental_try)
+    #         else:
+    #             print('No elements provided')
+    #         self.elemental_composition = elementality
 
-    m_def = Section(
-        definition = 'Chemicals for fabrication products',
-        a_eln={
-            'hide': [
-                'lab_id',
-                'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
-            ],
-        }
-    )
-
-    elemental_composition = SubSection(
-        section_def= ElementalComposition,
-        repeats= True,
-    )
-
-    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        super().normalize(archive, logger)
-        if self.chemical_formula:
-            elements, counts = parse_chemical_formula(self.chemical_formula)
-            total = 0
-            for token in counts:
-                total += int(token)
-            mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
-            if total != 0:
-                elemental_fraction = np.array(counts) / total
-                elementality = []
-                i = 0
-                for entry in elements:
-                    elemental_try = ElementalComposition()
-                    elemental_try.element = entry
-                    elemental_try.atomic_fraction = elemental_fraction[i]
-                    mass_frac = (am[an[entry]] * counts[i]) / mass
-                    elemental_try.mass_fraction = mass_frac
-                    i += 1
-                    elementality.append(elemental_try)
-            else:
-                print('No elements provided')
-            self.elemental_composition = elementality
-
-class Material(EntryData, ArchiveSection):
+class FabricationMaterial(EntryData, ArchiveSection):
 
     m_def=Section(
         description='Class containeg all information measured for a raw material',
