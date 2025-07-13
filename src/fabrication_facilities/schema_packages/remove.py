@@ -28,6 +28,7 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
 from fabrication_facilities.schema_packages.utils import (
     Massflow_controller,
     parse_chemical_formula,
+    FabricationChemical,
 )
 
 if TYPE_CHECKING:
@@ -40,7 +41,7 @@ if TYPE_CHECKING:
 
 m_package = Package(name='Etching workflow schema')
 
-class RIE(Chemical, FabricationProcessStep, ArchiveSection):
+class RIE(FabricationProcessStep, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -94,9 +95,10 @@ class RIE(Chemical, FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
     )
-    chemical_formula = Quantity(
+    chemical_species_formulas = Quantity(
         type=str,
         description='Inserted only if known',
+        shape= ['*'],
         a_eln={'component': 'StringEditQuantity'},
     )
     depth_target = Quantity(
@@ -134,31 +136,62 @@ class RIE(Chemical, FabricationProcessStep, ArchiveSection):
         repeats=True,
     )
 
-    material_elemental_composition = SubSection(
-        section_def=ElementalComposition, repeats=True
+    materials_etched=SubSection(
+        section_def= FabricationChemical,
+        repeats=True,
     )
+
+    # material_elemental_composition = SubSection(
+    #     section_def=ElementalComposition, repeats=True
+    # )
+
+    # def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+    #     super().normalize(archive, logger)
+    #     if self.chemical_formula:
+    #         elements, counts = parse_chemical_formula(self.chemical_formula)
+    #         total = 0
+    #         for token in counts:
+    #             total += int(token)
+    #         if total != 0:
+    #             elemental_fraction = np.array(counts) / total
+    #             elementality = []
+    #             i = 0
+    #             for entry in elements:
+    #                 elemental_try = ElementalComposition()
+    #                 elemental_try.element = entry
+    #                 elemental_try.atomic_fraction = elemental_fraction[i]
+    #                 i += 1
+    #                 elementality.append(elemental_try)
+    #         else:
+    #             print('No elements provided')
+    #         self.material_elemental_composition = elementality
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        if self.chemical_formula:
-            elements, counts = parse_chemical_formula(self.chemical_formula)
-            total = 0
-            for token in counts:
-                total += int(token)
-            if total != 0:
-                elemental_fraction = np.array(counts) / total
-                elementality = []
-                i = 0
-                for entry in elements:
-                    elemental_try = ElementalComposition()
-                    elemental_try.element = entry
-                    elemental_try.atomic_fraction = elemental_fraction[i]
-                    i += 1
-                    elementality.append(elemental_try)
-            else:
-                print('No elements provided')
-            self.material_elemental_composition = elementality
-
+        chems = []
+        for formula in self.chemical_species_formulas:
+            chemical = FabricationChemical()
+            chemical.chemical_formula=formula
+            chems.append(chemical)
+        self.materials_etched = formulas
+    #     if self.chemical_formula:
+    #         elements, counts = parse_chemical_formula(self.chemical_formula)
+    #         total = 0
+    #         for token in counts:
+    #             total += int(token)
+    #         if total != 0:
+    #             elemental_fraction = np.array(counts) / total
+    #             elementality = []
+    #             i = 0
+    #             for entry in elements:
+    #                 elemental_try = ElementalComposition()
+    #                 elemental_try.element = entry
+    #                 elemental_try.atomic_fraction = elemental_fraction[i]
+    #                 i += 1
+    #                 elementality.append(elemental_try)
+    #         else:
+    #             print('No elements provided')
+    #         self.material_elemental_composition = elementality
 
 class ICP_RIE(RIE, ArchiveSection):
     m_def = Section(
