@@ -7,8 +7,8 @@ from nomad.datamodel.data import (
     ArchiveSection,
     EntryData,
 )
-from nomad.datamodel.metainfo.basesections import (
-    System,
+from nomad.datamodel.metainfo.eln.Chemical import (
+    Chemical,
 )
 from nomad.metainfo import (
     Package,
@@ -30,7 +30,7 @@ m_package = Package(
     description='Plugin to describe raw materials properties'
 )
 
-class Etching_Properties(ArchiveSection):
+class EtchingProperties(ArchiveSection):
 
     m_def = Section(
         description='Class describing etching properties characterized for materials',
@@ -71,8 +71,46 @@ class Etching_Properties(ArchiveSection):
 
     instrument=SubSection(
         section_def= EquipmentReference,
+        description= 'Instrument through which the etching trial was performed',
         repeats=False,
     )
+
+class FabricationChemical(Chemical, ArchiveSection):
+
+    m_def = Section(
+        definition = 'Chemicals for fabrication products',
+        a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+        }
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+        if self.chemical_formula:
+            elements, counts = parse_chemical_formula(self.chemical_formula)
+            total = 0
+            for token in counts:
+                total += int(token)
+            if total != 0:
+                elemental_fraction = np.array(counts) / total
+                elementality = []
+                i = 0
+                for entry in elements:
+                    elemental_try = ElementalComposition()
+                    elemental_try.element = entry
+                    elemental_try.atomic_fraction = elemental_fraction[i]
+                    i += 1
+                    elementality.append(elemental_try)
+            else:
+                print('No elements provided')
+            self.material_elemental_composition = elementality
 
 class Material(EntryData, ArchiveSection):
 
@@ -82,7 +120,7 @@ class Material(EntryData, ArchiveSection):
             'properties':{
                 'order':[
                     'name',
-                    'id',
+                    'ID',
                     'description',
                     'location',
                     'operator',
@@ -100,8 +138,43 @@ class Material(EntryData, ArchiveSection):
         },
     )
 
-    material=SubSection(
-        section_def=System,
+    ID = Quantity(
+        type=str,
+        a_eln={
+            'component':'StringEditQuantity',
+        },
+    )
+
+    description = Quantity(
+        type=str,
+        a_eln={
+            'component':'RichTextEditQuantity',
+        },
+    )
+
+    location= Quantity(
+        type=str,
+        description= 'Laboratiory which produced the material',
+        a_eln={
+            'component':'StringEditQuantity',
+        },
+    )
+
+    operator= Quantity(
+        type=str,
+        description= 'Physical person which produced the material',
+        a_eln={
+            'component':'StringEditQuantity',
+        },
+    )
+
+    chemical_components=SubSection(
+        section_def = FabricationChemical,
         repeats=True,
+    )
+
+    etching_rates_list= SubSection(
+        section_def = EtchingProperties,
+        repeats= True,
     )
 
