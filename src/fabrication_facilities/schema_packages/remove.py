@@ -173,7 +173,7 @@ class RIE(FabricationProcessStep, ArchiveSection):
             chemical = FabricationChemical()
             chemical.chemical_formula=formula
             chems.append(chemical)
-        self.materials_etched = formulas
+        self.materials_etched = chems
     #     if self.chemical_formula:
     #         elements, counts = parse_chemical_formula(self.chemical_formula)
     #         total = 0
