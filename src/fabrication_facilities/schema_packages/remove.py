@@ -72,7 +72,7 @@ class RIE(FabricationProcessStep, ArchiveSection):
                     'recipe_file',
                     'recipe_preview',
                     'short_name',
-                    'chemical_formula',
+                    'chemical_species_formula',
                     'depth_target',
                     'duration_target',
                     'chamber_pressure',
@@ -172,6 +172,7 @@ class RIE(FabricationProcessStep, ArchiveSection):
         for formula in self.chemical_species_formulas:
             chemical = FabricationChemical()
             chemical.chemical_formula=formula
+            chemical.normalize(archive, logger)
             chems.append(chemical)
         self.materials_etched = chems
     #     if self.chemical_formula:
