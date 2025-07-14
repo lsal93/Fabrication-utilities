@@ -175,7 +175,7 @@ class ConditioningSteps(ArchiveSection):
 
     duration=Quantity(
         type=np.float64,
-        description='Time of conditioning'
+        description='Time of conditioning',
         a_eln={
             'component':'NumberEditQuantity',
             'defaultDisplayUnit':'sec',
