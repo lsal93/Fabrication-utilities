@@ -71,11 +71,19 @@ class RIE(FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
-                    'short_name',
-                    'chemical_species_formula',
+                    'short_names',
+                    'chemical_species_formulas',
                     'depth_target',
                     'duration_target',
+                    'etching_rate_target',
+                    'wall_temperature',
+                    'chuck_temperature',
+                    'chuck_power',
+                    'chuck_frequency',
                     'chamber_pressure',
+                    'bias',
+                    'clamping',
+                    'clamping_type',
                     'depth_measured',
                     'duration_measured',
                     'etching_rate_obtained',
@@ -84,9 +92,10 @@ class RIE(FabricationProcessStep, ArchiveSection):
             },
         },
     )
-    short_name = Quantity(
+    short_names = Quantity(
         type=str,
-        description='Material to be etched',
+        description='Materials to be etched',
+        shape=['*'],
         a_eln={'component': 'StringEditQuantity', 'label': 'target material'},
     )
     duration_target = Quantity(
@@ -113,6 +122,51 @@ class RIE(FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
         unit='mbar',
     )
+    wall_temperature=Quantity(
+        type=np.float64,
+        description='Temperature of the wall of the chamber',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+    chuck_temperature=Quantity(
+        type=np.float64,
+        description='Temperature imposed on the chuck',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+    chuck_power=Quantity(
+        type=np.float64,
+        description='Power imposed on the chuck',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'W'},
+        unit='W',
+    )
+    chuck_frequency=Quantity(
+        type=np.float64,
+        description='Frequency impulse imposed on the chuck',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'MHz'},
+        unit='MHz',
+    )
+    bias=Quantity(
+        type=np.float64,
+        description='Voltage imposed on the sample by electodes',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'V'},
+        unit='V',
+    )
+    clamping= Quantity(
+        type=bool,
+        description='Is clamping used in the process?',
+        a_eln={'component':'BoolEditQuantity'},
+    )
+    clamping_type = Quantity(
+        type=MEnum(
+            [
+                'None',
+                'Mechanical',
+                'Electrostatic',
+            ]
+        ),
+        a_eln={'component': 'EnumEditQuantity'},
+    )
     depth_measured = Quantity(
         type=np.float64,
         description='Amount of material ethced effectively in the process',
@@ -131,6 +185,15 @@ class RIE(FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm/minute'},
         unit='nm/minute',
     )
+    etching_rate_target = Quantity(
+        type=np.float64,
+        description='etching rate desired',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm/minute',
+        },
+        unit='nm/minute',
+    )
     fluximeters = SubSection(
         section_def=Massflow_controller,
         repeats=True,
@@ -141,31 +204,6 @@ class RIE(FabricationProcessStep, ArchiveSection):
         repeats=True,
     )
 
-    # material_elemental_composition = SubSection(
-    #     section_def=ElementalComposition, repeats=True
-    # )
-
-    # def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-    #     super().normalize(archive, logger)
-    #     if self.chemical_formula:
-    #         elements, counts = parse_chemical_formula(self.chemical_formula)
-    #         total = 0
-    #         for token in counts:
-    #             total += int(token)
-    #         if total != 0:
-    #             elemental_fraction = np.array(counts) / total
-    #             elementality = []
-    #             i = 0
-    #             for entry in elements:
-    #                 elemental_try = ElementalComposition()
-    #                 elemental_try.element = entry
-    #                 elemental_try.atomic_fraction = elemental_fraction[i]
-    #                 i += 1
-    #                 elementality.append(elemental_try)
-    #         else:
-    #             print('No elements provided')
-    #         self.material_elemental_composition = elementality
-
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
         chems = []
@@ -175,24 +213,7 @@ class RIE(FabricationProcessStep, ArchiveSection):
             chemical.normalize(archive, logger)
             chems.append(chemical)
         self.materials_etched = chems
-    #     if self.chemical_formula:
-    #         elements, counts = parse_chemical_formula(self.chemical_formula)
-    #         total = 0
-    #         for token in counts:
-    #             total += int(token)
-    #         if total != 0:
-    #             elemental_fraction = np.array(counts) / total
-    #             elementality = []
-    #             i = 0
-    #             for entry in elements:
-    #                 elemental_try = ElementalComposition()
-    #                 elemental_try.element = entry
-    #                 elemental_try.atomic_fraction = elemental_fraction[i]
-    #                 i += 1
-    #                 elementality.append(elemental_try)
-    #         else:
-    #             print('No elements provided')
-    #         self.material_elemental_composition = elementality
+
 
 class ICP_RIE(RIE, ArchiveSection):
     m_def = Section(
@@ -224,11 +245,12 @@ class ICP_RIE(RIE, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
-                    'short_name',
-                    'chemical_formula',
+                    'short_names',
+                    'chemical_species_formulas',
                     'depth_target',
                     'duration_target',
                     'etching_rate_target',
+                    'wall_temperature'
                     'chamber_pressure',
                     'chuck_temperature',
                     'chuck_power',
@@ -236,6 +258,10 @@ class ICP_RIE(RIE, ArchiveSection):
                     'icp_power',
                     'icp_frequency',
                     'bias',
+                    'cooling_helium_massflow',
+                    'cooling_helium_temperature',
+                    'clamping',
+                    'clamping_type',
                     'depth_measured',
                     'duration_measured',
                     'etching_rate_obtained',
@@ -244,82 +270,42 @@ class ICP_RIE(RIE, ArchiveSection):
             },
         },
     )
-    etching_rate_target = Quantity(
-        type=np.float64,
-        description='etching rate desired',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm/minute',
-        },
-        unit='nm/minute',
-    )
-    duration_target = Quantity(
-        type=np.float64,
-        description='Time prescribed by the recipe',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'minute',
-        },
-        unit='minute',
-    )
-    short_name = Quantity(
-        type=str,
-        description='Material to be etched',
-        a_eln={
-            'component': 'StringEditQuantity',
-            'label': 'target material',
-        },
-    )
-    chemical_formula = Quantity(
-        type=str,
-        description='Inserted only if known',
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    depth_target = Quantity(
-        type=np.float64,
-        description='Amount of material to be etched',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm',
-        },
-        unit='nm',
-    )
-    chamber_pressure = Quantity(
-        type=np.float64,
-        description='Pressure in the chamber',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'mbar',
-        },
-        unit='mbar',
-    )
-    chuck_temperature = Quantity(
-        type=np.float64,
-        description='Temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-    chuck_power = Quantity(
-        type=np.float64,
-        description='Power erogated on the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
-    chuck_frequency = Quantity(
-        type=np.float64,
-        description='Frequency of current on the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
-    )
+    # chamber_pressure = Quantity(
+    #     type=np.float64,
+    #     description='Pressure in the chamber',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'mbar',
+    #     },
+    #     unit='mbar',
+    # )
+    # chuck_temperature = Quantity(
+    #     type=np.float64,
+    #     description='Temperature of the chuck',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'celsius',
+    #     },
+    #     unit='celsius',
+    # )
+    # chuck_power = Quantity(
+    #     type=np.float64,
+    #     description='Power erogated on the chuck',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'watt',
+    #     },
+    #     unit='watt',
+    # )
+    # chuck_frequency = Quantity(
+    #     type=np.float64,
+    #     description='Frequency of current on the chuck',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'MHz',
+    #     },
+    #     unit='MHz',
+    # )
     icp_power = Quantity(
         type=np.float64,
         description='Power erogated in the region of the plasma',
@@ -338,73 +324,92 @@ class ICP_RIE(RIE, ArchiveSection):
         },
         unit='MHz',
     )
-    bias = Quantity(
+    cooling_helium_massflow = Quantity(
         type=np.float64,
-        description='Bias voltage in the chamber',
+        description='Rate at which the helium for cooling the chuck flows',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'volt',
+            'defaultDisplayUnit': 'centimeter^3/minute',
         },
-        unit='volt',
+        unit='centimeter^3/minute',
     )
-    depth_measured = Quantity(
+
+    cooling_helium_temperature = Quantity(
         type=np.float64,
-        description='Amount of material ethced effectively in the process',
+        description='Temperature of the cooling helium on the chuck',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm',
+            'defaultDisplayUnit': 'celsius',
         },
-        unit='nm',
+        unit='celsius',
     )
-    duration_measured = Quantity(
-        type=np.float64,
-        description='Real time of the process ad output',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'minute',
-        },
-        unit='minute',
-    )
-    etching_rate_obtained = Quantity(
-        type=np.float64,
-        description='Etching rate as output',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm/minute',
-        },
-        unit='nm/minute',
-    )
-    fluximeters = SubSection(
-        section_def=Massflow_controller,
-        repeats=True,
-    )
-    material_elemental_composition = SubSection(
-        section_def=ElementalComposition, repeats=True
-    )
+    # bias = Quantity(
+    #     type=np.float64,
+    #     description='Bias voltage in the chamber',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'volt',
+    #     },
+    #     unit='volt',
+    # )
+    # depth_measured = Quantity(
+    #     type=np.float64,
+    #     description='Amount of material ethced effectively in the process',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'nm',
+    #     },
+    #     unit='nm',
+    # )
+    # duration_measured = Quantity(
+    #     type=np.float64,
+    #     description='Real time of the process ad output',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'minute',
+    #     },
+    #     unit='minute',
+    # )
+    # etching_rate_obtained = Quantity(
+    #     type=np.float64,
+    #     description='Etching rate as output',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'nm/minute',
+    #     },
+    #     unit='nm/minute',
+    # )
+    # fluximeters = SubSection(
+    #     section_def=Massflow_controller,
+    #     repeats=True,
+    # )
+    # material_elemental_composition = SubSection(
+    #     section_def=ElementalComposition, repeats=True
+    # )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        if self.chemical_formula:
-            elements, counts = parse_chemical_formula(self.chemical_formula)
-            total = 0
-            for token in counts:
-                total += int(token)
-            mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
-            if total != 0:
-                elemental_fraction = np.array(counts) / total
-                elementality = []
-                i = 0
-                for entry in elements:
-                    elemental_try = ElementalComposition()
-                    elemental_try.element = entry
-                    elemental_try.atomic_fraction = elemental_fraction[i]
-                    mass_frac = (am[an[entry]] * counts[i]) / mass
-                    elemental_try.mass_fraction = mass_frac
-                    i += 1
-                    elementality.append(elemental_try)
-            else:
-                print('No elements provided')
-            self.material_elemental_composition = elementality
+        # if self.chemical_formula:
+        #     elements, counts = parse_chemical_formula(self.chemical_formula)
+        #     total = 0
+        #     for token in counts:
+        #         total += int(token)
+        #     mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
+        #     if total != 0:
+        #         elemental_fraction = np.array(counts) / total
+        #         elementality = []
+        #         i = 0
+        #         for entry in elements:
+        #             elemental_try = ElementalComposition()
+        #             elemental_try.element = entry
+        #             elemental_try.atomic_fraction = elemental_fraction[i]
+        #             mass_frac = (am[an[entry]] * counts[i]) / mass
+        #             elemental_try.mass_fraction = mass_frac
+        #             i += 1
+        #             elementality.append(elemental_try)
+        #     else:
+        #         print('No elements provided')
+        #     self.material_elemental_composition = elementality
 
 
 class WetEtching(Chemical, FabricationProcessStep, ArchiveSection):
