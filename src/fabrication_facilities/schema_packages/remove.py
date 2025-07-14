@@ -332,11 +332,34 @@ class Passivation(ArchiveSection):
         unit='sec',
     )
 
-    passivation_material= Quantity(
+    method=Quantity(
         type=str,
-        description='Material used in the passivation phase',
+        description=(
+            """""
+            Method employed for passivation: BOSCH require passivating material,
+            cryogenic require some temperature controls. So only the right parameters
+            has to be defined in the following.
+            """""
+        ),
         a_eln={'component':'StringEditQuantity'},
     )
+
+    passivation_material= Quantity(
+        type=str,
+        description='Material used in the passivation phase of a BOSCH',
+        a_eln={'component':'StringEditQuantity'},
+    )
+
+    passivation_temperature=Quantity(
+        type=np.float64,
+        description='Temperature adopted for the passivation',
+        a_eln={
+            'component':'NumberEditQuantity',
+            'defaulDisplayUnit':'celsius',
+        },
+        unit='celsius',
+    )
+
 
 
 class DRIEsubsubstep(ICP_RIE, ArchiveSection):
