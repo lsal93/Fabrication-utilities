@@ -27,6 +27,7 @@ from fabrication_facilities.schema_packages.utils import (
 from fabrication_facilities.schema_packages.fabrication_utilities import(
     EquipmentReference,
     FabricationProcessStep,
+    FabricationProcess,
 )
 
 if TYPE_CHECKING:
@@ -37,7 +38,7 @@ m_package = Package(
     description='Plugin to describe raw materials properties'
 )
 
-class EtchingProperties(ArchiveSection):
+class EtchingMeasures(ArchiveSection):
 
     m_def = Section(
         description='Class describing etching properties characterized for materials',
@@ -83,6 +84,30 @@ class EtchingProperties(ArchiveSection):
     )
 
 
+class EtchingProperties(ArchiveSection):
+
+    etching_results= SubSection(
+        section_def= EtchingMeasures,
+        repeats=True,
+    )
+
+class StressProperties(ArchiveSection):
+
+    instrument=SubSection(
+        section_def= EquipmentReference,
+        description= 'Instrument through which the characterization was performed',
+        repeats=False,
+    )
+
+
+class ProfileProperties(ArchiveSection):
+
+    instrument=SubSection(
+        section_def= EquipmentReference,
+        description= 'Instrument through which the characterization was performed',
+        repeats=False,
+    )
+
 class FabricationMaterial(EntryData, ArchiveSection):
 
     m_def=Section(
@@ -95,8 +120,8 @@ class FabricationMaterial(EntryData, ArchiveSection):
                     'description',
                     'location',
                     'operator',
-                    'production_method',
-                    'link_to_production_process',
+                    'production_process_name',
+                    'production_process_reference',
                 ]
             }
         }
@@ -139,13 +164,44 @@ class FabricationMaterial(EntryData, ArchiveSection):
         },
     )
 
+    production_process_name= Quantity(
+        type=str,
+        description='Name of the referenced process used in the production',
+        a_eln={
+            'component': 'StringEditQuantity',
+        }
+    )
+
+    production_process_reference=Quantity(
+        type=FabricationProcess,
+        description='Link to fabrication process employed',
+        a_eln={'component': 'ReferenceEditQuantity'},
+    )
+
     chemical_components=SubSection(
         section_def = FabricationChemical,
         repeats=True,
     )
 
-    etching_rates_list= SubSection(
+    etching_properties= SubSection(
         section_def = EtchingProperties,
-        repeats= True,
+        repeats= False,
     )
+
+    stress_properties= Subsection(
+        section_def = StressProperties,
+        repeats=False,
+    )
+
+    geometric_properties= SubSection(
+        section_def = ProfileProperties,
+        repeats = False,
+    )
+
+    electric_properties = SubSection(
+        section_def = ElectricProperties,
+        repeats= False,
+    )
+
+
 
