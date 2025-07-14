@@ -313,8 +313,26 @@ class ICP_RIE(RIE, ArchiveSection):
         unit='celsius',
     )
 
-class DRIE (ICP_RIE,ArchiveSection):
+class Passivation(ArchiveSection):
 
+    duration=Quantity(
+        type=np.float64,
+        description='Time for the depositing of the passive layer'
+        a_eln={
+            'component':'NumberEditQuantity',
+            'defaultDisplayUnit':'sec',
+        },
+        unit='sec',
+    )
+
+    passivation_material= Quantity(
+        type=str,
+        description='Material used in the passivation phase',
+        a_eln={'component':'StringEditQuantity'},
+    )
+
+
+class DRIEsubsubstep(ICP_RIE, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -356,6 +374,8 @@ class DRIE (ICP_RIE,ArchiveSection):
                     'chuck_frequency',
                     'icp_power',
                     'icp_frequency',
+                    'third_power',
+                    'third_frequency',
                     'bias',
                     'cooling_helium_massflow',
                     'cooling_helium_temperature',
@@ -369,6 +389,93 @@ class DRIE (ICP_RIE,ArchiveSection):
             },
         },
     )
+
+    third_power = Quantity(
+        type=np.float64,
+        description='Power erogated in the region of the plasma',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+    third_frequency = Quantity(
+        type=np.float64,
+        description='Frequency of current on the gases area',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+
+
+class DRIEsubstep(ArchiveSection):
+
+    m_def=Section(
+        description='Atomic step for a DRIE procedure',
+    )
+
+    etching_phase= SubSection(
+        section_def=DRIEsubsubstep,
+        repeats=False,
+    )
+
+    passivation_phase=SubSection(
+        section_def=Passivation,
+        repeats=False,
+    )
+
+
+
+class DRIE (FabricationProcessStep, ArchiveSection):
+
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    number_of_loops=Quantity(
+        type=int,
+        description='Number of etching-passivation cycles',
+        a_eln={'component':'NumberEditQuantity'},
+    )
+
+    etching_steps= SubSection(
+        section_def=DRIEsubstep,
+        repeats=True,
+    )
+
 
 
 class WetEtching(FabricationProcessStep, ArchiveSection):
@@ -492,30 +599,6 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
         },
     )
 
-    # material_elemental_composition = SubSection(
-    #     section_def=ElementalComposition, repeats=True
-    # )
-
-    # def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-    #     super().normalize(archive, logger)
-    #     if self.chemical_formula:
-    #         elements, counts = parse_chemical_formula(self.chemical_formula)
-    #         total = 0
-    #         for token in counts:
-    #             total += int(token)
-    #         if total != 0:
-    #             elemental_fraction = np.array(counts) / total
-    #             elementality = []
-    #             i = 0
-    #             for entry in elements:
-    #                 elemental_try = ElementalComposition()
-    #                 elemental_try.element = entry
-    #                 elemental_try.atomic_fraction = elemental_fraction[i]
-    #                 i += 1
-    #                 elementality.append(elemental_try)
-    #         else:
-    #             print('No elements provided')
-    #         self.material_elemental_composition = elementality
 
     materials_etched=SubSection(
         section_def= FabricationChemical,

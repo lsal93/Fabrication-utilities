@@ -446,6 +446,10 @@ class DRIE_Etcher (ICP_Etcher, ArchiveSection):
                     'max_icp_power',
                     'min_icp_frequency',
                     'max_icp_frequency',
+                    'min_third_power',
+                    'max_third_power',
+                    'min_third_frequency',
+                    'max_third_frequency',
                     'min_bias',
                     'max_bias',
                     'mechanical_clamping',
@@ -454,60 +458,104 @@ class DRIE_Etcher (ICP_Etcher, ArchiveSection):
                     'max_cooling_helium_massflow',
                     'min_cooling_helium_temperature',
                     'max_cooling_helium_temperature',
+                    'passivation_material',
                 ],
             },
         }
     )
-####
-#Ancora non cambierà niente tra ICP, Deep e BOSCH etcher
-####
 
-class DRIE_BOSCH_Etcher (DRIE_Etcher, ArchiveSection):
-    m_def = Section(
-        description='Dry etching instrument for deep geometries with BOSCH technology',
+    min_third_power = Quantity(
+        type=np.float64,
+        description='Minimal power erogated in the region of the plasma',
         a_eln={
-            'hide': [
-                'lab_id',
-                'datetime',
-            ],
-            'properties': {
-                'order': [
-                    'name',
-                    'inventary_code',
-                    'affiliation',
-                    'product_model',
-                    'institution',
-                    'manufacturer_name',
-                    'is_bookable',
-                    'automatic_loading',
-                    'description',
-                    'min_chamber_pressure',
-                    'max_chamber_pressure',
-                    'vacuum_system_name',
-                    'min_wall_temperature',
-                    'max_wall_temperature',
-                    'min_chuck_temperature',
-                    'max_chuck_temperature',
-                    'min_chuck_power',
-                    'max_chuck_power',
-                    'min_chuck_frequency',
-                    'max_chuck_frequency',
-                    'min_icp_power',
-                    'max_icp_power',
-                    'min_icp_frequency',
-                    'max_icp_frequency',
-                    'min_bias',
-                    'max_bias',
-                    'mechanical_clamping',
-                    'electrostatic_clamping',
-                    'min_cooling_helium_massflow',
-                    'max_cooling_helium_massflow',
-                    'min_cooling_helium_temperature',
-                    'max_cooling_helium_temperature',
-                ],
-            },
-        }
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
     )
+
+    max_third_power = Quantity(
+        type=np.float64,
+        description='Maximal power erogated in the region of the plasma',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    min_third_frequency = Quantity(
+        type=np.float64,
+        description='Minimal frequency of current on the gases area',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+
+    max_third_frequency = Quantity(
+        type=np.float64,
+        description='Maximal frequency of current on the gases area',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+
+    passivation_material=Quantity(
+        type=str,
+        description='Material at disposal for passivation',
+        a_eln={'component':'StringEditQuantity'},
+    )
+
+# class DRIE_BOSCH_Etcher (DRIE_Etcher, ArchiveSection):
+#     m_def = Section(
+#         description='Dry etching instrument for deep geometries with BOSCH technology',
+#         a_eln={
+#             'hide': [
+#                 'lab_id',
+#                 'datetime',
+#             ],
+#             'properties': {
+#                 'order': [
+#                     'name',
+#                     'inventary_code',
+#                     'affiliation',
+#                     'product_model',
+#                     'institution',
+#                     'manufacturer_name',
+#                     'is_bookable',
+#                     'automatic_loading',
+#                     'description',
+#                     'min_chamber_pressure',
+#                     'max_chamber_pressure',
+#                     'vacuum_system_name',
+#                     'min_wall_temperature',
+#                     'max_wall_temperature',
+#                     'min_chuck_temperature',
+#                     'max_chuck_temperature',
+#                     'min_chuck_power',
+#                     'max_chuck_power',
+#                     'min_chuck_frequency',
+#                     'max_chuck_frequency',
+#                     'min_icp_power',
+#                     'max_icp_power',
+#                     'min_icp_frequency',
+#                     'max_icp_frequency',
+#                     'min_bias',
+#                     'max_bias',
+#                     'mechanical_clamping',
+#                     'electrostatic_clamping',
+#                     'min_cooling_helium_massflow',
+#                     'max_cooling_helium_massflow',
+#                     'min_cooling_helium_temperature',
+#                     'max_cooling_helium_temperature',
+#                 ],
+#             },
+#         }
+#     )
 
 class BakingFurnace(Equipment, ArchiveSection):
     m_def = Section(
