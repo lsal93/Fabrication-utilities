@@ -188,7 +188,7 @@ class FabricationMaterial(EntryData, ArchiveSection):
         repeats= False,
     )
 
-    stress_properties= Subsection(
+    stress_properties= SubSection(
         section_def = StressProperties,
         repeats=False,
     )
