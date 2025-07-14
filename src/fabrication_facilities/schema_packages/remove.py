@@ -251,7 +251,7 @@ class ICP_RIE(RIE, ArchiveSection):
                     'depth_target',
                     'duration_target',
                     'etching_rate_target',
-                    'wall_temperature'
+                    'wall_temperature',
                     'chamber_pressure',
                     'chuck_temperature',
                     'chuck_power',
@@ -271,42 +271,7 @@ class ICP_RIE(RIE, ArchiveSection):
             },
         },
     )
-    # chamber_pressure = Quantity(
-    #     type=np.float64,
-    #     description='Pressure in the chamber',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'mbar',
-    #     },
-    #     unit='mbar',
-    # )
-    # chuck_temperature = Quantity(
-    #     type=np.float64,
-    #     description='Temperature of the chuck',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'celsius',
-    #     },
-    #     unit='celsius',
-    # )
-    # chuck_power = Quantity(
-    #     type=np.float64,
-    #     description='Power erogated on the chuck',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'watt',
-    #     },
-    #     unit='watt',
-    # )
-    # chuck_frequency = Quantity(
-    #     type=np.float64,
-    #     description='Frequency of current on the chuck',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'MHz',
-    #     },
-    #     unit='MHz',
-    # )
+
     icp_power = Quantity(
         type=np.float64,
         description='Power erogated in the region of the plasma',
@@ -344,52 +309,10 @@ class ICP_RIE(RIE, ArchiveSection):
         },
         unit='celsius',
     )
-    # bias = Quantity(
-    #     type=np.float64,
-    #     description='Bias voltage in the chamber',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'volt',
-    #     },
-    #     unit='volt',
-    # )
-    # depth_measured = Quantity(
-    #     type=np.float64,
-    #     description='Amount of material ethced effectively in the process',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'nm',
-    #     },
-    #     unit='nm',
-    # )
-    # duration_measured = Quantity(
-    #     type=np.float64,
-    #     description='Real time of the process ad output',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'minute',
-    #     },
-    #     unit='minute',
-    # )
-    # etching_rate_obtained = Quantity(
-    #     type=np.float64,
-    #     description='Etching rate as output',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'nm/minute',
-    #     },
-    #     unit='nm/minute',
-    # )
-    # fluximeters = SubSection(
-    #     section_def=Massflow_controller,
-    #     repeats=True,
-    # )
-    # material_elemental_composition = SubSection(
-    #     section_def=ElementalComposition, repeats=True
-    # )
 
-    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        super().normalize(archive, logger)
+
+#    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+#        super().normalize(archive, logger)
         # if self.chemical_formula:
         #     elements, counts = parse_chemical_formula(self.chemical_formula)
         #     total = 0
