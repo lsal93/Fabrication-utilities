@@ -30,6 +30,7 @@ from fabrication_facilities.schema_packages.utils import (
     Massflow_controller,
     parse_chemical_formula,
     FabricationChemical,
+    ConditioningSteps,
 )
 
 if TYPE_CHECKING:
@@ -202,6 +203,12 @@ class RIE(FabricationProcessStep, ArchiveSection):
 
     materials_etched=SubSection(
         section_def= FabricationChemical,
+        repeats=True,
+    )
+
+    conditioning= SubSection(
+        section_def= ConditioningSteps,
+        description= 'Steps performed to standardize the environment in the chamber',
         repeats=True,
     )
 
