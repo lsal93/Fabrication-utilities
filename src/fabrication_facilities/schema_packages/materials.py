@@ -108,6 +108,14 @@ class ProfileProperties(ArchiveSection):
         repeats=False,
     )
 
+class ElectricProperties(ArchiveSection):
+
+    instrument=SubSection(
+        section_def= EquipmentReference,
+        description= 'Instrument through which the characterization was performed',
+        repeats=False,
+    )
+
 class FabricationMaterial(EntryData, ArchiveSection):
 
     m_def=Section(
