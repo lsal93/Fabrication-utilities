@@ -317,7 +317,7 @@ class Passivation(ArchiveSection):
 
     duration=Quantity(
         type=np.float64,
-        description='Time for the depositing of the passive layer'
+        description='Time for the depositing of the passive layer',
         a_eln={
             'component':'NumberEditQuantity',
             'defaultDisplayUnit':'sec',
