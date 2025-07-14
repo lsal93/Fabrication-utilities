@@ -97,7 +97,7 @@ class RIE(FabricationProcessStep, ArchiveSection):
         type=str,
         description='Materials to be etched',
         shape=['*'],
-        a_eln={'component': 'StringEditQuantity', 'label': 'target material'},
+        a_eln={'component': 'StringEditQuantity', 'label': 'target materials'},
     )
     duration_target = Quantity(
         type=np.float64,
@@ -313,8 +313,7 @@ class ICP_RIE(RIE, ArchiveSection):
         unit='celsius',
     )
 
-
-class WetEtching(Chemical, FabricationProcessStep, ArchiveSection):
+class DRIE (ICP_RIE,ArchiveSection):
 
     m_def = Section(
         a_eln={
@@ -345,10 +344,70 @@ class WetEtching(Chemical, FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
-                    'short_name',
-                    'chemical_formula',
+                    'short_names',
+                    'chemical_species_formulas',
+                    'depth_target',
+                    'duration_target',
+                    'etching_rate_target',
+                    'wall_temperature',
+                    'chamber_pressure',
+                    'chuck_temperature',
+                    'chuck_power',
+                    'chuck_frequency',
+                    'icp_power',
+                    'icp_frequency',
+                    'bias',
+                    'cooling_helium_massflow',
+                    'cooling_helium_temperature',
+                    'clamping',
+                    'clamping_type',
+                    'depth_measured',
+                    'duration_measured',
+                    'etching_rate_obtained',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+
+class WetEtching(FabricationProcessStep, ArchiveSection):
+
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'short_names',
+                    'chemical_species_formulas',
                     'etching_solution',
                     'etching_solution_proportions',
+                    'etching_reactives',
+                    'etching_reactives_formulas',
                     'depth_target',
                     'duration_target',
                     'depth_measured',
@@ -360,14 +419,16 @@ class WetEtching(Chemical, FabricationProcessStep, ArchiveSection):
             },
         },
     )
-    short_name = Quantity(
+    short_names = Quantity(
         type=str,
-        description='Material to be etched',
-        a_eln={'component': 'StringEditQuantity', 'label': 'target material'},
+        description='Materials to be etched',
+        shape=['*'],
+        a_eln={'component': 'StringEditQuantity', 'label': 'target materials'},
     )
-    chemical_formula = Quantity(
+    chemical_species_formulas = Quantity(
         type=str,
-        description='Inserted only if known',
+        description='Formulas of materials etched',
+        shape= ['*'],
         a_eln={'component': 'StringEditQuantity'},
     )
     depth_target = Quantity(
@@ -387,6 +448,18 @@ class WetEtching(Chemical, FabricationProcessStep, ArchiveSection):
         a_eln={
             'component': 'StringEditQuantity',
         },
+    )
+    etching_reactives = Quantity(
+        type=str,
+        description='Names of compounds used to etch',
+        shape= ['*'],
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    etching_reactives_formulas = Quantity(
+        type=str,
+        description='Formulas of compounds used to etch',
+        shape= ['*'],
+        a_eln={'component': 'StringEditQuantity'},
     )
     duration_target = Quantity(
         type=np.float64,
@@ -419,30 +492,64 @@ class WetEtching(Chemical, FabricationProcessStep, ArchiveSection):
         },
     )
 
-    material_elemental_composition = SubSection(
-        section_def=ElementalComposition, repeats=True
+    # material_elemental_composition = SubSection(
+    #     section_def=ElementalComposition, repeats=True
+    # )
+
+    # def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+    #     super().normalize(archive, logger)
+    #     if self.chemical_formula:
+    #         elements, counts = parse_chemical_formula(self.chemical_formula)
+    #         total = 0
+    #         for token in counts:
+    #             total += int(token)
+    #         if total != 0:
+    #             elemental_fraction = np.array(counts) / total
+    #             elementality = []
+    #             i = 0
+    #             for entry in elements:
+    #                 elemental_try = ElementalComposition()
+    #                 elemental_try.element = entry
+    #                 elemental_try.atomic_fraction = elemental_fraction[i]
+    #                 i += 1
+    #                 elementality.append(elemental_try)
+    #         else:
+    #             print('No elements provided')
+    #         self.material_elemental_composition = elementality
+
+    materials_etched=SubSection(
+        section_def= FabricationChemical,
+        repeats=True,
+    )
+
+    reactives_used_to_etch=SubSection(
+        section_def = FabricationChemical,
+        repeats= True,
     )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        if self.chemical_formula:
-            elements, counts = parse_chemical_formula(self.chemical_formula)
-            total = 0
-            for token in counts:
-                total += int(token)
-            if total != 0:
-                elemental_fraction = np.array(counts) / total
-                elementality = []
-                i = 0
-                for entry in elements:
-                    elemental_try = ElementalComposition()
-                    elemental_try.element = entry
-                    elemental_try.atomic_fraction = elemental_fraction[i]
-                    i += 1
-                    elementality.append(elemental_try)
-            else:
-                print('No elements provided')
-            self.material_elemental_composition = elementality
+        if self.chemical_species_formulas is None:
+            pass
+        else:
+            chems = []
+            for formula in self.chemical_species_formulas:
+                chemical = FabricationChemical()
+                chemical.chemical_formula=formula
+                chemical.normalize(archive, logger)
+                chems.append(chemical)
+            self.materials_etched = chems
+
+        if self.etching_reactives_formulas is None:
+            pass
+        else:
+            reactives = []
+            for formula in self.etching_reactives_formulas:
+                reactive = FabricationChemical()
+                reactive.chemical_formula=formula
+                reactive.normalize(archive, logger)
+                reactives.append(reactive)
+            self.reactives_used_to_etch = reactives
 
 
 class WetCleaning(FabricationProcessStep, ArchiveSection):
