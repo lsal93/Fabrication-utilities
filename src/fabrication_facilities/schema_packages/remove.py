@@ -246,11 +246,11 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        if self.chemical_species_formulas is None:
+        if self.target_materials_formulas is None:
             pass
         else:
             chems = []
-            for formula in self.chemical_species_formulas:
+            for formula in self.target_materials_formulas:
                 chemical = FabricationChemical()
                 chemical.chemical_formula = formula
                 chemical.normalize(archive, logger)
