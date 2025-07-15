@@ -37,7 +37,8 @@ if TYPE_CHECKING:
 
 m_package = Package(name='Add processes schema')
 
-class PECVD (FabricationProcessStep, ArchiveSection):
+
+class PECVD(FabricationProcessStep, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -175,10 +176,10 @@ class PECVD (FabricationProcessStep, ArchiveSection):
         },
         unit='volt',
     )
-    clamping= Quantity(
+    clamping = Quantity(
         type=bool,
         description='Is clamping used in the process?',
-        a_eln={'component':'BoolEditQuantity'},
+        a_eln={'component': 'BoolEditQuantity'},
     )
     clamping_type = Quantity(
         type=MEnum(
@@ -255,9 +256,9 @@ class PECVD (FabricationProcessStep, ArchiveSection):
         section_def=ElementalComposition, repeats=True
     )
 
-    conditioning= SubSection(
-        section_def= ConditioningSteps,
-        description= 'Steps performed to standardize the environment in the chamber',
+    conditioning = SubSection(
+        section_def=ConditioningSteps,
+        description='Steps performed to standardize the environment in the chamber',
         repeats=True,
     )
 
@@ -285,8 +286,8 @@ class PECVD (FabricationProcessStep, ArchiveSection):
                 print('No elements provided')
             self.material_elemental_composition = elementality
 
-class ICP_CVD(PECVD, ArchiveSection):
 
+class ICP_CVD(PECVD, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -359,9 +360,9 @@ class ICP_CVD(PECVD, ArchiveSection):
 
 
 class LPCVD(PECVD, ArchiveSection):
-    m_def=Section(
+    m_def = Section(
         a_eln={
-            'hide':[
+            'hide': [
                 'description',
                 'lab_id',
                 'datetime',
@@ -373,8 +374,8 @@ class LPCVD(PECVD, ArchiveSection):
                 'chuck_frequency',
                 'bias',
             ],
-            'properties':{
-                'order':[
+            'properties': {
+                'order': [
                     'job_number',
                     'name',
                     'description',
@@ -404,9 +405,10 @@ class LPCVD(PECVD, ArchiveSection):
                     'deposition_rate_obtained',
                     'notes',
                 ],
-            }
+            },
         }
     )
+
 
 class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     m_def = Section(
@@ -1095,8 +1097,8 @@ class SOG(Chemical, FabricationProcessStep, ArchiveSection):
 
 m_package.__init_metainfo__()
 
-#PCVD
-#LPCVD
-#PECVD
-#PECVD
-#ICP-CVD
+# PCVD
+# LPCVD
+# PECVD
+# PECVD
+# ICP-CVD

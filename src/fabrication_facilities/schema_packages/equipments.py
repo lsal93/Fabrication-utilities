@@ -43,10 +43,8 @@ m_package = Package(name='Equipments specific definitions ')
 class Massflow_parameter(Massflow_controller, ArchiveSection):
     m_def = Section(
         description='Class to describe flux of gases in fluximeters',
-        a_eln={
-            'hide': ['lab_id', 'datetime', 'massflow']
-            }
-        )
+        a_eln={'hide': ['lab_id', 'datetime', 'massflow']},
+    )
 
     min_massflow = Quantity(
         type=np.float64,
@@ -67,8 +65,8 @@ class Massflow_parameter(Massflow_controller, ArchiveSection):
         unit='centimeter^3/minute',
     )
 
-class RIE_Etcher(Equipment, ArchiveSection):
 
+class RIE_Etcher(Equipment, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -108,10 +106,10 @@ class RIE_Etcher(Equipment, ArchiveSection):
                 ],
             },
         },
-        description = 'Base classes for etching instruments'
+        description='Base classes for etching instruments',
     )
 
-    vacuum_system_name= Quantity(
+    vacuum_system_name = Quantity(
         type=str,
         description='Type of vacuum pump adopted',
         a_eln={
@@ -240,7 +238,7 @@ class RIE_Etcher(Equipment, ArchiveSection):
 
     electrostatic_clamping = Quantity(
         type=bool,
-        description = 'Is electrostatic clamping available',
+        description='Is electrostatic clamping available',
         a_eln={
             'component': 'BoolEditQuantity',
         },
@@ -248,7 +246,7 @@ class RIE_Etcher(Equipment, ArchiveSection):
 
     mechanical_clamping = Quantity(
         type=bool,
-        description = 'Is mechanical clamping available',
+        description='Is mechanical clamping available',
         a_eln={
             'component': 'BoolEditQuantity',
         },
@@ -258,6 +256,7 @@ class RIE_Etcher(Equipment, ArchiveSection):
         section_def=Massflow_parameter,
         repeats=True,
     )
+
 
 class ICP_Etcher(RIE_Etcher, ArchiveSection):
     m_def = Section(
@@ -303,7 +302,7 @@ class ICP_Etcher(RIE_Etcher, ArchiveSection):
                     'max_cooling_helium_temperature',
                 ],
             },
-        }
+        },
     )
 
     min_icp_power = Quantity(
@@ -412,7 +411,8 @@ class ICP_Etcher(RIE_Etcher, ArchiveSection):
 # bisogna prima lavorare sugli items stessi...
 ###############
 
-class DRIE_Etcher (ICP_Etcher, ArchiveSection):
+
+class DRIE_Etcher(ICP_Etcher, ArchiveSection):
     m_def = Section(
         description='Dry etching instrument for deep geometries',
         a_eln={
@@ -461,7 +461,7 @@ class DRIE_Etcher (ICP_Etcher, ArchiveSection):
                     'passivation_material',
                 ],
             },
-        }
+        },
     )
 
     min_third_power = Quantity(
@@ -504,11 +504,12 @@ class DRIE_Etcher (ICP_Etcher, ArchiveSection):
         unit='MHz',
     )
 
-    passivation_material=Quantity(
+    passivation_material = Quantity(
         type=str,
         description='Material at disposal for passivation',
-        a_eln={'component':'StringEditQuantity'},
+        a_eln={'component': 'StringEditQuantity'},
     )
+
 
 # class DRIE_BOSCH_Etcher (DRIE_Etcher, ArchiveSection):
 #     m_def = Section(
@@ -559,7 +560,6 @@ class DRIE_Etcher (ICP_Etcher, ArchiveSection):
 
 
 class LPCVD_System(Equipment, ArchiveSection):
-
     m_def = Section(
         a_eln={
             'hide': [
@@ -599,10 +599,10 @@ class LPCVD_System(Equipment, ArchiveSection):
                 ],
             },
         },
-        description = 'Instrument used to perform LPCVD steps'
+        description='Instrument used to perform LPCVD steps',
     )
 
-    vacuum_system_name= Quantity(
+    vacuum_system_name = Quantity(
         type=str,
         description='Type of vacuum pump adopted',
         a_eln={
@@ -672,7 +672,7 @@ class LPCVD_System(Equipment, ArchiveSection):
 
     electrostatic_clamping = Quantity(
         type=bool,
-        description = 'Is electrostatic clamping available',
+        description='Is electrostatic clamping available',
         a_eln={
             'component': 'BoolEditQuantity',
         },
@@ -680,7 +680,7 @@ class LPCVD_System(Equipment, ArchiveSection):
 
     mechanical_clamping = Quantity(
         type=bool,
-        description = 'Is mechanical clamping available',
+        description='Is mechanical clamping available',
         a_eln={
             'component': 'BoolEditQuantity',
         },
@@ -690,6 +690,7 @@ class LPCVD_System(Equipment, ArchiveSection):
         section_def=Massflow_parameter,
         repeats=True,
     )
+
 
 class PECVD_System(LPCVD_System, ArchiveSection):
     m_def = Section(
@@ -731,7 +732,7 @@ class PECVD_System(LPCVD_System, ArchiveSection):
                     'max_cooling_helium_temperature',
                 ],
             },
-        }
+        },
     )
 
     min_chuck_power = Quantity(
@@ -793,7 +794,6 @@ class PECVD_System(LPCVD_System, ArchiveSection):
         unit='volt',
     )
 
-
     min_cooling_helium_massflow = Quantity(
         type=np.float64,
         description='Minimum rate at which the helium for cooling the chuck flows',
@@ -833,8 +833,8 @@ class PECVD_System(LPCVD_System, ArchiveSection):
         unit='celsius',
     )
 
-class ICP_CVD_System(PECVD_System, ArchiveSection):
 
+class ICP_CVD_System(PECVD_System, ArchiveSection):
     m_def = Section(
         description='Class for instruments devoted to ICP_CVD procedures',
         a_eln={
@@ -878,7 +878,7 @@ class ICP_CVD_System(PECVD_System, ArchiveSection):
                     'max_cooling_helium_temperature',
                 ],
             },
-        }
+        },
     )
 
     min_icp_power = Quantity(

@@ -82,9 +82,8 @@ def parse_chemical_formula(formula):
 
 
 class FabricationChemical(Chemical, ArchiveSection):
-
     m_def = Section(
-        definition = 'Chemicals for fabrication products',
+        definition='Chemicals for fabrication products',
         a_eln={
             'hide': [
                 'lab_id',
@@ -94,12 +93,12 @@ class FabricationChemical(Chemical, ArchiveSection):
                 'end_time',
                 'start_time',
             ],
-        }
+        },
     )
 
     elemental_composition = SubSection(
-        section_def= ElementalComposition,
-        repeats= True,
+        section_def=ElementalComposition,
+        repeats=True,
     )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
@@ -128,7 +127,6 @@ class FabricationChemical(Chemical, ArchiveSection):
 
 
 class Massflow_controller(FabricationChemical, ArchiveSection):
-
     m_def = Section(
         a_eln={'overview': True, 'hide': ['lab_id', 'datetime']},
     )
@@ -171,14 +169,14 @@ class Massflow_controller(FabricationChemical, ArchiveSection):
     #             print('No elements provided')
     #         self.elemental_composition = elementality
 
-class ConditioningSteps(ArchiveSection):
 
-    duration=Quantity(
+class ConditioningSteps(ArchiveSection):
+    duration = Quantity(
         type=np.float64,
         description='Time of conditioning',
         a_eln={
-            'component':'NumberEditQuantity',
-            'defaultDisplayUnit':'sec',
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
         },
         unit='sec',
     )

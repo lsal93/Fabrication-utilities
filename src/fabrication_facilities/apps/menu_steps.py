@@ -16,7 +16,7 @@ dmec = 'data.doping_material_elemental_composition.element'
 sec = 'data.substrate_elemental_composition.element'
 wc = 'wafer_cleaning'
 dev = 'developing'
-meec= 'data.materials_etched.elemental_composition.element'
+meec = 'data.materials_etched.elemental_composition.element'
 
 menuadd_icpcvd = Menu(
     title='ICP-CVD',

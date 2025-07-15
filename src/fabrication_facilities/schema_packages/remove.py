@@ -43,6 +43,7 @@ if TYPE_CHECKING:
 
 m_package = Package(name='Etching workflow schema')
 
+
 class RIE(FabricationProcessStep, ArchiveSection):
     m_def = Section(
         a_eln={
@@ -111,7 +112,7 @@ class RIE(FabricationProcessStep, ArchiveSection):
     target_materials_formulas = Quantity(
         type=str,
         description='Inserted only if known',
-        shape= ['*'],
+        shape=['*'],
         a_eln={'component': 'StringEditQuantity'},
     )
     depth_target = Quantity(
@@ -126,40 +127,40 @@ class RIE(FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
         unit='mbar',
     )
-    wall_temperature=Quantity(
+    wall_temperature = Quantity(
         type=np.float64,
         description='Temperature of the wall of the chamber',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
         unit='celsius',
     )
-    chuck_temperature=Quantity(
+    chuck_temperature = Quantity(
         type=np.float64,
         description='Temperature imposed on the chuck',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
         unit='celsius',
     )
-    chuck_power=Quantity(
+    chuck_power = Quantity(
         type=np.float64,
         description='Power imposed on the chuck',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'W'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'W'},
         unit='W',
     )
-    chuck_frequency=Quantity(
+    chuck_frequency = Quantity(
         type=np.float64,
         description='Frequency impulse imposed on the chuck',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'MHz'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'MHz'},
         unit='MHz',
     )
-    bias=Quantity(
+    bias = Quantity(
         type=np.float64,
         description='Voltage imposed on the sample by electodes',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'V'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'V'},
         unit='V',
     )
-    clamping= Quantity(
+    clamping = Quantity(
         type=bool,
         description='Is clamping used in the process?',
-        a_eln={'component':'BoolEditQuantity'},
+        a_eln={'component': 'BoolEditQuantity'},
     )
     clamping_type = Quantity(
         type=MEnum(
@@ -224,14 +225,14 @@ class RIE(FabricationProcessStep, ArchiveSection):
         repeats=True,
     )
 
-    materials_etched=SubSection(
-        section_def= FabricationChemical,
+    materials_etched = SubSection(
+        section_def=FabricationChemical,
         repeats=True,
     )
 
-    conditioning= SubSection(
-        section_def= ConditioningSteps,
-        description= 'Steps performed to standardize the environment in the chamber',
+    conditioning = SubSection(
+        section_def=ConditioningSteps,
+        description='Steps performed to standardize the environment in the chamber',
         repeats=True,
     )
 
@@ -243,7 +244,7 @@ class RIE(FabricationProcessStep, ArchiveSection):
             chems = []
             for formula in self.chemical_species_formulas:
                 chemical = FabricationChemical()
-                chemical.chemical_formula=formula
+                chemical.chemical_formula = formula
                 chemical.normalize(archive, logger)
                 chems.append(chemical)
             self.materials_etched = chems
@@ -324,46 +325,46 @@ class ICP_RIE(RIE, ArchiveSection):
         unit='MHz',
     )
 
-class Passivation(ArchiveSection):
 
-    duration=Quantity(
+class Passivation(ArchiveSection):
+    duration = Quantity(
         type=np.float64,
         description='Time for the depositing of the passive layer',
         a_eln={
-            'component':'NumberEditQuantity',
-            'defaultDisplayUnit':'sec',
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
         },
         unit='sec',
     )
 
-    method=Quantity(
+    method = Quantity(
         type=str,
         description=(
             """""
             Method employed for passivation: BOSCH require passivating material,
             cryogenic require some temperature controls. So only the right parameters
             has to be defined in the following.
-            """""
+            """
+            ''
         ),
-        a_eln={'component':'StringEditQuantity'},
+        a_eln={'component': 'StringEditQuantity'},
     )
 
-    passivation_material= Quantity(
+    passivation_material = Quantity(
         type=str,
         description='Material used in the passivation phase of a BOSCH',
-        a_eln={'component':'StringEditQuantity'},
+        a_eln={'component': 'StringEditQuantity'},
     )
 
-    passivation_temperature=Quantity(
+    passivation_temperature = Quantity(
         type=np.float64,
         description='Temperature adopted for the passivation',
         a_eln={
-            'component':'NumberEditQuantity',
-            'defaultDisplayUnit':'celsius',
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
         },
         unit='celsius',
     )
-
 
 
 class DRIEsubsubstep(ICP_RIE, ArchiveSection):
@@ -445,25 +446,22 @@ class DRIEsubsubstep(ICP_RIE, ArchiveSection):
 
 
 class DRIEsubstep(ArchiveSection):
-
-    m_def=Section(
+    m_def = Section(
         description='Atomic step for a DRIE procedure',
     )
 
-    etching_phase= SubSection(
+    etching_phase = SubSection(
         section_def=DRIEsubsubstep,
         repeats=False,
     )
 
-    passivation_phase=SubSection(
+    passivation_phase = SubSection(
         section_def=Passivation,
         repeats=False,
     )
 
 
-
-class DRIE (FabricationProcessStep, ArchiveSection):
-
+class DRIE(FabricationProcessStep, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -499,21 +497,19 @@ class DRIE (FabricationProcessStep, ArchiveSection):
         },
     )
 
-    number_of_loops=Quantity(
+    number_of_loops = Quantity(
         type=int,
         description='Number of etching-passivation cycles',
-        a_eln={'component':'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity'},
     )
 
-    etching_steps= SubSection(
+    etching_steps = SubSection(
         section_def=DRIEsubstep,
         repeats=True,
     )
 
 
-
 class WetEtching(FabricationProcessStep, ArchiveSection):
-
     m_def = Section(
         a_eln={
             'hide': [
@@ -569,7 +565,7 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
     target_materials_formulas = Quantity(
         type=str,
         description='Formulas of materials etched',
-        shape= ['*'],
+        shape=['*'],
         a_eln={'component': 'StringEditQuantity'},
     )
     depth_target = Quantity(
@@ -593,13 +589,13 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
     etching_reactives = Quantity(
         type=str,
         description='Names of compounds used to etch',
-        shape= ['*'],
+        shape=['*'],
         a_eln={'component': 'StringEditQuantity'},
     )
     etching_reactives_formulas = Quantity(
         type=str,
         description='Formulas of compounds used to etch',
-        shape= ['*'],
+        shape=['*'],
         a_eln={'component': 'StringEditQuantity'},
     )
     duration_target = Quantity(
@@ -633,15 +629,14 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
         },
     )
 
-
-    materials_etched=SubSection(
-        section_def= FabricationChemical,
+    materials_etched = SubSection(
+        section_def=FabricationChemical,
         repeats=True,
     )
 
-    reactives_used_to_etch=SubSection(
-        section_def = FabricationChemical,
-        repeats= True,
+    reactives_used_to_etch = SubSection(
+        section_def=FabricationChemical,
+        repeats=True,
     )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
@@ -653,15 +648,15 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
             for num, formula in enumerate(self.chemical_species_formulas):
                 chemical = FabricationChemical()
                 try:
-                    chemical.short_name= self.short_names[num]
+                    chemical.short_name = self.short_names[num]
                 except Exception as e:
-                    print(f" Error {e}. No name at position {num} in short_names")
+                    print(f' Error {e}. No name at position {num} in short_names')
                     raise
-# Si può provare a scrivere una funzione che parsa le entries multiple?
-# Tipo def mult_entries (class_to_append, list to read, element to append):
-# Blocco simile a quanto sopra. Dovrei dargli anche il bersaglio della classe a cui
-# puntare la quantità atomizzata.
-                chemical.chemical_formula=formula
+                # Si può provare a scrivere una funzione che parsa le entries multiple?
+                # Tipo def mult_entries (class_to_append, list to read, element to append):
+                # Blocco simile a quanto sopra. Dovrei dargli anche il bersaglio della classe a cui
+                # puntare la quantità atomizzata.
+                chemical.chemical_formula = formula
                 chemical.normalize(archive, logger)
                 chems.append(chemical)
             self.materials_etched = chems
@@ -672,7 +667,7 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
             reactives = []
             for formula in self.etching_reactives_formulas:
                 reactive = FabricationChemical()
-                reactive.chemical_formula=formula
+                reactive.chemical_formula = formula
                 reactive.normalize(archive, logger)
                 reactives.append(reactive)
             self.reactives_used_to_etch = reactives

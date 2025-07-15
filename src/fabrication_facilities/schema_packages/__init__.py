@@ -82,6 +82,7 @@ Equipments_entry_point = EquipmentsEntryPoint(
     description='Schema package for describing various equipments for fabrication.',
 )
 
+
 class MaterialEntryPoint(SchemaPackageEntryPoint):
     def load(self):
         from fabrication_facilities.schema_packages.materials import (
