@@ -25,7 +25,7 @@ from nomad.metainfo import (
 
 from fabrication_facilities.schema_packages.fabrication_utilities import (
     FabricationProcessStep,
-    FabricationProcessStepbase,
+    FabricationProcessStepBase,
 )
 from fabrication_facilities.schema_packages.utils import (
     Massflow_controller,
@@ -44,7 +44,7 @@ if TYPE_CHECKING:
 m_package = Package(name='Etching workflow schema')
 
 
-class RIEbase(FabricationProcessStepbase, ArchiveSection):
+class RIEbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [

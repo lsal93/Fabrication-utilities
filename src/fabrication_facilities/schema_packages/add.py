@@ -38,7 +38,7 @@ if TYPE_CHECKING:
 m_package = Package(name='Add processes schema')
 
 
-class PECVDbase(FabricationProcessStepbase, ArchiveSection):
+class PECVDbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
