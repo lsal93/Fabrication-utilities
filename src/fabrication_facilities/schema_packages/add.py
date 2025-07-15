@@ -20,11 +20,11 @@ from nomad.metainfo import (
 
 from fabrication_facilities.schema_packages.fabrication_utilities import (
     FabricationProcessStep,
+    FabricationProcessStepBase,
 )
 from fabrication_facilities.schema_packages.utils import (
     Massflow_controller,
     parse_chemical_formula,
-    ConditioningSteps,
 )
 
 if TYPE_CHECKING:
@@ -38,7 +38,7 @@ if TYPE_CHECKING:
 m_package = Package(name='Add processes schema')
 
 
-class PECVDbase(FabricationProcessStep, ArchiveSection):
+class PECVDbase(FabricationProcessStepbase, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -258,11 +258,11 @@ class PECVDbase(FabricationProcessStep, ArchiveSection):
         section_def=ElementalComposition, repeats=True
     )
 
-    conditioning = SubSection(
-        section_def=ConditioningSteps,
-        description='Steps performed to standardize the environment in the chamber',
-        repeats=True,
-    )
+    # conditioning = SubSection(
+    #     section_def=ConditioningSteps,
+    #     description='Steps performed to standardize the environment in the chamber',
+    #     repeats=True,
+    # )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)

@@ -25,12 +25,12 @@ from nomad.metainfo import (
 
 from fabrication_facilities.schema_packages.fabrication_utilities import (
     FabricationProcessStep,
+    FabricationProcessStepbase,
 )
 from fabrication_facilities.schema_packages.utils import (
     Massflow_controller,
     parse_chemical_formula,
     FabricationChemical,
-    ConditioningSteps,
 )
 
 if TYPE_CHECKING:
@@ -44,7 +44,7 @@ if TYPE_CHECKING:
 m_package = Package(name='Etching workflow schema')
 
 
-class RIEbase(FabricationProcessStep, ArchiveSection):
+class RIEbase(FabricationProcessStepbase, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -238,11 +238,11 @@ class RIEbase(FabricationProcessStep, ArchiveSection):
         repeats=True,
     )
 
-    conditioning = SubSection(
-        section_def=ConditioningSteps,
-        description='Steps performed to standardize the environment in the chamber',
-        repeats=True,
-    )
+    # conditioning = SubSection(
+    #     section_def=ConditioningSteps,
+    #     description='Steps performed to standardize the environment in the chamber',
+    #     repeats=True,
+    # )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)

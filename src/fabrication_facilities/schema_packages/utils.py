@@ -170,13 +170,13 @@ class Massflow_controller(FabricationChemical, ArchiveSection):
     #         self.elemental_composition = elementality
 
 
-class ConditioningSteps(ArchiveSection):
-    duration = Quantity(
-        type=np.float64,
-        description='Time of conditioning',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
-        },
-        unit='sec',
-    )
+# class ConditioningSteps(ArchiveSection):
+#     duration = Quantity(
+#         type=np.float64,
+#         description='Time of conditioning',
+#         a_eln={
+#             'component': 'NumberEditQuantity',
+#             'defaultDisplayUnit': 'sec',
+#         },
+#         unit='sec',
+#     )
