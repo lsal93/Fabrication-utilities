@@ -14,8 +14,9 @@ from fabrication_facilities.apps.menu_steps import (
     menuadd_sog,
     menuadd_spincoat,
     menuadd_sputtering,
-    menuremove_drie,
-    menuremove_rie,
+    menuremove_icprie,
+#    menuremove_drie,
+#    menuremove_rie,
     menuremove_stripping,
     menuremove_wetclean,
     menuremove_wetetching,
@@ -64,7 +65,7 @@ stepapp = App(
             selected=True,
         ),
         Column(quantity='upload_create_time', selected=True),
-        Column(quantity=f'data.recipe_name{dir0}'),
+        Column(quantity=f'data.recipe_name#{dir0}'),
     ],
     filters_locked={'section_defs.definition_qualified_name': dir0},
     menu=Menu(
@@ -150,6 +151,7 @@ stepapp = App(
                     Menu(
                         title='Etching',
                         items=[
+                            menuremove_icprie,
 #                            menuremove_drie,
 #                            menuremove_wetclean,
 #                            menuremove_rie,

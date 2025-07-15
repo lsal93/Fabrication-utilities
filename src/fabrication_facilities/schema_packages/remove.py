@@ -86,6 +86,8 @@ class RIE(FabricationProcessStep, ArchiveSection):
                     'bias',
                     'clamping',
                     'clamping_type',
+                    'cooling_helium_massflow',
+                    'cooling_helium_temperature',
                     'depth_measured',
                     'duration_measured',
                     'etching_rate_obtained',
@@ -169,6 +171,27 @@ class RIE(FabricationProcessStep, ArchiveSection):
         ),
         a_eln={'component': 'EnumEditQuantity'},
     )
+
+    cooling_helium_massflow = Quantity(
+        type=np.float64,
+        description='Rate at which the helium for cooling the chuck flows',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'centimeter^3/minute',
+        },
+        unit='centimeter^3/minute',
+    )
+
+    cooling_helium_temperature = Quantity(
+        type=np.float64,
+        description='Temperature of the cooling helium on the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
     depth_measured = Quantity(
         type=np.float64,
         description='Amount of material ethced effectively in the process',
@@ -269,10 +292,10 @@ class ICP_RIE(RIE, ArchiveSection):
                     'icp_power',
                     'icp_frequency',
                     'bias',
-                    'cooling_helium_massflow',
-                    'cooling_helium_temperature',
                     'clamping',
                     'clamping_type',
+                    'cooling_helium_massflow',
+                    'cooling_helium_temperature',
                     'depth_measured',
                     'duration_measured',
                     'etching_rate_obtained',
@@ -299,25 +322,6 @@ class ICP_RIE(RIE, ArchiveSection):
             'defaultDisplayUnit': 'MHz',
         },
         unit='MHz',
-    )
-    cooling_helium_massflow = Quantity(
-        type=np.float64,
-        description='Rate at which the helium for cooling the chuck flows',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'centimeter^3/minute',
-        },
-        unit='centimeter^3/minute',
-    )
-
-    cooling_helium_temperature = Quantity(
-        type=np.float64,
-        description='Temperature of the cooling helium on the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
     )
 
 class Passivation(ArchiveSection):
@@ -407,10 +411,10 @@ class DRIEsubsubstep(ICP_RIE, ArchiveSection):
                     'third_power',
                     'third_frequency',
                     'bias',
-                    'cooling_helium_massflow',
-                    'cooling_helium_temperature',
                     'clamping',
                     'clamping_type',
+                    'cooling_helium_massflow',
+                    'cooling_helium_temperature',
                     'depth_measured',
                     'duration_measured',
                     'etching_rate_obtained',

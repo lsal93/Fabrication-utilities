@@ -78,6 +78,10 @@ class PECVD (FabricationProcessStep, ArchiveSection):
                     'chuck_power',
                     'chuck_frequency',
                     'bias',
+                    'clamping',
+                    'clamping_type',
+                    'cooling_helium_massflow',
+                    'cooling_helium_temperature',
                     'thickness_measured',
                     'duration_measured',
                     'deposition_rate_obtained',
@@ -171,6 +175,42 @@ class PECVD (FabricationProcessStep, ArchiveSection):
         },
         unit='volt',
     )
+        clamping= Quantity(
+        type=bool,
+        description='Is clamping used in the process?',
+        a_eln={'component':'BoolEditQuantity'},
+    )
+    clamping_type = Quantity(
+        type=MEnum(
+            [
+                'None',
+                'Mechanical',
+                'Electrostatic',
+            ]
+        ),
+        a_eln={'component': 'EnumEditQuantity'},
+    )
+
+    cooling_helium_massflow = Quantity(
+        type=np.float64,
+        description='Rate at which the helium for cooling the chuck flows',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'centimeter^3/minute',
+        },
+        unit='centimeter^3/minute',
+    )
+
+    cooling_helium_temperature = Quantity(
+        type=np.float64,
+        description='Temperature of the cooling helium on the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
     thickness_measured = Quantity(
         type=np.float64,
         description='Actual amount of material deposited in the process',

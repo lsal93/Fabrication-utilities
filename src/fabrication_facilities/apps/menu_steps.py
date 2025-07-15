@@ -16,6 +16,7 @@ dmec = 'data.doping_material_elemental_composition.element'
 sec = 'data.substrate_elemental_composition.element'
 wc = 'wafer_cleaning'
 dev = 'developing'
+meec= 'data.materials_etched.elemental_composition.element'
 
 menuadd_icpcvd = Menu(
     title='ICP-CVD',
@@ -97,7 +98,7 @@ menuadd_icpcvd = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.wall_temperature#{dir_path["dir1"]}',
-                title='chuck_temperature',
+                title='wall_temperature',
                 unit='kelvin',
             ),
         ),
@@ -169,6 +170,36 @@ menuadd_icpcvd = Menu(
                 search_quantity=f'data.icp_frequency#{dir_path["dir1"]}',
                 title='icp frequency',
                 unit='MHz',
+            ),
+        ),
+        MenuItemTerms(
+            title='Clamping',
+            type='terms',
+            search_quantity=f'data.clamping#{dir_path["dir1"]}',
+        ),
+        MenuItemTerms(
+            title='Clamping type',
+            type='terms',
+            search_quantity=f'data.clamping_type#{dir_path["dir1"]}',
+        ),
+        MenuItemHistogram(
+            title='Cooling helium massflow',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.cooling_helium_massflow#{dir_path["dir1"]}',
+                title='helium massflow,
+                unit='kelvin',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Cooling helium temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.cooling_helium_temperature#{dir_path["dir1"]}',
+                title='helium_temperature',
+                unit='kelvin',
             ),
         ),
         MenuItemHistogram(
@@ -864,8 +895,8 @@ menutrans_develop = Menu(
     ],
 )
 
-menuremove_drie = Menu(
-    title='DRIE',
+menuremove_icprie = Menu(
+    title='ICP RIE',
     size='xl',
     items=[
         MenuItemTerms(
@@ -886,17 +917,17 @@ menuremove_drie = Menu(
         MenuItemTerms(
             title='Material to be etched',
             type='terms',
-            search_quantity=f'data.short_name#{dir_path["dir5"]}',
+            search_quantity=f'data.materials_etched.name#{dir_path["dir5"]}',
         ),
         MenuItemTerms(
             title='Formulas of the etched material',
             type='terms',
-            search_quantity=f'data.chemical_formula#{dir_path["dir5"]}',
+            search_quantity=f'data.materials_etched.chemical_formula#{dir_path["dir5"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements etched',
             type='periodic_table',
-            search_quantity=f'{mec}#{dir_path["dir5"]}',
+            search_quantity=f'{meec}#{dir_path["dir5"]}',
         ),
         MenuItemHistogram(
             title='Required duration',
@@ -945,6 +976,16 @@ menuremove_drie = Menu(
             x=Axis(
                 search_quantity=f'data.chuck_temperature#{dir_path["dir5"]}',
                 title='chuck temperature',
+                unit='kelvin',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Wall temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.wall_temperature#{dir_path["dir5"]}',
+                title='wall temperature',
                 unit='kelvin',
             ),
         ),
