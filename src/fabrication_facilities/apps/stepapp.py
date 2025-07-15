@@ -16,7 +16,7 @@ from fabrication_facilities.apps.menu_steps import (
     menuadd_sputtering,
     menuremove_icprie,
     #    menuremove_drie,
-    #    menuremove_rie,
+    menuremove_rie,
     menuremove_stripping,
     menuremove_wetclean,
     menuremove_wetetching,
