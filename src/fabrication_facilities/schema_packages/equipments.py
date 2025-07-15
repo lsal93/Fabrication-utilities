@@ -557,6 +557,371 @@ class DRIE_Etcher (ICP_Etcher, ArchiveSection):
 #         }
 #     )
 
+
+class LPCVD_System(Equipment, ArchiveSection):
+
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'inventary_code',
+                    'affiliation',
+                    'product_model',
+                    'institution',
+                    'manufacturer_name',
+                    'is_bookable',
+                    'automatic_loading',
+                    'description',
+                    'min_chamber_pressure',
+                    'max_chamber_pressure',
+                    'vacuum_system_name',
+                    'min_wall_temperature',
+                    'max_wall_temperature',
+                    'min_chuck_temperature',
+                    'max_chuck_temperature',
+                    'min_chuck_power',
+                    'max_chuck_power',
+                    'min_chuck_frequency',
+                    'max_chuck_frequency',
+                    'min_bias',
+                    'max_bias',
+                    'mechanical_clamping',
+                    'electrostatic_clamping',
+                    # 'min_cooling_helium_massflow',
+                    # 'max_cooling_helium_massflow',
+                    # 'min_cooling_helium_temperature',
+                    # 'max_cooling_helium_temperature',
+                ],
+            },
+        },
+        description = 'Instrument used to perform LPCVD steps'
+    )
+
+    vacuum_system_name= Quantity(
+        type=str,
+        description='Type of vacuum pump adopted',
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
+    )
+
+    min_chamber_pressure = Quantity(
+        type=np.float64,
+        description='Minimal pressure available',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
+
+    max_chamber_pressure = Quantity(
+        type=np.float64,
+        description='Maximal pressure available',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
+
+    min_wall_temperature = Quantity(
+        type=np.float64,
+        description='Minimal temperature at disposal for the wall',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    max_wall_temperature = Quantity(
+        type=np.float64,
+        description='Maximal temperature of the wall',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    min_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Minimal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    max_chuck_temperature = Quantity(
+        type=np.float64,
+        description='Maximal temperature of the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    electrostatic_clamping = Quantity(
+        type=bool,
+        description = 'Is electrostatic clamping available',
+        a_eln={
+            'component': 'BoolEditQuantity',
+        },
+    )
+
+    mechanical_clamping = Quantity(
+        type=bool,
+        description = 'Is mechanical clamping available',
+        a_eln={
+            'component': 'BoolEditQuantity',
+        },
+    )
+
+    gases = SubSection(
+        section_def=Massflow_parameter,
+        repeats=True,
+    )
+
+class PECVD_System(LPCVD_System, ArchiveSection):
+    m_def = Section(
+        description='Class instrument for PECVD procedures',
+        a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'inventary_code',
+                    'affiliation',
+                    'product_model',
+                    'institution',
+                    'manufacturer_name',
+                    'is_bookable',
+                    'automatic_loading',
+                    'description',
+                    'min_chamber_pressure',
+                    'max_chamber_pressure',
+                    'vacuum_system_name',
+                    'min_wall_temperature',
+                    'max_wall_temperature',
+                    'min_chuck_temperature',
+                    'max_chuck_temperature',
+                    'min_chuck_power',
+                    'max_chuck_power',
+                    'min_chuck_frequency',
+                    'max_chuck_frequency',
+                    'min_bias',
+                    'max_bias',
+                    'mechanical_clamping',
+                    'electrostatic_clamping',
+                    'min_cooling_helium_massflow',
+                    'max_cooling_helium_massflow',
+                    'min_cooling_helium_temperature',
+                    'max_cooling_helium_temperature',
+                ],
+            },
+        }
+    )
+
+    min_chuck_power = Quantity(
+        type=np.float64,
+        description='Minimal power erogated on the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    max_chuck_power = Quantity(
+        type=np.float64,
+        description='Maximal power erogated on the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    min_chuck_frequency = Quantity(
+        type=np.float64,
+        description='Minimal frequency of current on the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+    max_chuck_frequency = Quantity(
+        type=np.float64,
+        description='Maximal frequency of current on the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+
+    min_bias = Quantity(
+        type=np.float64,
+        description='Minimal bias voltage in the chamber',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'volt',
+        },
+        unit='volt',
+    )
+
+    max_bias = Quantity(
+        type=np.float64,
+        description='Maximal bias voltage in the chamber',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'volt',
+        },
+        unit='volt',
+    )
+
+
+    min_cooling_helium_massflow = Quantity(
+        type=np.float64,
+        description='Minimum rate at which the helium for cooling the chuck flows',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'centimeter^3/minute',
+        },
+        unit='centimeter^3/minute',
+    )
+    max_cooling_helium_massflow = Quantity(
+        type=np.float64,
+        description='Maximum rate at which the helium for cooling the chuck flows',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'centimeter^3/minute',
+        },
+        unit='centimeter^3/minute',
+    )
+
+    min_cooling_helium_temperature = Quantity(
+        type=np.float64,
+        description='Minimal temperature of the cooling helium on the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    max_cooling_helium_temperature = Quantity(
+        type=np.float64,
+        description='Maximal temperature of the cooling helium on the chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+class ICP_CVD_System(PECVD_System, ArchiveSection):
+
+    m_def = Section(
+        description='Class for instruments devoted to ICP_CVD procedures',
+        a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'inventary_code',
+                    'affiliation',
+                    'product_model',
+                    'institution',
+                    'manufacturer_name',
+                    'is_bookable',
+                    'automatic_loading',
+                    'description',
+                    'min_chamber_pressure',
+                    'max_chamber_pressure',
+                    'vacuum_system_name',
+                    'min_wall_temperature',
+                    'max_wall_temperature',
+                    'min_chuck_temperature',
+                    'max_chuck_temperature',
+                    'min_chuck_power',
+                    'max_chuck_power',
+                    'min_chuck_frequency',
+                    'max_chuck_frequency',
+                    'min_icp_power',
+                    'max_icp_power',
+                    'min_icp_frequency',
+                    'max_icp_frequency',
+                    'min_bias',
+                    'max_bias',
+                    'mechanical_clamping',
+                    'electrostatic_clamping',
+                    'min_cooling_helium_massflow',
+                    'max_cooling_helium_massflow',
+                    'min_cooling_helium_temperature',
+                    'max_cooling_helium_temperature',
+                ],
+            },
+        }
+    )
+
+    min_icp_power = Quantity(
+        type=np.float64,
+        description='Minimal power erogated in the region of the plasma',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    max_icp_power = Quantity(
+        type=np.float64,
+        description='Maximal power erogated in the region of the plasma',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    min_icp_frequency = Quantity(
+        type=np.float64,
+        description='Minimal frequency of current on the gases area',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+
+    max_icp_frequency = Quantity(
+        type=np.float64,
+        description='Maximal frequency of current on the gases area',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+
+
 class BakingFurnace(Equipment, ArchiveSection):
     m_def = Section(
         a_eln={
