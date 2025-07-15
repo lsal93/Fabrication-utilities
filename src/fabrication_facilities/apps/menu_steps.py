@@ -188,7 +188,7 @@ menuadd_icpcvd = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.cooling_helium_massflow#{dir_path["dir1"]}',
-                title='helium massflow,
+                title='helium massflow',
                 unit='kelvin',
             ),
         ),
@@ -1047,6 +1047,36 @@ menuremove_icprie = Menu(
                 search_quantity=f'data.icp_frequency#{dir_path["dir5"]}',
                 title='icp frequency',
                 unit='MHz',
+            ),
+        ),
+        MenuItemTerms(
+            title='Clamping',
+            type='terms',
+            search_quantity=f'data.clamping#{dir_path["dir5"]}',
+        ),
+        MenuItemTerms(
+            title='Clamping type',
+            type='terms',
+            search_quantity=f'data.clamping_type#{dir_path["dir5"]}',
+        ),
+        MenuItemHistogram(
+            title='Cooling helium massflow',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.cooling_helium_massflow#{dir_path["dir5"]}',
+                title='helium massflow',
+                unit='kelvin',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Cooling helium temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.cooling_helium_temperature#{dir_path["dir5"]}',
+                title='helium_temperature',
+                unit='kelvin',
             ),
         ),
         MenuItemHistogram(

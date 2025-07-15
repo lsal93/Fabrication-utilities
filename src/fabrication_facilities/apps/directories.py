@@ -6,7 +6,7 @@ dir_path = {
     'dir2': 'fabrication_facilities.schema_packages.add.Spin_Coating',
     'dir3': 'fabrication_facilities.schema_packages.transform.EBL',
     'dir4': 'fabrication_facilities.schema_packages.transform.FIB',
-    'dir5': 'fabrication_facilities.schema_packages.remove.DRIE',
+    'dir5': 'fabrication_facilities.schema_packages.remove.ICP_RIE',
     'dir6': 'fabrication_facilities.schema_packages.remove.WetCleaning',
     'dir7': 'fabrication_facilities.schema_packages.transform.ResistDevelopment',
     'dir8': 'fabrication_facilities.schema_packages.add.Bonding',
@@ -27,4 +27,5 @@ dir_path = {
     'dir23': f'fabrication_facilities.schema_packages.{obm}',
     'dir24': f'fabrication_facilities.schema_packages.fabrication_utilities.{sm}',
     'dir25': 'fabrication_facilities.schema_packages.transform.Baking',
+    'dir26': 'fabrication_facilities.schema_packages.remove.DRIE',
 }
