@@ -155,7 +155,7 @@ stepapp = App(
                             #                            menuremove_drie,
                             menuremove_wetclean,
                             menuremove_rie,
-#                            menuremove_wetetching,
+                            menuremove_wetetching,
                             menuremove_stripping,
                         ],
                     ),

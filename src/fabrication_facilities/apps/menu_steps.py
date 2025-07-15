@@ -2518,11 +2518,6 @@ menuremove_rie = Menu(
                 unit='mbar',
             ),
         ),
-        MenuItemTerms(
-            title='Gas name',
-            type='terms',
-            search_quantity=f'data.gas_name#{dir_path["dir20"]}',
-        ),
         MenuItemHistogram(
             title='Chuck Power',
             type='histogram',
