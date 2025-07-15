@@ -74,7 +74,7 @@ class RIE(FabricationProcessStep, ArchiveSection):
                     'recipe_file',
                     'recipe_preview',
                     'short_names',
-                    'chemical_species_formulas',
+                    'target_materials_formulas',
                     'depth_target',
                     'duration_target',
                     'etching_rate_target',
@@ -106,7 +106,7 @@ class RIE(FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
     )
-    chemical_species_formulas = Quantity(
+    target_materials_formulas = Quantity(
         type=str,
         description='Inserted only if known',
         shape= ['*'],
@@ -355,7 +355,7 @@ class Passivation(ArchiveSection):
         description='Temperature adopted for the passivation',
         a_eln={
             'component':'NumberEditQuantity',
-            'defaulDisplayUnit':'celsius',
+            'defaultDisplayUnit':'celsius',
         },
         unit='celsius',
     )
@@ -540,7 +540,7 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
                     'recipe_file',
                     'recipe_preview',
                     'short_names',
-                    'chemical_species_formulas',
+                    'target_materials_formulas',
                     'etching_solution',
                     'etching_solution_proportions',
                     'etching_reactives',
@@ -562,7 +562,7 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
         shape=['*'],
         a_eln={'component': 'StringEditQuantity', 'label': 'target materials'},
     )
-    chemical_species_formulas = Quantity(
+    target_materials_formulas = Quantity(
         type=str,
         description='Formulas of materials etched',
         shape= ['*'],
@@ -646,8 +646,17 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
             pass
         else:
             chems = []
-            for formula in self.chemical_species_formulas:
+            for num, formula in enumerate(self.chemical_species_formulas):
                 chemical = FabricationChemical()
+                try:
+                    chemical.short_name= self.short_names[num]
+                except Exception as e:
+                    print(f" Error {e}. No name at position {num} in short_names")
+                    raise
+# Si può provare a scrivere una funzione che parsa le entries multiple?
+# Tipo def mult_entries (class_to_append, list to read, element to append):
+# Blocco simile a quanto sopra. Dovrei dargli anche il bersaglio della classe a cui
+# puntare la quantità atomizzata.
                 chemical.chemical_formula=formula
                 chemical.normalize(archive, logger)
                 chems.append(chemical)
@@ -858,3 +867,11 @@ class Stripping(Chemical, FabricationProcessStep, ArchiveSection):
 
 
 m_package.__init_metainfo__()
+
+
+# FIB-SEM
+# SEM
+# EBL
+# ICP-RIE
+# CVD
+# AFM
