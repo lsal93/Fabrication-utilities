@@ -344,11 +344,6 @@ class ICP_CVD(PECVD, ArchiveSection):
 
 class LPCVD(PECVD, ArchiveSection):
     m_def=Section(
-        description=(
-            """"
-            Descrizione tecnica
-            """"
-        ),
         a_eln={
             'hide':[
                 'chuck_power',
