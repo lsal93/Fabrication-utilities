@@ -44,7 +44,7 @@ if TYPE_CHECKING:
 m_package = Package(name='Etching workflow schema')
 
 
-class RIE(FabricationProcessStep, ArchiveSection):
+class RIEbase(FabricationProcessStep, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -74,6 +74,7 @@ class RIE(FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'tag',
                     'short_names',
                     'target_materials_formulas',
                     'depth_target',
@@ -89,6 +90,7 @@ class RIE(FabricationProcessStep, ArchiveSection):
                     'clamping_type',
                     'cooling_helium_massflow',
                     'cooling_helium_temperature',
+                    'number of loops'
                     'depth_measured',
                     'duration_measured',
                     'etching_rate_obtained',
@@ -193,6 +195,12 @@ class RIE(FabricationProcessStep, ArchiveSection):
         unit='celsius',
     )
 
+    number_of_loops=Quantity(
+        type=int,
+        description='Times for which this step is repeated with equal parameters',
+        a_eln={'component':'NumberEditQuantity'},
+    )
+
     depth_measured = Quantity(
         type=np.float64,
         description='Amount of material ethced effectively in the process',
@@ -250,7 +258,19 @@ class RIE(FabricationProcessStep, ArchiveSection):
             self.materials_etched = chems
 
 
-class ICP_RIE(RIE, ArchiveSection):
+class RIE (FabricationProcessStep, ArchiveSection):
+
+    m_def=Section(
+        description='Set of RIE steps performed with a machine',
+    )
+
+    etching_steps=SubSection(
+        section_def=RIEbase,
+        repeats=True,
+    )
+
+
+class ICP_RIEbase(RIEbase, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -280,6 +300,7 @@ class ICP_RIE(RIE, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'tag',
                     'short_names',
                     'chemical_species_formulas',
                     'depth_target',
@@ -297,6 +318,7 @@ class ICP_RIE(RIE, ArchiveSection):
                     'clamping_type',
                     'cooling_helium_massflow',
                     'cooling_helium_temperature',
+                    'number_of_loops',
                     'depth_measured',
                     'duration_measured',
                     'etching_rate_obtained',
@@ -326,48 +348,60 @@ class ICP_RIE(RIE, ArchiveSection):
     )
 
 
-class Passivation(ArchiveSection):
-    duration = Quantity(
-        type=np.float64,
-        description='Time for the depositing of the passive layer',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
-        },
-        unit='sec',
+class ICP_RIE(FabricationProcessStep, ArchiveSection):
+
+    m_def=Section(
+        description='Set of RIE steps performed with a machine',
     )
 
-    method = Quantity(
-        type=str,
-        description=(
-            """""
-            Method employed for passivation: BOSCH require passivating material,
-            cryogenic require some temperature controls. So only the right parameters
-            has to be defined in the following.
-            """
-            ''
-        ),
-        a_eln={'component': 'StringEditQuantity'},
-    )
-
-    passivation_material = Quantity(
-        type=str,
-        description='Material used in the passivation phase of a BOSCH',
-        a_eln={'component': 'StringEditQuantity'},
-    )
-
-    passivation_temperature = Quantity(
-        type=np.float64,
-        description='Temperature adopted for the passivation',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
+    etching_steps=SubSection(
+        section_def=RIEbase,
+        repeats=True,
     )
 
 
-class DRIEsubsubstep(ICP_RIE, ArchiveSection):
+# class Passivation(ArchiveSection):
+#     duration = Quantity(
+#         type=np.float64,
+#         description='Time for the depositing of the passive layer',
+#         a_eln={
+#             'component': 'NumberEditQuantity',
+#             'defaultDisplayUnit': 'sec',
+#         },
+#         unit='sec',
+#     )
+
+#     method = Quantity(
+#         type=str,
+#         description=(
+#             """""
+#             Method employed for passivation: BOSCH require passivating material,
+#             cryogenic require some temperature controls. So only the right parameters
+#             has to be defined in the following.
+#             """
+#             ''
+#         ),
+#         a_eln={'component': 'StringEditQuantity'},
+#     )
+
+#     passivation_material = Quantity(
+#         type=str,
+#         description='Material used in the passivation phase of a BOSCH',
+#         a_eln={'component': 'StringEditQuantity'},
+#     )
+
+#     passivation_temperature = Quantity(
+#         type=np.float64,
+#         description='Temperature adopted for the passivation',
+#         a_eln={
+#             'component': 'NumberEditQuantity',
+#             'defaultDisplayUnit': 'celsius',
+#         },
+#         unit='celsius',
+#     )
+
+
+class DRIEbase(ICP_RIEbase, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -397,6 +431,7 @@ class DRIEsubsubstep(ICP_RIE, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'tag',
                     'short_names',
                     'chemical_species_formulas',
                     'depth_target',
@@ -416,6 +451,7 @@ class DRIEsubsubstep(ICP_RIE, ArchiveSection):
                     'clamping_type',
                     'cooling_helium_massflow',
                     'cooling_helium_temperature',
+                    'number_of_loops',
                     'depth_measured',
                     'duration_measured',
                     'etching_rate_obtained',
@@ -445,20 +481,20 @@ class DRIEsubsubstep(ICP_RIE, ArchiveSection):
     )
 
 
-class DRIEsubstep(ArchiveSection):
-    m_def = Section(
-        description='Atomic step for a DRIE procedure',
-    )
+# class DRIEsubstep(ArchiveSection):
+#     m_def = Section(
+#         description='Atomic step for a DRIE procedure',
+#     )
 
-    etching_phase = SubSection(
-        section_def=DRIEsubsubstep,
-        repeats=False,
-    )
+#     etching_phase = SubSection(
+#         section_def=DRIEsubsubstep,
+#         repeats=False,
+#     )
 
-    passivation_phase = SubSection(
-        section_def=Passivation,
-        repeats=False,
-    )
+#     passivation_phase = SubSection(
+#         section_def=Passivation,
+#         repeats=False,
+#     )
 
 
 class DRIE(FabricationProcessStep, ArchiveSection):
@@ -497,14 +533,8 @@ class DRIE(FabricationProcessStep, ArchiveSection):
         },
     )
 
-    number_of_loops = Quantity(
-        type=int,
-        description='Number of etching-passivation cycles',
-        a_eln={'component': 'NumberEditQuantity'},
-    )
-
     etching_steps = SubSection(
-        section_def=DRIEsubstep,
+        section_def=DRIEbase,
         repeats=True,
     )
 

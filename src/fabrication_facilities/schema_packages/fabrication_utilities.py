@@ -383,6 +383,7 @@ class FabricationProcessStepBase(ProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'tag',
                     'notes',
                 ],
             },
@@ -455,6 +456,12 @@ class FabricationProcessStepBase(ProcessStep, ArchiveSection):
     notes = Quantity(
         type=str,
         a_eln={'component': 'RichTextEditQuantity'},
+    )
+
+    tag=Quantity(
+        type=str,
+        description='Role of the step in fabrication (effective, conditioning, etc.)',
+        a_eln={'component': 'StringEditQuantity'},
     )
 
 

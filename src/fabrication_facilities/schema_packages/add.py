@@ -38,7 +38,7 @@ if TYPE_CHECKING:
 m_package = Package(name='Add processes schema')
 
 
-class PECVD(FabricationProcessStep, ArchiveSection):
+class PECVDbase(FabricationProcessStep, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -68,6 +68,7 @@ class PECVD(FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'tag',
                     'short_name',
                     'target_material_formula',
                     'duration_target',
@@ -83,6 +84,7 @@ class PECVD(FabricationProcessStep, ArchiveSection):
                     'clamping_type',
                     'cooling_helium_massflow',
                     'cooling_helium_temperature',
+                    'number_of_loops',
                     'thickness_measured',
                     'duration_measured',
                     'deposition_rate_obtained',
@@ -287,7 +289,18 @@ class PECVD(FabricationProcessStep, ArchiveSection):
             self.material_elemental_composition = elementality
 
 
-class ICP_CVD(PECVD, ArchiveSection):
+class PECVD(FabricationProcessStep, ArchiveSection):
+    m_def=Section(
+        description='Set of PECVD steps performed with a machine',
+    )
+
+    synthesis_steps=SubSection(
+        section_def=PECVDbase,
+        repeats=True,
+    )
+
+
+class ICP_CVDbase(PECVDbase, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -317,6 +330,7 @@ class ICP_CVD(PECVD, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'tag',
                     'short_name',
                     'target_material_formula',
                     'duration_target',
@@ -330,6 +344,7 @@ class ICP_CVD(PECVD, ArchiveSection):
                     'icp_power',
                     'icp_frequency',
                     'bias',
+                    'number_of_loops',
                     'thickness_measured',
                     'duration_measured',
                     'deposition_rate_obtained',
@@ -359,7 +374,19 @@ class ICP_CVD(PECVD, ArchiveSection):
     )
 
 
-class LPCVD(PECVD, ArchiveSection):
+class ICP_CVD(FabricationProcessStep, ArchiveSection):
+
+    m_def=Section(
+        description='Set of ICP CVD steps performed with a machine',
+    )
+
+    synthesis_steps=SubSection(
+        section_def=ICP_CVDbase,
+        repeats=True,
+    )
+
+
+class LPCVDbase(PECVDbase, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -392,6 +419,7 @@ class LPCVD(PECVD, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'tag',
                     'short_name',
                     'target_material_formula',
                     'duration_target',
@@ -400,6 +428,7 @@ class LPCVD(PECVD, ArchiveSection):
                     'wall_temperature',
                     'chamber_pressure',
                     'chuck_temperature',
+                    'number_of_loops',
                     'thickness_measured',
                     'duration_measured',
                     'deposition_rate_obtained',
@@ -409,6 +438,17 @@ class LPCVD(PECVD, ArchiveSection):
         }
     )
 
+
+class LPCVD(FabricationProcessStep, ArchiveSection):
+
+    m_def=Section(
+        description='Set of LPCVD steps performed with a machine',
+    )
+
+    synthesis_steps=SubSection(
+        section_def=LPCVDbase,
+        repeats=True,
+    )
 
 class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     m_def = Section(
