@@ -64,6 +64,7 @@ stepapp = App(
             selected=True,
         ),
         Column(quantity='upload_create_time', selected=True),
+        Column(quantity=f'data.recipe_name{dir0}'),
     ],
     filters_locked={'section_defs.definition_qualified_name': dir0},
     menu=Menu(
@@ -149,11 +150,11 @@ stepapp = App(
                     Menu(
                         title='Etching',
                         items=[
-                            menuremove_drie,
-                            menuremove_wetclean,
-                            menuremove_rie,
-                            menuremove_wetetching,
-                            menuremove_stripping,
+#                            menuremove_drie,
+#                            menuremove_wetclean,
+#                            menuremove_rie,
+#                            menuremove_wetetching,
+#                            menuremove_stripping,
                         ],
                     ),
                 ],

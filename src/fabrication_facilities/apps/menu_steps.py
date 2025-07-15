@@ -44,7 +44,7 @@ menuadd_icpcvd = Menu(
         MenuItemTerms(
             title='Formula of the material to be deposited',
             type='terms',
-            search_quantity=f'data.chemical_formula#{dir_path["dir1"]}',
+            search_quantity=f'data.target_material_formula#{dir_path["dir1"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements deposited',
@@ -90,6 +90,16 @@ menuadd_icpcvd = Menu(
             title='Gases formulas',
             type='terms',
             search_quantity=f'data.fluximeters.chemical_formula#{dir_path["dir1"]}',
+        ),
+        MenuItemHistogram(
+            title='Wall temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.wall_temperature#{dir_path["dir1"]}',
+                title='chuck_temperature',
+                unit='kelvin',
+            ),
         ),
         MenuItemHistogram(
             title='Chuck temperature',
