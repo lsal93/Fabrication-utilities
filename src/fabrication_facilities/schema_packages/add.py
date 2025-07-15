@@ -175,7 +175,7 @@ class PECVD (FabricationProcessStep, ArchiveSection):
         },
         unit='volt',
     )
-        clamping= Quantity(
+    clamping= Quantity(
         type=bool,
         description='Is clamping used in the process?',
         a_eln={'component':'BoolEditQuantity'},
