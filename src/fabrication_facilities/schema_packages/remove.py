@@ -46,7 +46,7 @@ m_package = Package(name='Etching workflow schema')
 
 class EtchingOutputs(ArchiveSection):
 
-    m_def={
+    m_def=Section(
         a_eln={
             'properties':{
                 'order':[
@@ -56,7 +56,8 @@ class EtchingOutputs(ArchiveSection):
                 ],
             }
         }
-    }
+        description= 'Set of parameters obtained in an etching process',
+    )
     depth_measured = Quantity(
         type=np.float64,
         description='Amount of material ethced effectively in the process',
