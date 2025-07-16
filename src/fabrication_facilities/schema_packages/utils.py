@@ -198,40 +198,40 @@ class Massflow_controller(FabricationChemical, ArchiveSection):
 
 class CustomSection(PlotSection, EntryData):
     m_def = Section(
-        a_plotly_graph_object=[
-            {
-                'label': 'graph object 1',
-                'data': {'x': '#time', 'y': '#chamber_pressure'},
-                'layout': {
-                    'title': {
-                        'text': 'Plot in section level'
-                    },
-                    'xaxis': {
-                        'title': {
-                            'text': 'x data'
-                        }
-                    },
-                    'yaxis': {
-                        'title': {
-                            'text': 'y data'
-                        }
-                    }
-                }
-            }, {
-                'label': 'graph object 2',
-                'data': {'x': '#time', 'y': '#substrate_temperature'}
-            }
-        ],
-        a_plotly_express={
-            'label': 'fig 2',
-            'index': 2,
-            'method': 'scatter',
-            'x': '#substrate_temperature',
-            'y': '#chamber_pressure',
-            'color': '#chamber_pressure'
-        },
+        # a_plotly_graph_object=[
+        #     {
+        #         'label': 'graph object 1',
+        #         'data': {'x': '#time', 'y': '#chamber_pressure'},
+        #         'layout': {
+        #             'title': {
+        #                 'text': 'Plot in section level'
+        #             },
+        #             'xaxis': {
+        #                 'title': {
+        #                     'text': 'x data'
+        #                 }
+        #             },
+        #             'yaxis': {
+        #                 'title': {
+        #                     'text': 'y data'
+        #                 }
+        #             }
+        #         }
+        #     }, {
+        #         'label': 'graph object 2',
+        #         'data': {'x': '#time', 'y': '#substrate_temperature'}
+        #     }
+        # ],
+#        a_plotly_express={
+#            'label': 'fig 2',
+#            'index': 2,
+#            'method': 'scatter',
+#            'x': '#substrate_temperature',
+#            'y': '#chamber_pressure',
+#            'color': '#chamber_pressure'
+#        },
         a_plotly_subplots={
-            'label': 'fig 1',
+            'label': 'Subplot',
             'index': 1,
             'parameters': {'rows': 2, 'cols': 2},
             'layout': {
@@ -252,18 +252,6 @@ class CustomSection(PlotSection, EntryData):
                     'y': '#substrate_temperature',
                     'color': '#substrate_temperature'
                 },
-                {
-                    'method': 'scatter',
-                    'x': '#substrate_temperature',
-                    'y': '#chamber_pressure',
-                    'color': '#chamber_pressure'
-                },
-                {
-                    'method': 'scatter',
-                    'x': '#substrate_temperature',
-                    'y': '#chamber_pressure',
-                    'color': '#substrate_temperature'
-                }
             ]
         }
     )
