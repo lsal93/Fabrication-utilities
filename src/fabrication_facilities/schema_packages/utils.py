@@ -9,7 +9,7 @@ import numpy as np
 from ase.data import atomic_masses as am
 from ase.data import atomic_numbers as an
 
-from nomad.datamodel.data import ArchiveSection
+from nomad.datamodel.data import (ArchiveSection, EntryData)
 
 from nomad.datamodel.metainfo.basesections import ElementalComposition
 
