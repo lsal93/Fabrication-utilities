@@ -13,7 +13,7 @@ from nomad.datamodel.data import (ArchiveSection, EntryData)
 
 from nomad.datamodel.metainfo.basesections import ElementalComposition
 
-from nomad.datamodel.metainfo.plot import PlotSection,, PlotlyFigure
+from nomad.datamodel.metainfo.plot import PlotSection, PlotlyFigure
 import plotly.express as px
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
