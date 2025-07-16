@@ -90,7 +90,7 @@ class SynthesisOutputs(ArchiveSection):
 
 class PECVDbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
-        description = "Atomistic component of a PECVD step"
+        description = "Atomistic component of a PECVD step",
         a_eln={
             'hide': [
                 'description',
@@ -396,6 +396,7 @@ class PECVD(FabricationProcessStep, ArchiveSection):
 
 class ICP_CVDbase(PECVDbase, ArchiveSection):
     m_def = Section(
+        description = 'Atomistic component of an ICP CVD step',
         a_eln={
             'hide': [
                 'description',
