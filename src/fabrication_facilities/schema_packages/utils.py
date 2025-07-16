@@ -13,6 +13,8 @@ from nomad.datamodel.data import ArchiveSection
 
 from nomad.datamodel.metainfo.basesections import ElementalComposition
 
+from nomad.datamodel.metainfo.plot import PlotSection
+
 from nomad.datamodel.metainfo.eln import Chemical
 
 from nomad.metainfo import (
@@ -125,8 +127,16 @@ class FabricationChemical(Chemical, ArchiveSection):
                 print('No elements provided')
             self.elemental_composition = elementality
 
+# class RampOfGases(ArchiveSection):
+#     m_def=Section(
+#         a_plot=dict(
+#             x='time'
+
+#         )
+#     )
 
 class Massflow_controller(FabricationChemical, ArchiveSection):
+
     m_def = Section(
         a_eln={'overview': True, 'hide': ['lab_id', 'datetime']},
     )
@@ -139,6 +149,11 @@ class Massflow_controller(FabricationChemical, ArchiveSection):
         },
         unit='centimeter^3/minute',
     )
+
+    # ramp_flows= SubSection(
+    #     section_def = RampOfGases,
+    #     repeats=True
+    # )
 
     # elemental_composition = SubSection(
     #     section_def=ElementalComposition,
@@ -180,3 +195,78 @@ class Massflow_controller(FabricationChemical, ArchiveSection):
 #         },
 #         unit='sec',
 #     )
+
+class CustomSection(PlotSection, EntryData):
+    m_def = Section(
+        a_plotly_graph_object=[
+            {
+                'label': 'graph object 1',
+                'data': {'x': '#time', 'y': '#chamber_pressure'},
+                'layout': {
+                    'title': {
+                        'text': 'Plot in section level'
+                    },
+                    'xaxis': {
+                        'title': {
+                            'text': 'x data'
+                        }
+                    },
+                    'yaxis': {
+                        'title': {
+                            'text': 'y data'
+                        }
+                    }
+                }
+            }, {
+                'label': 'graph object 2',
+                'data': {'x': '#time', 'y': '#substrate_temperature'}
+            }
+        ],
+        a_plotly_express={
+            'label': 'fig 2',
+            'index': 2,
+            'method': 'scatter',
+            'x': '#substrate_temperature',
+            'y': '#chamber_pressure',
+            'color': '#chamber_pressure'
+        },
+        a_plotly_subplots={
+            'label': 'fig 1',
+            'index': 1,
+            'parameters': {'rows': 2, 'cols': 2},
+            'layout': {
+                'title': {
+                    'text': 'All plots'
+                }
+            },
+            'plotly_express': [
+                {
+                    'method': 'scatter',
+                    'x': '#time',
+                    'y': '#chamber_pressure',
+                    'color': '#chamber_pressure'
+                },
+                {
+                    'method': 'scatter',
+                    'x': '#time',
+                    'y': '#substrate_temperature',
+                    'color': '#substrate_temperature'
+                },
+                {
+                    'method': 'scatter',
+                    'x': '#substrate_temperature',
+                    'y': '#chamber_pressure',
+                    'color': '#chamber_pressure'
+                },
+                {
+                    'method': 'scatter',
+                    'x': '#substrate_temperature',
+                    'y': '#chamber_pressure',
+                    'color': '#substrate_temperature'
+                }
+            ]
+        }
+    )
+    time = Quantity(type=float, shape=['*'], unit='s', a_eln=dict(component='NumberEditQuantity'))
+    substrate_temperature = Quantity(type=float, shape=['*'], unit='K', a_eln=dict(component='NumberEditQuantity'))
+    chamber_pressure = Quantity(type=float, shape=['*'], unit='Pa', a_eln=dict(component='NumberEditQuantity'))
