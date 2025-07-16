@@ -477,7 +477,7 @@ class ICP_CVD(FabricationProcessStep, ArchiveSection):
         gaseous precursor or mixture of precursors, commonly initiated by heat to create
         a plasma. To generate the plasma the ICP CVD procedure uses a current in addition
         to the lower electrodes to enanche by magnetic field the generation.
-        """
+        """,
         a_eln={
             'hide': [
                 'description',
