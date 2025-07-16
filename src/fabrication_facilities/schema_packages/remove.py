@@ -364,7 +364,7 @@ class RIE (FabricationProcessStep, ArchiveSection):
 
 class ICP_RIEbase(RIEbase, ArchiveSection):
     m_def = Section(
-        description = 'Atomistic component of an ICP RIE step'
+        description = 'Atomistic component of an ICP RIE step',
         a_eln={
             'hide': [
                 'description',
