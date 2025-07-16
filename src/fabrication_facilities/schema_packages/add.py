@@ -90,6 +90,7 @@ class SynthesisOutputs(ArchiveSection):
 
 class PECVDbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
+        description = "Atomistic component of a PECVD step"
         a_eln={
             'hide': [
                 'description',
@@ -342,7 +343,12 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
 class PECVD(FabricationProcessStep, ArchiveSection):
 
     m_def=Section(
-        description='Set of PECVD steps performed with a machine',
+        description="""
+        Deposition of a solid material onto a substrate by chemical reaction of a
+        gaseous precursor or mixture of precursors, commonly initiated by heat to create
+        a plasma. PECVD uses temperature tipically lower of LPCVD but relyies on an
+        electrode system on the sample.
+        """,
         a_eln={
             'hide': [
                 'description',
@@ -465,7 +471,12 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
 class ICP_CVD(FabricationProcessStep, ArchiveSection):
 
     m_def=Section(
-        description='Set of ICP CVD steps performed with a machine',
+        description="""
+        Deposition of a solid material onto a substrate by chemical reaction of a
+        gaseous precursor or mixture of precursors, commonly initiated by heat to create
+        a plasma. To generate the plasma the ICP CVD procedure uses a current in addition
+        to the lower electrodes to enanche by magnetic field the generation.
+        """
         a_eln={
             'hide': [
                 'description',
@@ -514,6 +525,7 @@ class ICP_CVD(FabricationProcessStep, ArchiveSection):
 
 class LPCVDbase(PECVDbase, ArchiveSection):
     m_def = Section(
+        description= 'Atomistic component of a general LPCVD step',
         a_eln={
             'hide': [
                 'description',
@@ -568,7 +580,10 @@ class LPCVDbase(PECVDbase, ArchiveSection):
 class LPCVD(FabricationProcessStep, ArchiveSection):
 
     m_def=Section(
-        description='Set of LPCVD steps performed with a machine',
+        description="""
+        Deposition of a solid material onto a substrate by chemical reaction of a gaseous
+        precursor or mixture of precursors, commonly initiated by heat.
+        """,
         a_eln={
             'hide': [
                 'description',

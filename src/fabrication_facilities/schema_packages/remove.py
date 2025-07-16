@@ -364,6 +364,7 @@ class RIE (FabricationProcessStep, ArchiveSection):
 
 class ICP_RIEbase(RIEbase, ArchiveSection):
     m_def = Section(
+        description = 'Atomistic component of an ICP RIE step'
         a_eln={
             'hide': [
                 'description',
@@ -443,7 +444,11 @@ class ICP_RIEbase(RIEbase, ArchiveSection):
 class ICP_RIE(FabricationProcessStep, ArchiveSection):
 
     m_def=Section(
-        description='Set of RIE steps performed with a machine',
+        description="""
+        Dry etching method by which energy is magnetically coupled into the
+        plasma by a current carrying loop around the chamber,
+        using etching based on ions reacting with substrate surface and hitting it
+        """,
         a_eln={
             'hide': [
                 'description',
