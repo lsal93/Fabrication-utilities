@@ -55,7 +55,7 @@ class EtchingOutputs(ArchiveSection):
                     'etching_rate_obtained',
                 ],
             }
-        }
+        },
         description= 'Set of parameters obtained in an etching process',
     )
     depth_measured = Quantity(
