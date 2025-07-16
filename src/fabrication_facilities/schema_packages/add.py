@@ -56,7 +56,7 @@ class SynthesisOutputs(ArchiveSection):
     thickness_obtained = Quantity(
         type=np.float64,
         description='Thickness obtained as output',
-        a_eln={'component':'NumberEditQuantity', 'defaultDispalyUnit':'nm'},
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'nm'},
         unit='nm',
     )
     duration_measured = Quantity(
@@ -78,6 +78,15 @@ class SynthesisOutputs(ArchiveSection):
         unit='nm/minute',
     )
 
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+        if self.thickness_obtained:
+            a=self.thickness_obtained
+            if self.duration_measured:
+                b=self.duration_measured
+                self.deposition_rate_obtained = a/b
+            else:
+                pass
 
 class PECVDbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(

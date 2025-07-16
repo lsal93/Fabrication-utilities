@@ -58,7 +58,7 @@ class EtchingOutputs(ArchiveSection):
         },
         description= 'Set of parameters obtained in an etching process',
     )
-    depth_measured = Quantity(
+    depth_obtained = Quantity(
         type=np.float64,
         description='Amount of material ethced effectively in the process',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
@@ -73,12 +73,23 @@ class EtchingOutputs(ArchiveSection):
     etching_rate_obtained = Quantity(
         type=np.float64,
         description='Etching rate as output',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm/minute'},
+        a_eln={'defaultDisplayUnit': 'nm/minute'},
         unit='nm/minute',
     )
 
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+        if self.depth_obtained:
+            a=self.depth_obtained
+            if self.duration_measured:
+                b=self.duration_measured
+                self.etching_rate_obtained = a/b
+            else:
+                pass
+
 class RIEbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
+        description = 'Atomistic component of a RIE step',
         a_eln={
             'hide': [
                 'description',
@@ -294,7 +305,18 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
 class RIE (FabricationProcessStep, ArchiveSection):
 
     m_def=Section(
-        description='Set of RIE steps performed with a machine',
+        description="""
+        Form of plasma etching  in which the wafer is placed on a radio-frequency-driven
+        electrode and the counter electrode has a larger area than the driven electrode.
+        Uses both physical and chemical mechanisms to achieve high levels of resolutions.
+        In the RIE process, cations are produced from reactive gases which are
+        accelerated with high energy to the substrate and chemically react with the item
+        surface. Factors such as applied coil or electrode power, reactant gas flow
+        rates, duty cycles and chamber presures were considered as main process
+        parameters. The plasma beam is generated under low pressure by an electromagnetic
+         field. High energy ions, predominantly bombarding the surface, normally create
+        a local abundance of radicals that react with the surface.
+        """,
         a_eln={
             'hide': [
                 'description',
