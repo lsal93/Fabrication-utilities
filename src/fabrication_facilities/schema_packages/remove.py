@@ -44,6 +44,38 @@ if TYPE_CHECKING:
 m_package = Package(name='Etching workflow schema')
 
 
+class EtchingOutputs(ArchiveSection):
+
+    m_def={
+        description='Outputs data obtained in a etching procedure',
+        a_eln={
+            'properties':{
+                'order':[
+                    'depth_obtained',
+                    'duration_measured',
+                    'etching_rate_obtained',
+                ],
+            }
+        }
+    }
+    depth_measured = Quantity(
+        type=np.float64,
+        description='Amount of material ethced effectively in the process',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm',
+    )
+    duration_measured = Quantity(
+        type=np.float64,
+        description='Real time of the process ad output',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
+    )
+    etching_rate_obtained = Quantity(
+        type=np.float64,
+        description='Etching rate as output',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm/minute'},
+        unit='nm/minute',
+    )
 class RIEbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
         a_eln={
@@ -262,10 +294,47 @@ class RIE (FabricationProcessStep, ArchiveSection):
 
     m_def=Section(
         description='Set of RIE steps performed with a machine',
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'tag',
+                ]
+            }
+        }
     )
 
     etching_steps=SubSection(
         section_def=RIEbase,
+        repeats=True,
+    )
+
+    outputs=SubSection(
+        section_def=EtchingOutputs,
         repeats=True,
     )
 
@@ -352,6 +421,38 @@ class ICP_RIE(FabricationProcessStep, ArchiveSection):
 
     m_def=Section(
         description='Set of RIE steps performed with a machine',
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'tag',
+                ]
+            }
+        }
     )
 
     etching_steps=SubSection(
@@ -527,10 +628,10 @@ class DRIE(FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
-                    'notes',
+                    'tag',
                 ]
-            },
-        },
+            }
+        }
     )
 
     etching_steps = SubSection(

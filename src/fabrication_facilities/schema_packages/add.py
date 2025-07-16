@@ -38,6 +38,47 @@ if TYPE_CHECKING:
 m_package = Package(name='Add processes schema')
 
 
+class synthesisOutputs(ArchiveSection):
+
+    m_def=Section(
+        a_eln={
+            'properties':{
+                'order':[
+                    'thickness_obtained',
+                    'duration_measured',
+                    'deposition_rate_obtained',
+                ],
+            }
+        },
+        description='Class describing all possible output data in synthesis steps',
+    )
+
+    thickness_obtained = Quantity(
+        type=np.float64,
+        description='Thickness obtained as output',
+        a_eln={'component':'NumberEditQuantity', 'defaultDispalyUnit':'nm'},
+        unit='nm',
+    )
+    duration_measured = Quantity(
+        type=np.float64,
+        description='Real time employed',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'minute',
+        },
+        unit='minute',
+    )
+    deposition_rate_obtained = Quantity(
+        type=np.float64,
+        description='Deposition rate as output',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm/minute',
+        },
+        unit='nm/minute',
+    )
+
+
 class PECVDbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
         a_eln={
@@ -290,13 +331,51 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
 
 
 class PECVD(FabricationProcessStep, ArchiveSection):
+
     m_def=Section(
         description='Set of PECVD steps performed with a machine',
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'tag',
+                    'notes'
+                ]
+            }
+        }
     )
 
     synthesis_steps=SubSection(
         section_def=PECVDbase,
         repeats=True,
+    )
+
+    outputs = SubSection(
+        section_def=synthesisOutputs, repeats=False,
     )
 
 
@@ -378,12 +457,46 @@ class ICP_CVD(FabricationProcessStep, ArchiveSection):
 
     m_def=Section(
         description='Set of ICP CVD steps performed with a machine',
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'tag',
+                    'notes'
+                ]
+            }
+        }
     )
 
     synthesis_steps=SubSection(
         section_def=ICP_CVDbase,
         repeats=True,
     )
+
 
 
 class LPCVDbase(PECVDbase, ArchiveSection):
@@ -443,6 +556,39 @@ class LPCVD(FabricationProcessStep, ArchiveSection):
 
     m_def=Section(
         description='Set of LPCVD steps performed with a machine',
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'tag',
+                    'notes'
+                ]
+            }
+        }
     )
 
     synthesis_steps=SubSection(
