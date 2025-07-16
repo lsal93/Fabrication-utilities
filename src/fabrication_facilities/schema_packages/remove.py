@@ -680,6 +680,19 @@ class DRIE(FabricationProcessStep, ArchiveSection):
 
 class WetEtching(FabricationProcessStep, ArchiveSection):
     m_def = Section(
+        description="""
+        Wet etching is a material removal process that uses liquid chemicals or etchants
+        to remove materials from a wafer. The specific patters are defined by masks on
+        the wafer. Materials that are not protected by the masks are etched away by
+        liquid chemicals. A wet etching process involves multiple chemical reactions that
+        consume the original reactants and produce new reactants. The wet etch process
+        can be described by three basic steps. (1) Diffusion of the liquid etchant to the
+        structure that is to be removed. (2) The reaction between the liquid etchant and
+        the material being etched away. A reduction-oxidation (redox) reaction usually
+        occurs. This reaction entails the oxidation of the material then dissolving the
+        oxidized material. (3) Diffusion of the byproducts in the reaction from the
+        reacted surface.
+        """,
         a_eln={
             'hide': [
                 'description',
