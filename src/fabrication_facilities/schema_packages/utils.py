@@ -294,4 +294,4 @@ class CustomSection2(PlotSection, EntryData):
         figure3 = go.Figure(data=heatmap)
         figure_json = figure3.to_plotly_json()
         figure_json['config'] = {'staticPlot': True}
-        self.figures.append(PlotlyFigure(label='figure 3', index=0, figure=figure_json)
+        self.figures.append(PlotlyFigure(label='figure 3', index=0, figure=figure_json))
