@@ -47,7 +47,6 @@ m_package = Package(name='Etching workflow schema')
 class EtchingOutputs(ArchiveSection):
 
     m_def={
-        description='Outputs data obtained in a etching procedure',
         a_eln={
             'properties':{
                 'order':[
