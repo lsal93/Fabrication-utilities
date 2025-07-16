@@ -269,7 +269,7 @@ class CustomSection2(PlotSection, EntryData):
     chamber_pressure = Quantity(type=float, shape=['*'], unit='Pa', a_eln=dict(component='NumberEditQuantity'))
 
     def normalize(self, archive, logger):
-        super(CustomSection, self).normalize(archive, logger)
+        super(CustomSection2, self).normalize(archive, logger)
 
         first_line = px.scatter(x=self.time, y=self.substrate_temperature)
         second_line = px.scatter(x=self.time, y=self.chamber_pressure)
