@@ -76,6 +76,7 @@ class EtchingOutputs(ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm/minute'},
         unit='nm/minute',
     )
+
 class RIEbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
         a_eln={
@@ -460,6 +461,11 @@ class ICP_RIE(FabricationProcessStep, ArchiveSection):
         repeats=True,
     )
 
+    outputs=SubSection(
+        section_def=EtchingOutputs,
+        repeats=True,
+    )
+
 
 # class Passivation(ArchiveSection):
 #     duration = Quantity(
@@ -636,6 +642,11 @@ class DRIE(FabricationProcessStep, ArchiveSection):
 
     etching_steps = SubSection(
         section_def=DRIEbase,
+        repeats=True,
+    )
+
+    outputs=SubSection(
+        section_def=EtchingOutputs,
         repeats=True,
     )
 

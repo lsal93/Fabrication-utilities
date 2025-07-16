@@ -38,7 +38,7 @@ if TYPE_CHECKING:
 m_package = Package(name='Add processes schema')
 
 
-class synthesisOutputs(ArchiveSection):
+class SynthesisOutputs(ArchiveSection):
 
     m_def=Section(
         a_eln={
@@ -375,7 +375,7 @@ class PECVD(FabricationProcessStep, ArchiveSection):
     )
 
     outputs = SubSection(
-        section_def=synthesisOutputs, repeats=False,
+        section_def=SynthesisOutputs, repeats=False,
     )
 
 
@@ -497,6 +497,10 @@ class ICP_CVD(FabricationProcessStep, ArchiveSection):
         repeats=True,
     )
 
+    outputs = SubSection(
+        section_def=SynthesisOutputs, repeats=False,
+    )
+
 
 
 class LPCVDbase(PECVDbase, ArchiveSection):
@@ -594,6 +598,10 @@ class LPCVD(FabricationProcessStep, ArchiveSection):
     synthesis_steps=SubSection(
         section_def=LPCVDbase,
         repeats=True,
+    )
+
+    outputs = SubSection(
+        section_def=SynthesisOutputs, repeats=False,
     )
 
 class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
