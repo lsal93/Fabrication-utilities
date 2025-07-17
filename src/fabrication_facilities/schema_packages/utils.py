@@ -288,7 +288,7 @@ class TimeRampMassflow(PlotSection, EntryData):
 
     name=Quantity(
         type=str,
-        description='What gaseous massflow are you tracing? (Alse the chemical formulas are accepted)',
+        description='What gaseous massflow are you tracing? (Also the chemical formulas are accepted)',
         a_eln={'component':'StringEditQuantity'},
     )
 
@@ -312,6 +312,44 @@ class TimeRampMassflow(PlotSection, EntryData):
     def normalize(self, archive, logger):
         if self.values is not None and len(self.values) > 0:
             super(TimeRampMassflow, self).normalize(archive, logger)
+            if hasattr(self, 'figures') and self.figures:
+                self.figures.clear()
+            make_line(
+                self.time, self.values, 'Time (s)', 'Massflow (sccm)',
+                self.figures, 'Ramp of massflow'
+            )
+
+
+class TimeRampRotation(PlotSection, EntryData):
+
+    m_def = Section()
+
+    name=Quantity(
+        type=str,
+        description='What rotation are you tracing?',
+        a_eln={'component':'StringEditQuantity'},
+    )
+
+    time=Quantity(
+        type=np.float64,
+        shape=['*'],
+        a_eln={
+            'component':'NumberEditQuantity',
+            'defaultDisplayUnit':'rpm',
+        },
+        unit='rpm',
+    )
+
+    values=Quantity(
+        type=np.float64,
+        shape=['*'],
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'centimeter^3/minute'},
+        unit= 'centimeter^3/minute'
+    )
+
+    def normalize(self, archive, logger):
+        if self.values is not None and len(self.values) > 0:
+            super(TimeRampRotation, self).normalize(archive, logger)
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
             make_line(

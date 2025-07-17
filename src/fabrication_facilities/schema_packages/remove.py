@@ -119,10 +119,11 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
                     'job_number',
                     'tag',
                     'id_item_processed',
+                    'operator',
                     'starting_date',
                     'ending_date',
-                    'operator'
-                    'short_names',
+                    'operator',
+                    'short_names'
                     'target_materials_formulas',
                     'depth_target',
                     'duration_target',
@@ -142,17 +143,17 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
             },
         },
     )
-    short_names = Quantity(
-        type=str,
-        description='Materials to be etched',
-        shape=['*'],
-        a_eln={'component': 'StringEditQuantity', 'label': 'target materials'},
-    )
     duration_target = Quantity(
         type=np.float64,
         description='Time prescribed by the recipe',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
+    )
+    short_names = Quantity(
+        type=str,
+        description='Name of reactive species',
+        shape=['*'],
+        a_eln={'component': 'StringEditQuantity', 'label': 'target_materials_names'},
     )
     target_materials_formulas = Quantity(
         type=str,
@@ -384,12 +385,12 @@ class ICP_RIEbase(RIEbase, ArchiveSection):
                 'order': [
                     'job_number',
                     'tag',
-                    'tag',
                     'id_item_processed',
+                    'operator',
                     'starting_date',
                     'ending_date',
                     'short_names',
-                    'chemical_species_formulas',
+                    'target_materials_formulas',
                     'depth_target',
                     'duration_target',
                     'etching_rate_target',
@@ -526,13 +527,12 @@ class DRIEbase(ICP_RIEbase, ArchiveSection):
                 'order': [
                     'job_number',
                     'tag',
-                    'tag',
                     'id_item_processed',
+                    'operator',
                     'starting_date',
                     'ending_date',
                     'short_names',
-                    'chemical_species_formulas',
-                    'chemical_priority_per_target',
+                    'target_materials_formulas',
                     'depth_target',
                     'duration_target',
                     'etching_rate_target',

@@ -121,9 +121,9 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
                     'job_number',
                     'tag',
                     'id_item_processed',
+                    'operator',
                     'starting_date',
                     'ending_date',
-                    'operator'
                     'short_name',
                     'target_material_formula',
                     'duration_target',
@@ -412,9 +412,9 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
                     'job_number',
                     'tag',
                     'id_item_processed',
+                    'operator',
                     'starting_date',
                     'ending_date',
-                    'operator'
                     'short_name',
                     'target_material_formula',
                     'duration_target',
@@ -558,11 +558,11 @@ class LPCVDbase(PECVDbase, ArchiveSection):
             'properties': {
                 'order': [
                     'job_number',
-                    'operator',
+                    'tag',
                     'id_item_processed',
+                    'operatore'
                     'starting_date',
                     'ending_date',
-                    'tag',
                     'short_name',
                     'target_material_formula',
                     'duration_target',
