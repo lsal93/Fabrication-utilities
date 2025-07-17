@@ -217,9 +217,13 @@ class RampTime(PlotSection, EntryData):
     values=Quantity(
         type=np.float64,
         shape=['*'],
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'K'},
-        unit='K'
+        a_eln={'component': 'NumberEditQuantity'},
+#        unit='K'
     )
+
+    def __init__(self, string):
+        values.unit= string
+#        values.ELNAnnotaion.defaultdisplayUnit= string
 
     def normalize(self, archive, logger):
         super(RampTime, self).normalize(archive, logger)
