@@ -222,14 +222,14 @@ class RampTime(PlotSection, EntryData):
         a_eln={'component': 'NumberEditQuantity'},
     )
 
-    def normalize(self, archive, logger):
+    def normalize(self, string=None, archive, logger):
         super(RampTime, self).normalize(archive, logger)
         figure1 = px.line(
             x=self.time,
             y=self.values,
             height=400,
             width=800,
-            labels={'x': 'Time (s)', 'y': 'Temperature(K)'},
+            labels={'x': 'Time (s)', 'y': string},
             markers=True,
         )
 
@@ -246,18 +246,26 @@ class RampTime(PlotSection, EntryData):
 
 class RampTemperature(RampTime):
 
-    m_def=Section(
-        a_eln={
-            'properties':{
-                'hide':[
-                    'values',
-                ],
-            },
-        }
-    )
+    m_def=Section()
 
-    temperatures=RampTime.values.m_copy()
-    temperatures.unit='K'
-    temperatures.a_eln = ELNAnnotation(
-        defaultDisplayUnit= 'celsius'
-    )
+    def normalize(self, archive, logger):
+        super().normalize(archive,logger)
+        RampTime.normalize('Temperature (°C)', archive, logger)
+
+# class RampTemperature(RampTime):
+
+#     m_def=Section(
+#         a_eln={
+#             'properties':{
+#                 'hide':[
+#                     'values',
+#                 ],
+#             },
+#         }
+#     )
+
+#     temperatures=RampTime.values.m_copy()
+#     temperatures.unit='K'
+#     temperatures.a_eln = ELNAnnotation(
+#         defaultDisplayUnit= 'celsius'
+#     )
