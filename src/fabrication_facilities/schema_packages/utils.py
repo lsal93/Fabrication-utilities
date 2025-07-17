@@ -250,8 +250,9 @@ class RampTemperature(RampTime):
 
     temperatures=RampTime.values.m_copy()
     temperatures.unit='K'
-    a_eln = dict(temperatures.a_eln or {})
-    a_eln['defaultDisplayUnit'] = 'celsius'
-    temperatures.a_eln = ELNAnnotation(a_eln)
+    a_eln_dict = dict(temperatures.a_eln or {})
+    a_eln_dict['defaultDisplayUnit'] = 'celsius'
+    temperatures.a_eln = ELNAnnotation(**a_eln_dict)
+
 
 #    temperatures.a_eln={'component': 'NumberEditQuantity','defaultDisplayUnit':'celsius'}
