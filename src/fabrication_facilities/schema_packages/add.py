@@ -25,6 +25,10 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
 from fabrication_facilities.schema_packages.utils import (
     Massflow_controller,
     parse_chemical_formula,
+    FabricationChemical,
+    TimeRampTemperature,
+    TimeRampMassflow,
+    TimeRampPressure,
 )
 
 if TYPE_CHECKING:
