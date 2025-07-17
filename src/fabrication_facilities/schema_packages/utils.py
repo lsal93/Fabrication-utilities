@@ -248,10 +248,12 @@ class RampTemperature(RampTime, EntryData):
 
     m_def = Section()
 
-    values= RampTime.values.unit='celsius'
+    values= RampTime.values.m_copy()
+    values.unit='celsius'
 
     def normalize(self, archive, logger):
-        super().normalize('Temperature (°C)', archive, logger)
+        if values:
+            super().normalize('Temperature (°C)', archive, logger)
 
     # temperatures=RampTime.values.m_copy()
     # temperatures.unit='K'
