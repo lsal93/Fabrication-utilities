@@ -231,9 +231,9 @@ class RampTime(PlotSection, EntryData):
             labels={'x': 'Tempo (s)', 'y': 'Temperature(K)'}
         )
 
-        if self.figures is not None:
-            for figure in figures:
-                self.figures.remove(figure)
+        # if self.figures is not None:
+        #     for figure in self.figures:
+        #         self.figures.remove(figure)
 
         self.figures.append(
             PlotlyFigure(
