@@ -201,10 +201,70 @@ class Massflow_controller(FabricationChemical, ArchiveSection):
 #         unit='sec',
 #     )
 
+def make_line(list1,list2,labelx,labely,finalist, labelfigure)
 
-class RampTime(PlotSection):
+    figure1 = px.line(
+    x=list1,
+        y=list2,
+        height=400,
+        width=800,
+        labels={'x': labelx, 'y': labely},
+        markers=True,
+    )
 
-    m_def=Section()
+    finalist.append(
+        PlotlyFigure(
+            label=labelfigure,
+            figure=figure1.to_plotly_json(),
+            index=0,
+        )
+    )
+
+# class RampTime(PlotSection):
+
+#     m_def=Section()
+
+#     time=Quantity(
+#         type=np.float64,
+#         shape=['*'],
+#         a_eln={
+#             'component':'NumberEditQuantity',
+#             'defaultDisplayUnit':'sec',
+#         },
+#         unit='sec',
+#     )
+
+#     values=Quantity(
+#         type=np.float64,
+#         shape=['*'],
+#         a_eln={'component': 'NumberEditQuantity'},
+#     )
+
+#     def normalize(self, string, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+#         super(RampTime, self).normalize(archive, logger)
+#         figure1 = px.line(
+#             x=self.time,
+#             y=self.values,
+#             height=400,
+#             width=800,
+#             labels={'x': 'Time (s)', 'y': string},
+#             markers=True,
+#         )
+
+#         if hasattr(self, 'figures') and self.figures:
+#             self.figures.clear()
+
+#         self.figures.append(
+#             PlotlyFigure(
+#                 label='Ramp',
+#                 figure=figure1.to_plotly_json(),
+#                 index=0,
+#             )
+#         )
+
+class TimeRampTemperature(PlotSection, EntryData):
+
+    m_def = Section()
 
     time=Quantity(
         type=np.float64,
@@ -219,41 +279,19 @@ class RampTime(PlotSection):
     values=Quantity(
         type=np.float64,
         shape=['*'],
-        a_eln={'component': 'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
+        unit= 'celsius'
     )
 
-    def normalize(self, string, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        super(RampTime, self).normalize(archive, logger)
-        figure1 = px.line(
-            x=self.time,
-            y=self.values,
-            height=400,
-            width=800,
-            labels={'x': 'Time (s)', 'y': string},
-            markers=True,
-        )
-
-        if hasattr(self, 'figures') and self.figures:
-            self.figures.clear()
-
-        self.figures.append(
-            PlotlyFigure(
-                label='Ramp',
-                figure=figure1.to_plotly_json(),
-                index=0,
-            )
-        )
-
-class RampTemperature(RampTime, EntryData):
-
-    m_def = Section()
-
-    values= RampTime.values.m_copy()
-    values.unit='celsius'
+    # values= RampTime.values.m_copy()
+    # values.unit='celsius'
 
     def normalize(self, archive, logger):
         if self.values is not None and len(self.values) > 0:
-            super().normalize('Temperature (°C)', archive, logger)
+            super(RampTemperature, self).normalize(archive, logger)
+            if hasattr(self, 'figures') and self.figures:
+                self.figures.clear()
+            make_line(self.time, self.values, 'Time (s)', 'Temperature (°C)', self.figures, 'Ramp of temperature')
 
     # temperatures=RampTime.values.m_copy()
     # temperatures.unit='K'
