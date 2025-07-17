@@ -227,13 +227,12 @@ class RampTime(PlotSection, EntryData):
             y=self.values,
             height=400,
             width=800,
-            labels={'x': 'Tempo (s)', 'y': 'Temperature(K)'},
-#            markers=True,
+            labels={'x': 'Time (s)', 'y': 'Temperature(K)'},
+            markers=True,
         )
 
-        # if self.figures is not None:
-        #     for figure in self.figures:
-        #         self.figures.remove(figure)
+        if hasattr(self, 'figures') and self.figures:
+            self.figures.clear()
 
         self.figures.append(
             PlotlyFigure(
@@ -247,6 +246,6 @@ class RampTemperature(RampTime):
 
     m_def=Section()
 
-    values=RampTime.values.m_copy()
-
-    values.unit='K'
+    temperatures=RampTime.values.m_copy()
+    temperatures.unit='K'
+    temperatures.a_eln['defaultDisplayUnit'] = 'celsius'
