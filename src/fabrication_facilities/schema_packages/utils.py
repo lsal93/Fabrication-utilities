@@ -228,9 +228,12 @@ class RampTime(PlotSection, EntryData):
             y=self.values,
             height=400,
             width=800,
-            xaxis_title='Time (s)',
-            yaxis_title='Temperature (K)'
+            labels={'x': 'Tempo (s)', 'y': 'Temperature(K)'}
         )
+        
+        if self.figures is not None:
+            self.figures.remove(figure1)
+
         self.figures.append(
             PlotlyFigure(
                 label='Ramp',
