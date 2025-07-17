@@ -219,6 +219,7 @@ class RampTime(PlotSection, EntryData):
     values=Quantity(
         type=np.float64,
         shape=['*'],
+        a_eln={'component': 'NumberEditQuantity'},
     )
 
     def normalize(self, archive, logger):
@@ -249,4 +250,8 @@ class RampTemperature(RampTime):
 
     temperatures=RampTime.values.m_copy()
     temperatures.unit='K'
-    temperatures.a_eln={'component': 'NumberEditQuantity','defaultDisplayUnit':'celsius'}
+    a_eln = dict(temperatures.a_eln or {})
+    a_eln['defaultDisplayUnit'] = 'celsius'
+    temperatures.a_eln = ELNAnnotation(a_eln)
+
+#    temperatures.a_eln={'component': 'NumberEditQuantity','defaultDisplayUnit':'celsius'}
