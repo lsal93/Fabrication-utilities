@@ -138,7 +138,7 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
                     'clamping',
                     'clamping_type',
                     'clamping_pressure',
-                    'number of loops',
+                    'number_of_loops',
                     'notes',
                 ]
             },
@@ -437,7 +437,7 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
                     'clamping',
                     'clamping_type',
                     'clamping_pressure',
-                    'number of loops',
+                    'number_of_loops',
                     'notes',
                 ]
             },
@@ -621,7 +621,6 @@ class LPCVD(FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
-                    'tag',
                     'notes'
                 ]
             }
@@ -1338,9 +1337,3 @@ class SOG(Chemical, FabricationProcessStep, ArchiveSection):
 
 
 m_package.__init_metainfo__()
-
-# PCVD
-# LPCVD
-# PECVD
-# PECVD
-# ICP-CVD

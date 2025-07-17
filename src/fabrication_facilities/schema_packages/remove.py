@@ -90,6 +90,7 @@ class EtchingOutputs(ArchiveSection):
             else:
                 pass
 
+
 class RIEbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
         description = 'Atomistic component of a RIE step',
@@ -554,7 +555,6 @@ class DRIEbase(ICP_RIEbase, ArchiveSection):
     )
 
 
-
 class DRIE(FabricationProcessStep, ArchiveSection):
     m_def = Section(
         a_eln={
@@ -987,11 +987,3 @@ class Stripping(Chemical, FabricationProcessStep, ArchiveSection):
 
 
 m_package.__init_metainfo__()
-
-
-# FIB-SEM
-# SEM
-# EBL
-# ICP-RIE
-# CVD
-# AFM
