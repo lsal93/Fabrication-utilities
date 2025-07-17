@@ -288,10 +288,13 @@ class TimeRampTemperature(PlotSection, EntryData):
 
     def normalize(self, archive, logger):
         if self.values is not None and len(self.values) > 0:
-            super(RampTemperature, self).normalize(archive, logger)
+            super(TimeRampTemperature, self).normalize(archive, logger)
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
-            make_line(self.time, self.values, 'Time (s)', 'Temperature (°C)', self.figures, 'Ramp of temperature')
+            make_line(
+                self.time, self.values, 'Time (s)', 'Temperature (°C)',
+                self.figures, 'Ramp of temperature'
+            )
 
     # temperatures=RampTime.values.m_copy()
     # temperatures.unit='K'
