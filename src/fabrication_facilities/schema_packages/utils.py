@@ -140,21 +140,6 @@ class FabricationChemical(Chemical, ArchiveSection):
 #         )
 #     )
 
-class Massflow_controller(FabricationChemical, ArchiveSection):
-
-    m_def = Section(
-        a_eln={'overview': True, 'hide': ['lab_id', 'datetime']},
-    )
-    massflow = Quantity(
-        type=np.float64,
-        description='Rate at which the gas flows',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'centimeter^3/minute',
-        },
-        unit='centimeter^3/minute',
-    )
-
     # ramp_flows= SubSection(
     #     section_def = RampOfGases,
     #     repeats=True
@@ -333,3 +318,25 @@ class TimeRampMassflow(PlotSection, EntryData):
                 self.time, self.values, 'Time (s)', 'Massflow (sccm)',
                 self.figures, 'Ramp of massflow'
             )
+
+
+class Massflow_controller(FabricationChemical, ArchiveSection):
+
+    m_def = Section(
+        a_eln={'overview': True, 'hide': ['lab_id', 'datetime']},
+    )
+    massflow = Quantity(
+        type=np.float64,
+        description='Rate at which the gas flows',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'centimeter^3/minute',
+        },
+        unit='centimeter^3/minute',
+    )
+
+    gaseous_massflow_ramps=SubSection(
+        section_def=TimeRampMassflow,
+        repeats=True,
+    )
+
