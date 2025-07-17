@@ -205,7 +205,7 @@ class RampTime(PlotSection, EntryData):
     m_def=Section()
 
     time=Quantity(
-        type=nop.float64,
+        type=np.float64,
         shape=['*'],
         a_eln={
             'component':'NumberEditQuantity',
