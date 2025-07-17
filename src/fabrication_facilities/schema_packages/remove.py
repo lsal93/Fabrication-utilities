@@ -305,6 +305,7 @@ class RIE (FabricationProcessStep, ArchiveSection):
                 'duration',
                 'end_time',
                 'start_time',
+                'tag',
             ],
             'properties': {
                 'order': [
@@ -447,6 +448,7 @@ class ICP_RIE(FabricationProcessStep, ArchiveSection):
                 'duration',
                 'end_time',
                 'start_time',
+                'tag',
             ],
             'properties': {
                 'order': [
@@ -565,6 +567,7 @@ class DRIE(FabricationProcessStep, ArchiveSection):
                 'duration',
                 'end_time',
                 'start_time',
+                'tag',
             ],
             'properties': {
                 'order': [

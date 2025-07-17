@@ -332,6 +332,7 @@ class PECVD(FabricationProcessStep, ArchiveSection):
                 'duration',
                 'end_time',
                 'start_time',
+                'tag',
             ],
             'properties': {
                 'order': [
@@ -475,6 +476,7 @@ class ICP_CVD(FabricationProcessStep, ArchiveSection):
                 'duration',
                 'end_time',
                 'start_time',
+                'tag',
             ],
             'properties': {
                 'order': [
@@ -593,6 +595,7 @@ class LPCVD(FabricationProcessStep, ArchiveSection):
                 'duration',
                 'end_time',
                 'start_time',
+                'tag',
             ],
             'properties': {
                 'order': [

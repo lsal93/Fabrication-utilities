@@ -273,7 +273,7 @@ class TimeRampPressure(PlotSection, EntryData):
 
     def normalize(self, archive, logger):
         if self.values is not None and len(self.values) > 0:
-            super(TimeRampTemperature, self).normalize(archive, logger)
+            super(TimeRampPressure, self).normalize(archive, logger)
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
             make_line(
@@ -311,7 +311,7 @@ class TimeRampMassflow(PlotSection, EntryData):
 
     def normalize(self, archive, logger):
         if self.values is not None and len(self.values) > 0:
-            super(TimeRampTemperature, self).normalize(archive, logger)
+            super(TimeRampMassflow, self).normalize(archive, logger)
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
             make_line(
