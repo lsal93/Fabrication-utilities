@@ -228,7 +228,6 @@ class RampTime(PlotSection, EntryData):
             y=self.values,
             height=400,
             width=800,
-            title_text="Creating plot for temp",
             xaxis_title='Time (s)',
             yaxis_title='Temperature (K)'
         )
