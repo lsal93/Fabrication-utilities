@@ -202,7 +202,7 @@ class Massflow_controller(FabricationChemical, ArchiveSection):
 #     )
 
 
-class RampTime(PlotSection, EntryData):
+class RampTime(PlotSection):
 
     m_def=Section()
 
@@ -222,7 +222,7 @@ class RampTime(PlotSection, EntryData):
         a_eln={'component': 'NumberEditQuantity'},
     )
 
-    def normalize(self, string=None, archive, logger):
+    def normalize(self, string, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super(RampTime, self).normalize(archive, logger)
         figure1 = px.line(
             x=self.time,
@@ -245,27 +245,15 @@ class RampTime(PlotSection, EntryData):
         )
 
 class RampTemperature(RampTime):
+    m_def = Section()
 
-    m_def=Section()
+    values.unit='celsius'
 
     def normalize(self, archive, logger):
-        super().normalize(archive,logger)
-        RampTime.normalize('Temperature (°C)', archive, logger)
+        super().normalize('Temperature (°C)', archive, logger)
 
-# class RampTemperature(RampTime):
-
-#     m_def=Section(
-#         a_eln={
-#             'properties':{
-#                 'hide':[
-#                     'values',
-#                 ],
-#             },
-#         }
-#     )
-
-#     temperatures=RampTime.values.m_copy()
-#     temperatures.unit='K'
-#     temperatures.a_eln = ELNAnnotation(
-#         defaultDisplayUnit= 'celsius'
-#     )
+    # temperatures=RampTime.values.m_copy()
+    # temperatures.unit='K'
+    # temperatures.a_eln = ELNAnnotation(
+    #     defaultDisplayUnit= 'celsius'
+    # )
