@@ -227,7 +227,7 @@ class TimeRampTemperature(PlotSection, EntryData):
 
     name=Quantity(
         type=str,
-        description='What temperature are you tracing?'
+        description='What temperature are you tracing?',
         a_eln={'component':'StringEditQuantity'},
     )
 
@@ -265,7 +265,7 @@ class TimeRampPressure(PlotSection, EntryData):
 
     name=Quantity(
         type=str,
-        description='What pressure are you tracing?'
+        description='What pressure are you tracing?',
         a_eln={'component':'StringEditQuantity'},
     )
 
@@ -303,7 +303,7 @@ class TimeRampMassflow(PlotSection, EntryData):
 
     name=Quantity(
         type=str,
-        description='What gaseous massflow are you tracing? (Alse the chemical formula is accepted)'
+        description='What gaseous massflow are you tracing? (Alse the chemical formulas are accepted)',
         a_eln={'component':'StringEditQuantity'},
     )
 
