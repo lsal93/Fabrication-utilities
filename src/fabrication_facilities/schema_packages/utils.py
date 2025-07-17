@@ -244,10 +244,11 @@ class RampTime(PlotSection):
             )
         )
 
-class RampTemperature(RampTime):
+class RampTemperature(RampTime, EntryData):
+
     m_def = Section()
 
-    values.unit='celsius'
+    values= RampTime.values.unit='celsius'
 
     def normalize(self, archive, logger):
         super().normalize('Temperature (°C)', archive, logger)
