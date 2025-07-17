@@ -201,10 +201,10 @@ class Massflow_controller(FabricationChemical, ArchiveSection):
 #         unit='sec',
 #     )
 
-def make_line(list1,list2,labelx,labely,finalist, labelfigure)
+def make_line(list1,list2,labelx,labely,finalist, labelfigure):
 
     figure1 = px.line(
-    x=list1,
+        x=list1,
         y=list2,
         height=400,
         width=800,
