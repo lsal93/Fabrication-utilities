@@ -138,7 +138,7 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
                     'clamping',
                     'clamping_type',
                     'clamping_pressure',
-                    'number of loops'
+                    'number of loops',
                     'notes',
                 ]
             },
@@ -263,6 +263,12 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
             'defaultDisplayUnit': 'minute',
         },
         unit='minute',
+    )
+
+    number_of_loops=Quantity(
+        type=int,
+        description='Times for which this step is repeated with equal parameters',
+        a_eln={'component':'NumberEditQuantity'},
     )
 
     temperature_ramps=SubSection(
@@ -431,7 +437,7 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
                     'clamping',
                     'clamping_type',
                     'clamping_pressure',
-                    'number of loops'
+                    'number of loops',
                     'notes',
                 ]
             },

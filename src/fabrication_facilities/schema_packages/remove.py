@@ -122,8 +122,7 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
                     'operator',
                     'starting_date',
                     'ending_date',
-                    'operator',
-                    'short_names'
+                    'short_names',
                     'target_materials_formulas',
                     'depth_target',
                     'duration_target',
@@ -153,7 +152,7 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
         type=str,
         description='Name of reactive species',
         shape=['*'],
-        a_eln={'component': 'StringEditQuantity', 'label': 'target_materials_names'},
+        a_eln={'component': 'StringEditQuantity', 'label': 'target materials names'},
     )
     target_materials_formulas = Quantity(
         type=str,
