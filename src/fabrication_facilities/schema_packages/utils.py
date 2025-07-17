@@ -217,8 +217,7 @@ class RampTime(PlotSection, EntryData):
     values=Quantity(
         type=np.float64,
         shape=['*'],
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'K',},
-        unit='K',
+        a_eln={'component': 'NumberEditQuantity'},
     )
 
     def normalize(self, archive, logger):
@@ -228,7 +227,8 @@ class RampTime(PlotSection, EntryData):
             y=self.values,
             height=400,
             width=800,
-            labels={'x': 'Tempo (s)', 'y': 'Temperature(K)'}
+            labels={'x': 'Tempo (s)', 'y': 'Temperature(K)'},
+#            markers=True,
         )
 
         # if self.figures is not None:
@@ -242,3 +242,11 @@ class RampTime(PlotSection, EntryData):
                 index=0,
             )
         )
+
+class RampTemperature(RampTime):
+
+    m_def=Section()
+
+    values=RampTime.values.m_copy()
+
+    values.unit='K'
