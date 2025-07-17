@@ -220,51 +220,16 @@ def make_line(list1,list2,labelx,labely,finalist, labelfigure):
         )
     )
 
-# class RampTime(PlotSection):
-
-#     m_def=Section()
-
-#     time=Quantity(
-#         type=np.float64,
-#         shape=['*'],
-#         a_eln={
-#             'component':'NumberEditQuantity',
-#             'defaultDisplayUnit':'sec',
-#         },
-#         unit='sec',
-#     )
-
-#     values=Quantity(
-#         type=np.float64,
-#         shape=['*'],
-#         a_eln={'component': 'NumberEditQuantity'},
-#     )
-
-#     def normalize(self, string, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-#         super(RampTime, self).normalize(archive, logger)
-#         figure1 = px.line(
-#             x=self.time,
-#             y=self.values,
-#             height=400,
-#             width=800,
-#             labels={'x': 'Time (s)', 'y': string},
-#             markers=True,
-#         )
-
-#         if hasattr(self, 'figures') and self.figures:
-#             self.figures.clear()
-
-#         self.figures.append(
-#             PlotlyFigure(
-#                 label='Ramp',
-#                 figure=figure1.to_plotly_json(),
-#                 index=0,
-#             )
-#         )
 
 class TimeRampTemperature(PlotSection, EntryData):
 
     m_def = Section()
+
+    name=Quantity(
+        type=str,
+        description='What temperature are you tracing?'
+        a_eln={'component':'StringEditQuantity'},
+    )
 
     time=Quantity(
         type=np.float64,
@@ -283,9 +248,6 @@ class TimeRampTemperature(PlotSection, EntryData):
         unit= 'celsius'
     )
 
-    # values= RampTime.values.m_copy()
-    # values.unit='celsius'
-
     def normalize(self, archive, logger):
         if self.values is not None and len(self.values) > 0:
             super(TimeRampTemperature, self).normalize(archive, logger)
@@ -296,8 +258,78 @@ class TimeRampTemperature(PlotSection, EntryData):
                 self.figures, 'Ramp of temperature'
             )
 
-    # temperatures=RampTime.values.m_copy()
-    # temperatures.unit='K'
-    # temperatures.a_eln = ELNAnnotation(
-    #     defaultDisplayUnit= 'celsius'
-    # )
+
+class TimeRampPressure(PlotSection, EntryData):
+
+    m_def = Section()
+
+    name=Quantity(
+        type=str,
+        description='What pressure are you tracing?'
+        a_eln={'component':'StringEditQuantity'},
+    )
+
+    time=Quantity(
+        type=np.float64,
+        shape=['*'],
+        a_eln={
+            'component':'NumberEditQuantity',
+            'defaultDisplayUnit':'sec',
+        },
+        unit='sec',
+    )
+
+    values=Quantity(
+        type=np.float64,
+        shape=['*'],
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'mbar'},
+        unit= 'mbar'
+    )
+
+    def normalize(self, archive, logger):
+        if self.values is not None and len(self.values) > 0:
+            super(TimeRampTemperature, self).normalize(archive, logger)
+            if hasattr(self, 'figures') and self.figures:
+                self.figures.clear()
+            make_line(
+                self.time, self.values, 'Time (s)', 'Pressure (mbar)',
+                self.figures, 'Ramp of pressure'
+            )
+
+
+class TimeRampMassflow(PlotSection, EntryData):
+
+    m_def = Section()
+
+    name=Quantity(
+        type=str,
+        description='What gaseous massflow are you tracing? (Alse the chemical formula is accepted)'
+        a_eln={'component':'StringEditQuantity'},
+    )
+
+    time=Quantity(
+        type=np.float64,
+        shape=['*'],
+        a_eln={
+            'component':'NumberEditQuantity',
+            'defaultDisplayUnit':'sec',
+        },
+        unit='sec',
+    )
+
+    values=Quantity(
+        type=np.float64,
+        shape=['*'],
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'centimeter^3/minute'},
+        unit= 'centimeter^3/minute'
+    )
+
+    def normalize(self, archive, logger):
+        if self.values is not None and len(self.values) > 0:
+            super(TimeRampTemperature, self).normalize(archive, logger)
+            if hasattr(self, 'figures') and self.figures:
+                self.figures.clear()
+            make_line(
+                self.time, self.values, 'Time (s)', 'Massflow (sccm)',
+                self.figures, 'Ramp of massflow'
+            )

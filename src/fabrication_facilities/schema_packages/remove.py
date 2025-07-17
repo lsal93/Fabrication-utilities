@@ -31,6 +31,9 @@ from fabrication_facilities.schema_packages.utils import (
     Massflow_controller,
     parse_chemical_formula,
     FabricationChemical,
+    TimeRampTemperature,
+    TimeRampMassflow,
+    TimeRampPressure,
 )
 
 if TYPE_CHECKING:
@@ -356,6 +359,21 @@ class RIE (FabricationProcessStep, ArchiveSection):
         repeats=True,
     )
 
+    temperature_ramps=SubSection(
+        section_def=TimeRampTemperature,
+        repeats=True,
+    )
+
+    pressure_ramps=SubSection(
+        section_def=TimeRampPressure,
+        repeats=True,
+    )
+
+    gaseous_massflow_ramps=SubSection(
+        section_def=TimeRampMassflow,
+        repeats=True,
+    )
+
     outputs=SubSection(
         section_def=EtchingOutputs,
         repeats=True,
@@ -484,7 +502,22 @@ class ICP_RIE(FabricationProcessStep, ArchiveSection):
     )
 
     etching_steps=SubSection(
-        section_def=RIEbase,
+        section_def=ICP_RIEbase,
+        repeats=True,
+    )
+
+    temperature_ramps=SubSection(
+        section_def=TimeRampTemperature,
+        repeats=True,
+    )
+
+    pressure_ramps=SubSection(
+        section_def=TimeRampPressure,
+        repeats=True,
+    )
+
+    gaseous_massflow_ramps=SubSection(
+        section_def=TimeRampMassflow,
         repeats=True,
     )
 
@@ -669,6 +702,21 @@ class DRIE(FabricationProcessStep, ArchiveSection):
 
     etching_steps = SubSection(
         section_def=DRIEbase,
+        repeats=True,
+    )
+
+    temperature_ramps=SubSection(
+        section_def=TimeRampTemperature,
+        repeats=True,
+    )
+
+    pressure_ramps=SubSection(
+        section_def=TimeRampPressure,
+        repeats=True,
+    )
+
+    gaseous_massflow_ramps=SubSection(
+        section_def=TimeRampMassflow,
         repeats=True,
     )
 
