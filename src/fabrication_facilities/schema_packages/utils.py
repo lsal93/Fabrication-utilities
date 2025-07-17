@@ -223,7 +223,7 @@ class RampTime(PlotSection, EntryData):
 
     def normalize(self, archive, logger):
         super(RampTime, self).normalize(archive, logger)
-        first_line = px.scatter(x=self.time, y=self.substrate_temperature)
+        first_line = px.scatter(x=self.time, y=self.values)
         figure1 = make_subplots(rows=1, cols=2, shared_yaxes=True)
         figure1.add_trace(first_line.data[0], row=1, col=1)
         figure1.update_layout(height=400, width=716, title_text="Creating plot for temp")
