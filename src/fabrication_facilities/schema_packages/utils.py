@@ -246,13 +246,18 @@ class RampTime(PlotSection, EntryData):
 
 class RampTemperature(RampTime):
 
-    m_def=Section()
+    m_def=Section(
+        a_eln={
+            'properties':{
+                'hide':[
+                    'values',
+                ],
+            },
+        }
+    )
 
     temperatures=RampTime.values.m_copy()
     temperatures.unit='K'
-    a_eln_dict = dict(temperatures.a_eln or {})
-    a_eln_dict['defaultDisplayUnit'] = 'celsius'
-    temperatures.a_eln = ELNAnnotation(**a_eln_dict)
-
-
-#    temperatures.a_eln={'component': 'NumberEditQuantity','defaultDisplayUnit':'celsius'}
+    temperatures.a_eln = ELNAnnotation(
+        defaultDisplayUnit= 'celsius'
+    )
