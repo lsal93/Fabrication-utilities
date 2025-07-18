@@ -601,7 +601,7 @@ class DRIE_BOSCH(FabricationProcessStep, ArchiveSection):
     )
 
     etching_steps = SubSection(
-        section_def=DRIEbase,
+        section_def=DRIE_BOSCHbase,
         repeats=True,
     )
 
