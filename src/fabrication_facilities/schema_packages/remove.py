@@ -669,18 +669,28 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'depth_target',
+                    'duration_target',
+                    'erching_rate_target',
                     'short_names',
                     'target_materials_formulas',
                     'etching_solution',
                     'etching_solution_proportions',
                     'etching_reactives',
                     'etching_reactives_formulas',
-                    'depth_target',
-                    'duration_target',
-                    'depth_measured',
-                    'duration_measured',
-                    'etching_rate_obtained',
-                    'etching_type',
+                    'enanching_temperature',
+                    'atmosphere_pressure',
+                    'atmpsphere_gas',
+                    'wetting',
+                    'wetting_duration',
+                    'ultrasounds_required',
+                    'ultrasounds_frequency',
+                    'ultrasounds_duration',
+                    'rinsing_solution',
+                    'rinsing_solution_proportions',
+                    'rinsing_duration',
+                    'rinsing_de_ionic_H2O',
+                    'rinsing_de_ionic_H2O_duration',
                     'notes',
                 ]
             },
@@ -734,29 +744,105 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
     )
-    depth_measured = Quantity(
+    enanching_temperature = Quantity(
         type=np.float64,
-        description='Amount of material ethced effectively in the process',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
-        unit='nm',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
     )
-    duration_measured = Quantity(
+    hood_pressure = Quantity(
         type=np.float64,
-        description='Real time of the process ad output',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar'
+        }
+        unit= 'mbar'
+    )
+
+    hood_atmpspheric_gas = Quantity(
+        type=str,
+        a_eln={
+            'component':'StringEditQuantity'
+        }
+    )
+
+    wetting=Quantity(
+        type= bool,
+        a_eln={
+            'component':'BoolEditQuantity',
+        }
+    )
+
+    wetting_duration = Quantity(
+        type= np.float64,
+        a_eln={
+            'component':'NumberEditQuantity',
+            'defaultDisplayUnit': 'minute',
+        },
         unit='minute',
     )
-    etching_rate_obtained = Quantity(
-        type=np.float64,
-        description='Etching rate as output',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm/minute'},
-        unit='nm/minute',
+
+    ultrasounds_required=Quantity(
+        type= ,
+        a_eln={
+            'component':'BoolEditQuantity',
+        }
     )
-    etching_type = Quantity(
+
+    ultrasounds_frequency=Quantity(
+        type= np.float64,
+        a_eln={
+            'component':'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+
+    ultrasounds_duration=Quantity(
+        type= np.float64,
+        a_eln={
+            'component':'NumberEditQuantity',
+            'defaultDisplayUnit': 'minute',
+        },
+        unit='minute',
+    )
+
+    rinsing_solution = Quantity(
         type=str,
         a_eln={
             'component': 'StringEditQuantity',
         },
+    )
+    rinsing_solution_proportions = Quantity(
+        type=str,
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
+    )
+    rinsing_duration = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'minute',
+        },
+        unit='minute',
+    )
+
+    rinsing_de_ionic_H2O = Quantity(
+        type=bool,
+        a_eln={
+            'component': 'BoolEditQuantity',
+        },
+    )
+    rinsing_de_ionic_H2O_duration = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'minute',
+        },
+        unit='minute',
     )
 
     materials_etched = SubSection(
@@ -767,6 +853,11 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
     reactives_used_to_etch = SubSection(
         section_def=FabricationChemical,
         repeats=True,
+    )
+
+    outputs=SubSection(
+        section_def=EtchingOutputs,
+        repeats=False,
     )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
@@ -803,7 +894,7 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
             self.reactives_used_to_etch = reactives
 
 
-class WetCleaning(FabricationProcessStep, ArchiveSection):
+class WetCleaning(WetEtching):
     m_def = Section(
         a_eln={
             'hide': [
@@ -833,61 +924,50 @@ class WetCleaning(FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
-                    'removing_solution',
-                    'removing_solution_proportions',
-                    'removing_duration',
-                    'removing_temperature',
-                    'rising_solution',
-                    'rising_solution_proportions',
-                    'rising_duration',
+                    'depth_target',
+                    'duration_target',
+                    'erching_rate_target',
+                    'short_names',
+                    'target_materials_formulas',
+                    'etching_solution',
+                    'etching_solution_proportions',
+                    'etching_reactives',
+                    'etching_reactives_formulas',
+                    'enanching_temperature',
+                    'atmosphere_pressure',
+                    'atmpsphere_gas',
+                    'wetting',
+                    'wetting_duration',
+                    'ultrasounds_required',
+                    'ultrasounds_frequency',
+                    'ultrasounds_duration',
+                    'rinsing_solution',
+                    'rinsing_solution_proportions',
+                    'rinsing_duration',
+                    'rinsing_de_ionic_H2O',
+                    'rinsing_de_ionic_H2O_duration',
                     'notes',
                 ]
             },
         },
     )
-    removing_solution = Quantity(
+    etching_solution = Quantity(
         type=str,
-        a_eln={'component': 'StringEditQuantity'},
+        a_eln={'component': 'StringEditQuantity', 'label': 'cleaning solution'},
     )
-    removing_solution_proportions = Quantity(
+    etching_solution_proportions = Quantity(
         type=str,
         a_eln={
             'component': 'StringEditQuantity',
+            'label': 'cleaning solution proportions',
         },
     )
-    removing_duration = Quantity(
+    etching_duration = Quantity(
         type=np.float64,
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'minute',
-        },
-        unit='minute',
-    )
-    removing_temperature = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-    rising_solution = Quantity(
-        type=str,
-        a_eln={
-            'component': 'StringEditQuantity',
-        },
-    )
-    rising_solution_proportions = Quantity(
-        type=str,
-        a_eln={
-            'component': 'StringEditQuantity',
-        },
-    )
-    rising_duration = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'minute',
+            'label': 'cleaning duration',
         },
         unit='minute',
     )
