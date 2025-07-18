@@ -29,6 +29,7 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
 )
 from fabrication_facilities.schema_packages.utils import (
     Massflow_controller,
+    DRIE_Massflow_controller,
     parse_chemical_formula,
     FabricationChemical,
     TimeRampTemperature,
@@ -54,25 +55,18 @@ class EtchingOutputs(ArchiveSection):
             'properties':{
                 'order':[
                     'job_number',
-#                    'depth_obtained',
                     'duration_measured',
-#                    'etching_rate_obtained',
                 ],
             }
         },
         description= 'Set of parameters obtained in an etching process',
     )
-    
+
     job_number = Quantity(
         type=int,
         a_eln={'component': 'NumberEditQuantity'},
     )
-    # depth_obtained = Quantity(
-    #     type=np.float64,
-    #     description='Amount of material ethced effectively in the process',
-    #     a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
-    #     unit='nm',
-    # )
+
     duration_measured = Quantity(
         type=np.float64,
         description='Real time of the process ad output',
@@ -84,22 +78,6 @@ class EtchingOutputs(ArchiveSection):
         section_def=TimeRampTemperature,
         repeats=True,
     )
-    # etching_rate_obtained = Quantity(
-    #     type=np.float64,
-    #     description='Etching rate as output',
-    #     a_eln={'defaultDisplayUnit': 'nm/minute'},
-    #     unit='nm/minute',
-    # )
-
-    # def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-    #     super().normalize(archive, logger)
-    #     if self.depth_obtained:
-    #         a=self.depth_obtained
-    #         if self.duration_measured:
-    #             b=self.duration_measured
-    #             self.etching_rate_obtained = a/b
-    #         else:
-    #             pass
 
 
 class RIEbase(FabricationProcessStepBase, ArchiveSection):
@@ -352,21 +330,6 @@ class RIE (FabricationProcessStep, ArchiveSection):
         repeats=True,
     )
 
-    # temperature_ramps=SubSection(
-    #     section_def=TimeRampTemperature,
-    #     repeats=True,
-    # )
-
-    # pressure_ramps=SubSection(
-    #     section_def=TimeRampPressure,
-    #     repeats=True,
-    # )
-
-    # gaseous_massflow_ramps=SubSection(
-    #     section_def=TimeRampMassflow,
-    #     repeats=True,
-    # )
-
     outputs=SubSection(
         section_def=EtchingOutputs,
         repeats=True,
@@ -491,30 +454,52 @@ class ICP_RIE(RIE, ArchiveSection):
         }
     )
 
+    high_chuck_power = Quantity(
+        type=np.float64,
+        description='Power erogated on the chuck in the high phase',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    low_chuck_power = Quantity(
+        type=np.float64,
+        description='Power erogated on the chuck in the low phase',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    high_chuck_power_duration = Quantity(
+        type=np.float64,
+        description='Power erogated on the chuck in the high phase',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
+    )
+
+    low_chuck_power_duration = Quantity(
+        type=np.float64,
+        description='Duration of the low phase',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
+    )
+
+
     etching_steps=SubSection(
         section_def=ICP_RIEbase,
         repeats=True,
     )
 
-    # temperature_ramps=SubSection(
-    #     section_def=TimeRampTemperature,
-    #     repeats=True,
-    # )
-
-    # pressure_ramps=SubSection(
-    #     section_def=TimeRampPressure,
-    #     repeats=True,
-    # )
-
-    # gaseous_massflow_ramps=SubSection(
-    #     section_def=TimeRampMassflow,
-    #     repeats=True,
-    # )
-
-    # outputs=SubSection(
-    #     section_def=EtchingOutputs,
-    #     repeats=True,
-    # )
 
 class DRIEbase(ICP_RIEbase, ArchiveSection):
     m_def = Section(
@@ -538,6 +523,7 @@ class DRIEbase(ICP_RIEbase, ArchiveSection):
                 'affiliation',
                 'room',
                 'location',
+                'chuck_power',
             ],
             'properties': {
                 'order': [
@@ -555,7 +541,10 @@ class DRIEbase(ICP_RIEbase, ArchiveSection):
                     'wall_temperature',
                     'chamber_pressure',
                     'chuck_temperature',
-                    'chuck_power',
+                    'high_chuck_power',
+                    'high_chuck_power_time',
+                    'low_chuck_power',
+                    'low_chuck_power_time',
                     'chuck_frequency',
                     'icp_power',
                     'icp_frequency',
@@ -568,6 +557,11 @@ class DRIEbase(ICP_RIEbase, ArchiveSection):
                 ]
             },
         },
+    )
+
+    fluximeters=SubSection(
+        section_def=DRIE_Massflow_controller,
+        repeats=True,
     )
 
 
