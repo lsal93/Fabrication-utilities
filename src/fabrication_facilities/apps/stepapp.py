@@ -16,7 +16,7 @@ from fabrication_facilities.apps.menu_steps import (
     menuadd_spincoat,
     menuadd_sputtering,
     menuremove_icprie,
-    #    menuremove_drie,
+    menuremove_driebosch,
     menuremove_rie,
     menuremove_stripping,
     menuremove_wetclean,
@@ -156,12 +156,24 @@ stepapp = App(
                     Menu(
                         title='Etching',
                         items=[
-                            menuremove_icprie,
-                            #                            menuremove_drie,
-                            menuremove_wetclean,
                             menuremove_rie,
+                            menuremove_icprie,
+                            menuremove_driebosch,
                             menuremove_wetetching,
+                            menuremove_wetclean,
                             menuremove_stripping,
+                        ],
+                    ),
+                ],
+            ),
+            Menu(
+                title='Characterization steps',
+                indentation=0,
+                items=[
+                    Menu(
+                        title='Measurements',
+                        items=[
+                            menuutils_obsmeasurements,
                         ],
                     ),
                 ],
@@ -170,12 +182,6 @@ stepapp = App(
                 title='Starting material',
                 items=[
                     menuutils_startingmaterial,
-                ],
-            ),
-            Menu(
-                title='Measurements',
-                items=[
-                    menuutils_obsmeasurements,
                 ],
             ),
             Menu(

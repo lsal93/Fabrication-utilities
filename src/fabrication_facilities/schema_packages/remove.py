@@ -460,7 +460,7 @@ class ICP_RIE(RIE, ArchiveSection):
     )
 
 
-class DRIEbase(ICP_RIEbase, ArchiveSection):
+class DRIE_BOSCHbase(ICP_RIEbase, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
@@ -564,7 +564,7 @@ class DRIEbase(ICP_RIEbase, ArchiveSection):
     )
 
 
-class DRIE(FabricationProcessStep, ArchiveSection):
+class DRIE_BOSCH(FabricationProcessStep, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [

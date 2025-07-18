@@ -3340,3 +3340,219 @@ menutrans_baking = Menu(
         ),
     ],
 )
+
+menuremove_driebosch=Menu(
+    title='DRIE BOSCH',
+    size='xl',
+    items=[
+        MenuItemTerms(
+            title='Lab location',
+            type='terms',
+            search_quantity=f'data.location#{dir_path["dir26"]}',
+        ),
+        MenuItemTerms(
+            title='ID item processed',
+            type='terms',
+            search_quantity=f'data.id_item_processed#{dir_path["dir26"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the recipe',
+            type='terms',
+            search_quantity=f'data.recipe_name#{dir_path["dir26"]}',
+        ),
+        MenuItemHistogram(
+            title='Desired depth',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.depth_target#{dir_path["dir26"]}',
+                title='depth',
+                unit='nm',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Required duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.duration_target#{dir_path["dir26"]}',
+                title='duration',
+                unit='minute',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Etching rate target',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_rate_target#{dir_path["dir26"]}',
+                title='etching rate target',
+                unit='nm/minute',
+            ),
+        ),
+        MenuItemTerms(
+            title='Kind of step',
+            type='terms',
+            search_quantity=f'data.etching_steps.tag#{dir_path['dir26']}'
+        ),
+        MenuItemTerms(
+            title='Material to be etched',
+            type='terms',
+            search_quantity=f'data.etching_steps.materials_etched.name#{dir_path["dir26"]}',
+        ),
+        MenuItemTerms(
+            title='Formulas of the etched material',
+            type='terms',
+            search_quantity=f'data.etching_steps.materials_etched.chemical_formula#{dir_path["dir26"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements etched',
+            type='periodic_table',
+            search_quantity=f'{meec}#{dir_path["dir26"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements of gases employed',
+            type='periodic_table',
+            search_quantity=f'{fluxetch}#{dir_path["dir26"]}',
+        ),
+        MenuItemTerms(
+            title='Gases formulas',
+            type='terms',
+            search_quantity=f'data.etching_steps.fluximeters.chemical_formula#{dir_path["dir26"]}',
+        ),
+        MenuItemTerms(
+            title='Gases name',
+            type='terms',
+            search_quantity=f'data.etching_steps.fluximeters.name#{dir_path['dir26']}',
+        ),
+        MenuItemHistogram(
+            title='Gases fluxes',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_steps.fluximeters.massflow#{dir_path['dir26']}',
+                unit='centimeter^3/minute',
+            )
+        ),
+        MenuItemHistogram(
+            title='Chuck temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_steps.chuck_temperature#{dir_path["dir26"]}',
+                title='chuck temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Wall temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_steps.wall_temperature#{dir_path["dir26"]}',
+                title='wall temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Bias',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_steps.bias#{dir_path["dir26"]}',
+                title='bias',
+                unit='V',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chamber pressure',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_steps.chamber_pressure#{dir_path["dir26"]}',
+                title='chamber_pressure',
+                unit='mbar',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chuck Power',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_steps.chuck_power#{dir_path["dir26"]}',
+                title='chuck power',
+                unit='watt',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chuck Frequency',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_steps.chuck_frequency#{dir_path["dir26"]}',
+                title='chuck frequency',
+                unit='MHz',
+            ),
+        ),
+        MenuItemHistogram(
+            title='ICP Power',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_steps.icp_power#{dir_path["dir26"]}',
+                title='icp power',
+                unit='watt',
+            ),
+        ),
+        MenuItemHistogram(
+            title='ICP Frequency',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_steps.icp_frequency#{dir_path["dir26"]}',
+                title='icp frequency',
+                unit='MHz',
+            ),
+        ),
+        MenuItemTerms(
+            title='Clamping',
+            type='terms',
+            search_quantity=f'data.etching_steps.clamping#{dir_path["dir26"]}',
+        ),
+        MenuItemTerms(
+            title='Clamping type',
+            type='terms',
+            search_quantity=f'data.etching_steps.clamping_type#{dir_path["dir26"]}',
+        ),
+        MenuItemHistogram(
+            title='Clamping pressure',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_steps.clamping_pressure#{dir_path["dir26"]}',
+                title='clamping pressure',
+                unit='mbar',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Effective duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.outputs.duration_measured#{dir_path["dir26"]}',
+                title='effective duration',
+                unit='minute',
+            ),
+        ),
+        MenuItemTerms(
+            title='Name equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.name#{dir_path["dir26"]}',
+        ),
+        MenuItemTerms(
+            title='ID equipment used',
+            type='terms',
+            search_quantity=f'data.instruments.id#{dir_path["dir26"]}',
+        ),
+    ],
+)
