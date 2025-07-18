@@ -560,7 +560,7 @@ class DRIE_Massflow_controller(Massflow_controller):
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'sec'
-        }
+        },
         unit='sec'
     )
 
