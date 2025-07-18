@@ -564,7 +564,7 @@ class DRIE_BOSCHbase(ICP_RIEbase, ArchiveSection):
     )
 
 
-class DRIE_BOSCH(FabricationProcessStep, ArchiveSection):
+class DRIE_BOSCH(ICP_RIE, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
