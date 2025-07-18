@@ -62,6 +62,11 @@ class EtchingOutputs(ArchiveSection):
         },
         description= 'Set of parameters obtained in an etching process',
     )
+    
+    job_number = Quantity(
+        type=int,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
     # depth_obtained = Quantity(
     #     type=np.float64,
     #     description='Amount of material ethced effectively in the process',

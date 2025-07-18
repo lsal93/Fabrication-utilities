@@ -57,6 +57,11 @@ class SynthesisOutputs(ArchiveSection):
         },
         description='Class describing all possible output data in synthesis steps',
     )
+    
+    job_number = Quantity(
+        type=int,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
 
     # thickness_obtained = Quantity(
     #     type=np.float64,

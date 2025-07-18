@@ -28,4 +28,6 @@ dir_path = {
     'dir24': f'fabrication_facilities.schema_packages.fabrication_utilities.{sm}',
     'dir25': 'fabrication_facilities.schema_packages.transform.Baking',
     'dir26': 'fabrication_facilities.schema_packages.remove.DRIE',
+    'dir27': 'fabrication_facilities.schema_packagese.add.PECVD',
+    'dir28': 'fabrication_facilities.schema_packagese.add.LPCVD',
 }

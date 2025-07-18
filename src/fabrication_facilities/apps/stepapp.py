@@ -7,6 +7,7 @@ from nomad.config.models.ui import (
 )
 
 from fabrication_facilities.apps.directories import dir_path
+
 from fabrication_facilities.apps.menu_steps import (
     menuadd_bonding,
     menuadd_electrongun,
@@ -14,9 +15,9 @@ from fabrication_facilities.apps.menu_steps import (
     menuadd_sog,
     menuadd_spincoat,
     menuadd_sputtering,
-    menuremove_icprie,
+#    menuremove_icprie,
     #    menuremove_drie,
-    menuremove_rie,
+#    menuremove_rie,
     menuremove_stripping,
     menuremove_wetclean,
     menuremove_wetetching,
@@ -34,6 +35,8 @@ from fabrication_facilities.apps.menu_steps import (
     menutrans_track,
     menuutils_obsmeasurements,
     menuutils_startingmaterial,
+    menuadd_lpcvd,
+    menuadd_pecvd,
 )
 
 schemas = [f'*#{path_value}' for path_value in dir_path.values()]
@@ -45,7 +48,7 @@ stepapp = App(
     label='Fabrication steps',
     path='stepapp',
     category='Fabrication facilities',
-    description='App to search fabrication processes.',
+    description='App to search fabrication steps.',
     readme="""
     This app is intended to navigate around the ecosystem of clean room fabrication
     possible steps. At the beginning you can see all the fabrication steps available
@@ -87,6 +90,8 @@ stepapp = App(
                     Menu(
                         title='Sinthesys',
                         items=[
+                            menuadd_lpcvd,
+                            menuadd_pecvd,
                             menuadd_icpcvd,
                             menuadd_spincoat,
                             menuadd_electrongun,
@@ -151,10 +156,10 @@ stepapp = App(
                     Menu(
                         title='Etching',
                         items=[
-                            menuremove_icprie,
+#                            menuremove_icprie,
                             #                            menuremove_drie,
                             menuremove_wetclean,
-                            menuremove_rie,
+#                            menuremove_rie,
                             menuremove_wetetching,
                             menuremove_stripping,
                         ],
