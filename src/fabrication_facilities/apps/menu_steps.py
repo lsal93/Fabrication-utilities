@@ -99,7 +99,7 @@ menuadd_icpcvd = Menu(
             title='Gases name',
             type='terms',
             search_quantity=f'data.synthesis_steps.fluximeters.name#{dir_path['dir1']}',
-        )
+        ),
         MenuItemHistogram(
             title='Gases fluxes',
             type='histogram',
@@ -107,7 +107,7 @@ menuadd_icpcvd = Menu(
             x=Axis(
                 search_quantity=f'data.synthesis_steps.fluximeters.massflow#{dir_path['dir1']}',
             )
-        )
+        ),
         MenuItemHistogram(
             title='Wall temperature',
             type='histogram',
@@ -329,7 +329,7 @@ menuadd_pecvd = Menu(
             title='Gases name',
             type='terms',
             search_quantity=f'data.synthesis_steps.fluximeters.name#{dir_path['dir27']}',
-        )
+        ),
         MenuItemHistogram(
             title='Gases fluxes',
             type='histogram',
@@ -337,7 +337,7 @@ menuadd_pecvd = Menu(
             x=Axis(
                 search_quantity=f'data.synthesis_steps.fluximeters.massflow#{dir_path['dir27']}',
             )
-        )
+        ),
         MenuItemHistogram(
             title='Wall temperature',
             type='histogram',
@@ -539,7 +539,7 @@ menuadd_pecvd = Menu(
             title='Gases name',
             type='terms',
             search_quantity=f'data.synthesis_steps.fluximeters.name#{dir_path['dir28']}',
-        )
+        ),
         MenuItemHistogram(
             title='Gases fluxes',
             type='histogram',
@@ -547,7 +547,7 @@ menuadd_pecvd = Menu(
             x=Axis(
                 search_quantity=f'data.synthesis_steps.fluximeters.massflow#{dir_path['dir28']}',
             )
-        )
+        ),
         MenuItemHistogram(
             title='Wall temperature',
             type='histogram',
