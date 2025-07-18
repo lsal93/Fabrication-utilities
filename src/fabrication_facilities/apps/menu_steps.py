@@ -72,7 +72,7 @@ menuadd_icpcvd = Menu(
             ),
         ),
         MenuItemTerms(
-            title='Kind of step'
+            title='Kind of step',
             type='terms',
             search_quantity=f'data.synthesis_steps.tag#{dir_path['dir1']}'
         ),
@@ -1290,7 +1290,7 @@ menuremove_icprie = Menu(
             ),
         ),
         MenuItemTerms(
-            title='Kind of step'
+            title='Kind of step',
             type='terms',
             search_quantity=f'data.etching_steps.tag#{dir_path['dir5']}'
         ),
