@@ -873,18 +873,12 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
             pass
         else:
             chems = []
-            for num, formula in enumerate(self.target_materials_formulas):
+            for v1, v2 in zip(self.target_materials, self.target_materials_formulas):
                 chemical = FabricationChemical()
-                try:
-                    chemical.short_name = self.short_names[num]
-                except Exception as e:
-                    print(f' Error {e}. No name at position {num} in short_names')
-                    raise
-                # Si può provare a scrivere una funzione che parsa le entries multiple?
-                # Tipo def mult_entries (class_to_append, list to read, element to append):
-                # Blocco simile a quanto sopra. Dovrei dargli anche il bersaglio della classe a cui
-                # puntare la quantità atomizzata.
-                chemical.chemical_formula = formula
+                val1 = v1 if v1 != '-' else None
+                val2 = v2 if v2 != '-' else None
+                chemical.name=val1
+                chemical.chemical_formula=val2
                 chemical.normalize(archive, logger)
                 chems.append(chemical)
             self.materials_etched = chems
@@ -893,11 +887,14 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
             pass
         else:
             reactives = []
-            for formula in self.etching_reactives_formulas:
-                reactive = FabricationChemical()
-                reactive.chemical_formula = formula
-                reactive.normalize(archive, logger)
-                reactives.append(reactive)
+            for v1, v2 in zip(self.etching_reactives, self.etching_reactives_formulas):
+                chemical = FabricationChemical()
+                val1 = v1 if v1 != '-' else None
+                val2 = v2 if v2 != '-' else None
+                chemical.name=val1
+                chemical.chemical_formula=val2
+                chemical.normalize(archive, logger)
+                reactives.append(chemical)
             self.reactives_used_to_etch = reactives
 
 
