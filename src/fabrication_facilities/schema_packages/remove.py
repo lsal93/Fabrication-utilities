@@ -53,42 +53,48 @@ class EtchingOutputs(ArchiveSection):
         a_eln={
             'properties':{
                 'order':[
-                    'depth_obtained',
+                    'job_number',
+#                    'depth_obtained',
                     'duration_measured',
-                    'etching_rate_obtained',
+#                    'etching_rate_obtained',
                 ],
             }
         },
         description= 'Set of parameters obtained in an etching process',
     )
-    depth_obtained = Quantity(
-        type=np.float64,
-        description='Amount of material ethced effectively in the process',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
-        unit='nm',
-    )
+    # depth_obtained = Quantity(
+    #     type=np.float64,
+    #     description='Amount of material ethced effectively in the process',
+    #     a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+    #     unit='nm',
+    # )
     duration_measured = Quantity(
         type=np.float64,
         description='Real time of the process ad output',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
     )
-    etching_rate_obtained = Quantity(
-        type=np.float64,
-        description='Etching rate as output',
-        a_eln={'defaultDisplayUnit': 'nm/minute'},
-        unit='nm/minute',
-    )
 
-    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        super().normalize(archive, logger)
-        if self.depth_obtained:
-            a=self.depth_obtained
-            if self.duration_measured:
-                b=self.duration_measured
-                self.etching_rate_obtained = a/b
-            else:
-                pass
+    control_parameter_profile=SubSection(
+        section_def=TimeRampTemperature,
+        repeats=True,
+    )
+    # etching_rate_obtained = Quantity(
+    #     type=np.float64,
+    #     description='Etching rate as output',
+    #     a_eln={'defaultDisplayUnit': 'nm/minute'},
+    #     unit='nm/minute',
+    # )
+
+    # def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+    #     super().normalize(archive, logger)
+    #     if self.depth_obtained:
+    #         a=self.depth_obtained
+    #         if self.duration_measured:
+    #             b=self.duration_measured
+    #             self.etching_rate_obtained = a/b
+    #         else:
+    #             pass
 
 
 class RIEbase(FabricationProcessStepBase, ArchiveSection):
@@ -125,9 +131,6 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
                     'ending_date',
                     'short_names',
                     'target_materials_formulas',
-                    'depth_target',
-                    'duration_target',
-                    'etching_rate_target',
                     'wall_temperature',
                     'chuck_temperature',
                     'chuck_power',
@@ -143,12 +146,6 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
             },
         },
     )
-    duration_target = Quantity(
-        type=np.float64,
-        description='Time prescribed by the recipe',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
-        unit='sec',
-    )
     short_names = Quantity(
         type=str,
         description='Name of reactive species',
@@ -160,12 +157,6 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
         description='Inserted only if known',
         shape=['*'],
         a_eln={'component': 'StringEditQuantity'},
-    )
-    depth_target = Quantity(
-        type=np.float64,
-        description='Amount of material to be etched',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
-        unit='nm',
     )
     chamber_pressure = Quantity(
         type=np.float64,
@@ -234,15 +225,7 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
         description='Times for which this step is repeated with equal parameters',
         a_eln={'component':'NumberEditQuantity'},
     )
-    etching_rate_target = Quantity(
-        type=np.float64,
-        description='etching rate desired',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm/minute',
-        },
-        unit='nm/minute',
-    )
+
     fluximeters = SubSection(
         section_def=Massflow_controller,
         repeats=True,
@@ -326,9 +309,37 @@ class RIE (FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'depth_target',
+                    'duration_target',
+                    'etching_rate_target',
+                    'notes',
                 ]
             }
         }
+    )
+
+    depth_target = Quantity(
+        type=np.float64,
+        description='Amount of material to be etched',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm',
+    )
+
+    duration_target = Quantity(
+        type=np.float64,
+        description='Time prescribed by the recipe',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
+    )
+
+    etching_rate_target = Quantity(
+        type=np.float64,
+        description='etching rate desired',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm/minute',
+        },
+        unit='nm/minute',
     )
 
     etching_steps=SubSection(
@@ -336,20 +347,20 @@ class RIE (FabricationProcessStep, ArchiveSection):
         repeats=True,
     )
 
-    temperature_ramps=SubSection(
-        section_def=TimeRampTemperature,
-        repeats=True,
-    )
+    # temperature_ramps=SubSection(
+    #     section_def=TimeRampTemperature,
+    #     repeats=True,
+    # )
 
-    pressure_ramps=SubSection(
-        section_def=TimeRampPressure,
-        repeats=True,
-    )
+    # pressure_ramps=SubSection(
+    #     section_def=TimeRampPressure,
+    #     repeats=True,
+    # )
 
-    gaseous_massflow_ramps=SubSection(
-        section_def=TimeRampMassflow,
-        repeats=True,
-    )
+    # gaseous_massflow_ramps=SubSection(
+    #     section_def=TimeRampMassflow,
+    #     repeats=True,
+    # )
 
     outputs=SubSection(
         section_def=EtchingOutputs,
@@ -391,9 +402,6 @@ class ICP_RIEbase(RIEbase, ArchiveSection):
                     'ending_date',
                     'short_names',
                     'target_materials_formulas',
-                    'depth_target',
-                    'duration_target',
-                    'etching_rate_target',
                     'wall_temperature',
                     'chamber_pressure',
                     'chuck_temperature',
@@ -432,7 +440,7 @@ class ICP_RIEbase(RIEbase, ArchiveSection):
     )
 
 
-class ICP_RIE(FabricationProcessStep, ArchiveSection):
+class ICP_RIE(RIE, ArchiveSection):
 
     m_def=Section(
         description="""
@@ -469,6 +477,10 @@ class ICP_RIE(FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'depth_target',
+                    'duration_target',
+                    'etching_rate_target',
+                    'notes',
                 ]
             }
         }
@@ -479,26 +491,25 @@ class ICP_RIE(FabricationProcessStep, ArchiveSection):
         repeats=True,
     )
 
-    temperature_ramps=SubSection(
-        section_def=TimeRampTemperature,
-        repeats=True,
-    )
+    # temperature_ramps=SubSection(
+    #     section_def=TimeRampTemperature,
+    #     repeats=True,
+    # )
 
-    pressure_ramps=SubSection(
-        section_def=TimeRampPressure,
-        repeats=True,
-    )
+    # pressure_ramps=SubSection(
+    #     section_def=TimeRampPressure,
+    #     repeats=True,
+    # )
 
-    gaseous_massflow_ramps=SubSection(
-        section_def=TimeRampMassflow,
-        repeats=True,
-    )
+    # gaseous_massflow_ramps=SubSection(
+    #     section_def=TimeRampMassflow,
+    #     repeats=True,
+    # )
 
-    outputs=SubSection(
-        section_def=EtchingOutputs,
-        repeats=True,
-    )
-
+    # outputs=SubSection(
+    #     section_def=EtchingOutputs,
+    #     repeats=True,
+    # )
 
 class DRIEbase(ICP_RIEbase, ArchiveSection):
     m_def = Section(

@@ -48,21 +48,22 @@ class SynthesisOutputs(ArchiveSection):
         a_eln={
             'properties':{
                 'order':[
-                    'thickness_obtained',
+                    'job_number',
+#                    'thickness_obtained',
                     'duration_measured',
-                    'deposition_rate_obtained',
+#                    'deposition_rate_obtained',
                 ],
             }
         },
         description='Class describing all possible output data in synthesis steps',
     )
 
-    thickness_obtained = Quantity(
-        type=np.float64,
-        description='Thickness obtained as output',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'nm'},
-        unit='nm',
-    )
+    # thickness_obtained = Quantity(
+    #     type=np.float64,
+    #     description='Thickness obtained as output',
+    #     a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'nm'},
+    #     unit='nm',
+    # )
     duration_measured = Quantity(
         type=np.float64,
         description='Real time employed',
@@ -72,14 +73,19 @@ class SynthesisOutputs(ArchiveSection):
         },
         unit='minute',
     )
-    deposition_rate_obtained = Quantity(
-        type=np.float64,
-        description='Deposition rate as output',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm/minute',
-        },
-        unit='nm/minute',
+    # deposition_rate_obtained = Quantity(
+    #     type=np.float64,
+    #     description='Deposition rate as output',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'nm/minute',
+    #     },
+    #     unit='nm/minute',
+    # )
+
+    control_parameter_profile=SubSection(
+        section_def=TimeRampTemperature,
+        repeats=True,
     )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
@@ -126,9 +132,6 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
                     'ending_date',
                     'short_name',
                     'target_material_formula',
-                    'duration_target',
-                    'thickness_target',
-                    'deposition_rate_target',
                     'wall_temperature',
                     'chuck_temperature',
                     'chuck_power',
@@ -144,15 +147,7 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
             },
         },
     )
-    deposition_rate_target = Quantity(
-        type=np.float64,
-        description='Deposition rate desired',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm/minute',
-        },
-        unit='nm/minute',
-    )
+
     short_name = Quantity(
         type=str,
         description='Material to be deposited',
@@ -161,20 +156,13 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
             'label': 'target material',
         },
     )
+
     target_material_formula = Quantity(
         type=str,
         description='Formula of the material target. Insert only if known',
         a_eln={'component': 'StringEditQuantity'},
     )
-    thickness_target = Quantity(
-        type=np.float64,
-        description='Amount of material to be deposited',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm',
-        },
-        unit='nm',
-    )
+
     chamber_pressure = Quantity(
         type=np.float64,
         description='Pressure in the chamber',
@@ -184,6 +172,7 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
         },
         unit='mbar',
     )
+
     wall_temperature = Quantity(
         type=np.float64,
         description='Temperature of the chamber walls',
@@ -193,6 +182,7 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
         },
         unit='celsius',
     )
+
     chuck_temperature = Quantity(
         type=np.float64,
         description='Temperature of the chuck',
@@ -202,6 +192,7 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
         },
         unit='celsius',
     )
+
     chuck_power = Quantity(
         type=np.float64,
         description='Power erogated on the chuck by the electrodes',
@@ -211,6 +202,7 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
         },
         unit='watt',
     )
+
     chuck_frequency = Quantity(
         type=np.float64,
         description='Frequency of current on the chuck by the electrodes',
@@ -220,6 +212,7 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
         },
         unit='MHz',
     )
+
     bias = Quantity(
         type=np.float64,
         description='Bias voltage in the chamber',
@@ -229,11 +222,13 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
         },
         unit='volt',
     )
+
     clamping = Quantity(
         type=bool,
         description='Is clamping used in the process?',
         a_eln={'component': 'BoolEditQuantity'},
     )
+
     clamping_type = Quantity(
         type=MEnum(
             [
@@ -253,16 +248,6 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
             'defaultDisplayUnit': 'mbar',
         },
         unit='mbar',
-    )
-
-    duration_target = Quantity(
-        type=np.float64,
-        description='Duration required of the process',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'minute',
-        },
-        unit='minute',
     )
 
     number_of_loops=Quantity(
@@ -358,10 +343,43 @@ class PECVD(FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'duration_target',
+                    'thickness_target',
+                    'deposition_rate_target',
                     'notes'
                 ]
             }
         }
+    )
+
+    thickness_target = Quantity(
+        type=np.float64,
+        description='Amount of material to be deposited',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
+        unit='nm',
+    )
+
+    duration_target = Quantity(
+        type=np.float64,
+        description='Duration required of the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'minute',
+        },
+        unit='minute',
+    )
+
+    deposition_rate_target = Quantity(
+        type=np.float64,
+        description='Deposition rate desired',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm/minute',
+        },
+        unit='nm/minute',
     )
 
     synthesis_steps=SubSection(
@@ -369,20 +387,20 @@ class PECVD(FabricationProcessStep, ArchiveSection):
         repeats=True,
     )
 
-    temperature_ramps=SubSection(
-        section_def=TimeRampTemperature,
-        repeats=True,
-    )
+    # temperature_ramps=SubSection(
+    #     section_def=TimeRampTemperature,
+    #     repeats=True,
+    # )
 
-    pressure_ramps=SubSection(
-        section_def=TimeRampPressure,
-        repeats=True,
-    )
+    # pressure_ramps=SubSection(
+    #     section_def=TimeRampPressure,
+    #     repeats=True,
+    # )
 
-    gaseous_massflow_ramps=SubSection(
-        section_def=TimeRampMassflow,
-        repeats=True,
-    )
+    # gaseous_massflow_ramps=SubSection(
+    #     section_def=TimeRampMassflow,
+    #     repeats=True,
+    # )
 
     outputs = SubSection(
         section_def=SynthesisOutputs, repeats=False,
@@ -423,9 +441,6 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
                     'ending_date',
                     'short_name',
                     'target_material_formula',
-                    'duration_target',
-                    'thickness_target',
-                    'deposition_rate_target',
                     'wall_temperature',
                     'chuck_temperature',
                     'chuck_power',
@@ -464,7 +479,7 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
     )
 
 
-class ICP_CVD(FabricationProcessStep, ArchiveSection):
+class ICP_CVD(PECVD, ArchiveSection):
 
     m_def=Section(
         description="""
@@ -502,6 +517,9 @@ class ICP_CVD(FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'thickness_target',
+                    'duration_target',
+                    'deposition_rate_target',
                     'notes'
                 ]
             }
@@ -513,24 +531,24 @@ class ICP_CVD(FabricationProcessStep, ArchiveSection):
         repeats=True,
     )
 
-    temperature_ramps=SubSection(
-        section_def=TimeRampTemperature,
-        repeats=True,
-    )
+    # temperature_ramps=SubSection(
+    #     section_def=TimeRampTemperature,
+    #     repeats=True,
+    # )
 
-    pressure_ramps=SubSection(
-        section_def=TimeRampPressure,
-        repeats=True,
-    )
+    # pressure_ramps=SubSection(
+    #     section_def=TimeRampPressure,
+    #     repeats=True,
+    # )
 
-    gaseous_massflow_ramps=SubSection(
-        section_def=TimeRampMassflow,
-        repeats=True,
-    )
+    # gaseous_massflow_ramps=SubSection(
+    #     section_def=TimeRampMassflow,
+    #     repeats=True,
+    # )
 
-    outputs = SubSection(
-        section_def=SynthesisOutputs, repeats=False,
-    )
+    # outputs = SubSection(
+    #     section_def=SynthesisOutputs, repeats=False,
+    # )
 
 
 
@@ -571,9 +589,6 @@ class LPCVDbase(PECVDbase, ArchiveSection):
                     'ending_date',
                     'short_name',
                     'target_material_formula',
-                    'duration_target',
-                    'thickness_target',
-                    'deposition_rate_target',
                     'wall_temperature',
                     'chamber_pressure',
                     'chuck_temperature',
@@ -585,7 +600,7 @@ class LPCVDbase(PECVDbase, ArchiveSection):
     )
 
 
-class LPCVD(FabricationProcessStep, ArchiveSection):
+class LPCVD(PECVD, ArchiveSection):
 
     m_def=Section(
         description="""
@@ -621,6 +636,9 @@ class LPCVD(FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'thickness_target',
+                    'duration_target',
+                    'deposition_rate_target',
                     'notes'
                 ]
             }
@@ -632,24 +650,24 @@ class LPCVD(FabricationProcessStep, ArchiveSection):
         repeats=True,
     )
 
-    temperature_ramps=SubSection(
-        section_def=TimeRampTemperature,
-        repeats=True,
-    )
+    # temperature_ramps=SubSection(
+    #     section_def=TimeRampTemperature,
+    #     repeats=True,
+    # )
 
-    pressure_ramps=SubSection(
-        section_def=TimeRampPressure,
-        repeats=True,
-    )
+    # pressure_ramps=SubSection(
+    #     section_def=TimeRampPressure,
+    #     repeats=True,
+    # )
 
-    gaseous_massflow_ramps=SubSection(
-        section_def=TimeRampMassflow,
-        repeats=True,
-    )
+    # gaseous_massflow_ramps=SubSection(
+    #     section_def=TimeRampMassflow,
+    #     repeats=True,
+    # )
 
-    outputs = SubSection(
-        section_def=SynthesisOutputs, repeats=False,
-    )
+    # outputs = SubSection(
+    #     section_def=SynthesisOutputs, repeats=False,
+    # )
 
 class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     m_def = Section(
