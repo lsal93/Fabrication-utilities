@@ -785,7 +785,7 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
     )
 
     ultrasounds_required=Quantity(
-        type= ,
+        type= bool ,
         a_eln={
             'component':'BoolEditQuantity',
         }
