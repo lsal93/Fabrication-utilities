@@ -757,7 +757,7 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'mbar'
-        }
+        },
         unit= 'mbar'
     )
 
