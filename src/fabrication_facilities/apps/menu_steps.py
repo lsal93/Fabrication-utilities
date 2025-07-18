@@ -1348,7 +1348,7 @@ menuremove_icprie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_stepswall_temperature#{dir_path["dir5"]}',
+                search_quantity=f'data.etching_steps.wall_temperature#{dir_path["dir5"]}',
                 title='wall temperature',
                 unit='celsius',
             ),
@@ -1438,7 +1438,7 @@ menuremove_icprie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.duration_measured#{dir_path["dir5"]}',
+                search_quantity=f'data.outputs.duration_measured#{dir_path["dir5"]}',
                 title='effective duration',
                 unit='minute',
             ),
@@ -2924,7 +2924,7 @@ menuremove_rie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.duration_measured#{dir_path["dir20"]}',
+                search_quantity=f'data.outputs.duration_measured#{dir_path["dir20"]}',
                 title='duration measured',
                 unit='sec',
             ),
