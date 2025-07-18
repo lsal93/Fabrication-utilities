@@ -601,8 +601,6 @@ class EquipmentReference(Link, ArchiveSection):
         a_eln={'component': 'ReferenceEditQuantity'},
     )
 
-class ItemPlacement(PlotSection)
-
 
 class FabricationProcessStep(FabricationProcessStepBase, EntryData):
     m_def = Section(
