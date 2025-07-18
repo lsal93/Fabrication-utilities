@@ -862,11 +862,11 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        if self.chemical_species_formulas is None:
+        if self.target_materials_formulas is None:
             pass
         else:
             chems = []
-            for num, formula in enumerate(self.chemical_species_formulas):
+            for num, formula in enumerate(self.target_materials_formulas):
                 chemical = FabricationChemical()
                 try:
                     chemical.short_name = self.short_names[num]
