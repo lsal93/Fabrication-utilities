@@ -873,7 +873,7 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
             pass
         else:
             chems = []
-            for v1, v2 in zip(self.target_materials, self.target_materials_formulas):
+            for v1, v2 in zip(self.short_names, self.target_materials_formulas):
                 chemical = FabricationChemical()
                 val1 = v1 if v1 != '-' else None
                 val2 = v2 if v2 != '-' else None
