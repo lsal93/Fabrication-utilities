@@ -57,7 +57,7 @@ class SynthesisOutputs(ArchiveSection):
         },
         description='Class describing all possible output data in synthesis steps',
     )
-    
+
     job_number = Quantity(
         type=int,
         a_eln={'component': 'NumberEditQuantity'},
@@ -348,8 +348,8 @@ class PECVD(FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
-                    'duration_target',
                     'thickness_target',
+                    'duration_target',
                     'deposition_rate_target',
                     'notes'
                 ]

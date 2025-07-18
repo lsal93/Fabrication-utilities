@@ -9,7 +9,7 @@ from nomad.config.models.ui import (
 from fabrication_facilities.apps.directories import dir_path
 
 mec = 'data.synthesis_steps.material_elemental_composition.element'
-flux = 'data.synthesi_steps.fluximeters.elemental_composition.element'
+flux = 'data.synthesis_steps.fluximeters.elemental_composition.element'
 rec = 'data.resist_elemental_composition.element'
 gec = 'data.gas_elemental_composition.element'
 dmec = 'data.doping_material_elemental_composition.element'
