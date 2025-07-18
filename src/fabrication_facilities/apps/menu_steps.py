@@ -10,13 +10,14 @@ from fabrication_facilities.apps.directories import dir_path
 
 mec = 'data.synthesis_steps.material_elemental_composition.element'
 flux = 'data.synthesis_steps.fluximeters.elemental_composition.element'
+fluxetch='data.etching_steps.fluximeters.elemental_composition.element'
 rec = 'data.resist_elemental_composition.element'
 gec = 'data.gas_elemental_composition.element'
 dmec = 'data.doping_material_elemental_composition.element'
 sec = 'data.substrate_elemental_composition.element'
 wc = 'wafer_cleaning'
 dev = 'developing'
-meec = 'data.materials_etched.elemental_composition.element'
+meec = 'data.etching_steps.materials_etched.elemental_composition.element'
 rute= 'data.reactives_used_to_etch.elemental_composition.element'
 ru= 'reactive_used_to_etch'
 alias='data.synthesis_steps.target_material_formula'
@@ -71,6 +72,11 @@ menuadd_icpcvd = Menu(
             ),
         ),
         MenuItemTerms(
+            title='Kind of step'
+            type='terms',
+            search_quantity=f'data.synthesis_steps.tag#{dir_path['dir1']}'
+        ),
+        MenuItemTerms(
             title='Material to be deposited',
             type='terms',
             search_quantity=f'data.synthesis_steps.short_name#{dir_path["dir1"]}',
@@ -106,6 +112,7 @@ menuadd_icpcvd = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.synthesis_steps.fluximeters.massflow#{dir_path['dir1']}',
+                unit='centimeter^3/minute',
             )
         ),
         MenuItemHistogram(
@@ -218,26 +225,6 @@ menuadd_icpcvd = Menu(
                 unit='minute',
             ),
         ),
-        # MenuItemHistogram(
-        #     title='Thickness obtained',
-        #     type='histogram',
-        #     n_bins=10,
-        #     x=Axis(
-        #         search_quantity=f'data.thickness_measured#{dir_path["dir1"]}',
-        #         title='thickness obtained',
-        #         unit='nm',
-        #     ),
-        # ),
-        # MenuItemHistogram(
-        #     title='Deposition rate obtained',
-        #     type='histogram',
-        #     n_bins=10,
-        #     x=Axis(
-        #         search_quantity=f'data.deposition_rate_obtained#{dir_path["dir1"]}',
-        #         title='deposition rate obtained',
-        #         unit='nm/minute',
-        #     ),
-        # ),
         MenuItemTerms(
             title='Name equipment used',
             type='terms',
@@ -336,6 +323,7 @@ menuadd_pecvd = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.synthesis_steps.fluximeters.massflow#{dir_path['dir27']}',
+                unit='centimeter^3/minute',
             )
         ),
         MenuItemHistogram(
@@ -428,26 +416,6 @@ menuadd_pecvd = Menu(
                 unit='minute',
             ),
         ),
-        # MenuItemHistogram(
-        #     title='Thickness obtained',
-        #     type='histogram',
-        #     n_bins=10,
-        #     x=Axis(
-        #         search_quantity=f'data.thickness_measured#{dir_path["dir1"]}',
-        #         title='thickness obtained',
-        #         unit='nm',
-        #     ),
-        # ),
-        # MenuItemHistogram(
-        #     title='Deposition rate obtained',
-        #     type='histogram',
-        #     n_bins=10,
-        #     x=Axis(
-        #         search_quantity=f'data.deposition_rate_obtained#{dir_path["dir1"]}',
-        #         title='deposition rate obtained',
-        #         unit='nm/minute',
-        #     ),
-        # ),
         MenuItemTerms(
             title='Name equipment used',
             type='terms',
@@ -546,6 +514,7 @@ menuadd_lpcvd = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.synthesis_steps.fluximeters.massflow#{dir_path['dir28']}',
+                unit='centimeter^3/minute',
             )
         ),
         MenuItemHistogram(
@@ -692,7 +661,7 @@ menuadd_spincoat = Menu(
             x=Axis(
                 search_quantity=f'data.peb_temperature#{dir_path["dir2"]}',
                 title='peb temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemTerms(
@@ -737,7 +706,7 @@ menuadd_spincoat = Menu(
             x=Axis(
                 search_quantity=f'data.dewetting_temperature#{dir_path["dir2"]}',
                 title='De-wetting temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -802,7 +771,7 @@ menuadd_spincoat = Menu(
             x=Axis(
                 search_quantity=f'data.baking_temperature#{dir_path["dir2"]}',
                 title='baking temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -993,7 +962,7 @@ menutrans_ebl = Menu(
             n_bins=10,
             x=Axis(
                 title='chuck temperature',
-                unit='kelvin',
+                unit='celsius',
                 search_quantity=f'data.chuck_temperature#{dir_path["dir3"]}',
             ),
         ),
@@ -1119,7 +1088,7 @@ menutrans_fib = Menu(
             n_bins=10,
             x=Axis(
                 title='chuck temperature',
-                unit='kelvin',
+                unit='celsius',
                 search_quantity=f'data.chuck_temperature#{dir_path["dir4"]}',
             ),
         ),
@@ -1215,7 +1184,7 @@ menutrans_develop = Menu(
             x=Axis(
                 search_quantity=f'data.developing_temperature#{dir_path["dir7"]}',
                 title='developing temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemTerms(
@@ -1290,20 +1259,15 @@ menuremove_icprie = Menu(
             type='terms',
             search_quantity=f'data.recipe_name#{dir_path["dir5"]}',
         ),
-        MenuItemTerms(
-            title='Material to be etched',
-            type='terms',
-            search_quantity=f'data.materials_etched.name#{dir_path["dir5"]}',
-        ),
-        MenuItemTerms(
-            title='Formulas of the etched material',
-            type='terms',
-            search_quantity=f'data.materials_etched.chemical_formula#{dir_path["dir5"]}',
-        ),
-        MenuItemPeriodicTable(
-            title='Elements etched',
-            type='periodic_table',
-            search_quantity=f'{meec}#{dir_path["dir5"]}',
+        MenuItemHistogram(
+            title='Desired depth',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.depth_target#{dir_path["dir5"]}',
+                title='depth',
+                unit='nm',
+            ),
         ),
         MenuItemHistogram(
             title='Required duration',
@@ -1316,16 +1280,6 @@ menuremove_icprie = Menu(
             ),
         ),
         MenuItemHistogram(
-            title='Desired depth',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.depth_target#{dir_path["dir5"]}',
-                title='depth',
-                unit='nm',
-            ),
-        ),
-        MenuItemHistogram(
             title='Etching rate target',
             type='histogram',
             n_bins=10,
@@ -1335,24 +1289,58 @@ menuremove_icprie = Menu(
                 unit='nm/minute',
             ),
         ),
+        MenuItemTerms(
+            title='Kind of step'
+            type='terms',
+            search_quantity=f'data.etching_steps.tag#{dir_path['dir5']}'
+        ),
+        MenuItemTerms(
+            title='Material to be etched',
+            type='terms',
+            search_quantity=f'data.etching_steps.materials_etched.name#{dir_path["dir5"]}',
+        ),
+        MenuItemTerms(
+            title='Formulas of the etched material',
+            type='terms',
+            search_quantity=f'data.etching_steps.materials_etched.chemical_formula#{dir_path["dir5"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements etched',
+            type='periodic_table',
+            search_quantity=f'{meec}#{dir_path["dir5"]}',
+        ),
         MenuItemPeriodicTable(
             title='Elements of gases employed',
             type='periodic_table',
-            search_quantity=f'{flux}#{dir_path["dir5"]}',
+            search_quantity=f'{fluxetch}#{dir_path["dir5"]}',
         ),
         MenuItemTerms(
             title='Gases formulas',
             type='terms',
-            search_quantity=f'data.fluximeters.chemical_formula#{dir_path["dir5"]}',
+            search_quantity=f'data.etching_steps.fluximeters.chemical_formula#{dir_path["dir5"]}',
+        ),
+        MenuItemTerms(
+            title='Gases name',
+            type='terms',
+            search_quantity=f'data.etching_steps.fluximeters.name#{dir_path['dir5']}',
+        ),
+        MenuItemHistogram(
+            title='Gases fluxes',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_steps.fluximeters.massflow#{dir_path['dir5']}',
+                unit='centimeter^3/minute',
+            )
         ),
         MenuItemHistogram(
             title='Chuck temperature',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.chuck_temperature#{dir_path["dir5"]}',
+                search_quantity=f'data.etching_steps.chuck_temperature#{dir_path["dir5"]}',
                 title='chuck temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -1360,9 +1348,9 @@ menuremove_icprie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.wall_temperature#{dir_path["dir5"]}',
+                search_quantity=f'data.etching_stepswall_temperature#{dir_path["dir5"]}',
                 title='wall temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -1370,7 +1358,7 @@ menuremove_icprie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.bias#{dir_path["dir5"]}',
+                search_quantity=f'data.etching_steps.bias#{dir_path["dir5"]}',
                 title='bias',
                 unit='V',
             ),
@@ -1380,7 +1368,7 @@ menuremove_icprie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.chamber_pressure#{dir_path["dir5"]}',
+                search_quantity=f'data.etching_steps.chamber_pressure#{dir_path["dir5"]}',
                 title='chamber_pressure',
                 unit='mbar',
             ),
@@ -1390,7 +1378,7 @@ menuremove_icprie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.chuck_power#{dir_path["dir5"]}',
+                search_quantity=f'data..etching_steps.chuck_power#{dir_path["dir5"]}',
                 title='chuck power',
                 unit='watt',
             ),
@@ -1400,7 +1388,7 @@ menuremove_icprie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.chuck_frequency#{dir_path["dir5"]}',
+                search_quantity=f'data.etching_steps.chuck_frequency#{dir_path["dir5"]}',
                 title='chuck frequency',
                 unit='MHz',
             ),
@@ -1410,7 +1398,7 @@ menuremove_icprie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.icp_power#{dir_path["dir5"]}',
+                search_quantity=f'data.etching_steps.icp_power#{dir_path["dir5"]}',
                 title='icp power',
                 unit='watt',
             ),
@@ -1420,7 +1408,7 @@ menuremove_icprie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.icp_frequency#{dir_path["dir5"]}',
+                search_quantity=f'data.etching_steps.icp_frequency#{dir_path["dir5"]}',
                 title='icp frequency',
                 unit='MHz',
             ),
@@ -1428,31 +1416,21 @@ menuremove_icprie = Menu(
         MenuItemTerms(
             title='Clamping',
             type='terms',
-            search_quantity=f'data.clamping#{dir_path["dir5"]}',
+            search_quantity=f'data.etching_steps.clamping#{dir_path["dir5"]}',
         ),
         MenuItemTerms(
             title='Clamping type',
             type='terms',
-            search_quantity=f'data.clamping_type#{dir_path["dir5"]}',
+            search_quantity=f'data.etching_steps.clamping_type#{dir_path["dir5"]}',
         ),
         MenuItemHistogram(
-            title='Cooling helium massflow',
+            title='Clamping pressure',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.cooling_helium_massflow#{dir_path["dir5"]}',
-                title='helium massflow',
-                unit='kelvin',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Cooling helium temperature',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.cooling_helium_temperature#{dir_path["dir5"]}',
-                title='helium_temperature',
-                unit='kelvin',
+                search_quantity=f'data.etching_steps.clamping_pressure#{dir_path["dir5"]}',
+                title='clamping pressure',
+                unit='mbar',
             ),
         ),
         MenuItemHistogram(
@@ -1463,26 +1441,6 @@ menuremove_icprie = Menu(
                 search_quantity=f'data.duration_measured#{dir_path["dir5"]}',
                 title='effective duration',
                 unit='minute',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Depth obtained',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.depth_measured#{dir_path["dir5"]}',
-                title='depth obtained',
-                unit='nm',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Etching rate obtained',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.etching_rate_obtained#{dir_path["dir5"]}',
-                title='etching rate obtained',
-                unit='nm/minute',
             ),
         ),
         MenuItemTerms(
@@ -1543,7 +1501,7 @@ menuremove_wetclean = Menu(
             x=Axis(
                 search_quantity=f'data.removing_temperature#{dir_path["dir6"]}',
                 title='removing temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemTerms(
@@ -1614,7 +1572,7 @@ menutrans_annealing = Menu(
             x=Axis(
                 search_quantity=f'data.temperature_start#{dir_path["dir9"]}',
                 title='starting temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -1624,7 +1582,7 @@ menutrans_annealing = Menu(
             x=Axis(
                 search_quantity=f'data.temperature_final_target#{dir_path["dir9"]}',
                 title='target final temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemTerms(
@@ -1663,7 +1621,7 @@ menutrans_annealing = Menu(
             x=Axis(
                 search_quantity=f'data.temperature_final_measured#{dir_path["dir9"]}',
                 title='measured final temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -1683,7 +1641,7 @@ menutrans_annealing = Menu(
             x=Axis(
                 search_quantity=f'data.temperature_ramp_up_rate#{dir_path["dir9"]}',
                 title='ramp up rate',
-                unit='kelvin/minute',
+                unit='celsius/minute',
             ),
         ),
         MenuItemHistogram(
@@ -1693,7 +1651,7 @@ menutrans_annealing = Menu(
             x=Axis(
                 search_quantity=f'data.temperature_ramp_down_rate#{dir_path["dir9"]}',
                 title='ramp down rate',
-                unit='kelvin/minute',
+                unit='celsius/minute',
             ),
         ),
         MenuItemTerms(
@@ -1749,7 +1707,7 @@ menutrans_ltodensification = Menu(
             x=Axis(
                 search_quantity=f'data.temperature_target#{dir_path["dir10"]}',
                 title='densification temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -1825,7 +1783,7 @@ menutrans_thermaloxidation = Menu(
             x=Axis(
                 search_quantity=f'data.temperature_final_target#{dir_path["dir11"]}',
                 title='target final temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -2022,7 +1980,7 @@ menutrans_doping = Menu(
             x=Axis(
                 search_quantity=f'data.temperature_target#{dir_path["dir13"]}',
                 title='doping temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -2204,7 +2162,7 @@ menutrans_sod = Menu(
             x=Axis(
                 search_quantity=f'data.peb_temperature#{dir_path["dir15"]}',
                 title='peb temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -2305,7 +2263,7 @@ menutrans_track = Menu(
             x=Axis(
                 search_quantity=f'data.dewetting_temperature#{dir_path["dir16"]}',
                 title='de-wetting temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemTerms(
@@ -2400,7 +2358,7 @@ menutrans_track = Menu(
             x=Axis(
                 search_quantity=f'data.peb_temperature#{dir_path["dir16"]}',
                 title='peb temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemTerms(
@@ -2425,7 +2383,7 @@ menutrans_track = Menu(
             x=Axis(
                 search_quantity=f'data.softbake_temperature#{dir_path["dir16"]}',
                 title='softbake temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemTerms(
@@ -2450,7 +2408,7 @@ menutrans_track = Menu(
             x=Axis(
                 search_quantity=f'data.hardbake_temperature#{dir_path["dir16"]}',
                 title='hardbake temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemTerms(
@@ -2647,7 +2605,7 @@ menuadd_sputtering = Menu(
             x=Axis(
                 search_quantity=f'data.chuck_temperature#{dir_path["dir18"]}',
                 title='chuck temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -2773,7 +2731,7 @@ menuadd_sog = Menu(
             x=Axis(
                 search_quantity=f'data.dewetting_temperature#{dir_path["dir19"]}',
                 title='de-wetting temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -2817,21 +2775,6 @@ menuremove_rie = Menu(
             type='terms',
             search_quantity=f'data.recipe_name#{dir_path["dir20"]}',
         ),
-        MenuItemTerms(
-            title='Material to be etched',
-            type='terms',
-            search_quantity=f'data.materials_etched.name#{dir_path["dir20"]}',
-        ),
-        MenuItemTerms(
-            title='Formulas of the etched material',
-            type='terms',
-            search_quantity=f'data.materials_etched.chemical_formula#{dir_path["dir20"]}',
-        ),
-        MenuItemPeriodicTable(
-            title='Elements etched',
-            type='periodic_table',
-            search_quantity=f'{meec}#{dir_path["dir20"]}',
-        ),
         MenuItemHistogram(
             title='Desired depth',
             type='histogram',
@@ -2849,8 +2792,38 @@ menuremove_rie = Menu(
             x=Axis(
                 search_quantity=f'data.duration_target#{dir_path["dir20"]}',
                 title='duration target',
-                unit='sec',
+                unit='minute',
             ),
+        ),
+        MenuItemHistogram(
+            title='Desired etching rate',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_rate_target#{dir_path["dir20"]}',
+                title='etching rate target',
+                unit='nm/minute',
+            ),
+        ),
+        MenuItemTerms(
+            title='Kind of step',
+            type='terms',
+            search_quantity=f'data.etching_steps.recipe_name#{dir_path["dir20"]}',
+        ),
+        MenuItemTerms(
+            title='Material to be etched',
+            type='terms',
+            search_quantity=f'data.etching_steps.materials_etched.name#{dir_path["dir20"]}',
+        ),
+        MenuItemTerms(
+            title='Formulas of the etched material',
+            type='terms',
+            search_quantity=f'data.etching_steps.materials_etched.chemical_formula#{dir_path["dir20"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements etched',
+            type='periodic_table',
+            search_quantity=f'{meec}#{dir_path["dir20"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements of gases employed',
@@ -2860,16 +2833,30 @@ menuremove_rie = Menu(
         MenuItemTerms(
             title='Gases formulas',
             type='terms',
-            search_quantity=f'data.fluximeters.chemical_formula#{dir_path["dir20"]}',
+            search_quantity=f'data.etching_steps.fluximeters.chemical_formula#{dir_path["dir20"]}',
+        ),
+        MenuItemTerms(
+            title='Gases name',
+            type='terms',
+            search_quantity=f'data.etching_steps.fluximeters.name#{dir_path['dir20']}',
+        ),
+        MenuItemHistogram(
+            title='Gases fluxes',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_steps.fluximeters.massflow#{dir_path['dir20']}',
+                unit='centimeter^3/minute',
+            )
         ),
         MenuItemHistogram(
             title='Chuck temperature',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.chuck_temperature#{dir_path["dir20"]}',
+                search_quantity=f'data.etching_steps.chuck_temperature#{dir_path["dir20"]}',
                 title='chuck temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -2877,9 +2864,9 @@ menuremove_rie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.wall_temperature#{dir_path["dir20"]}',
+                search_quantity=f'data.etching_steps.wall_temperature#{dir_path["dir20"]}',
                 title='wall temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -2887,7 +2874,7 @@ menuremove_rie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.chamber_pressure#{dir_path["dir20"]}',
+                search_quantity=f'data.etching_steps.chamber_pressure#{dir_path["dir20"]}',
                 title='chamber pressure',
                 unit='mbar',
             ),
@@ -2897,7 +2884,7 @@ menuremove_rie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.chuck_power#{dir_path["dir20"]}',
+                search_quantity=f'data.etching_steps.chuck_power#{dir_path["dir20"]}',
                 title='chuck power',
                 unit='watt',
             ),
@@ -2907,7 +2894,7 @@ menuremove_rie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.chuck_frequency#{dir_path["dir20"]}',
+                search_quantity=f'data.etching_steps.chuck_frequency#{dir_path["dir20"]}',
                 title='chuck frequency',
                 unit='MHz',
             ),
@@ -2915,41 +2902,21 @@ menuremove_rie = Menu(
         MenuItemTerms(
             title='Clamping',
             type='terms',
-            search_quantity=f'data.clamping#{dir_path["dir20"]}',
+            search_quantity=f'data.etching_steps.clamping#{dir_path["dir20"]}',
         ),
         MenuItemTerms(
             title='Clamping type',
             type='terms',
-            search_quantity=f'data.clamping_type#{dir_path["dir20"]}',
+            search_quantity=f'data.etching_steps.clamping_type#{dir_path["dir20"]}',
         ),
         MenuItemHistogram(
-            title='Cooling helium massflow',
+            title='Clamping pressure',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.cooling_helium_massflow#{dir_path["dir20"]}',
-                title='helium massflow',
-                unit='kelvin',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Cooling helium temperature',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.cooling_helium_temperature#{dir_path["dir20"]}',
-                title='helium_temperature',
-                unit='kelvin',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Depth obtained',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.depth_measured#{dir_path["dir20"]}',
-                title='depth measured',
-                unit='nm',
+                search_quantity=f'data.etching_steps.clamping_pressure#{dir_path["dir20"]}',
+                title='clamping pressure',
+                unit='mbar',
             ),
         ),
         MenuItemHistogram(
@@ -2960,16 +2927,6 @@ menuremove_rie = Menu(
                 search_quantity=f'data.duration_measured#{dir_path["dir20"]}',
                 title='duration measured',
                 unit='sec',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Etching rate obtained',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.etching_rate_obtained#{dir_path["dir20"]}',
-                title='etching rate obtained',
-                unit='nm/minute',
             ),
         ),
         MenuItemTerms(
@@ -3156,7 +3113,7 @@ menuremove_stripping = Menu(
             x=Axis(
                 search_quantity=f'data.removing_temperature#{dir_path["dir22"]}',
                 title='removing temperature',
-                unit='kelvin',
+                unit='celsius',
             ),
         ),
         MenuItemTerms(

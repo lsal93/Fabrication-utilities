@@ -454,47 +454,6 @@ class ICP_RIE(RIE, ArchiveSection):
         }
     )
 
-    high_chuck_power = Quantity(
-        type=np.float64,
-        description='Power erogated on the chuck in the high phase',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
-
-    low_chuck_power = Quantity(
-        type=np.float64,
-        description='Power erogated on the chuck in the low phase',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
-
-    high_chuck_power_duration = Quantity(
-        type=np.float64,
-        description='Power erogated on the chuck in the high phase',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
-        },
-        unit='sec',
-    )
-
-    low_chuck_power_duration = Quantity(
-        type=np.float64,
-        description='Duration of the low phase',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
-        },
-        unit='sec',
-    )
-
-
     etching_steps=SubSection(
         section_def=ICP_RIEbase,
         repeats=True,
@@ -542,9 +501,9 @@ class DRIEbase(ICP_RIEbase, ArchiveSection):
                     'chamber_pressure',
                     'chuck_temperature',
                     'high_chuck_power',
-                    'high_chuck_power_time',
+                    'high_chuck_power_duration',
                     'low_chuck_power',
-                    'low_chuck_power_time',
+                    'low_chuck_power_duration',
                     'chuck_frequency',
                     'icp_power',
                     'icp_frequency',
@@ -557,6 +516,46 @@ class DRIEbase(ICP_RIEbase, ArchiveSection):
                 ]
             },
         },
+    )
+
+    high_chuck_power = Quantity(
+        type=np.float64,
+        description='Power erogated on the chuck in the high phase',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    low_chuck_power = Quantity(
+        type=np.float64,
+        description='Power erogated on the chuck in the low phase',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    high_chuck_power_duration = Quantity(
+        type=np.float64,
+        description='Power erogated on the chuck in the high phase',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
+    )
+
+    low_chuck_power_duration = Quantity(
+        type=np.float64,
+        description='Duration of the low phase',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
     )
 
     fluximeters=SubSection(
