@@ -220,7 +220,7 @@ class Section2(Section1, EntryData):
 
     m_def=Section()
 
-    value=value.Section1.m_copy
+    value=value.Section1.m_copy()
     value.unit='second'
 
 
