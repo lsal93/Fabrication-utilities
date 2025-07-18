@@ -669,6 +669,7 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'tag',
                     'depth_target',
                     'duration_target',
                     'erching_rate_target',
@@ -679,8 +680,8 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
                     'etching_reactives',
                     'etching_reactives_formulas',
                     'enanching_temperature',
-                    'atmosphere_pressure',
-                    'atmpsphere_gas',
+                    'hood_pressure',
+                    'hood_atmospheric_gas',
                     'wetting',
                     'wetting_duration',
                     'ultrasounds_required',
@@ -744,6 +745,12 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
     )
+    etching_rate_target = Quantity(
+        type=np.float64,
+        description='Etching rate prescribed by the recipe',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm/minute'},
+        unit='nm/minute',
+    )
     enanching_temperature = Quantity(
         type=np.float64,
         a_eln={
@@ -761,7 +768,7 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
         unit= 'mbar'
     )
 
-    hood_atmpspheric_gas = Quantity(
+    hood_atmospheric_gas = Quantity(
         type=str,
         a_eln={
             'component':'StringEditQuantity'
@@ -924,6 +931,7 @@ class WetCleaning(WetEtching):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'tag',
                     'depth_target',
                     'duration_target',
                     'erching_rate_target',
@@ -934,8 +942,8 @@ class WetCleaning(WetEtching):
                     'etching_reactives',
                     'etching_reactives_formulas',
                     'enanching_temperature',
-                    'atmosphere_pressure',
-                    'atmpsphere_gas',
+                    'hood_pressure',
+                    'hood_atmospheric_gas',
                     'wetting',
                     'wetting_duration',
                     'ultrasounds_required',
