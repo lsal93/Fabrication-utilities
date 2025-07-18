@@ -461,7 +461,7 @@ menuadd_pecvd = Menu(
     ],
 )
 
-menuadd_pecvd = Menu(
+menuadd_lpcvd = Menu(
     title='LPCVD',
     size='xl',
     items=[
