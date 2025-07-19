@@ -320,8 +320,6 @@ class Rectangle(Contour):
     )
 
 def make_geometric_represent(chuck,x,y,finalist):
-    # Posizioni dei centri dei quadrati (in cm)
-    #(x, y) devono stare dentro il cerchio di raggio 5
     posizione_centro = [(x, y)]
     # Chuck creation
     fig = go.Figure()
@@ -367,7 +365,6 @@ def make_geometric_represent(chuck,x,y,finalist):
                         name='Chuck'
                     )
                 )
-    # Aggiungi i centri dei quadratini
         for i, (x1, y1) in enumerate(posizione_centro):
             fig.add_trace(
                 go.Scatter(
@@ -378,25 +375,10 @@ def make_geometric_represent(chuck,x,y,finalist):
                     name=f'Quadratino {i+1} centro'
                 )
             )
-            # Disegna anche il quadratino attorno al centro
-            # half = lato_quadrato / 2
-            # x_quad = [x - half, x + half, x + half, x - half, x - half]
-            # y_quad = [y - half, y - half, y + half, y + half, y - half]
-            # fig.add_trace(
-            #     go.Scatter(
-            #         x=x_quad,
-            #         y=y_quad,
-            #         mode='lines',
-            #         line=dict(color='blue'),
-            #         showlegend=False
-            #     )
-            # )
         fig.update_layout(
-            title='Posizione degli items nel piatto',
-        #    xaxis=dict(scaleanchor='y', range=[-6, 6]),
-        #    yaxis=dict(range=[-6, 6]),
+            title='Item centering on chuck/chamber',
             width=800,
-            height=800
+            height=800,
         )
         figure_json = fig.to_plotly_json()
         figure_json['config'] = {'staticPlot': True}
@@ -413,9 +395,10 @@ class ItemPlacement(PlotSection, EntryData):
     m_def=Section(
         description="""
         Section used to describe, if needed, item placement on chucks. The reference frame
-        is centered on the chuck center so displacemnt of center of items is given with
-        respect the chuck center. If no chuck is provided you can describe the chamber
-        shape.
+        is centered on the chuck center (considered aligned to the chamber center) so
+        displacemnt of center of items is given with respect the chuck center. If no chuck
+        is provided you can use the chuck for describing the chamber shape, ideally the
+        role is similar in these cases.
         """
     )
 
@@ -435,11 +418,6 @@ class ItemPlacement(PlotSection, EntryData):
             'defaultDisplayUnit': 'cm'
         },
         unit='cm'
-    )
-
-    chamber_geometry=SubSection(
-        section_def=Contour,
-        repeats=False,
     )
 
     chuck_geometry=SubSection(

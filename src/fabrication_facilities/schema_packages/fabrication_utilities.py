@@ -40,7 +40,10 @@ from nomad.metainfo import (
     SubSection,
 )
 
-from fabrication_facilities.schema_packages.Items import Item
+from fabrication_facilities.schema_packages.Items import (
+    Item,
+    ItemPlacement,
+)
 from fabrication_facilities.schema_packages.utils import parse_chemical_formula
 
 if TYPE_CHECKING:
@@ -637,6 +640,11 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
     instruments = SubSection(
         section_def=EquipmentReference,
         repeats=True,
+    )
+
+    item_placement = SubSection(
+        section_def= ItemPlacement,
+        repeats=False,
     )
 
 
