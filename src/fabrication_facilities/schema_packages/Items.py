@@ -398,10 +398,12 @@ def make_geometric_represent(chuck,x,y,finalist):
             width=800,
             height=800
         )
+        figure_json = fig.to_plotly_json()
+        figure_json['config'] = {'staticPlot': True}
         finalist.append(
             PlotlyFigure(
                 label='Chuck vision',
-                figure=fig.to_plotly_json(),
+                figure=figure_json,
                 index=0,
             )
         )
@@ -454,10 +456,10 @@ class ItemPlacement(PlotSection, EntryData):
         super(ItemPlacement, self).normalize(archive, logger)
         if hasattr(self, 'figures') and self.figures:
             self.figures.clear()
-        if isinstance(self.chuck_geometry, Contour):
+        if isinstance(self.chuck_geometry[0], Contour):
             pass
         else:
-            make_geometric_represent(self.chuck_geometry, self.item_center_x, self.item_center_y, self.figures)
+            make_geometric_represent(self.chuck_geometry[0], self.item_center_x, self.item_center_y, self.figures)
 
 
 
