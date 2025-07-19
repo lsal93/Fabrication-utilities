@@ -875,7 +875,7 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
             chems = []
             for v1, v2 in zip(self.short_names, self.target_materials_formulas):
                 chemical = FabricationChemical()
-                val1 = v1 if v1 != '-' else None
+                val1 = v1 #if v1 != '-' else None
                 val2 = v2 if v2 != '-' else None
                 chemical.name=val1
                 chemical.chemical_formula=val2
@@ -889,7 +889,7 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
             reactives = []
             for v1, v2 in zip(self.etching_reactives, self.etching_reactives_formulas):
                 chemical = FabricationChemical()
-                val1 = v1 if v1 != '-' else None
+                val1 = v1 #if v1 != '-' else val1=v2
                 val2 = v2 if v2 != '-' else None
                 chemical.name=val1
                 chemical.chemical_formula=val2

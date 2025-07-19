@@ -36,6 +36,12 @@ from nomad.metainfo import (
     SubSection,
 )
 
+import plotly.graph_objects as go
+
+from nomad.datamodel.metainfo.plot import PlotSection, PlotlyFigure
+
+import plotly.graph_objs as go
+
 if TYPE_CHECKING:
     pass
 
@@ -244,6 +250,216 @@ class ListOfItemPropertyDefinition(EntryData, ArchiveSection):
         section_def=ItemShapeType,
         repeats=True,
     )
+
+class Contour(ArchiveSection):
+
+    m_def=Section(
+        description="""
+        Ideal class to desceibe geometric shape used as base for other definitions
+        """
+    )
+
+class Square(Contour):
+
+    m_def=Section(
+        description="""
+        Ideal class usable to describe square shapes of items or objects of fabrication
+        """
+    )
+
+    side=Quantity(
+        type=np.float64,
+        a_eln={
+            'component':'NumberEditQuantity',
+            'defaultDisplayUnit': 'cm'
+        },
+        unit='cm'
+    )
+
+class Circle(Contour):
+
+    m_def=Section(
+        description="""
+        Ideal class usable to describe circular shapes of items or objects of fabrication
+        """
+    )
+
+    radius=Quantity(
+        type=np.float64,
+        a_eln={
+            'component':'NumberEditQuantity',
+            'defaultDisplayUnit': 'cm'
+        },
+        unit='cm'
+    )
+
+class Rectangle(Contour):
+
+    m_def=Section(
+        description="""
+        Ideal class usable to describe rectangle shapes of items or objects in fabrication
+        """
+    )
+
+    base = Quantity(
+        type=np.float64,
+        a_eln={
+            'component':'NumberEditQuantity',
+            'defaultDisplayUnit': 'cm'
+        },
+        unit='cm'
+    )
+
+    height = Quantity(
+        type=np.float64,
+        a_eln={
+            'component':'NumberEditQuantity',
+            'defaultDisplayUnit': 'cm'
+        },
+        unit='cm'
+    )
+
+def make_geometric_represent(chuck,x,y,finalist):
+    # Posizioni dei centri dei quadrati (in cm)
+    #(x, y) devono stare dentro il cerchio di raggio 5
+    posizione_centro = [(x, y)]
+    # Chuck creation
+    fig = go.Figure()
+    if chuck is not None:
+        if isinstance(chuck, Circle):
+            theta = np.linspace(0, 2*np.pi, 100)
+            x_cerchio = chuck.radius * np.cos(theta)
+            y_cerchio = chuck.radius * np.sin(theta)
+            fig.add_trace(
+                go.Scatter(
+                    x=x_cerchio,
+                    y=y_cerchio,
+                    mode='lines',
+                    fill='toself',
+                    name='Chuck'
+                )
+            )
+        else:
+            if isinstance(chuck, Square):
+                half = chuck.side / 2
+                x_quad = [-half, half, half, -half, -half]
+                y_quad = [-half, -half, half, half, -half]
+                fig.add_trace(
+                    go.Scatter(
+                        x=x_quad,
+                        y=y_quad,
+                        mode='lines',
+                        fill='toself',
+                        name='Chuck'
+                    )
+                )
+            if isinstance(chuck,Rectangle):
+                half_base =  chuck.base/ 2
+                half_height = chuck.height/2
+                x_quad = [-half_base, half_base, half_base, -half_base, -half_base]
+                y_quad = [-half_height, -half_height, half_height, half_height, -half_height]
+                fig.add_trace(
+                    go.Scatter(
+                        x=x_quad,
+                        y=y_quad,
+                        mode='lines',
+                        fill='toself',
+                        name='Chuck'
+                    )
+                )
+    # Aggiungi i centri dei quadratini
+        for i, (x1, y1) in enumerate(posizione_centro):
+            fig.add_trace(
+                go.Scatter(
+                    x=[x1],
+                    y=[y1],
+                    mode='markers',
+                    marker=dict(size=10, color='red'),
+                    name=f'Quadratino {i+1} centro'
+                )
+            )
+            # Disegna anche il quadratino attorno al centro
+            # half = lato_quadrato / 2
+            # x_quad = [x - half, x + half, x + half, x - half, x - half]
+            # y_quad = [y - half, y - half, y + half, y + half, y - half]
+            # fig.add_trace(
+            #     go.Scatter(
+            #         x=x_quad,
+            #         y=y_quad,
+            #         mode='lines',
+            #         line=dict(color='blue'),
+            #         showlegend=False
+            #     )
+            # )
+        fig.update_layout(
+            title='Posizione degli items nel piatto',
+        #    xaxis=dict(scaleanchor='y', range=[-6, 6]),
+        #    yaxis=dict(range=[-6, 6]),
+            width=800,
+            height=800
+        )
+        finalist.append(
+            PlotlyFigure(
+                label='Chuck vision',
+                figure=fig.to_plotly_json(),
+                index=0,
+            )
+        )
+
+class ItemPlacement(PlotSection, EntryData):
+
+    m_def=Section(
+        description="""
+        Section used to describe, if needed, item placement on chucks. The reference frame
+        is centered on the chuck center so displacemnt of center of items is given with
+        respect the chuck center. If no chuck is provided you can describe the chamber
+        shape.
+        """
+    )
+
+    item_center_x = Quantity(
+        type=np.float64,
+        a_eln={
+            'component':'NumberEditQuantity',
+            'defaultDisplayUnit': 'cm'
+        },
+        unit='cm'
+    )
+
+    item_center_y = Quantity(
+        type=np.float64,
+        a_eln={
+            'component':'NumberEditQuantity',
+            'defaultDisplayUnit': 'cm'
+        },
+        unit='cm'
+    )
+
+    chamber_geometry=SubSection(
+        section_def=Contour,
+        repeats=False,
+    )
+
+    chuck_geometry=SubSection(
+        section_def=Contour,
+        repeats=False,
+    )
+
+    item_geometry = SubSection(
+        section_def = Contour,
+        repeats=False,
+    )
+
+    def normalize(self, archive, logger):
+        super(ItemPlacement, self).normalize(archive, logger)
+        if hasattr(self, 'figures') and self.figures:
+            self.figures.clear()
+        if isinstance(self.chuck_geometry, Contour):
+            pass
+        else:
+            make_geometric_represent(self.chuck_geometry, self.item_center_x, self.item_center_y, self.figures)
+
+
 
 
 class Item(Entity, ArchiveSection):

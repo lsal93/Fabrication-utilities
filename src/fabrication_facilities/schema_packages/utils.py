@@ -186,7 +186,7 @@ class FabricationChemical(Chemical, ArchiveSection):
 #         unit='sec',
 #     )
 
-def make_line(list1,list2,labelx,labely,finalist, labelfigure):
+def make_line_express(list1,list2,labelx,labely,finalist, labelfigure):
 
     figure1 = px.line(
         x=list1,
@@ -204,6 +204,7 @@ def make_line(list1,list2,labelx,labely,finalist, labelfigure):
             index=0,
         )
     )
+
 
 class Section1(ArchiveSection):
 
@@ -289,7 +290,7 @@ class TimeRampTemperature(PlotSection, EntryData):
             super(TimeRampTemperature, self).normalize(archive, logger)
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
-            make_line(
+            make_line_express(
                 self.time, self.values, 'Time (s)', 'Temperature (°C)',
                 self.figures, 'Ramp of temperature'
             )
@@ -360,7 +361,7 @@ class TimeRampPressure(PlotSection, EntryData):
             super(TimeRampPressure, self).normalize(archive, logger)
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
-            make_line(
+            make_line_express(
                 self.time, self.values, 'Time (s)', 'Pressure (mbar)',
                 self.figures, 'Ramp of pressure'
             )
@@ -431,7 +432,7 @@ class TimeRampMassflow(PlotSection, EntryData):
             super(TimeRampMassflow, self).normalize(archive, logger)
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
-            make_line(
+            make_line_express(
                 self.time, self.values, 'Time (s)', 'Massflow (sccm)',
                 self.figures, 'Ramp of massflow'
             )
@@ -496,7 +497,7 @@ class TimeRampRotation(PlotSection, EntryData):
             super(TimeRampRotation, self).normalize(archive, logger)
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
-            make_line(
+            make_line_express(
                 self.time, self.values, 'Time (s)', 'Spin frequency (rpm)',
                 self.figures, 'Ramp of spin frequency'
             )
