@@ -456,10 +456,7 @@ class ItemPlacement(PlotSection, EntryData):
         super(ItemPlacement, self).normalize(archive, logger)
         if hasattr(self, 'figures') and self.figures:
             self.figures.clear()
-        if isinstance(self.chuck_geometry[0], Contour):
-            pass
-        else:
-            make_geometric_represent(self.chuck_geometry[0], self.item_center_x, self.item_center_y, self.figures)
+        make_geometric_represent(self.chuck_geometry, self.item_center_x, self.item_center_y, self.figures)
 
 
 
