@@ -392,21 +392,6 @@ class PECVD(FabricationProcessStep, ArchiveSection):
         repeats=True,
     )
 
-    # temperature_ramps=SubSection(
-    #     section_def=TimeRampTemperature,
-    #     repeats=True,
-    # )
-
-    # pressure_ramps=SubSection(
-    #     section_def=TimeRampPressure,
-    #     repeats=True,
-    # )
-
-    # gaseous_massflow_ramps=SubSection(
-    #     section_def=TimeRampMassflow,
-    #     repeats=True,
-    # )
-
     outputs = SubSection(
         section_def=SynthesisOutputs, repeats=False,
     )
@@ -536,25 +521,6 @@ class ICP_CVD(PECVD, ArchiveSection):
         repeats=True,
     )
 
-    # temperature_ramps=SubSection(
-    #     section_def=TimeRampTemperature,
-    #     repeats=True,
-    # )
-
-    # pressure_ramps=SubSection(
-    #     section_def=TimeRampPressure,
-    #     repeats=True,
-    # )
-
-    # gaseous_massflow_ramps=SubSection(
-    #     section_def=TimeRampMassflow,
-    #     repeats=True,
-    # )
-
-    # outputs = SubSection(
-    #     section_def=SynthesisOutputs, repeats=False,
-    # )
-
 
 
 class LPCVDbase(PECVDbase, ArchiveSection):
@@ -589,7 +555,7 @@ class LPCVDbase(PECVDbase, ArchiveSection):
                     'job_number',
                     'tag',
                     'id_item_processed',
-                    'operatore'
+                    'operator'
                     'starting_date',
                     'ending_date',
                     'short_name',
@@ -597,6 +563,9 @@ class LPCVDbase(PECVDbase, ArchiveSection):
                     'wall_temperature',
                     'chamber_pressure',
                     'chuck_temperature',
+                    'clamping',
+                    'clamping_type',
+                    'clamping_pressure',
                     'number_of_loops',
                     'notes',
                 ],
@@ -655,24 +624,6 @@ class LPCVD(PECVD, ArchiveSection):
         repeats=True,
     )
 
-    # temperature_ramps=SubSection(
-    #     section_def=TimeRampTemperature,
-    #     repeats=True,
-    # )
-
-    # pressure_ramps=SubSection(
-    #     section_def=TimeRampPressure,
-    #     repeats=True,
-    # )
-
-    # gaseous_massflow_ramps=SubSection(
-    #     section_def=TimeRampMassflow,
-    #     repeats=True,
-    # )
-
-    # outputs = SubSection(
-    #     section_def=SynthesisOutputs, repeats=False,
-    # )
 
 class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     m_def = Section(

@@ -526,14 +526,15 @@ class Equipment(Instrument, EntryData, ArchiveSection):
             'properties': {
                 'order': [
                     'name',
-                    'inventary_code',
+                    'description',
                     'affiliation',
-                    'product_model',
                     'institution',
+                    'product_model',
                     'manufacturer_name',
+                    'inventary_code',
                     'is_bookable',
                     'automatic_loading',
-                    'description',
+                    'notes',
                 ],
             },
         }
@@ -569,10 +570,14 @@ class Equipment(Instrument, EntryData, ArchiveSection):
         type=bool,
         a_eln={'component': 'BoolEditQuantity'},
     )
-    #    capabilities = SubSection(
-    #        section_def=EquipmentParameterData,
-    #        repeats=True,
-    #    )
+
+    notes = Quantity(
+        type=str,
+        a_eln={
+            'component':'RichTextEditQuantity',
+        }
+    )
+
     equipmentTechniques = SubSection(
         section_def=EquipmentTechnique,
         repeats=True,

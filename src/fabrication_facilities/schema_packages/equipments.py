@@ -32,7 +32,7 @@ from nomad.metainfo import (
 )
 
 from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
-from fabrication_facilities.schema_packages.utils import Massflow_controller
+from fabrication_facilities.schema_packages.utils import FabricationChemical
 
 if TYPE_CHECKING:
     pass
@@ -40,10 +40,10 @@ if TYPE_CHECKING:
 m_package = Package(name='Equipments specific definitions ')
 
 
-class Massflow_parameter(Massflow_controller, ArchiveSection):
+class Massflow_parameter(FabricationChemical, ArchiveSection):
     m_def = Section(
         description='Class to describe flux of gases in fluximeters',
-        a_eln={'hide': ['lab_id', 'datetime', 'massflow']},
+        a_eln={'hide': ['lab_id', 'datetime']},
     )
 
     min_massflow = Quantity(
@@ -76,14 +76,14 @@ class RIE_Etcher(Equipment, ArchiveSection):
             'properties': {
                 'order': [
                     'name',
-                    'inventary_code',
+                    'description',
                     'affiliation',
-                    'product_model',
                     'institution',
+                    'product_model',
                     'manufacturer_name',
+                    'inventary_code',
                     'is_bookable',
                     'automatic_loading',
-                    'description',
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
@@ -97,12 +97,12 @@ class RIE_Etcher(Equipment, ArchiveSection):
                     'max_chuck_frequency',
                     'min_bias',
                     'max_bias',
+                    'clamping',
                     'mechanical_clamping',
                     'electrostatic_clamping',
-                    # 'min_cooling_helium_massflow',
-                    # 'max_cooling_helium_massflow',
-                    # 'min_cooling_helium_temperature',
-                    # 'max_cooling_helium_temperature',
+                    'min_clamping_pressure',
+                    'max_clamping_pressure',
+                    'notes',
                 ],
             },
         },
@@ -236,6 +236,14 @@ class RIE_Etcher(Equipment, ArchiveSection):
         unit='volt',
     )
 
+    clamping = Quantity(
+        type=bool,
+        description='Is a system for clamping available?',
+        a_eln={
+            'component': 'BoolEditQuantity',
+        },
+    )
+
     electrostatic_clamping = Quantity(
         type=bool,
         description='Is electrostatic clamping available',
@@ -252,13 +260,32 @@ class RIE_Etcher(Equipment, ArchiveSection):
         },
     )
 
+    min_clamping_pressure = Quantity(
+        type=np.float64,
+        description='Minimum pressure needed on chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
+    max_clamping_pressure = Quantity(
+        type=np.float64,
+        description='Maximum pressure needed on chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
+
     gases = SubSection(
         section_def=Massflow_parameter,
         repeats=True,
     )
 
 
-class ICP_Etcher(RIE_Etcher, ArchiveSection):
+class ICP_RIE_Etcher(RIE_Etcher, ArchiveSection):
     m_def = Section(
         description='Dry etching class for instruments where a plasma is involved',
         a_eln={
@@ -269,14 +296,14 @@ class ICP_Etcher(RIE_Etcher, ArchiveSection):
             'properties': {
                 'order': [
                     'name',
-                    'inventary_code',
+                    'description',
                     'affiliation',
-                    'product_model',
                     'institution',
+                    'product_model',
                     'manufacturer_name',
+                    'inventary_code',
                     'is_bookable',
                     'automatic_loading',
-                    'description',
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
@@ -294,12 +321,12 @@ class ICP_Etcher(RIE_Etcher, ArchiveSection):
                     'max_icp_frequency',
                     'min_bias',
                     'max_bias',
+                    'clamping',
                     'mechanical_clamping',
                     'electrostatic_clamping',
-                    'min_cooling_helium_massflow',
-                    'max_cooling_helium_massflow',
-                    'min_cooling_helium_temperature',
-                    'max_cooling_helium_temperature',
+                    'min_clamping_pressure',
+                    'max_clamping_pressure',
+                    'notes',
                 ],
             },
         },
@@ -345,66 +372,6 @@ class ICP_Etcher(RIE_Etcher, ArchiveSection):
         unit='MHz',
     )
 
-    min_cooling_helium_massflow = Quantity(
-        type=np.float64,
-        description='Minimum rate at which the helium for cooling the chuck flows',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'centimeter^3/minute',
-        },
-        unit='centimeter^3/minute',
-    )
-    max_cooling_helium_massflow = Quantity(
-        type=np.float64,
-        description='Maximum rate at which the helium for cooling the chuck flows',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'centimeter^3/minute',
-        },
-        unit='centimeter^3/minute',
-    )
-
-    min_cooling_helium_temperature = Quantity(
-        type=np.float64,
-        description='Minimal temperature of the cooling helium on the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-
-    max_cooling_helium_temperature = Quantity(
-        type=np.float64,
-        description='Maximal temperature of the cooling helium on the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-
-    # electrostatic_clamping = Quantity(
-    #     type=bool,
-    #     description = 'Is electrostatic clamping available',
-    #     a_eln={
-    #         'component': 'BoolEditQuantity',
-    #     },
-    # )
-
-    # mechanical_clamping = Quantity(
-    #     type=bool,
-    #     description = 'Is mechanical clamping available',
-    #     a_eln={
-    #         'component': 'BoolEditQuantity',
-    #     },
-    # )
-
-    # gases = SubSection(
-    #     section_def=Massflow_parameter,
-    #     repeats=True,
-    # )
-
 
 ###############
 # In futuro si deve aggiungere una sezione per gli items permessi ma per farlo
@@ -412,7 +379,7 @@ class ICP_Etcher(RIE_Etcher, ArchiveSection):
 ###############
 
 
-class DRIE_Etcher(ICP_Etcher, ArchiveSection):
+class DRIE_BOSCH_Etcher(ICP_RIE_Etcher, ArchiveSection):
     m_def = Section(
         description='Dry etching instrument for deep geometries',
         a_eln={
@@ -423,14 +390,14 @@ class DRIE_Etcher(ICP_Etcher, ArchiveSection):
             'properties': {
                 'order': [
                     'name',
-                    'inventary_code',
+                    'description',
                     'affiliation',
-                    'product_model',
                     'institution',
+                    'product_model',
                     'manufacturer_name',
+                    'inventary_code',
                     'is_bookable',
                     'automatic_loading',
-                    'description',
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
@@ -446,117 +413,18 @@ class DRIE_Etcher(ICP_Etcher, ArchiveSection):
                     'max_icp_power',
                     'min_icp_frequency',
                     'max_icp_frequency',
-                    'min_third_power',
-                    'max_third_power',
-                    'min_third_frequency',
-                    'max_third_frequency',
                     'min_bias',
                     'max_bias',
+                    'clamping',
                     'mechanical_clamping',
                     'electrostatic_clamping',
-                    'min_cooling_helium_massflow',
-                    'max_cooling_helium_massflow',
-                    'min_cooling_helium_temperature',
-                    'max_cooling_helium_temperature',
-                    'passivation_material',
+                    'min_clamping_pressure',
+                    'max_clamping_pressure',
+                    'notes',
                 ],
             },
         },
     )
-
-    min_third_power = Quantity(
-        type=np.float64,
-        description='Minimal power erogated in the region of the plasma',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
-
-    max_third_power = Quantity(
-        type=np.float64,
-        description='Maximal power erogated in the region of the plasma',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
-
-    min_third_frequency = Quantity(
-        type=np.float64,
-        description='Minimal frequency of current on the gases area',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
-    )
-
-    max_third_frequency = Quantity(
-        type=np.float64,
-        description='Maximal frequency of current on the gases area',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
-    )
-
-    passivation_material = Quantity(
-        type=str,
-        description='Material at disposal for passivation',
-        a_eln={'component': 'StringEditQuantity'},
-    )
-
-
-# class DRIE_BOSCH_Etcher (DRIE_Etcher, ArchiveSection):
-#     m_def = Section(
-#         description='Dry etching instrument for deep geometries with BOSCH technology',
-#         a_eln={
-#             'hide': [
-#                 'lab_id',
-#                 'datetime',
-#             ],
-#             'properties': {
-#                 'order': [
-#                     'name',
-#                     'inventary_code',
-#                     'affiliation',
-#                     'product_model',
-#                     'institution',
-#                     'manufacturer_name',
-#                     'is_bookable',
-#                     'automatic_loading',
-#                     'description',
-#                     'min_chamber_pressure',
-#                     'max_chamber_pressure',
-#                     'vacuum_system_name',
-#                     'min_wall_temperature',
-#                     'max_wall_temperature',
-#                     'min_chuck_temperature',
-#                     'max_chuck_temperature',
-#                     'min_chuck_power',
-#                     'max_chuck_power',
-#                     'min_chuck_frequency',
-#                     'max_chuck_frequency',
-#                     'min_icp_power',
-#                     'max_icp_power',
-#                     'min_icp_frequency',
-#                     'max_icp_frequency',
-#                     'min_bias',
-#                     'max_bias',
-#                     'mechanical_clamping',
-#                     'electrostatic_clamping',
-#                     'min_cooling_helium_massflow',
-#                     'max_cooling_helium_massflow',
-#                     'min_cooling_helium_temperature',
-#                     'max_cooling_helium_temperature',
-#                 ],
-#             },
-#         }
-#     )
 
 
 class LPCVD_System(Equipment, ArchiveSection):
@@ -569,14 +437,14 @@ class LPCVD_System(Equipment, ArchiveSection):
             'properties': {
                 'order': [
                     'name',
-                    'inventary_code',
+                    'description',
                     'affiliation',
-                    'product_model',
                     'institution',
+                    'product_model',
                     'manufacturer_name',
+                    'inventary_code',
                     'is_bookable',
                     'automatic_loading',
-                    'description',
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
@@ -584,18 +452,18 @@ class LPCVD_System(Equipment, ArchiveSection):
                     'max_wall_temperature',
                     'min_chuck_temperature',
                     'max_chuck_temperature',
-                    'min_chuck_power',
-                    'max_chuck_power',
-                    'min_chuck_frequency',
-                    'max_chuck_frequency',
-                    'min_bias',
-                    'max_bias',
+                    # 'min_chuck_power',
+                    # 'max_chuck_power',
+                    # 'min_chuck_frequency',
+                    # 'max_chuck_frequency',
+                    #'min_bias',
+                    #'max_bias',
+                    'clamping',
                     'mechanical_clamping',
                     'electrostatic_clamping',
-                    # 'min_cooling_helium_massflow',
-                    # 'max_cooling_helium_massflow',
-                    # 'min_cooling_helium_temperature',
-                    # 'max_cooling_helium_temperature',
+                    'min_clamping_pressure',
+                    'max_clamping_pressure',
+                    'notes',
                 ],
             },
         },
@@ -670,6 +538,14 @@ class LPCVD_System(Equipment, ArchiveSection):
         unit='celsius',
     )
 
+    clamping = Quantity(
+        type=bool,
+        description='Is a system for clamping available?',
+        a_eln={
+            'component': 'BoolEditQuantity',
+        },
+    )
+
     electrostatic_clamping = Quantity(
         type=bool,
         description='Is electrostatic clamping available',
@@ -684,6 +560,25 @@ class LPCVD_System(Equipment, ArchiveSection):
         a_eln={
             'component': 'BoolEditQuantity',
         },
+    )
+
+    min_clamping_pressure = Quantity(
+        type=np.float64,
+        description='Minimum pressure needed on chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
+    max_clamping_pressure = Quantity(
+        type=np.float64,
+        description='Maximum pressure needed on chuck',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
     )
 
     gases = SubSection(
@@ -724,12 +619,12 @@ class PECVD_System(LPCVD_System, ArchiveSection):
                     'max_chuck_frequency',
                     'min_bias',
                     'max_bias',
+                    'clamping',
                     'mechanical_clamping',
                     'electrostatic_clamping',
-                    'min_cooling_helium_massflow',
-                    'max_cooling_helium_massflow',
-                    'min_cooling_helium_temperature',
-                    'max_cooling_helium_temperature',
+                    'min_clamping_pressure',
+                    'max_clamping_pressure',
+                    'notes',
                 ],
             },
         },
@@ -794,45 +689,6 @@ class PECVD_System(LPCVD_System, ArchiveSection):
         unit='volt',
     )
 
-    min_cooling_helium_massflow = Quantity(
-        type=np.float64,
-        description='Minimum rate at which the helium for cooling the chuck flows',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'centimeter^3/minute',
-        },
-        unit='centimeter^3/minute',
-    )
-    max_cooling_helium_massflow = Quantity(
-        type=np.float64,
-        description='Maximum rate at which the helium for cooling the chuck flows',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'centimeter^3/minute',
-        },
-        unit='centimeter^3/minute',
-    )
-
-    min_cooling_helium_temperature = Quantity(
-        type=np.float64,
-        description='Minimal temperature of the cooling helium on the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-
-    max_cooling_helium_temperature = Quantity(
-        type=np.float64,
-        description='Maximal temperature of the cooling helium on the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-
 
 class ICP_CVD_System(PECVD_System, ArchiveSection):
     m_def = Section(
@@ -870,12 +726,12 @@ class ICP_CVD_System(PECVD_System, ArchiveSection):
                     'max_icp_frequency',
                     'min_bias',
                     'max_bias',
+                    'clamping',
                     'mechanical_clamping',
                     'electrostatic_clamping',
-                    'min_cooling_helium_massflow',
-                    'max_cooling_helium_massflow',
-                    'min_cooling_helium_temperature',
-                    'max_cooling_helium_temperature',
+                    'min_clamping_pressure',
+                    'max_clamping_pressure',
+                    'notes',
                 ],
             },
         },
