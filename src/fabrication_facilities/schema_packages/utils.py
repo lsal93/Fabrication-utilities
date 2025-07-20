@@ -221,7 +221,7 @@ class Section2(Section1, EntryData):
 
     m_def=Section()
 
-    value=value.m_copy()
+    value=Section1.value.m_copy()
     value.unit='second'
     #Section1.value.a_eln['defaultDisplayUnit'] = 'second'
 
