@@ -338,56 +338,56 @@ class ItemPlacement(PlotSection, EntryData):
         make_geometric_represent(self.chuck_geometry, self.item_center_x, self.item_center_y, self.figures)
 
 
-class ItemsPermitted(ArchiveSection):
+# class ItemsPermitted(ArchiveSection):
 
-    m_def=Section()
+#     m_def=Section()
 
-    type_of_material = Quantity(
-        type= MEnum(
-            [
-                'dielectric',
-                'metal',
-                'other (specify in notes)'
-            ]
-        ),
-        a_eln={'component':'EnumEditQuantity'}
-    )
+#     type_of_material = Quantity(
+#         type= MEnum(
+#             [
+#                 'dielectric',
+#                 'metal',
+#                 'other (specify in notes)'
+#             ]
+#         ),
+#         a_eln={'component':'EnumEditQuantity'}
+#     )
 
-    maximum_dimensions= Quantity(
-        type=np.float64,
-        description="""
-        Is intended as the maximum diameter for a circle allowed in the chamber on the
-        chuck.
-        """,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'cm'},
-        unit='cm',
-    )
+#     maximum_dimensions= Quantity(
+#         type=np.float64,
+#         description="""
+#         Is intended as the maximum diameter for a circle allowed in the chamber on the
+#         chuck.
+#         """,
+#         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'cm'},
+#         unit='cm',
+#     )
 
-    doping_type
+#     doping_type
 
-    item_shape = Quantity(
-        description= 'Intended as the way of presenting of the sample processable.',
-        type=MEnum(
-            [
-                'Wafer with flat standard',
-                'Wafer with flat JEIDA',
-                'Rectangle shape',
-                '1/2 wafer',
-                '1/4 wafer',
-                'Fragment',
-                'Square shape',
-                'Powder',
-                'Wafer with Notch standard',
-                'Other (specify in notes)',
-            ]
-        ),
-        a_eln={'component': 'EnumEditQuantity'},
-    )
+#     item_shape = Quantity(
+#         description= 'Intended as the way of presenting of the sample processable.',
+#         type=MEnum(
+#             [
+#                 'Wafer with flat standard',
+#                 'Wafer with flat JEIDA',
+#                 'Rectangle shape',
+#                 '1/2 wafer',
+#                 '1/4 wafer',
+#                 'Fragment',
+#                 'Square shape',
+#                 'Powder',
+#                 'Wafer with Notch standard',
+#                 'Other (specify in notes)',
+#             ]
+#         ),
+#         a_eln={'component': 'EnumEditQuantity'},
+#     )
 
-    notes=Quantity(
-        type=str,
-        a_eln={'component':'RichTextEditQuantity'},
-    )
+#     notes=Quantity(
+#         type=str,
+#         a_eln={'component':'RichTextEditQuantity'},
+#     )
 
 
 class Item(Entity, ArchiveSection):
