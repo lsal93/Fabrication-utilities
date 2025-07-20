@@ -210,7 +210,7 @@ class Section1(ArchiveSection):
 
     m_def=Section()
 
-    value= Quantity(
+    value = Quantity(
         type=np.float64,
         a_eln={
             'component': 'NumberEditQuantity',
@@ -221,9 +221,9 @@ class Section2(Section1, EntryData):
 
     m_def=Section()
 
-    value=Section1.value.m_copy()
-    value.unit='second'
-
+    #value=Section1.value.m_copy()
+    Section1.value.unit='second'
+    Section1.value.a_eln['defaultDisplayUnit'] = 'second'
 
 class TimeRampTemperature(PlotSection, EntryData):
 
