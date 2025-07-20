@@ -221,9 +221,9 @@ class Section2(Section1, EntryData):
 
     m_def=Section()
 
-    #value=Section1.value.m_copy()
-    Section1.value.unit='second'
-    Section1.value.a_eln['defaultDisplayUnit'] = 'second'
+    value=value.m_copy()
+    value.unit='second'
+    #Section1.value.a_eln['defaultDisplayUnit'] = 'second'
 
 class TimeRampTemperature(PlotSection, EntryData):
 
