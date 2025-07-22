@@ -32,7 +32,10 @@ from nomad.metainfo import (
 )
 
 from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
-from fabrication_facilities.schema_packages.utils import FabricationChemical
+from fabrication_facilities.schema_packages.utils import (
+    FabricationChemical,
+    ReactiveComponents,
+)
 
 if TYPE_CHECKING:
     pass
@@ -84,6 +87,7 @@ class RIE_Etcher(Equipment, ArchiveSection):
                     'inventary_code',
                     'is_bookable',
                     'automatic_loading',
+                    'contamination_class',
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
@@ -304,6 +308,7 @@ class ICP_RIE_Etcher(RIE_Etcher, ArchiveSection):
                     'inventary_code',
                     'is_bookable',
                     'automatic_loading',
+                    'contamination_class',
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
@@ -398,6 +403,7 @@ class DRIE_BOSCH_Etcher(ICP_RIE_Etcher, ArchiveSection):
                     'inventary_code',
                     'is_bookable',
                     'automatic_loading',
+                    'contamination_class',
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
@@ -445,6 +451,7 @@ class LPCVD_System(Equipment, ArchiveSection):
                     'inventary_code',
                     'is_bookable',
                     'automatic_loading',
+                    'contamination_class',
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
@@ -452,12 +459,6 @@ class LPCVD_System(Equipment, ArchiveSection):
                     'max_wall_temperature',
                     'min_chuck_temperature',
                     'max_chuck_temperature',
-                    # 'min_chuck_power',
-                    # 'max_chuck_power',
-                    # 'min_chuck_frequency',
-                    # 'max_chuck_frequency',
-                    #'min_bias',
-                    #'max_bias',
                     'clamping',
                     'mechanical_clamping',
                     'electrostatic_clamping',
@@ -606,6 +607,7 @@ class PECVD_System(LPCVD_System, ArchiveSection):
                     'is_bookable',
                     'automatic_loading',
                     'description',
+                    'contamination_class',
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
@@ -709,6 +711,7 @@ class ICP_CVD_System(PECVD_System, ArchiveSection):
                     'is_bookable',
                     'automatic_loading',
                     'description',
+                    'contamination_class',
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
@@ -777,6 +780,68 @@ class ICP_CVD_System(PECVD_System, ArchiveSection):
         unit='MHz',
     )
 
+
+class Well(Equipment):
+
+    m_def=Section(
+        description="""
+        Bath containing some chemical solution or pure substance to perform wet processes,
+        """,
+    )
+
+    volume_of_solution= Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'liter'},
+        unit='liter',
+    )
+
+    min_bath_temperature=Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
+        unit='celsius',
+    )
+
+    max_bath_temperature=Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
+        unit='celsius',
+    )
+
+    max_overflow=Quantity(
+        type=np.float64,
+        description='Maximum amount of flow at disposal',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'liter'},
+        unit='liter',
+    )
+
+    filtering_mechanism=Quantity(
+        type=np.float64,
+        description='There is a filtering system for the bath?',
+        a_eln={'component':'BoolEditQuantity'},
+    )
+
+    solution_renewal=Quantity(
+        type=str,
+        description='Frequency of the renewal of the solution in the bath',
+        a_eln={'component':'StringEditQuantity'},
+    )
+
+    max_number_of_repetitions = Quantity(
+        type=int,
+        description='Maximum number of successive steps allowed for that well',
+        a_eln={'component':'NumberEditQuantity'},
+    )
+
+    reactives=SubSection(
+        section_def=ReactiveComponents,
+        repeats=True
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        if self.volume_of_solution is not None:
+            super().normalize(archive, logger)
+            for token in reactives:
+                self.token.final_solution_concentration = self.token.initial_concentration*self.token.dispensed_volume/self.volume_of_solution
 
 class BakingFurnace(Equipment, ArchiveSection):
     m_def = Section(

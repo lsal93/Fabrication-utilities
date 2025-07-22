@@ -59,6 +59,7 @@ m_package = Package(name='General organization and equipment for fabrication')
 
 
 class TechniqueSubCategory(ArchiveSection):
+
     m_def = Section(
         a_eln={'properties': {'order': ['name', 'id', 'description']}},
     )
@@ -194,17 +195,6 @@ class EquipmentTechnique(ArchiveSection):
         description='Reference to the taxonomy adopted',
         a_eln={'component': 'ReferenceEditQuantity'},
     )
-
-    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        """
-        The normalizer for the `EquipmentTechnique` class.
-
-        Args:
-            archive (EntryArchive): The archive containing the section that is being
-            normalized.
-            logger (BoundLogger): A structlog logger.
-        """
-        super().normalize(archive, logger)
 
 
 class FabricationProductType(EntryData, ArchiveSection):
@@ -427,6 +417,7 @@ class Equipment(Instrument, EntryData, ArchiveSection):
                     'inventary_code',
                     'is_bookable',
                     'automatic_loading',
+                    'contamination_class',
                     'notes',
                 ],
             },
@@ -440,6 +431,7 @@ class Equipment(Instrument, EntryData, ArchiveSection):
         type=MEnum(
             'NFFA-DI',
             'iENTRANCE@ENL',
+            'other',
         ),
         a_eln={'component': 'EnumEditQuantity'},
     )
@@ -462,6 +454,11 @@ class Equipment(Instrument, EntryData, ArchiveSection):
     is_bookable = Quantity(
         type=bool,
         a_eln={'component': 'BoolEditQuantity'},
+    )
+    contamination_class = Quantity(
+        type=int,
+        description='Level of quality of the environment in the equipment',
+        a_eln={'component':'NumberEditQuantity'}
     )
 
     notes = Quantity(
@@ -492,6 +489,7 @@ class EquipmentReference(Link, ArchiveSection):
         type=str,
         a_eln={'component': 'StringEditQuantity'},
     )
+
     notes = Quantity(
         type=str,
         a_eln={'component': 'RichTextEditQuantity'},

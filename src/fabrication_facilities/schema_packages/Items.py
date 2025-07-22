@@ -352,6 +352,17 @@ class ItemsPermitted(ArchiveSection):
         ),
         a_eln={'component':'EnumEditQuantity'}
     )
+
+    minimum_dimensions= Quantity(
+        type=np.float64,
+        description="""
+        Is intended as the minimum diameter for a circle allowed in the chamber on the
+        chuck.
+        """,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'cm'},
+        unit='cm',
+    )
+
     maximum_dimensions= Quantity(
         type=np.float64,
         description="""
