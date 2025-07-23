@@ -15,7 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import os
 
 from typing import (
     TYPE_CHECKING,
@@ -45,7 +44,7 @@ from nomad.metainfo import (
 from fabrication_facilities.schema_packages.Items import (
     Item,
     ItemPlacement,
-    ItemsPermitted
+    ItemsPermitted,
 )
 from fabrication_facilities.schema_packages.utils import parse_chemical_formula
 
@@ -61,7 +60,6 @@ m_package = Package(name='General organization and equipment for fabrication')
 
 
 class TechniqueSubCategory(ArchiveSection):
-
     m_def = Section(
         a_eln={'properties': {'order': ['name', 'id', 'description']}},
     )
@@ -278,9 +276,9 @@ class FabricationProcessStepBase(ProcessStep, ArchiveSection):
         },
     )
 
-    duration= Quantity(
+    duration = Quantity(
         type=np.float64,
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'minute'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
     )
     job_number = Quantity(
@@ -352,7 +350,7 @@ class FabricationProcessStepBase(ProcessStep, ArchiveSection):
         a_eln={'component': 'RichTextEditQuantity'},
     )
 
-    tag=Quantity(
+    tag = Quantity(
         type=str,
         description='Role of the step in fabrication (effective, conditioning, etc.)',
         a_eln={'component': 'StringEditQuantity'},
@@ -466,14 +464,14 @@ class Equipment(Instrument, EntryData, ArchiveSection):
     contamination_class = Quantity(
         type=int,
         description='Level of quality of the environment in the equipment',
-        a_eln={'component':'NumberEditQuantity'}
+        a_eln={'component': 'NumberEditQuantity'},
     )
 
     notes = Quantity(
         type=str,
         a_eln={
-            'component':'RichTextEditQuantity',
-        }
+            'component': 'RichTextEditQuantity',
+        },
     )
 
     equipmentTechniques = SubSection(
@@ -491,7 +489,6 @@ class Equipment(Instrument, EntryData, ArchiveSection):
 
 
 class EquipmentReference(Link, ArchiveSection):
-
     m_def = Section()
 
     id = Quantity(
@@ -508,12 +505,13 @@ class EquipmentReference(Link, ArchiveSection):
         type=Instrument,
         a_eln={'component': 'ReferenceEditQuantity'},
     )
-    def normalize(self, archive:'EntryArchive', logger:'BoundLogger') -> None:
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         if self.section is not None:
             super().normalize(archive, logger)
             try:
-                self.name=self.section.name
-                self.id=self.section.lab_id
+                self.name = self.section.name
+                self.id = self.section.lab_id
             except Exception as e:
                 raise e
 
@@ -556,11 +554,11 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
     )
 
     item_placement = SubSection(
-        section_def= ItemPlacement,
+        section_def=ItemPlacement,
         repeats=False,
     )
 
-    def normalize(self, archive:'EntryArchive', logger:'BoundLogger') -> None:
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         if self.instruments.section is not None:
             super().normalize(archive, logger)
 

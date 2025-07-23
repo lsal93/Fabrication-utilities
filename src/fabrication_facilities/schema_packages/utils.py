@@ -137,6 +137,7 @@ def make_line_express(list1, list2, labelx, labely, finalist, labelfigure):
         )
     )
 
+
 # Capire se se può ingegnerizzare meglio la funzinoe per ridurre variabili
 
 
