@@ -907,6 +907,17 @@ class WetCleaningbase(WetEtchingbase):
                 'duration',
                 'end_time',
                 'start_time',
+                'step_type',
+                'definition_of_process_step',
+                'keywords',
+                'recipe_name',
+                'recipe_file',
+                'recipe_preview',
+                'name',
+                'description',
+                'affiliation',
+                'room',
+                'location',
             ],
             'properties': {
                 'order': [
@@ -947,6 +958,15 @@ class WetCleaningbase(WetEtchingbase):
         type=np.float64,
         a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
+    )
+    etching_temperature = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+            'label': 'cleaning duration',
+        },
+        unit='celsius',
     )
     etching_duration = Quantity(
         type=np.float64,
