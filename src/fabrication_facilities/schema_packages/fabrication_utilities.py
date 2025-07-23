@@ -510,12 +510,12 @@ class EquipmentReference(Link, ArchiveSection):
     )
     def normalize(self, archive:'EntryArchive', logger:'BoundLogger') -> None:
         if self.section is not None:
-		super().normalize(archive, logger)
-		try:
-			self.name=self.section.name
-			self.id=self.section.lab_id
-		except Exception as e:
-			raise e
+            super().normalize(archive, logger)
+            try:
+                self.name=self.section.name
+                self.id=self.section.lab_id
+            except Exception as e:
+                raise e
 
 
 class FabricationProcessStep(FabricationProcessStepBase, EntryData):
