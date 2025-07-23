@@ -505,6 +505,14 @@ class EquipmentReference(Link, ArchiveSection):
         type=Instrument,
         a_eln={'component': 'ReferenceEditQuantity'},
     )
+    def normalize(self, archive:'EntryArchive', logger:'BoundLogger') -> None:
+        if self.section is not None:
+	    super().normalize(archive, logger)
+            try:
+            	self.name=self.section.name
+		self.id=self.section.lab_id
+            except Exception as e:
+                raise e
 
 
 class FabricationProcessStep(FabricationProcessStepBase, EntryData):
@@ -550,15 +558,8 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
     )
 
     def normalize(self, archive:'EntryArchive', logger:'BoundLogger') -> None:
-        super().normalize(archive, logger)
         if self.instruments.section is not None:
-            try:
-                path=self.instruments.section
-                with open(f'{path}', 'r') as f:
-                    dati=json.load(f)
-                    self.instruments.name=dati['name']
-            except Exception as e:
-                raise e
+            super().normalize(archive, logger)
 
 
 class FabricationProcess(EntryData, ArchiveSection):
