@@ -38,6 +38,7 @@ dev = ["ruff", "pytest", "structlog"]
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
+ignore = ["PLC0415"]
 exclude = [
     ".bzr",
     ".direnv",
