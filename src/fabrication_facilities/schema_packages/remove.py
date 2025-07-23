@@ -924,6 +924,7 @@ class WetCleaningbase(WetEtchingbase):
                     'etching_reactives',
                     'etching_reactives_formulas',
                     'etching_temperature',
+                    'etching_duration',
                     'filtering_system',
                     'recycle_system',
                     'initial_rinsing_cycles',
@@ -947,17 +948,6 @@ class WetCleaningbase(WetEtchingbase):
         a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
     )
-    etching_solution = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity', 'label': 'cleaning solution'},
-    )
-    etching_solution_proportions = Quantity(
-        type=str,
-        a_eln={
-            'component': 'StringEditQuantity',
-            'label': 'cleaning solution proportions',
-        },
-    )
     etching_duration = Quantity(
         type=np.float64,
         a_eln={
@@ -972,6 +962,53 @@ class WetCleaningbase(WetEtchingbase):
         section_def=WetEtchingbase,
         label= 'cleaning steps',
         repeats=True,
+    )
+
+
+class WetCleaning(FabricationProcessStep, ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+                'tag',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                ]
+            }
+        }
+    )
+
+    cleaning_steps=SubSection(
+        section_def=WetCleaningbase,
+        repeats=True,
+    )
+
+    outputs=SubSection(
+        section_def=EtchingOutputs,
+        repeats=False,
     )
 
 
