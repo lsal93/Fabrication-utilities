@@ -549,6 +549,17 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
         repeats=False,
     )
 
+    def normalize(self, archive:'EntryArchive', logger:'BoundLogger') -> None:
+        super().normalize(archive, logger)
+        if self.instruments.section is not None:
+            try:
+                path=self.instruments.section
+                with open(f'{path}', 'r') as f:
+                    dati=json.load(f)
+                    self.instruments.name=dati['name']
+            except Exception as e:
+                raise e
+
 
 class FabricationProcess(EntryData, ArchiveSection):
     m_def = Section(

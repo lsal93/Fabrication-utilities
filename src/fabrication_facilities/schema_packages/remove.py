@@ -977,12 +977,7 @@ class WetCleaningbase(WetEtchingbase):
         },
         unit='minute',
     )
-
-    etching_steps=SubSection(
-        section_def=WetEtchingbase,
-        label= 'cleaning steps',
-        repeats=True,
-    )
+    
 
 
 class WetCleaning(FabricationProcessStep, ArchiveSection):
