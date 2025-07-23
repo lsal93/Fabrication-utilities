@@ -15,6 +15,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+import os
+
 from typing import (
     TYPE_CHECKING,
 )
@@ -489,6 +491,7 @@ class Equipment(Instrument, EntryData, ArchiveSection):
 
 
 class EquipmentReference(Link, ArchiveSection):
+
     m_def = Section()
 
     id = Quantity(
@@ -509,8 +512,8 @@ class EquipmentReference(Link, ArchiveSection):
         if self.section is not None:
 	    super().normalize(archive, logger)
             try:
-            	self.name=self.section.name
-		self.id=self.section.lab_id
+                self.name=self.section.name
+		        self.id=self.section.lab_id
             except Exception as e:
                 raise e
 
