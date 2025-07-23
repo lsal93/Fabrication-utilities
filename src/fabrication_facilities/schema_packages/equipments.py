@@ -789,6 +789,12 @@ class Well(Equipment):
         """,
     )
 
+    hood_system = Quantity(
+        type=str,
+        description='Name of the hood system used for safety',
+        a_eln={'component': 'StringEditQuantity'},
+    )
+
     volume_of_solution= Quantity(
         type=np.float64,
         a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'liter'},
@@ -815,7 +821,13 @@ class Well(Equipment):
     )
 
     filtering_mechanism=Quantity(
-        type=np.float64,
+        type=bool,
+        description='There is a filtering system for the bath?',
+        a_eln={'component':'BoolEditQuantity'},
+    )
+
+    recycle_mechanism=Quantity(
+        type=bool,
         description='There is a filtering system for the bath?',
         a_eln={'component':'BoolEditQuantity'},
     )

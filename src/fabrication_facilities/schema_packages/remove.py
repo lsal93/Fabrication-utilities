@@ -36,6 +36,7 @@ from fabrication_facilities.schema_packages.utils import (
     TimeRampMassflow,
     TimeRampPressure,
     ReactiveComponents,
+    ResistivityControl,
 )
 
 if TYPE_CHECKING:
@@ -113,6 +114,7 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
                     'operator',
                     'starting_date',
                     'ending_date',
+                    'duration',
                     'short_names',
                     'target_materials_formulas',
                     'wall_temperature',
@@ -369,6 +371,7 @@ class ICP_RIEbase(RIEbase, ArchiveSection):
                     'operator',
                     'starting_date',
                     'ending_date',
+                    'duration',
                     'short_names',
                     'target_materials_formulas',
                     'wall_temperature',
@@ -493,6 +496,7 @@ class DRIE_BOSCHbase(ICP_RIEbase, ArchiveSection):
                     'operator',
                     'starting_date',
                     'ending_date',
+                    'duration',
                     'short_names',
                     'target_materials_formulas',
                     'depth_target',
@@ -672,31 +676,36 @@ class WetEtchingbase(FabricationProcessStepBase, ArchiveSection):
                     'id_item_processed',
                     'starting_date',
                     'ending_date',
+                    'duration',
                     'tag',
                     'short_names',
                     'target_materials_formulas',
                     'etching_reactives',
                     'etching_reactives_formulas',
                     'etching_temperature',
-                    'resistivity_target',
+                    'filtering_system',
+                    'recycle_system',
                     'wetting',
                     'wetting_duration',
                     'ultrasounds_required',
                     'ultrasounds_frequency',
                     'ultrasounds_duration',
+                    'bath_number',
                     'notes',
                 ]
             },
         },
     )
 
-#Aggiungere la durata degli steps anche in tutti gli altri.
-
-    resistivity_target = Quantity(
-        type=np.float64,
-        description='Value of resistivity measured on the well. If reached the step is stopped',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'ohm*cm'},
-        unit='ohm*cm',
+    filtering_system= Quantity(
+        type=bool,
+        description= 'During the process is a filtering of the solution provided?',
+        a_eln={'component':'BoolEditQuantity'},
+    )
+    recycle_system= Quantity(
+        type=bool,
+        description= 'During the process is a recycle of the solution provided?',
+        a_eln={'component':'BoolEditQuantity'},
     )
     short_names = Quantity(
         type=str,
@@ -737,7 +746,6 @@ class WetEtchingbase(FabricationProcessStepBase, ArchiveSection):
             'component':'BoolEditQuantity',
         }
     )
-
     wetting_duration = Quantity(
         type= np.float64,
         a_eln={
@@ -768,14 +776,28 @@ class WetEtchingbase(FabricationProcessStepBase, ArchiveSection):
         },
         unit='minute',
     )
+
+    bath_number=Quantity(
+        type=int,
+        description='Chronological number from the last solution renewal',
+        a_eln={'component':'NumberEditQuantity'},
+    )
+
+    resistivity_control=SubSection(
+        section_def=ResistivityControl,
+        repeats=False,
+    )
+
     materials_etched = SubSection(
         section_def=FabricationChemical,
         repeats=True,
     )
+
     reactives_used_to_etch = SubSection(
         section_def=FabricationChemical,
         repeats=True,
     )
+
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
         if self.target_materials_formulas is None:
@@ -874,7 +896,7 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
         repeats=False,
     )
 
-class WetCleaning(WetEtching):
+class WetCleaningbase(WetEtchingbase):
     m_def = Section(
         a_eln={
             'hide': [
@@ -891,46 +913,39 @@ class WetCleaning(WetEtching):
                     'job_number',
                     'name',
                     'description',
-                    'affiliation',
-                    'location',
                     'operator',
-                    'room',
                     'id_item_processed',
                     'starting_date',
                     'ending_date',
-                    'step_type',
-                    'definition_of_process_step',
-                    'keywords',
-                    'recipe_name',
-                    'recipe_file',
-                    'recipe_preview',
+                    'duration',
                     'tag',
-                    'depth_target',
-                    'duration_target',
-                    'erching_rate_target',
                     'short_names',
                     'target_materials_formulas',
-                    'etching_solution',
-                    'etching_solution_proportions',
                     'etching_reactives',
                     'etching_reactives_formulas',
-                    'enanching_temperature',
-                    'hood_pressure',
-                    'hood_atmospheric_gas',
+                    'etching_temperature',
+                    'filtering_system',
+                    'recycle_system',
+                    'initial_rinsing_cycles',
+                    'initial_rinsing_duration',
                     'wetting',
                     'wetting_duration',
                     'ultrasounds_required',
                     'ultrasounds_frequency',
                     'ultrasounds_duration',
-                    'rinsing_solution',
-                    'rinsing_solution_proportions',
-                    'rinsing_duration',
-                    'rinsing_de_ionic_H2O',
-                    'rinsing_de_ionic_H2O_duration',
                     'notes',
                 ]
             },
         },
+    )
+    initial_rinsing_cycles=Quantity(
+        type=int,
+        a_eln={'component':'NumberEditQuantity'},
+    )
+    initial_rinsing_duration = Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute',
     )
     etching_solution = Quantity(
         type=str,

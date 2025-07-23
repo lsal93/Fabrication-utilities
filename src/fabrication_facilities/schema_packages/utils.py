@@ -572,3 +572,22 @@ class ReactiveComponents(FabricationChemical):
         a_eln={'component': 'NumberEditQuantity'},
     )
 
+class ResistivityControl(ArchiveSection):
+
+    m_def=Section(
+        description='Section used in case of resistivity feedbacks',
+    )
+
+    resistivity_target=Quantity(
+        type=np.float64,
+        description='Value used as target to stop the process',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'Ohm*cm'},
+        unit='Ohm*cm',
+    )
+
+    increment_duration=Quantity(
+        type=np.float64,
+        description='Time used in the process to reach the target value',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'minute'},
+        unit='minute',
+    )

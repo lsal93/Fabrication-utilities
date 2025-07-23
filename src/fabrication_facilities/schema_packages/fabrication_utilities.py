@@ -248,7 +248,6 @@ class FabricationProcessStepBase(ProcessStep, ArchiveSection):
         a_eln={
             'hide': [
                 'comment',
-                'duration',
                 'start_time',
             ],
             'properties': {
@@ -263,6 +262,7 @@ class FabricationProcessStepBase(ProcessStep, ArchiveSection):
                     'id_item_processed',
                     'starting_date',
                     'ending_date',
+                    'duration',
                     'step_type',
                     'definition_of_process_step',
                     'keywords',
@@ -274,6 +274,12 @@ class FabricationProcessStepBase(ProcessStep, ArchiveSection):
                 ],
             },
         },
+    )
+
+    duration= Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'minute'},
+        unit='minute',
     )
     job_number = Quantity(
         type=int,
@@ -506,8 +512,8 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
         a_eln={
             'hide': [
                 'comment',
-                'duration',
                 'start_time',
+                'duration',
             ],
             'properties': {
                 'order': [
