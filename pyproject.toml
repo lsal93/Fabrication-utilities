@@ -19,10 +19,10 @@ version = "0.1.0"
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
-    { name = "Matteo Bontorno", email = "mbontorn@sissa.it" },
+    { name = "Matteo Bontorno", email = "mbontorno@fbk.eu" },
 ]
 maintainers = [
-    { name = "Matteo Bontorno", email = "mbontorn@sissa.it" },
+    { name = "Matteo Bontorno", email = "mbontorno@fbk.eu" },
 ]
 license = { file = "LICENSE" }
 dependencies = [
@@ -38,7 +38,6 @@ dev = ["ruff", "pytest", "structlog"]
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
-ignore = ["PLC0415"]
 exclude = [
     ".bzr",
     ".direnv",
@@ -84,6 +83,7 @@ select = [
 
 ignore = [
     "F403", # 'from module import *' used; unable to detect undefined names
+    "PLC0415",
 ]
 
 fixable = ["ALL"]
