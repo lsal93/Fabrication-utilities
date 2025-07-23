@@ -582,8 +582,8 @@ class ResistivityControl(ArchiveSection):
     resistivity_target=Quantity(
         type=np.float64,
         description='Value used as target to stop the process',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'Ohm*cm'},
-        unit='Ohm*cm',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'ohm*cm'},
+        unit='ohm*cm',
     )
 
     increment_duration=Quantity(
