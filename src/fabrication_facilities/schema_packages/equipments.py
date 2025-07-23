@@ -38,7 +38,12 @@ from fabrication_facilities.schema_packages.utils import (
 )
 
 if TYPE_CHECKING:
-    pass
+    from nomad.datamodel.datamodel import (
+        EntryArchive,
+    )
+    from structlog.stdlib import (
+        BoundLogger,
+    )
 
 m_package = Package(name='Equipments specific definitions ')
 
@@ -784,7 +789,7 @@ class ICP_CVD_System(PECVD_System, ArchiveSection):
 class Well(Equipment):
     m_def = Section(
         description="""
-        Bath containing some chemical solution or pure substance to perform wet processes,
+        Bath containing a chemical solution or pure substance to perform wet processes,
         """,
     )
 
@@ -848,7 +853,7 @@ class Well(Equipment):
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         if self.volume_of_solution is not None:
             super().normalize(archive, logger)
-            for token in reactives:
+            for token in self.reactives:
                 self.token.final_solution_concentration = (
                     self.token.initial_concentration
                     * self.token.dispensed_volume

@@ -137,6 +137,8 @@ def make_line_express(list1, list2, labelx, labely, finalist, labelfigure):
         )
     )
 
+# Capire se se può ingegnerizzare meglio la funzinoe per ridurre variabili
+
 
 class Section1(ArchiveSection):
     m_def = Section()
@@ -218,7 +220,7 @@ class TimeRampTemperature(PlotSection, EntryData):
 
     def normalize(self, archive, logger):
         if self.values is not None and len(self.values) > 0:
-            super(TimeRampTemperature, self).normalize(archive, logger)
+            super().normalize(archive, logger)
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
             make_line_express(
@@ -292,7 +294,7 @@ class TimeRampPressure(PlotSection, EntryData):
 
     def normalize(self, archive, logger):
         if self.values is not None and len(self.values) > 0:
-            super(TimeRampPressure, self).normalize(archive, logger)
+            super().normalize(archive, logger)
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
             make_line_express(
@@ -310,7 +312,7 @@ class TimeRampMassflow(PlotSection, EntryData):
 
     name = Quantity(
         type=str,
-        description='What gaseous massflow are you tracing? (Also the chemical formulas are accepted)',
+        description='What massflow are you tracing? (Chemical formulas are accepted)',
         a_eln={'component': 'StringEditQuantity'},
     )
 
@@ -369,7 +371,7 @@ class TimeRampMassflow(PlotSection, EntryData):
 
     def normalize(self, archive, logger):
         if self.values is not None and len(self.values) > 0:
-            super(TimeRampMassflow, self).normalize(archive, logger)
+            super().normalize(archive, logger)
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
             make_line_express(
@@ -437,7 +439,7 @@ class TimeRampRotation(PlotSection, EntryData):
 
     def normalize(self, archive, logger):
         if self.values is not None and len(self.values) > 0:
-            super(TimeRampRotation, self).normalize(archive, logger)
+            super().normalize(archive, logger)
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
             make_line_express(
@@ -551,7 +553,7 @@ class ReactiveComponents(FabricationChemical):
 
     initial_concentration = Quantity(
         type=np.float64,
-        description='Initial volume percentage concentration of the reactives by manufacturer',
+        description='Initial volume percentage of the reactives by manufacturer',
         a_eln={'component': 'NumberEditQuantity'},
     )
 

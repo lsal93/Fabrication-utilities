@@ -250,15 +250,15 @@ class RIE(FabricationProcessStep, ArchiveSection):
     m_def = Section(
         description="""
         Form of plasma etching  in which the wafer is placed on a radio-frequency-driven
-        electrode and the counter electrode has a larger area than the driven electrode.
-        Uses both physical and chemical mechanisms to achieve high levels of resolutions.
-        In the RIE process, cations are produced from reactive gases which are
-        accelerated with high energy to the substrate and chemically react with the item
-        surface. Factors such as applied coil or electrode power, reactant gas flow
-        rates, duty cycles and chamber presures were considered as main process
-        parameters. The plasma beam is generated under low pressure by an electromagnetic
-         field. High energy ions, predominantly bombarding the surface, normally create
-        a local abundance of radicals that react with the surface.
+        electrode and the counter electrode has a larger area than the driven
+        electrode. Uses both physical and chemical mechanisms to achieve high levels
+        of resolutions. In the RIE process, cations are produced from reactive gases
+        which are accelerated with high energy to the substrate and chemically react
+        with the item surface. Factors such as applied coil or electrode power, reactant
+        gas flow rates, duty cycles and chamber presures were considered as main process
+        parameters. The plasma beam is generated under low pressure by an
+        electromagnetic field. High energy ions, predominantly bombarding the surface,
+        normally create a local abundance of radicals that react with the surface.
         """,
         a_eln={
             'hide': [
@@ -630,14 +630,14 @@ class WetEtchingbase(FabricationProcessStepBase, ArchiveSection):
         Wet etching is a material removal process that uses liquid chemicals or etchants
         to remove materials from a wafer. The specific patters are defined by masks on
         the wafer. Materials that are not protected by the masks are etched away by
-        liquid chemicals. A wet etching process involves multiple chemical reactions that
-        consume the original reactants and produce new reactants. The wet etch process
-        can be described by three basic steps. (1) Diffusion of the liquid etchant to the
-        structure that is to be removed. (2) The reaction between the liquid etchant and
-        the material being etched away. A reduction-oxidation (redox) reaction usually
-        occurs. This reaction entails the oxidation of the material then dissolving the
-        oxidized material. (3) Diffusion of the byproducts in the reaction from the
-        reacted surface.
+        liquid chemicals. A wet etching process involves multiple chemical reactions
+        that consume the original reactants and produce new reactants. The wet etch
+        process can be described by three basic steps. (1) Diffusion of the liquid
+        etchant to the structure that is to be removed. (2) The reaction between the
+        liquid etchant and the material being etched away. A reduction-oxidation (redox)
+        reaction usually occurs. This reaction entails the oxidation of the material
+        then dissolving the oxidized material. (3) Diffusion of the byproducts in the
+        reaction from the reacted surface.
         """,
         a_eln={
             'hide': [

@@ -472,8 +472,8 @@ class ICP_CVD(PECVD, ArchiveSection):
         description="""
         Deposition of a solid material onto a substrate by chemical reaction of a
         gaseous precursor or mixture of precursors, commonly initiated by heat to create
-        a plasma. To generate the plasma the ICP CVD procedure uses a current in addition
-        to the lower electrodes to enanche by magnetic field the generation.
+        a plasma. To generate the plasma the ICP CVD procedure uses a current in
+        addition to the lower electrodes to enanche by magnetic field the generation.
         """,
         a_eln={
             'hide': [
@@ -572,8 +572,8 @@ class LPCVDbase(PECVDbase, ArchiveSection):
 class LPCVD(PECVD, ArchiveSection):
     m_def = Section(
         description="""
-        Deposition of a solid material onto a substrate by chemical reaction of a gaseous
-        precursor or mixture of precursors, commonly initiated by heat.
+        Deposition of a solid material onto a substrate by chemical reaction of
+        a gaseous precursor or mixture of precursors, commonly initiated by heat.
         """,
         a_eln={
             'hide': [

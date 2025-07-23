@@ -22,7 +22,6 @@ from typing import (
 
 import numpy as np
 import plotly.graph_objects as go
-import plotly.graph_objs as go
 from nomad.datamodel.data import (
     ArchiveSection,
     EntryData,
@@ -158,7 +157,7 @@ class Contour(ArchiveSection):
 class Square(Contour):
     m_def = Section(
         description="""
-        Ideal class usable to describe square shapes of items or objects of fabrication
+        Class to describe square shapes of items or objects of fabrication
         """
     )
 
@@ -172,7 +171,7 @@ class Square(Contour):
 class Circle(Contour):
     m_def = Section(
         description="""
-        Ideal class usable to describe circular shapes of items or objects of fabrication
+        Class to describe circular shapes of items or objects of fabrication
         """
     )
 
@@ -186,7 +185,7 @@ class Circle(Contour):
 class Rectangle(Contour):
     m_def = Section(
         description="""
-        Ideal class usable to describe rectangle shapes of items or objects in fabrication
+        Class usable to describe rectangle shapes of items or objects in fabrication
         """
     )
 
@@ -272,11 +271,11 @@ def make_geometric_represent(chuck, x, y, finalist):
 class ItemPlacement(PlotSection, EntryData):
     m_def = Section(
         description="""
-        Section used to describe, if needed, item placement on chucks. The reference frame
-        is centered on the chuck center (considered aligned to the chamber center) so
-        displacemnt of center of items is given with respect the chuck center. If no chuck
-        is provided you can use the chuck for describing the chamber shape, ideally the
-        role is similar in these cases.
+        Section used to describe, if needed, item placement on chucks. The reference
+        frame is centered on the chuck center (considered aligned to the chamber
+        center) so displacemnt of center of items is given with respect the chuck
+        center. If no chuck is provided you can use the chuck for describing the
+        chamber shape, ideally the role is similar in these cases.
         """
     )
 
@@ -303,7 +302,7 @@ class ItemPlacement(PlotSection, EntryData):
     )
 
     def normalize(self, archive, logger):
-        super(ItemPlacement, self).normalize(archive, logger)
+        super().normalize(archive, logger)
         if hasattr(self, 'figures') and self.figures:
             self.figures.clear()
         make_geometric_represent(
