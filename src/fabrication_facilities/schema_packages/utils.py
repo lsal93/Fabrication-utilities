@@ -26,6 +26,7 @@ from nomad.metainfo import (
     Quantity,
     Section,
     SubSection,
+    MEnum
 )
 
 if TYPE_CHECKING:
