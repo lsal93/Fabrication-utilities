@@ -733,7 +733,7 @@ class WetEtchingbase(FabricationProcessStepBase, ArchiveSection):
     )
     etching_temperature = Quantity(
         type=np.float64,
-        description='Temperature set for the bath'
+        description='Temperature set for the bath',
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'celsius',
