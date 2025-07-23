@@ -8,8 +8,6 @@ from typing import (
 )
 
 import numpy as np
-from ase.data import atomic_masses as am
-from ase.data import atomic_numbers as an
 from nomad.datamodel.data import (
     ArchiveSection,
 )
@@ -28,15 +26,14 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
     FabricationProcessStepBase,
 )
 from fabrication_facilities.schema_packages.utils import (
-    Massflow_controller,
     DRIE_Massflow_controller,
-    parse_chemical_formula,
     FabricationChemical,
-    TimeRampTemperature,
+    Massflow_controller,
+    ResistivityControl,
     TimeRampMassflow,
     TimeRampPressure,
-    ReactiveComponents,
-    ResistivityControl,
+    TimeRampTemperature,
+    parse_chemical_formula,
 )
 
 if TYPE_CHECKING:
@@ -51,17 +48,16 @@ m_package = Package(name='Etching workflow schema')
 
 
 class EtchingOutputs(ArchiveSection):
-
-    m_def=Section(
+    m_def = Section(
         a_eln={
-            'properties':{
-                'order':[
+            'properties': {
+                'order': [
                     'job_number',
                     'duration_measured',
                 ],
             }
         },
-        description= 'Set of parameters obtained in an etching process',
+        description='Set of parameters obtained in an etching process',
     )
 
     job_number = Quantity(
@@ -76,7 +72,7 @@ class EtchingOutputs(ArchiveSection):
         unit='sec',
     )
 
-    control_parameter_profile=SubSection(
+    control_parameter_profile = SubSection(
         section_def=TimeRampTemperature,
         repeats=True,
     )
@@ -84,7 +80,7 @@ class EtchingOutputs(ArchiveSection):
 
 class RIEbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
-        description = 'Atomistic component of a RIE step',
+        description='Atomistic component of a RIE step',
         a_eln={
             'hide': [
                 'description',
@@ -126,8 +122,7 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
                     'clamping',
                     'clamping_type',
                     'clamping_pressure',
-                    'number of loops'
-                    'notes',
+                    'number of loopsnotes',
                 ]
             },
         },
@@ -206,10 +201,10 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
         unit='mbar',
     )
 
-    number_of_loops=Quantity(
+    number_of_loops = Quantity(
         type=int,
         description='Times for which this step is repeated with equal parameters',
-        a_eln={'component':'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity'},
     )
 
     fluximeters = SubSection(
@@ -217,17 +212,17 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
         repeats=True,
     )
 
-    temperature_ramps=SubSection(
+    temperature_ramps = SubSection(
         section_def=TimeRampTemperature,
         repeats=True,
     )
 
-    pressure_ramps=SubSection(
+    pressure_ramps = SubSection(
         section_def=TimeRampPressure,
         repeats=True,
     )
 
-    gaseous_massflow_ramps=SubSection(
+    gaseous_massflow_ramps = SubSection(
         section_def=TimeRampMassflow,
         repeats=True,
     )
@@ -251,9 +246,8 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
             self.materials_etched = chems
 
 
-class RIE (FabricationProcessStep, ArchiveSection):
-
-    m_def=Section(
+class RIE(FabricationProcessStep, ArchiveSection):
+    m_def = Section(
         description="""
         Form of plasma etching  in which the wafer is placed on a radio-frequency-driven
         electrode and the counter electrode has a larger area than the driven electrode.
@@ -300,8 +294,8 @@ class RIE (FabricationProcessStep, ArchiveSection):
                     'etching_rate_target',
                     'notes',
                 ]
-            }
-        }
+            },
+        },
     )
 
     depth_target = Quantity(
@@ -328,12 +322,12 @@ class RIE (FabricationProcessStep, ArchiveSection):
         unit='nm/minute',
     )
 
-    etching_steps=SubSection(
+    etching_steps = SubSection(
         section_def=RIEbase,
         repeats=True,
     )
 
-    outputs=SubSection(
+    outputs = SubSection(
         section_def=EtchingOutputs,
         repeats=True,
     )
@@ -341,7 +335,7 @@ class RIE (FabricationProcessStep, ArchiveSection):
 
 class ICP_RIEbase(RIEbase, ArchiveSection):
     m_def = Section(
-        description = 'Atomistic component of an ICP RIE step',
+        description='Atomistic component of an ICP RIE step',
         a_eln={
             'hide': [
                 'description',
@@ -413,8 +407,7 @@ class ICP_RIEbase(RIEbase, ArchiveSection):
 
 
 class ICP_RIE(RIE, ArchiveSection):
-
-    m_def=Section(
+    m_def = Section(
         description="""
         Dry etching method by which energy is magnetically coupled into the
         plasma by a current carrying loop around the chamber,
@@ -454,11 +447,11 @@ class ICP_RIE(RIE, ArchiveSection):
                     'etching_rate_target',
                     'notes',
                 ]
-            }
-        }
+            },
+        },
     )
 
-    etching_steps=SubSection(
+    etching_steps = SubSection(
         section_def=ICP_RIEbase,
         repeats=True,
     )
@@ -563,7 +556,7 @@ class DRIE_BOSCHbase(ICP_RIEbase, ArchiveSection):
         unit='sec',
     )
 
-    fluximeters=SubSection(
+    fluximeters = SubSection(
         section_def=DRIE_Massflow_controller,
         repeats=True,
     )
@@ -601,7 +594,7 @@ class DRIE_BOSCH(ICP_RIE, ArchiveSection):
                     'recipe_file',
                     'recipe_preview',
                 ]
-            }
+            },
         }
     )
 
@@ -610,22 +603,22 @@ class DRIE_BOSCH(ICP_RIE, ArchiveSection):
         repeats=True,
     )
 
-    temperature_ramps=SubSection(
+    temperature_ramps = SubSection(
         section_def=TimeRampTemperature,
         repeats=True,
     )
 
-    pressure_ramps=SubSection(
+    pressure_ramps = SubSection(
         section_def=TimeRampPressure,
         repeats=True,
     )
 
-    gaseous_massflow_ramps=SubSection(
+    gaseous_massflow_ramps = SubSection(
         section_def=TimeRampMassflow,
         repeats=True,
     )
 
-    outputs=SubSection(
+    outputs = SubSection(
         section_def=EtchingOutputs,
         repeats=True,
     )
@@ -697,15 +690,15 @@ class WetEtchingbase(FabricationProcessStepBase, ArchiveSection):
         },
     )
 
-    filtering_system= Quantity(
+    filtering_system = Quantity(
         type=bool,
-        description= 'During the process is a filtering of the solution provided?',
-        a_eln={'component':'BoolEditQuantity'},
+        description='During the process is a filtering of the solution provided?',
+        a_eln={'component': 'BoolEditQuantity'},
     )
-    recycle_system= Quantity(
+    recycle_system = Quantity(
         type=bool,
-        description= 'During the process is a recycle of the solution provided?',
-        a_eln={'component':'BoolEditQuantity'},
+        description='During the process is a recycle of the solution provided?',
+        a_eln={'component': 'BoolEditQuantity'},
     )
     short_names = Quantity(
         type=str,
@@ -740,50 +733,50 @@ class WetEtchingbase(FabricationProcessStepBase, ArchiveSection):
         },
         unit='celsius',
     )
-    wetting=Quantity(
-        type= bool,
+    wetting = Quantity(
+        type=bool,
         a_eln={
-            'component':'BoolEditQuantity',
-        }
+            'component': 'BoolEditQuantity',
+        },
     )
     wetting_duration = Quantity(
-        type= np.float64,
+        type=np.float64,
         a_eln={
-            'component':'NumberEditQuantity',
+            'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'minute',
         },
         unit='minute',
     )
-    ultrasounds_required=Quantity(
-        type= bool ,
+    ultrasounds_required = Quantity(
+        type=bool,
         a_eln={
-            'component':'BoolEditQuantity',
-        }
+            'component': 'BoolEditQuantity',
+        },
     )
-    ultrasounds_frequency=Quantity(
-        type= np.float64,
+    ultrasounds_frequency = Quantity(
+        type=np.float64,
         a_eln={
-            'component':'NumberEditQuantity',
+            'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'MHz',
         },
         unit='MHz',
     )
-    ultrasounds_duration=Quantity(
-        type= np.float64,
+    ultrasounds_duration = Quantity(
+        type=np.float64,
         a_eln={
-            'component':'NumberEditQuantity',
+            'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'minute',
         },
         unit='minute',
     )
 
-    bath_number=Quantity(
+    bath_number = Quantity(
         type=int,
         description='Chronological number from the last solution renewal',
-        a_eln={'component':'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity'},
     )
 
-    resistivity_control=SubSection(
+    resistivity_control = SubSection(
         section_def=ResistivityControl,
         repeats=False,
     )
@@ -806,10 +799,10 @@ class WetEtchingbase(FabricationProcessStepBase, ArchiveSection):
             chems = []
             for v1, v2 in zip(self.short_names, self.target_materials_formulas):
                 chemical = FabricationChemical()
-                val1 = v1 #if v1 != '-' else None
+                val1 = v1  # if v1 != '-' else None
                 val2 = v2 if v2 != '-' else None
-                chemical.name=val1
-                chemical.chemical_formula=val2
+                chemical.name = val1
+                chemical.chemical_formula = val2
                 chemical.normalize(archive, logger)
                 chems.append(chemical)
             self.materials_etched = chems
@@ -820,13 +813,14 @@ class WetEtchingbase(FabricationProcessStepBase, ArchiveSection):
             reactives = []
             for v1, v2 in zip(self.etching_reactives, self.etching_reactives_formulas):
                 chemical = FabricationChemical()
-                val1 = v1 #if v1 != '-' else val1=v2
+                val1 = v1  # if v1 != '-' else val1=v2
                 val2 = v2 if v2 != '-' else None
-                chemical.name=val1
-                chemical.chemical_formula=val2
+                chemical.name = val1
+                chemical.chemical_formula = val2
                 chemical.normalize(archive, logger)
                 reactives.append(chemical)
             self.reactives_used_to_etch = reactives
+
 
 class WetEtching(FabricationProcessStep, ArchiveSection):
     m_def = Section(
@@ -863,7 +857,7 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
                     'duration_target',
                     'erching_rate_target',
                 ]
-            }
+            },
         }
     )
 
@@ -886,15 +880,16 @@ class WetEtching(FabricationProcessStep, ArchiveSection):
         unit='nm/minute',
     )
 
-    etching_steps=SubSection(
+    etching_steps = SubSection(
         section_def=WetEtchingbase,
         repeats=True,
     )
 
-    outputs=SubSection(
+    outputs = SubSection(
         section_def=EtchingOutputs,
         repeats=False,
     )
+
 
 class WetCleaningbase(WetEtchingbase):
     m_def = Section(
@@ -950,13 +945,13 @@ class WetCleaningbase(WetEtchingbase):
             },
         },
     )
-    initial_rinsing_cycles=Quantity(
+    initial_rinsing_cycles = Quantity(
         type=int,
-        a_eln={'component':'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity'},
     )
     initial_rinsing_duration = Quantity(
         type=np.float64,
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
     )
     etching_temperature = Quantity(
@@ -977,7 +972,6 @@ class WetCleaningbase(WetEtchingbase):
         },
         unit='minute',
     )
-    
 
 
 class WetCleaning(FabricationProcessStep, ArchiveSection):
@@ -1012,16 +1006,16 @@ class WetCleaning(FabricationProcessStep, ArchiveSection):
                     'recipe_file',
                     'recipe_preview',
                 ]
-            }
+            },
         }
     )
 
-    cleaning_steps=SubSection(
+    cleaning_steps = SubSection(
         section_def=WetCleaningbase,
         repeats=True,
     )
 
-    outputs=SubSection(
+    outputs = SubSection(
         section_def=EtchingOutputs,
         repeats=False,
     )

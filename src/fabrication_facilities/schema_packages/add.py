@@ -24,11 +24,10 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
 )
 from fabrication_facilities.schema_packages.utils import (
     Massflow_controller,
-    parse_chemical_formula,
-    FabricationChemical,
-    TimeRampTemperature,
     TimeRampMassflow,
     TimeRampPressure,
+    TimeRampTemperature,
+    parse_chemical_formula,
 )
 
 if TYPE_CHECKING:
@@ -43,15 +42,14 @@ m_package = Package(name='Add processes schema')
 
 
 class SynthesisOutputs(ArchiveSection):
-
-    m_def=Section(
+    m_def = Section(
         a_eln={
-            'properties':{
-                'order':[
+            'properties': {
+                'order': [
                     'job_number',
-#                    'thickness_obtained',
+                    #                    'thickness_obtained',
                     'duration_measured',
-#                    'deposition_rate_obtained',
+                    #                    'deposition_rate_obtained',
                 ],
             }
         },
@@ -88,7 +86,7 @@ class SynthesisOutputs(ArchiveSection):
     #     unit='nm/minute',
     # )
 
-    control_parameter_profile=SubSection(
+    control_parameter_profile = SubSection(
         section_def=TimeRampTemperature,
         repeats=True,
     )
@@ -96,16 +94,17 @@ class SynthesisOutputs(ArchiveSection):
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
         if self.thickness_obtained:
-            a=self.thickness_obtained
+            a = self.thickness_obtained
             if self.duration_measured:
-                b=self.duration_measured
-                self.deposition_rate_obtained = a/b
+                b = self.duration_measured
+                self.deposition_rate_obtained = a / b
             else:
                 pass
 
+
 class PECVDbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
-        description = "Atomistic component of a PECVD step",
+        description='Atomistic component of a PECVD step',
         a_eln={
             'hide': [
                 'description',
@@ -255,23 +254,23 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
         unit='mbar',
     )
 
-    number_of_loops=Quantity(
+    number_of_loops = Quantity(
         type=int,
         description='Times for which this step is repeated with equal parameters',
-        a_eln={'component':'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity'},
     )
 
-    temperature_ramps=SubSection(
+    temperature_ramps = SubSection(
         section_def=TimeRampTemperature,
         repeats=True,
     )
 
-    pressure_ramps=SubSection(
+    pressure_ramps = SubSection(
         section_def=TimeRampPressure,
         repeats=True,
     )
 
-    gaseous_massflow_ramps=SubSection(
+    gaseous_massflow_ramps = SubSection(
         section_def=TimeRampMassflow,
         repeats=True,
     )
@@ -283,7 +282,6 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
     material_elemental_composition = SubSection(
         section_def=ElementalComposition, repeats=True
     )
-
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
@@ -311,8 +309,7 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
 
 
 class PECVD(FabricationProcessStep, ArchiveSection):
-
-    m_def=Section(
+    m_def = Section(
         description="""
         Deposition of a solid material onto a substrate by chemical reaction of a
         gaseous precursor or mixture of precursors, commonly initiated by heat to create
@@ -351,10 +348,10 @@ class PECVD(FabricationProcessStep, ArchiveSection):
                     'thickness_target',
                     'duration_target',
                     'deposition_rate_target',
-                    'notes'
+                    'notes',
                 ]
-            }
-        }
+            },
+        },
     )
 
     thickness_target = Quantity(
@@ -387,19 +384,20 @@ class PECVD(FabricationProcessStep, ArchiveSection):
         unit='nm/minute',
     )
 
-    synthesis_steps=SubSection(
+    synthesis_steps = SubSection(
         section_def=PECVDbase,
         repeats=True,
     )
 
     outputs = SubSection(
-        section_def=SynthesisOutputs, repeats=False,
+        section_def=SynthesisOutputs,
+        repeats=False,
     )
 
 
 class ICP_CVDbase(PECVDbase, ArchiveSection):
     m_def = Section(
-        description = 'Atomistic component of an ICP CVD step',
+        description='Atomistic component of an ICP CVD step',
         a_eln={
             'hide': [
                 'description',
@@ -470,8 +468,7 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
 
 
 class ICP_CVD(PECVD, ArchiveSection):
-
-    m_def=Section(
+    m_def = Section(
         description="""
         Deposition of a solid material onto a substrate by chemical reaction of a
         gaseous precursor or mixture of precursors, commonly initiated by heat to create
@@ -510,22 +507,21 @@ class ICP_CVD(PECVD, ArchiveSection):
                     'thickness_target',
                     'duration_target',
                     'deposition_rate_target',
-                    'notes'
+                    'notes',
                 ]
-            }
-        }
+            },
+        },
     )
 
-    synthesis_steps=SubSection(
+    synthesis_steps = SubSection(
         section_def=ICP_CVDbase,
         repeats=True,
     )
 
 
-
 class LPCVDbase(PECVDbase, ArchiveSection):
     m_def = Section(
-        description= 'Atomistic component of a general LPCVD step',
+        description='Atomistic component of a general LPCVD step',
         a_eln={
             'hide': [
                 'description',
@@ -555,8 +551,7 @@ class LPCVDbase(PECVDbase, ArchiveSection):
                     'job_number',
                     'tag',
                     'id_item_processed',
-                    'operator'
-                    'starting_date',
+                    'operatorstarting_date',
                     'ending_date',
                     'short_name',
                     'target_material_formula',
@@ -570,13 +565,12 @@ class LPCVDbase(PECVDbase, ArchiveSection):
                     'notes',
                 ],
             },
-        }
+        },
     )
 
 
 class LPCVD(PECVD, ArchiveSection):
-
-    m_def=Section(
+    m_def = Section(
         description="""
         Deposition of a solid material onto a substrate by chemical reaction of a gaseous
         precursor or mixture of precursors, commonly initiated by heat.
@@ -613,13 +607,13 @@ class LPCVD(PECVD, ArchiveSection):
                     'thickness_target',
                     'duration_target',
                     'deposition_rate_target',
-                    'notes'
+                    'notes',
                 ]
-            }
-        }
+            },
+        },
     )
 
-    synthesis_steps=SubSection(
+    synthesis_steps = SubSection(
         section_def=LPCVDbase,
         repeats=True,
     )

@@ -2,17 +2,11 @@ from typing import (
     TYPE_CHECKING,
 )
 
-from ase.data import atomic_masses as am
-from ase.data import atomic_numbers as an
 import numpy as np
-
 from nomad.datamodel.data import (
     ArchiveSection,
     EntryData,
 )
-from nomad.datamodel.metainfo.eln import Chemical
-from nomad.datamodel.metainfo.basesections import ElementalComposition
-
 from nomad.metainfo import (
     Package,
     Quantity,
@@ -20,13 +14,12 @@ from nomad.metainfo import (
     SubSection,
 )
 
-from fabrication_facilities.schema_packages.utils import FabricationChemical
-
 from fabrication_facilities.schema_packages.fabrication_utilities import (
     EquipmentReference,
-    FabricationProcessStep,
     FabricationProcess,
+    FabricationProcessStep,
 )
+from fabrication_facilities.schema_packages.utils import FabricationChemical
 
 if TYPE_CHECKING:
     pass

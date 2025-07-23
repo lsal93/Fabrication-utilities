@@ -10,7 +10,7 @@ from fabrication_facilities.apps.directories import dir_path
 
 mec = 'data.synthesis_steps.material_elemental_composition.element'
 flux = 'data.synthesis_steps.fluximeters.elemental_composition.element'
-fluxetch='data.etching_steps.fluximeters.elemental_composition.element'
+fluxetch = 'data.etching_steps.fluximeters.elemental_composition.element'
 rec = 'data.resist_elemental_composition.element'
 gec = 'data.gas_elemental_composition.element'
 dmec = 'data.doping_material_elemental_composition.element'
@@ -18,9 +18,9 @@ sec = 'data.substrate_elemental_composition.element'
 wc = 'wafer_cleaning'
 dev = 'developing'
 meec = 'data.etching_steps.materials_etched.elemental_composition.element'
-rute= 'data.reactives_used_to_etch.elemental_composition.element'
-ru= 'reactive_used_to_etch'
-alias='data.synthesis_steps.target_material_formula'
+rute = 'data.reactives_used_to_etch.elemental_composition.element'
+ru = 'reactive_used_to_etch'
+alias = 'data.synthesis_steps.target_material_formula'
 
 menuadd_icpcvd = Menu(
     title='ICP-CVD',
@@ -74,7 +74,7 @@ menuadd_icpcvd = Menu(
         MenuItemTerms(
             title='Kind of step',
             type='terms',
-            search_quantity=f'data.synthesis_steps.tag#{dir_path['dir1']}'
+            search_quantity=f'data.synthesis_steps.tag#{dir_path["dir1"]}',
         ),
         MenuItemTerms(
             title='Material to be deposited',
@@ -104,16 +104,16 @@ menuadd_icpcvd = Menu(
         MenuItemTerms(
             title='Gases name',
             type='terms',
-            search_quantity=f'data.synthesis_steps.fluximeters.name#{dir_path['dir1']}',
+            search_quantity=f'data.synthesis_steps.fluximeters.name#{dir_path["dir1"]}',
         ),
         MenuItemHistogram(
             title='Gases fluxes',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.synthesis_steps.fluximeters.massflow#{dir_path['dir1']}',
+                search_quantity=f'data.synthesis_steps.fluximeters.massflow#{dir_path["dir1"]}',
                 unit='centimeter^3/minute',
-            )
+            ),
         ),
         MenuItemHistogram(
             title='Wall temperature',
@@ -315,16 +315,16 @@ menuadd_pecvd = Menu(
         MenuItemTerms(
             title='Gases name',
             type='terms',
-            search_quantity=f'data.synthesis_steps.fluximeters.name#{dir_path['dir27']}',
+            search_quantity=f'data.synthesis_steps.fluximeters.name#{dir_path["dir27"]}',
         ),
         MenuItemHistogram(
             title='Gases fluxes',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.synthesis_steps.fluximeters.massflow#{dir_path['dir27']}',
+                search_quantity=f'data.synthesis_steps.fluximeters.massflow#{dir_path["dir27"]}',
                 unit='centimeter^3/minute',
-            )
+            ),
         ),
         MenuItemHistogram(
             title='Wall temperature',
@@ -506,16 +506,16 @@ menuadd_lpcvd = Menu(
         MenuItemTerms(
             title='Gases name',
             type='terms',
-            search_quantity=f'data.synthesis_steps.fluximeters.name#{dir_path['dir28']}',
+            search_quantity=f'data.synthesis_steps.fluximeters.name#{dir_path["dir28"]}',
         ),
         MenuItemHistogram(
             title='Gases fluxes',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.synthesis_steps.fluximeters.massflow#{dir_path['dir28']}',
+                search_quantity=f'data.synthesis_steps.fluximeters.massflow#{dir_path["dir28"]}',
                 unit='centimeter^3/minute',
-            )
+            ),
         ),
         MenuItemHistogram(
             title='Wall temperature',
@@ -1292,7 +1292,7 @@ menuremove_icprie = Menu(
         MenuItemTerms(
             title='Kind of step',
             type='terms',
-            search_quantity=f'data.etching_steps.tag#{dir_path['dir5']}'
+            search_quantity=f'data.etching_steps.tag#{dir_path["dir5"]}',
         ),
         MenuItemTerms(
             title='Material to be etched',
@@ -1322,16 +1322,16 @@ menuremove_icprie = Menu(
         MenuItemTerms(
             title='Gases name',
             type='terms',
-            search_quantity=f'data.etching_steps.fluximeters.name#{dir_path['dir5']}',
+            search_quantity=f'data.etching_steps.fluximeters.name#{dir_path["dir5"]}',
         ),
         MenuItemHistogram(
             title='Gases fluxes',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.fluximeters.massflow#{dir_path['dir5']}',
+                search_quantity=f'data.etching_steps.fluximeters.massflow#{dir_path["dir5"]}',
                 unit='centimeter^3/minute',
-            )
+            ),
         ),
         MenuItemHistogram(
             title='Chuck temperature',
@@ -2838,16 +2838,16 @@ menuremove_rie = Menu(
         MenuItemTerms(
             title='Gases name',
             type='terms',
-            search_quantity=f'data.etching_steps.fluximeters.name#{dir_path['dir20']}',
+            search_quantity=f'data.etching_steps.fluximeters.name#{dir_path["dir20"]}',
         ),
         MenuItemHistogram(
             title='Gases fluxes',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.fluximeters.massflow#{dir_path['dir20']}',
+                search_quantity=f'data.etching_steps.fluximeters.massflow#{dir_path["dir20"]}',
                 unit='centimeter^3/minute',
-            )
+            ),
         ),
         MenuItemHistogram(
             title='Chuck temperature',
@@ -3341,7 +3341,7 @@ menutrans_baking = Menu(
     ],
 )
 
-menuremove_driebosch=Menu(
+menuremove_driebosch = Menu(
     title='DRIE BOSCH',
     size='xl',
     items=[
@@ -3393,7 +3393,7 @@ menuremove_driebosch=Menu(
         MenuItemTerms(
             title='Kind of step',
             type='terms',
-            search_quantity=f'data.etching_steps.tag#{dir_path['dir26']}'
+            search_quantity=f'data.etching_steps.tag#{dir_path["dir26"]}',
         ),
         MenuItemTerms(
             title='Material to be etched',
@@ -3423,16 +3423,16 @@ menuremove_driebosch=Menu(
         MenuItemTerms(
             title='Gases name',
             type='terms',
-            search_quantity=f'data.etching_steps.fluximeters.name#{dir_path['dir26']}',
+            search_quantity=f'data.etching_steps.fluximeters.name#{dir_path["dir26"]}',
         ),
         MenuItemHistogram(
             title='Gases fluxes',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.fluximeters.massflow#{dir_path['dir26']}',
+                search_quantity=f'data.etching_steps.fluximeters.massflow#{dir_path["dir26"]}',
                 unit='centimeter^3/minute',
-            )
+            ),
         ),
         MenuItemHistogram(
             title='Chuck temperature',

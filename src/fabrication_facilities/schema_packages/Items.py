@@ -21,6 +21,8 @@ from typing import (
 )
 
 import numpy as np
+import plotly.graph_objects as go
+import plotly.graph_objs as go
 from nomad.datamodel.data import (
     ArchiveSection,
     EntryData,
@@ -28,6 +30,7 @@ from nomad.datamodel.data import (
 from nomad.datamodel.metainfo.basesections import (
     Entity,
 )
+from nomad.datamodel.metainfo.plot import PlotlyFigure, PlotSection
 from nomad.metainfo import (
     MEnum,
     Package,
@@ -35,12 +38,6 @@ from nomad.metainfo import (
     Section,
     SubSection,
 )
-
-import plotly.graph_objects as go
-
-from nomad.datamodel.metainfo.plot import PlotSection, PlotlyFigure
-
-import plotly.graph_objs as go
 
 if TYPE_CHECKING:
     pass
@@ -53,7 +50,6 @@ m_package = Package(name='Items plugin')
 
 
 class ItemPropertyDefinition(ArchiveSection):
-
     m_def = Section(
         a_eln={
             'properties': {
@@ -61,7 +57,7 @@ class ItemPropertyDefinition(ArchiveSection):
                     'name',
                     'description',
                     'id',
-#                    'value',
+                    #                    'value',
                 ]
             }
         },
@@ -86,7 +82,6 @@ class ItemPropertyDefinition(ArchiveSection):
 
 
 class ItemShapeType(ArchiveSection):
-
     m_def = Section(
         a_eln={
             'properties': {
@@ -151,51 +146,45 @@ class ListOfItemPropertyDefinition(EntryData, ArchiveSection):
         repeats=True,
     )
 
-class Contour(ArchiveSection):
 
-    m_def=Section(
+class Contour(ArchiveSection):
+    m_def = Section(
         description="""
         Ideal class to desceibe geometric shape used as base for other definitions
         """
     )
 
-class Square(Contour):
 
-    m_def=Section(
+class Square(Contour):
+    m_def = Section(
         description="""
         Ideal class usable to describe square shapes of items or objects of fabrication
         """
     )
 
-    side=Quantity(
+    side = Quantity(
         type=np.float64,
-        a_eln={
-            'component':'NumberEditQuantity',
-            'defaultDisplayUnit': 'cm'
-        },
-        unit='cm'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'cm'},
+        unit='cm',
     )
 
-class Circle(Contour):
 
-    m_def=Section(
+class Circle(Contour):
+    m_def = Section(
         description="""
         Ideal class usable to describe circular shapes of items or objects of fabrication
         """
     )
 
-    radius=Quantity(
+    radius = Quantity(
         type=np.float64,
-        a_eln={
-            'component':'NumberEditQuantity',
-            'defaultDisplayUnit': 'cm'
-        },
-        unit='cm'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'cm'},
+        unit='cm',
     )
 
-class Rectangle(Contour):
 
-    m_def=Section(
+class Rectangle(Contour):
+    m_def = Section(
         description="""
         Ideal class usable to describe rectangle shapes of items or objects in fabrication
         """
@@ -203,39 +192,29 @@ class Rectangle(Contour):
 
     base = Quantity(
         type=np.float64,
-        a_eln={
-            'component':'NumberEditQuantity',
-            'defaultDisplayUnit': 'cm'
-        },
-        unit='cm'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'cm'},
+        unit='cm',
     )
 
     height = Quantity(
         type=np.float64,
-        a_eln={
-            'component':'NumberEditQuantity',
-            'defaultDisplayUnit': 'cm'
-        },
-        unit='cm'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'cm'},
+        unit='cm',
     )
 
 
-def make_geometric_represent(chuck,x,y,finalist):
+def make_geometric_represent(chuck, x, y, finalist):
     posizione_centro = [(x, y)]
     # Chuck creation
     fig = go.Figure()
     if chuck is not None:
         if isinstance(chuck, Circle):
-            theta = np.linspace(0, 2*np.pi, 100)
+            theta = np.linspace(0, 2 * np.pi, 100)
             x_cerchio = chuck.radius * np.cos(theta)
             y_cerchio = chuck.radius * np.sin(theta)
             fig.add_trace(
                 go.Scatter(
-                    x=x_cerchio,
-                    y=y_cerchio,
-                    mode='lines',
-                    fill='toself',
-                    name='Chuck'
+                    x=x_cerchio, y=y_cerchio, mode='lines', fill='toself', name='Chuck'
                 )
             )
         else:
@@ -245,25 +224,23 @@ def make_geometric_represent(chuck,x,y,finalist):
                 y_quad = [-half, -half, half, half, -half]
                 fig.add_trace(
                     go.Scatter(
-                        x=x_quad,
-                        y=y_quad,
-                        mode='lines',
-                        fill='toself',
-                        name='Chuck'
+                        x=x_quad, y=y_quad, mode='lines', fill='toself', name='Chuck'
                     )
                 )
-            if isinstance(chuck,Rectangle):
-                half_base =  chuck.base/ 2
-                half_height = chuck.height/2
+            if isinstance(chuck, Rectangle):
+                half_base = chuck.base / 2
+                half_height = chuck.height / 2
                 x_quad = [-half_base, half_base, half_base, -half_base, -half_base]
-                y_quad = [-half_height, -half_height, half_height, half_height, -half_height]
+                y_quad = [
+                    -half_height,
+                    -half_height,
+                    half_height,
+                    half_height,
+                    -half_height,
+                ]
                 fig.add_trace(
                     go.Scatter(
-                        x=x_quad,
-                        y=y_quad,
-                        mode='lines',
-                        fill='toself',
-                        name='Chuck'
+                        x=x_quad, y=y_quad, mode='lines', fill='toself', name='Chuck'
                     )
                 )
         for i, (x1, y1) in enumerate(posizione_centro):
@@ -273,7 +250,7 @@ def make_geometric_represent(chuck,x,y,finalist):
                     y=[y1],
                     mode='markers',
                     marker=dict(size=10, color='red'),
-                    name=f'Quadratino {i+1} centro'
+                    name=f'Quadratino {i + 1} centro',
                 )
             )
         fig.update_layout(
@@ -291,9 +268,9 @@ def make_geometric_represent(chuck,x,y,finalist):
             )
         )
 
-class ItemPlacement(PlotSection, EntryData):
 
-    m_def=Section(
+class ItemPlacement(PlotSection, EntryData):
+    m_def = Section(
         description="""
         Section used to describe, if needed, item placement on chucks. The reference frame
         is centered on the chuck center (considered aligned to the chamber center) so
@@ -305,29 +282,23 @@ class ItemPlacement(PlotSection, EntryData):
 
     item_center_x = Quantity(
         type=np.float64,
-        a_eln={
-            'component':'NumberEditQuantity',
-            'defaultDisplayUnit': 'cm'
-        },
-        unit='cm'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'cm'},
+        unit='cm',
     )
 
     item_center_y = Quantity(
         type=np.float64,
-        a_eln={
-            'component':'NumberEditQuantity',
-            'defaultDisplayUnit': 'cm'
-        },
-        unit='cm'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'cm'},
+        unit='cm',
     )
 
-    chuck_geometry=SubSection(
+    chuck_geometry = SubSection(
         section_def=Contour,
         repeats=False,
     )
 
     item_geometry = SubSection(
-        section_def = Contour,
+        section_def=Contour,
         repeats=False,
     )
 
@@ -335,25 +306,20 @@ class ItemPlacement(PlotSection, EntryData):
         super(ItemPlacement, self).normalize(archive, logger)
         if hasattr(self, 'figures') and self.figures:
             self.figures.clear()
-        make_geometric_represent(self.chuck_geometry, self.item_center_x, self.item_center_y, self.figures)
+        make_geometric_represent(
+            self.chuck_geometry, self.item_center_x, self.item_center_y, self.figures
+        )
 
 
 class ItemsPermitted(ArchiveSection):
-
-    m_def=Section()
+    m_def = Section()
 
     type_of_material = Quantity(
-        type= MEnum(
-            [
-                'dielectric',
-                'metal',
-                'other (specify in notes)'
-            ]
-        ),
-        a_eln={'component':'EnumEditQuantity'}
+        type=MEnum(['dielectric', 'metal', 'other (specify in notes)']),
+        a_eln={'component': 'EnumEditQuantity'},
     )
 
-    minimum_dimensions= Quantity(
+    minimum_dimensions = Quantity(
         type=np.float64,
         description="""
         Is intended as the minimum diameter for a circle allowed in the chamber on the
@@ -363,7 +329,7 @@ class ItemsPermitted(ArchiveSection):
         unit='cm',
     )
 
-    maximum_dimensions= Quantity(
+    maximum_dimensions = Quantity(
         type=np.float64,
         description="""
         Is intended as the maximum diameter for a circle allowed in the chamber on the
@@ -373,7 +339,7 @@ class ItemsPermitted(ArchiveSection):
         unit='cm',
     )
 
-#     doping_type
+    #     doping_type
 
     # item_shape = Quantity(
     #     description= 'Intended as the way of presenting of the sample processable.',
@@ -394,9 +360,9 @@ class ItemsPermitted(ArchiveSection):
     #     a_eln={'component': 'EnumEditQuantity'},
     # )
 
-    notes=Quantity(
+    notes = Quantity(
         type=str,
-        a_eln={'component':'RichTextEditQuantity'},
+        a_eln={'component': 'RichTextEditQuantity'},
     )
 
 
@@ -456,9 +422,9 @@ class Item(Entity, ArchiveSection):
         shape=['*'],
         a_eln={'component': 'StringEditQuantity'},
     )
-    noets=Quantity(
+    noets = Quantity(
         type=str,
-        a_eln={'component':'RichTextEditQuantity'},
+        a_eln={'component': 'RichTextEditQuantity'},
     )
     item_geometric_properties = SubSection(
         section_def=Contour,

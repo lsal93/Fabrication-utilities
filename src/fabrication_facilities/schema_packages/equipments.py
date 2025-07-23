@@ -782,8 +782,7 @@ class ICP_CVD_System(PECVD_System, ArchiveSection):
 
 
 class Well(Equipment):
-
-    m_def=Section(
+    m_def = Section(
         description="""
         Bath containing some chemical solution or pure substance to perform wet processes,
         """,
@@ -795,65 +794,67 @@ class Well(Equipment):
         a_eln={'component': 'StringEditQuantity'},
     )
 
-    volume_of_solution= Quantity(
+    volume_of_solution = Quantity(
         type=np.float64,
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'liter'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'liter'},
         unit='liter',
     )
 
-    min_bath_temperature=Quantity(
+    min_bath_temperature = Quantity(
         type=np.float64,
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
         unit='celsius',
     )
 
-    max_bath_temperature=Quantity(
+    max_bath_temperature = Quantity(
         type=np.float64,
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
         unit='celsius',
     )
 
-    max_overflow=Quantity(
+    max_overflow = Quantity(
         type=np.float64,
         description='Maximum amount of flow at disposal',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'liter'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'liter'},
         unit='liter',
     )
 
-    filtering_mechanism=Quantity(
+    filtering_mechanism = Quantity(
         type=bool,
         description='There is a filtering system for the bath?',
-        a_eln={'component':'BoolEditQuantity'},
+        a_eln={'component': 'BoolEditQuantity'},
     )
 
-    recycle_mechanism=Quantity(
+    recycle_mechanism = Quantity(
         type=bool,
         description='There is a filtering system for the bath?',
-        a_eln={'component':'BoolEditQuantity'},
+        a_eln={'component': 'BoolEditQuantity'},
     )
 
-    solution_renewal=Quantity(
+    solution_renewal = Quantity(
         type=str,
         description='Frequency of the renewal of the solution in the bath',
-        a_eln={'component':'StringEditQuantity'},
+        a_eln={'component': 'StringEditQuantity'},
     )
 
     max_number_of_repetitions = Quantity(
         type=int,
         description='Maximum number of successive steps allowed for that well',
-        a_eln={'component':'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity'},
     )
 
-    reactives=SubSection(
-        section_def=ReactiveComponents,
-        repeats=True
-    )
+    reactives = SubSection(section_def=ReactiveComponents, repeats=True)
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         if self.volume_of_solution is not None:
             super().normalize(archive, logger)
             for token in reactives:
-                self.token.final_solution_concentration = self.token.initial_concentration*self.token.dispensed_volume/self.volume_of_solution
+                self.token.final_solution_concentration = (
+                    self.token.initial_concentration
+                    * self.token.dispensed_volume
+                    / self.volume_of_solution
+                )
+
 
 class BakingFurnace(Equipment, ArchiveSection):
     m_def = Section(

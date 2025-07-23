@@ -7,16 +7,17 @@ from nomad.config.models.ui import (
 )
 
 from fabrication_facilities.apps.directories import dir_path
-
 from fabrication_facilities.apps.menu_steps import (
     menuadd_bonding,
     menuadd_electrongun,
     menuadd_icpcvd,
+    menuadd_lpcvd,
+    menuadd_pecvd,
     menuadd_sog,
     menuadd_spincoat,
     menuadd_sputtering,
-    menuremove_icprie,
     menuremove_driebosch,
+    menuremove_icprie,
     menuremove_rie,
     menuremove_stripping,
     menuremove_wetclean,
@@ -35,8 +36,6 @@ from fabrication_facilities.apps.menu_steps import (
     menutrans_track,
     menuutils_obsmeasurements,
     menuutils_startingmaterial,
-    menuadd_lpcvd,
-    menuadd_pecvd,
 )
 
 schemas = [f'*#{path_value}' for path_value in dir_path.values()]

@@ -5,29 +5,14 @@ from typing import (
 )
 
 import numpy as np
-
+import plotly.express as px
 from ase.data import atomic_masses as am
 from ase.data import atomic_numbers as an
-
-from nomad.datamodel.data import (ArchiveSection, EntryData)
-from nomad.datamodel.metainfo.annotations import (
-    ELNAnnotation,
-)
+from nomad.datamodel.data import ArchiveSection, EntryData
 from nomad.datamodel.metainfo.basesections import ElementalComposition
-
-from nomad.datamodel.metainfo.plot import PlotSection, PlotlyFigure
-import plotly.express as px
-import plotly.graph_objs as go
-from plotly.subplots import make_subplots
-
 from nomad.datamodel.metainfo.eln import Chemical
-
-from nomad.metainfo import (
-    Quantity,
-    Section,
-    SubSection,
-    MEnum
-)
+from nomad.datamodel.metainfo.plot import PlotlyFigure, PlotSection
+from nomad.metainfo import MEnum, Quantity, Section, SubSection
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (
@@ -134,8 +119,7 @@ class FabricationChemical(Chemical, ArchiveSection):
             self.elemental_composition = elementality
 
 
-def make_line_express(list1,list2,labelx,labely,finalist, labelfigure):
-
+def make_line_express(list1, list2, labelx, labely, finalist, labelfigure):
     figure1 = px.line(
         x=list1,
         y=list2,
@@ -155,82 +139,81 @@ def make_line_express(list1,list2,labelx,labely,finalist, labelfigure):
 
 
 class Section1(ArchiveSection):
-
-    m_def=Section()
+    m_def = Section()
 
     value = Quantity(
         type=np.float64,
         a_eln={
             'component': 'NumberEditQuantity',
-        }
+        },
     )
+
 
 class Section2(Section1, EntryData):
-
-    m_def=Section()
-
-    value=Section1.value.m_copy()
-    value.unit='second'
-    value.a_eln = dict(value.a_eln, defaultDisplayUnit = 'second')
-
-class TimeRampTemperature(PlotSection, EntryData):
-
     m_def = Section()
 
-    name=Quantity(
+    value = Section1.value.m_copy()
+    value.unit = 'second'
+    value.a_eln = dict(value.a_eln, defaultDisplayUnit='second')
+
+
+class TimeRampTemperature(PlotSection, EntryData):
+    m_def = Section()
+
+    name = Quantity(
         type=str,
         description='What temperature are you tracing?',
-        a_eln={'component':'StringEditQuantity'},
+        a_eln={'component': 'StringEditQuantity'},
     )
 
-    start_value=Quantity(
+    start_value = Quantity(
         type=np.float64,
         description='Value at the beginning of the increment',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit':'celsius',
+            'defaultDisplayUnit': 'celsius',
         },
         unit='celsius',
     )
 
-    end_value=Quantity(
+    end_value = Quantity(
         type=np.float64,
         description='Value at the end of the increment',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit':'celsius',
+            'defaultDisplayUnit': 'celsius',
         },
         unit='celsius',
     )
 
-    increment_duration=Quantity(
+    increment_duration = Quantity(
         type=np.float64,
         description='Duration of the increment',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'sec'},
-        unit='sec'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
     )
 
-    increment_behavior=Quantity(
+    increment_behavior = Quantity(
         type=str,
         description='Is the increment linear(uniform), sigmoidal, etc...?',
-        a_eln={'component':'StringEditQuantity'},
+        a_eln={'component': 'StringEditQuantity'},
     )
 
-    time=Quantity(
+    time = Quantity(
         type=np.float64,
         shape=['*'],
         a_eln={
-            'component':'NumberEditQuantity',
-            'defaultDisplayUnit':'sec',
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
         },
         unit='sec',
     )
 
-    values=Quantity(
+    values = Quantity(
         type=np.float64,
         shape=['*'],
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
-        unit= 'celsius'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
     )
 
     def normalize(self, archive, logger):
@@ -239,69 +222,72 @@ class TimeRampTemperature(PlotSection, EntryData):
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
             make_line_express(
-                self.time, self.values, 'Time (s)', 'Temperature (°C)',
-                self.figures, 'Ramp of temperature'
+                self.time,
+                self.values,
+                'Time (s)',
+                'Temperature (°C)',
+                self.figures,
+                'Ramp of temperature',
             )
 
 
 class TimeRampPressure(PlotSection, EntryData):
-
     m_def = Section()
 
-    name=Quantity(
+    name = Quantity(
         type=str,
         description='What pressure are you tracing?',
-        a_eln={'component':'StringEditQuantity'},
+        a_eln={'component': 'StringEditQuantity'},
     )
 
-    start_value=Quantity(
+    start_value = Quantity(
         type=np.float64,
         description='Value at the beginning of the increment',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit':'mbar',
+            'defaultDisplayUnit': 'mbar',
         },
         unit='mbar',
     )
 
-    end_value=Quantity(
+    end_value = Quantity(
         type=np.float64,
         description='Value at the end of the increment',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit':'mbar',
+            'defaultDisplayUnit': 'mbar',
         },
         unit='mbar',
     )
 
-    increment_duration=Quantity(
+    increment_duration = Quantity(
         type=np.float64,
         description='Duration of the increment',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'sec'},
-        unit='sec'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
     )
 
-    increment_behavior=Quantity(
+    increment_behavior = Quantity(
         type=str,
         description='Is the increment linear(uniform), sigmoidal, etc...?',
-        a_eln={'component':'StringEditQuantity'},
+        a_eln={'component': 'StringEditQuantity'},
     )
 
-    time=Quantity(
+    time = Quantity(
         type=np.float64,
         shape=['*'],
         a_eln={
-            'component':'NumberEditQuantity',
-            'defaultDisplayUnit':'sec',
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
         },
         unit='sec',
     )
 
-    values=Quantity(
+    values = Quantity(
         type=np.float64,
         shape=['*'],
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'mbar'},
-        unit= 'mbar'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
+        unit='mbar',
     )
 
     def normalize(self, archive, logger):
@@ -310,69 +296,75 @@ class TimeRampPressure(PlotSection, EntryData):
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
             make_line_express(
-                self.time, self.values, 'Time (s)', 'Pressure (mbar)',
-                self.figures, 'Ramp of pressure'
+                self.time,
+                self.values,
+                'Time (s)',
+                'Pressure (mbar)',
+                self.figures,
+                'Ramp of pressure',
             )
 
 
 class TimeRampMassflow(PlotSection, EntryData):
-
     m_def = Section()
 
-    name=Quantity(
+    name = Quantity(
         type=str,
         description='What gaseous massflow are you tracing? (Also the chemical formulas are accepted)',
-        a_eln={'component':'StringEditQuantity'},
+        a_eln={'component': 'StringEditQuantity'},
     )
 
-    start_value=Quantity(
+    start_value = Quantity(
         type=np.float64,
         description='Value at the beginning of the increment',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit':'centimeter^3/minute',
+            'defaultDisplayUnit': 'centimeter^3/minute',
         },
         unit='centimeter^3/minute',
     )
 
-    end_value=Quantity(
+    end_value = Quantity(
         type=np.float64,
         description='Value at the end of the increment',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit':'centimeter^3/minute',
+            'defaultDisplayUnit': 'centimeter^3/minute',
         },
         unit='centimeter^3/minute',
     )
 
-    increment_duration=Quantity(
+    increment_duration = Quantity(
         type=np.float64,
         description='Duration of the increment',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'sec'},
-        unit='sec'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
     )
 
-    increment_behavior=Quantity(
+    increment_behavior = Quantity(
         type=str,
         description='Is the increment linear(uniform), sigmoidal, etc...?',
-        a_eln={'component':'StringEditQuantity'},
+        a_eln={'component': 'StringEditQuantity'},
     )
 
-    time=Quantity(
+    time = Quantity(
         type=np.float64,
         shape=['*'],
         a_eln={
-            'component':'NumberEditQuantity',
-            'defaultDisplayUnit':'sec',
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
         },
         unit='sec',
     )
 
-    values=Quantity(
+    values = Quantity(
         type=np.float64,
         shape=['*'],
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'centimeter^3/minute'},
-        unit= 'centimeter^3/minute'
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'centimeter^3/minute',
+        },
+        unit='centimeter^3/minute',
     )
 
     def normalize(self, archive, logger):
@@ -381,63 +373,66 @@ class TimeRampMassflow(PlotSection, EntryData):
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
             make_line_express(
-                self.time, self.values, 'Time (s)', 'Massflow (sccm)',
-                self.figures, 'Ramp of massflow'
+                self.time,
+                self.values,
+                'Time (s)',
+                'Massflow (sccm)',
+                self.figures,
+                'Ramp of massflow',
             )
 
 
 class TimeRampRotation(PlotSection, EntryData):
-
     m_def = Section()
 
-    name=Quantity(
+    name = Quantity(
         type=str,
         description='What rotation are you tracing?',
-        a_eln={'component':'StringEditQuantity'},
+        a_eln={'component': 'StringEditQuantity'},
     )
 
-    start_value=Quantity(
+    start_value = Quantity(
         type=np.float64,
         description='Value at the beginning of the increment',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'rpm'},
-        unit='rpm'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'rpm'},
+        unit='rpm',
     )
 
-    end_value=Quantity(
+    end_value = Quantity(
         type=np.float64,
         description='Value at the end of the increment',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'rpm'},
-        unit='rpm'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'rpm'},
+        unit='rpm',
     )
 
-    increment_duration=Quantity(
+    increment_duration = Quantity(
         type=np.float64,
         description='Duration of the increment',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'sec'},
-        unit='sec'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
     )
 
-    increment_behavior=Quantity(
+    increment_behavior = Quantity(
         type=str,
         description='Is the increment linear(uniform), sigmoidal, etc...?',
-        a_eln={'component':'StringEditQuantity'},
+        a_eln={'component': 'StringEditQuantity'},
     )
 
-    time=Quantity(
+    time = Quantity(
         type=np.float64,
         shape=['*'],
         a_eln={
-            'component':'NumberEditQuantity',
-            'defaultDisplayUnit':'sec',
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
         },
         unit='sec',
     )
 
-    values=Quantity(
+    values = Quantity(
         type=np.float64,
         shape=['*'],
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'rpm'},
-        unit= 'rpm'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'rpm'},
+        unit='rpm',
     )
 
     def normalize(self, archive, logger):
@@ -446,13 +441,16 @@ class TimeRampRotation(PlotSection, EntryData):
             if hasattr(self, 'figures') and self.figures:
                 self.figures.clear()
             make_line_express(
-                self.time, self.values, 'Time (s)', 'Spin frequency (rpm)',
-                self.figures, 'Ramp of spin frequency'
+                self.time,
+                self.values,
+                'Time (s)',
+                'Spin frequency (rpm)',
+                self.figures,
+                'Ramp of spin frequency',
             )
 
 
 class Massflow_controller(FabricationChemical, ArchiveSection):
-
     m_def = Section(
         a_eln={'overview': True, 'hide': ['lab_id', 'datetime']},
     )
@@ -466,21 +464,21 @@ class Massflow_controller(FabricationChemical, ArchiveSection):
         unit='centimeter^3/minute',
     )
 
-    gaseous_massflow_ramps=SubSection(
+    gaseous_massflow_ramps = SubSection(
         section_def=TimeRampMassflow,
         repeats=True,
     )
 
-class DRIE_Massflow_controller(Massflow_controller):
 
+class DRIE_Massflow_controller(Massflow_controller):
     m_def = Section(
         a_eln={'overview': True, 'hide': ['lab_id', 'datetime', 'massflow']},
     )
 
-    priority=Quantity(
+    priority = Quantity(
         type=str,
         description='Parameter describing the ordering in the chemical reactivity',
-        a_eln={'component':'StringEditQuantity'},
+        a_eln={'component': 'StringEditQuantity'},
     )
 
     inactive_state_massflow = Quantity(
@@ -506,21 +504,17 @@ class DRIE_Massflow_controller(Massflow_controller):
     pulse_time = Quantity(
         type=np.float64,
         description='Atomistic time of activity for the gas',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec'
-        },
-        unit='sec'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
     )
 
-    gaseous_massflow_ramps=SubSection(
+    gaseous_massflow_ramps = SubSection(
         section_def=TimeRampMassflow,
         repeats=True,
     )
 
 
 class ReactiveComponents(FabricationChemical):
-
     m_def = Section(
         definition='Chemicals for wet fabrication steps',
         a_eln={
@@ -532,8 +526,8 @@ class ReactiveComponents(FabricationChemical):
                 'end_time',
                 'start_time',
             ],
-            'properties':{
-                'order':[
+            'properties': {
+                'order': [
                     'name',
                     'chemmical_formula',
                     'description',
@@ -541,30 +535,30 @@ class ReactiveComponents(FabricationChemical):
                     'purity_level',
                     'final_solution_concentration',
                 ],
-            }
+            },
         },
     )
 
-    purity_level= Quantity(
+    purity_level = Quantity(
         description='Purity level of the starting reactives by manufacturer',
         type=MEnum(
             'VLSI',
             'ULSI',
             'SLSI',
         ),
-        a_eln={'component': 'EnumEditQuantity'}
+        a_eln={'component': 'EnumEditQuantity'},
     )
 
     initial_concentration = Quantity(
         type=np.float64,
         description='Initial volume percentage concentration of the reactives by manufacturer',
-        a_eln={'component':'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity'},
     )
 
     dispensed_volume = Quantity(
         type=np.float64,
         description='Volume of reactive used to generate the final solution',
-        a_eln={'component':'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity'},
     )
 
     final_solution_concentration = Quantity(
@@ -573,22 +567,22 @@ class ReactiveComponents(FabricationChemical):
         a_eln={'component': 'NumberEditQuantity'},
     )
 
-class ResistivityControl(ArchiveSection):
 
-    m_def=Section(
+class ResistivityControl(ArchiveSection):
+    m_def = Section(
         description='Section used in case of resistivity feedbacks',
     )
 
-    resistivity_target=Quantity(
+    resistivity_target = Quantity(
         type=np.float64,
         description='Value used as target to stop the process',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'ohm*cm'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'ohm*cm'},
         unit='ohm*cm',
     )
 
-    increment_duration=Quantity(
+    increment_duration = Quantity(
         type=np.float64,
         description='Time used in the process to reach the target value',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'minute'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
     )
