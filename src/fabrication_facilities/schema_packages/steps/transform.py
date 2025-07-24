@@ -64,7 +64,7 @@ class EBL(FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
-                    'dose',
+                    'area_dose',
                     'writing_field_dimension',
                     'address_size',
                     'clock',
@@ -87,9 +87,9 @@ class EBL(FabricationProcessStep, ArchiveSection):
             'component': 'StringEditQuantity',
         },
     )
-    dose = Quantity(
+    area_dose = Quantity(
         type=np.float64,
-        description='Dose used in the process',
+        description='Dose per area used in the process',
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'uC/centimeter^2',

@@ -93,7 +93,6 @@ class Clamping_System(ArchiveSection):
 
 
 class Chuck (ArchiveSection):
-
     m_def=Section(
         description="""
         Section containing all parameters relative to the chuck.
@@ -112,6 +111,81 @@ class Chuck (ArchiveSection):
         description='Power imposed on the chuck',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'W'},
         unit='W',
+    )
+
+    chuck_frequency = Quantity(
+        type=np.float64,
+        description='Frequency impulse imposed on the chuck',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'MHz'},
+        unit='MHz',
+    )
+
+    bias = Quantity(
+        type=np.float64,
+        description='Voltage imposed on the sample by electrodes',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'V'},
+        unit='V',
+    )
+
+    temperature_ramps = SubSection(
+        section_def = TimeRampTemperature,
+        repeats=True,
+    )
+
+class DRIE_Chuck(ArchiveSection):
+    m_def=Section(
+        description="""
+        Section containing all parameters relative to the chuck in a DRIE process. The
+        main property is the existence of an alternate powering for electrical data,
+        so also the duration of each phase is reported.
+        """
+    )
+
+    chuck_temperature = Quantity(
+        type=np.float64,
+        description='Temperature imposed on the chuck',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+
+    high_chuck_power = Quantity(
+        type=np.float64,
+        description='Power erogated on the chuck in the high phase',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    low_chuck_power = Quantity(
+        type=np.float64,
+        description='Power erogated on the chuck in the low phase',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    high_chuck_power_duration = Quantity(
+        type=np.float64,
+        description='Power erogated on the chuck in the high phase',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
+    )
+
+    low_chuck_power_duration = Quantity(
+        type=np.float64,
+        description='Duration of the low phase',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
     )
 
     chuck_frequency = Quantity(
@@ -165,11 +239,6 @@ class Chamber(ArchiveSection):
         description='Temperature of the wall of the chamber',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
         unit='celsius',
-    )
-
-    chuck= SubSection(
-        section_def=Chuck,
-        repeats=False,
     )
 
     item_carrier = SubSection(

@@ -30,7 +30,13 @@ from fabrication_facilities.schema_packages.utils import (
     parse_chemical_formula,
 )
 
-from fabrication_facilities.schema_packages.steps.utils import Massflow_controller
+from fabrication_facilities.schema_packages.steps.utils import (
+    Massflow_controller,
+    Chuck,
+    Chamber,
+    ICP_Column,
+    Clamping_System,
+)
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (
@@ -138,15 +144,15 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
                     'ending_date',
                     'short_name',
                     'target_material_formula',
-                    'wall_temperature',
-                    'chuck_temperature',
-                    'chuck_power',
-                    'chuck_frequency',
-                    'chamber_pressure',
-                    'bias',
-                    'clamping',
-                    'clamping_type',
-                    'clamping_pressure',
+                    # 'wall_temperature',
+                    # 'chuck_temperature',
+                    # 'chuck_power',
+                    # 'chuck_frequency',
+                    # 'chamber_pressure',
+                    # 'bias',
+                    # 'clamping',
+                    # 'clamping_type',
+                    # 'clamping_pressure',
                     'number_of_loops',
                     'notes',
                 ]
@@ -169,92 +175,92 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
         a_eln={'component': 'StringEditQuantity'},
     )
 
-    chamber_pressure = Quantity(
-        type=np.float64,
-        description='Pressure in the chamber',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'mbar',
-        },
-        unit='mbar',
-    )
+    # chamber_pressure = Quantity(
+    #     type=np.float64,
+    #     description='Pressure in the chamber',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'mbar',
+    #     },
+    #     unit='mbar',
+    # )
 
-    wall_temperature = Quantity(
-        type=np.float64,
-        description='Temperature of the chamber walls',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
+    # wall_temperature = Quantity(
+    #     type=np.float64,
+    #     description='Temperature of the chamber walls',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'celsius',
+    #     },
+    #     unit='celsius',
+    # )
 
-    chuck_temperature = Quantity(
-        type=np.float64,
-        description='Temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
+    # chuck_temperature = Quantity(
+    #     type=np.float64,
+    #     description='Temperature of the chuck',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'celsius',
+    #     },
+    #     unit='celsius',
+    # )
 
-    chuck_power = Quantity(
-        type=np.float64,
-        description='Power erogated on the chuck by the electrodes',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
+    # chuck_power = Quantity(
+    #     type=np.float64,
+    #     description='Power erogated on the chuck by the electrodes',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'watt',
+    #     },
+    #     unit='watt',
+    # )
 
-    chuck_frequency = Quantity(
-        type=np.float64,
-        description='Frequency of current on the chuck by the electrodes',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
-    )
+    # chuck_frequency = Quantity(
+    #     type=np.float64,
+    #     description='Frequency of current on the chuck by the electrodes',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'MHz',
+    #     },
+    #     unit='MHz',
+    # )
 
-    bias = Quantity(
-        type=np.float64,
-        description='Bias voltage in the chamber',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'volt',
-        },
-        unit='volt',
-    )
+    # bias = Quantity(
+    #     type=np.float64,
+    #     description='Bias voltage in the chamber',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'volt',
+    #     },
+    #     unit='volt',
+    # )
 
-    clamping = Quantity(
-        type=bool,
-        description='Is clamping used in the process?',
-        a_eln={'component': 'BoolEditQuantity'},
-    )
+    # clamping = Quantity(
+    #     type=bool,
+    #     description='Is clamping used in the process?',
+    #     a_eln={'component': 'BoolEditQuantity'},
+    # )
 
-    clamping_type = Quantity(
-        type=MEnum(
-            [
-                'None',
-                'Mechanical',
-                'Electrostatic',
-            ]
-        ),
-        a_eln={'component': 'EnumEditQuantity'},
-    )
+    # clamping_type = Quantity(
+    #     type=MEnum(
+    #         [
+    #             'None',
+    #             'Mechanical',
+    #             'Electrostatic',
+    #         ]
+    #     ),
+    #     a_eln={'component': 'EnumEditQuantity'},
+    # )
 
-    clamping_pressure = Quantity(
-        type=np.float64,
-        description='Pressure generated by a cooling helium flow on the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'mbar',
-        },
-        unit='mbar',
-    )
+    # clamping_pressure = Quantity(
+    #     type=np.float64,
+    #     description='Pressure generated by a cooling helium flow on the chuck',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'mbar',
+    #     },
+    #     unit='mbar',
+    # )
 
     number_of_loops = Quantity(
         type=int,
@@ -262,25 +268,41 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity'},
     )
 
-    temperature_ramps = SubSection(
-        section_def=TimeRampTemperature,
-        repeats=True,
-    )
+    # temperature_ramps = SubSection(
+    #     section_def=TimeRampTemperature,
+    #     repeats=True,
+    # )
 
-    pressure_ramps = SubSection(
-        section_def=TimeRampPressure,
-        repeats=True,
-    )
+    # pressure_ramps = SubSection(
+    #     section_def=TimeRampPressure,
+    #     repeats=True,
+    # )
 
-    gaseous_massflow_ramps = SubSection(
-        section_def=TimeRampMassflow,
-        repeats=True,
-    )
+    # gaseous_massflow_ramps = SubSection(
+    #     section_def=TimeRampMassflow,
+    #     repeats=True,
+    # )
 
     fluximeters = SubSection(
         section_def=Massflow_controller,
         repeats=True,
     )
+
+    chamber = SubSection(
+        section_def=Chamber,
+        repeats=False,
+    )
+
+    chuck= SubSection(
+        section_def=Chuck,
+        repeats=False,
+    )
+
+    clamping= SubSection(
+        section_def = Clamping_System,
+        repeats = False
+    )
+
     material_elemental_composition = SubSection(
         section_def=ElementalComposition, repeats=True
     )
@@ -431,17 +453,17 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
                     'ending_date',
                     'short_name',
                     'target_material_formula',
-                    'wall_temperature',
-                    'chuck_temperature',
-                    'chuck_power',
-                    'chuck_frequency',
-                    'chamber_pressure',
-                    'bias',
-                    'icp_power',
-                    'icp_frequency',
-                    'clamping',
-                    'clamping_type',
-                    'clamping_pressure',
+                    # 'wall_temperature',
+                    # 'chuck_temperature',
+                    # 'chuck_power',
+                    # 'chuck_frequency',
+                    # 'chamber_pressure',
+                    # 'bias',
+                    # 'icp_power',
+                    # 'icp_frequency',
+                    # 'clamping',
+                    # 'clamping_type',
+                    # 'clamping_pressure',
                     'number_of_loops',
                     'notes',
                 ]
@@ -449,24 +471,24 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
         },
     )
 
-    icp_power = Quantity(
-        type=np.float64,
-        description='Power erogated in the region of the plasma',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
-    icp_frequency = Quantity(
-        type=np.float64,
-        description='Frequency of current on the gases area',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
-    )
+    # icp_power = Quantity(
+    #     type=np.float64,
+    #     description='Power erogated in the region of the plasma',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'watt',
+    #     },
+    #     unit='watt',
+    # )
+    # icp_frequency = Quantity(
+    #     type=np.float64,
+    #     description='Frequency of current on the gases area',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'MHz',
+    #     },
+    #     unit='MHz',
+    # )
 
 
 class ICP_CVD(PECVD, ArchiveSection):
@@ -521,7 +543,7 @@ class ICP_CVD(PECVD, ArchiveSection):
     )
 
 
-class LPCVDbase(PECVDbase, ArchiveSection):
+class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
         description='Atomistic component of a general LPCVD step',
         a_eln={
@@ -544,31 +566,31 @@ class LPCVDbase(PECVDbase, ArchiveSection):
                 'affiliation',
                 'room',
                 'location',
-                'chuck_power',
-                'chuck_frequency',
-                'bias',
             ],
             'properties': {
                 'order': [
                     'job_number',
                     'tag',
                     'id_item_processed',
-                    'operatorstarting_date',
+                    'operator',
+                    'starting_date',
                     'ending_date',
                     'short_name',
                     'target_material_formula',
-                    'wall_temperature',
-                    'chamber_pressure',
-                    'chuck_temperature',
-                    'clamping',
-                    'clamping_type',
-                    'clamping_pressure',
+                    # 'wall_temperature',
+                    # 'chamber_pressure',
+                    # 'chuck_temperature',
+                    # 'clamping',
+                    # 'clamping_type',
+                    # 'clamping_pressure',
                     'number_of_loops',
                     'notes',
                 ],
             },
         },
     )
+
+    PECVD.chamber.m_remove(wall_temperature)
 
 
 class LPCVD(PECVD, ArchiveSection):

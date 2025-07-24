@@ -40,6 +40,8 @@ from fabrication_facilities.schema_packages.steps.utils import (
     ICP_Column,
     Clamping_System,
     Chamber,
+    Chuck,
+    DRIE_Chuck
 )
 
 
@@ -130,7 +132,7 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
                     # 'clamping',
                     # 'clamping_type',
                     # 'clamping_pressure',
-                    'number of loops',
+                    'number_of_loops',
                     'notes',
                 ]
             },
@@ -226,25 +228,15 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
         repeats=False,
     )
 
+    chuck= SubSection(
+        section_def=Chuck,
+        repeats=False,
+    )
+
     clamping= SubSection(
         section_def = Clamping_System,
         repeats = False
     )
-
-    # temperature_ramps = SubSection(
-    #     section_def=TimeRampTemperature,
-    #     repeats=True,
-    # )
-
-    # pressure_ramps = SubSection(
-    #     section_def=TimeRampPressure,
-    #     repeats=True,
-    # )
-
-    # gaseous_massflow_ramps = SubSection(
-    #     section_def=TimeRampMassflow,
-    #     repeats=True,
-    # )
 
     materials_etched = SubSection(
         section_def=FabricationChemical,
@@ -386,18 +378,18 @@ class ICP_RIEbase(RIEbase, ArchiveSection):
                     'ending_date',
                     'duration',
                     'short_names',
-                    'target_materials_formulas',
-                    'wall_temperature',
-                    'chamber_pressure',
-                    'chuck_temperature',
-                    'chuck_power',
-                    'chuck_frequency',
-                    'icp_power',
-                    'icp_frequency',
-                    'bias',
-                    'clamping',
-                    'clamping_type',
-                    'clamping_pressure',
+                    # 'target_materials_formulas',
+                    # 'wall_temperature',
+                    # 'chamber_pressure',
+                    # 'chuck_temperature',
+                    # 'chuck_power',
+                    # 'chuck_frequency',
+                    # 'icp_power',
+                    # 'icp_frequency',
+                    # 'bias',
+                    # 'clamping',
+                    # 'clamping_type',
+                    # 'clamping_pressure',
                     'number_of_loops',
                     'notes',
                 ]
@@ -405,23 +397,28 @@ class ICP_RIEbase(RIEbase, ArchiveSection):
         },
     )
 
-    icp_power = Quantity(
-        type=np.float64,
-        description='Power erogated in the region of the plasma',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
-    icp_frequency = Quantity(
-        type=np.float64,
-        description='Frequency of current on the gases area',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
+    # icp_power = Quantity(
+    #     type=np.float64,
+    #     description='Power erogated in the region of the plasma',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'watt',
+    #     },
+    #     unit='watt',
+    # )
+    # icp_frequency = Quantity(
+    #     type=np.float64,
+    #     description='Frequency of current on the gases area',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'MHz',
+    #     },
+    #     unit='MHz',
+    # )
+
+    icp_column=SubSection(
+        section_def=ICP_Column,
+        repeats=False,
     )
 
 
@@ -514,20 +511,20 @@ class DRIE_BOSCHbase(ICP_RIEbase, ArchiveSection):
                     'depth_target',
                     'duration_target',
                     'etching_rate_target',
-                    'wall_temperature',
-                    'chamber_pressure',
-                    'chuck_temperature',
-                    'high_chuck_power',
-                    'high_chuck_power_duration',
-                    'low_chuck_power',
-                    'low_chuck_power_duration',
-                    'chuck_frequency',
-                    'icp_power',
-                    'icp_frequency',
-                    'bias',
-                    'clamping',
-                    'clamping_type',
-                    'clamping_pressure',
+                    # 'wall_temperature',
+                    # 'chamber_pressure',
+                    # 'chuck_temperature',
+                    # 'high_chuck_power',
+                    # 'high_chuck_power_duration',
+                    # 'low_chuck_power',
+                    # 'low_chuck_power_duration',
+                    # 'chuck_frequency',
+                    # 'icp_power',
+                    # 'icp_frequency',
+                    # 'bias',
+                    # 'clamping',
+                    # 'clamping_type',
+                    # 'clamping_pressure',
                     'number_of_loops',
                     'notes',
                 ]
@@ -535,50 +532,57 @@ class DRIE_BOSCHbase(ICP_RIEbase, ArchiveSection):
         },
     )
 
-    high_chuck_power = Quantity(
-        type=np.float64,
-        description='Power erogated on the chuck in the high phase',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
+    # high_chuck_power = Quantity(
+    #     type=np.float64,
+    #     description='Power erogated on the chuck in the high phase',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'watt',
+    #     },
+    #     unit='watt',
+    # )
 
-    low_chuck_power = Quantity(
-        type=np.float64,
-        description='Power erogated on the chuck in the low phase',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
+    # low_chuck_power = Quantity(
+    #     type=np.float64,
+    #     description='Power erogated on the chuck in the low phase',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'watt',
+    #     },
+    #     unit='watt',
+    # )
 
-    high_chuck_power_duration = Quantity(
-        type=np.float64,
-        description='Power erogated on the chuck in the high phase',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
-        },
-        unit='sec',
-    )
+    # high_chuck_power_duration = Quantity(
+    #     type=np.float64,
+    #     description='Power erogated on the chuck in the high phase',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'sec',
+    #     },
+    #     unit='sec',
+    # )
 
-    low_chuck_power_duration = Quantity(
-        type=np.float64,
-        description='Duration of the low phase',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
-        },
-        unit='sec',
-    )
+    # low_chuck_power_duration = Quantity(
+    #     type=np.float64,
+    #     description='Duration of the low phase',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'sec',
+    #     },
+    #     unit='sec',
+    # )
 
     fluximeters = SubSection(
         section_def=DRIE_Massflow_controller,
         repeats=True,
     )
+
+    chuck= SubSection(
+        section_def=DRIE_Chuck,
+        repeats=False,
+    )
+
+
 
 
 class DRIE_BOSCH(ICP_RIE, ArchiveSection):
@@ -621,21 +625,6 @@ class DRIE_BOSCH(ICP_RIE, ArchiveSection):
         section_def=DRIE_BOSCHbase,
         repeats=True,
     )
-
-    # temperature_ramps = SubSection(
-    #     section_def=TimeRampTemperature,
-    #     repeats=True,
-    # )
-
-    # pressure_ramps = SubSection(
-    #     section_def=TimeRampPressure,
-    #     repeats=True,
-    # )
-
-    # gaseous_massflow_ramps = SubSection(
-    #     section_def=TimeRampMassflow,
-    #     repeats=True,
-    # )
 
     outputs = SubSection(
         section_def=EtchingOutputs,
