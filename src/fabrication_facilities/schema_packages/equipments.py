@@ -785,7 +785,7 @@ class ICP_CVD_System(PECVD_System, ArchiveSection):
         unit='MHz',
     )
 
-
+#suggested name instead Well: Wet_bench_unit
 class Well(Equipment):
     m_def = Section(
         description="""
