@@ -31,7 +31,7 @@ Utilities_entry_point = UtilitiesEntryPoint(
 
 class AddEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.add import m_package
+        from fabrication_facilities.schema_packages.steps.add import m_package
 
         return m_package
 
@@ -44,7 +44,7 @@ Add_entry_point = AddEntryPoint(
 
 class TransformEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.transform import m_package
+        from fabrication_facilities.schema_packages.steps.transform import m_package
 
         return m_package
 
@@ -57,7 +57,7 @@ Transform_entry_point = TransformEntryPoint(
 
 class RemoveEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.remove import m_package
+        from fabrication_facilities.schema_packages.steps.remove import m_package
 
         return m_package
 
