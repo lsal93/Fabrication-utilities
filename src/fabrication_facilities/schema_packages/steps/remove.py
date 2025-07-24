@@ -26,6 +26,7 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
     FabricationProcessStepBase,
 )
 from fabrication_facilities.schema_packages.utils import (
+    FabricationChemical,
     TimeRampMassflow,
     TimeRampPressure,
     TimeRampTemperature,
