@@ -36,6 +36,7 @@ from fabrication_facilities.schema_packages.steps.utils import (
     Chamber,
     ICP_Column,
     Clamping_System,
+    Carrier,
 )
 
 if TYPE_CHECKING:
