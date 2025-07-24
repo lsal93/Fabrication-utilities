@@ -171,7 +171,7 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
     )
     bias = Quantity(
         type=np.float64,
-        description='Voltage imposed on the sample by electodes',
+        description='Voltage imposed on the sample by electrodes',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'V'},
         unit='V',
     )
