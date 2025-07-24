@@ -23,12 +23,13 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
     FabricationProcessStepBase,
 )
 from fabrication_facilities.schema_packages.utils import (
-    Massflow_controller,
     TimeRampMassflow,
     TimeRampPressure,
     TimeRampTemperature,
     parse_chemical_formula,
 )
+
+from fabrication_facilities.schema_packages.steps.utils import Massflow_controller
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (
