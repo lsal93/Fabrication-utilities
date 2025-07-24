@@ -109,6 +109,121 @@ class SynthesisOutputs(ArchiveSection):
             else:
                 pass
 
+class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
+    m_def = Section(
+        description='Atomistic component of a general LPCVD step',
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+                'step_type',
+                'definition_of_process_step',
+                'keywords',
+                'recipe_name',
+                'recipe_file',
+                'recipe_preview',
+                'name',
+                'description',
+                'affiliation',
+                'room',
+                'location',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'tag',
+                    'id_item_processed',
+                    'operator',
+                    'starting_date',
+                    'ending_date',
+                    'short_name',
+                    'target_material_formula',
+                    'chamber_temperature',
+                    'chamber_pressure',
+                    'number_of_loops',
+                    'notes',
+                ],
+            },
+        },
+    )
+
+    short_name = Quantity(
+        type=str,
+        description='Material to be deposited',
+        a_eln={
+            'component': 'StringEditQuantity',
+            'label': 'target material',
+        },
+    )
+
+    target_material_formula = Quantity(
+        type=str,
+        description='Formula of the material target. Insert only if known',
+        a_eln={'component': 'StringEditQuantity'},
+    )
+
+    chamber_pressure = Quantity(
+        type=np.float64,
+        description='Pressure in the chamber',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
+        unit='mbar',
+    )
+
+    chamber_temperature = Quantity(
+        type=np.float64,
+        description='Temperature of the chamber',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+
+    number_of_loops = Quantity(
+        type=int,
+        description='Times for which this step is repeated with equal parameters',
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+
+    item_carrier = SubSection(
+        section_def = Carrier,
+        repeats = False
+    )
+
+    fluximeters = SubSection(
+        section_def=Massflow_controller,
+        repeats=True,
+    )
+
+    material_elemental_composition = SubSection(
+        section_def=ElementalComposition, repeats=True
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+        if self.target_material_formula:
+            elements, counts = parse_chemical_formula(self.target_material_formula)
+            total = 0
+            for token in counts:
+                total += int(token)
+            mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
+            if total != 0:
+                elemental_fraction = np.array(counts) / total
+                elementality = []
+                i = 0
+                for entry in elements:
+                    elemental_try = ElementalComposition()
+                    elemental_try.element = entry
+                    elemental_try.atomic_fraction = elemental_fraction[i]
+                    mass_frac = (am[an[entry]] * counts[i]) / mass
+                    elemental_try.mass_fraction = mass_frac
+                    i += 1
+                    elementality.append(elemental_try)
+            else:
+                print('No elements provided')
+            self.material_elemental_composition = elementality
 
 class PECVDbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
@@ -160,20 +275,20 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
         },
     )
 
-    short_name = Quantity(
-        type=str,
-        description='Material to be deposited',
-        a_eln={
-            'component': 'StringEditQuantity',
-            'label': 'target material',
-        },
-    )
+    # short_name = Quantity(
+    #     type=str,
+    #     description='Material to be deposited',
+    #     a_eln={
+    #         'component': 'StringEditQuantity',
+    #         'label': 'target material',
+    #     },
+    # )
 
-    target_material_formula = Quantity(
-        type=str,
-        description='Formula of the material target. Insert only if known',
-        a_eln={'component': 'StringEditQuantity'},
-    )
+    # target_material_formula = Quantity(
+    #     type=str,
+    #     description='Formula of the material target. Insert only if known',
+    #     a_eln={'component': 'StringEditQuantity'},
+    # )
 
     # chamber_pressure = Quantity(
     #     type=np.float64,
@@ -262,11 +377,11 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
     #     unit='mbar',
     # )
 
-    number_of_loops = Quantity(
-        type=int,
-        description='Times for which this step is repeated with equal parameters',
-        a_eln={'component': 'NumberEditQuantity'},
-    )
+    # number_of_loops = Quantity(
+    #     type=int,
+    #     description='Times for which this step is repeated with equal parameters',
+    #     a_eln={'component': 'NumberEditQuantity'},
+    # )
 
     # temperature_ramps = SubSection(
     #     section_def=TimeRampTemperature,
@@ -283,10 +398,10 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
     #     repeats=True,
     # )
 
-    fluximeters = SubSection(
-        section_def=Massflow_controller,
-        repeats=True,
-    )
+    # fluximeters = SubSection(
+    #     section_def=Massflow_controller,
+    #     repeats=True,
+    # )
 
     chamber = SubSection(
         section_def=Chamber,
@@ -303,33 +418,33 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
         repeats = False
     )
 
-    material_elemental_composition = SubSection(
-        section_def=ElementalComposition, repeats=True
-    )
+    # material_elemental_composition = SubSection(
+    #     section_def=ElementalComposition, repeats=True
+    # )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        super().normalize(archive, logger)
         if self.target_material_formula:
-            elements, counts = parse_chemical_formula(self.target_material_formula)
-            total = 0
-            for token in counts:
-                total += int(token)
-            mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
-            if total != 0:
-                elemental_fraction = np.array(counts) / total
-                elementality = []
-                i = 0
-                for entry in elements:
-                    elemental_try = ElementalComposition()
-                    elemental_try.element = entry
-                    elemental_try.atomic_fraction = elemental_fraction[i]
-                    mass_frac = (am[an[entry]] * counts[i]) / mass
-                    elemental_try.mass_fraction = mass_frac
-                    i += 1
-                    elementality.append(elemental_try)
-            else:
-                print('No elements provided')
-            self.material_elemental_composition = elementality
+            super().normalize(archive, logger)
+    #         elements, counts = parse_chemical_formula(self.target_material_formula)
+    #         total = 0
+    #         for token in counts:
+    #             total += int(token)
+    #         mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
+    #         if total != 0:
+    #             elemental_fraction = np.array(counts) / total
+    #             elementality = []
+    #             i = 0
+    #             for entry in elements:
+    #                 elemental_try = ElementalComposition()
+    #                 elemental_try.element = entry
+    #                 elemental_try.atomic_fraction = elemental_fraction[i]
+    #                 mass_frac = (am[an[entry]] * counts[i]) / mass
+    #                 elemental_try.mass_fraction = mass_frac
+    #                 i += 1
+    #                 elementality.append(elemental_try)
+    #         else:
+    #             print('No elements provided')
+    #         self.material_elemental_composition = elementality
 
 
 class PECVD(FabricationProcessStep, ArchiveSection):
@@ -590,6 +705,11 @@ class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
         },
     )
 
+
+    item_carrier = SubSection(
+        section_def = Carrier,
+        repeats = False
+    )
 
 class LPCVD(PECVD, ArchiveSection):
     m_def = Section(
