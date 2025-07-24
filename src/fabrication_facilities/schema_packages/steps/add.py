@@ -577,8 +577,8 @@ class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
                     'ending_date',
                     'short_name',
                     'target_material_formula',
-                    # 'wall_temperature',
-                    # 'chamber_pressure',
+                    'chamber_temperature',
+                    'chamber_pressure',
                     # 'chuck_temperature',
                     # 'clamping',
                     # 'clamping_type',
@@ -589,8 +589,6 @@ class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
             },
         },
     )
-
-    PECVD.chamber.m_remove(wall_temperature)
 
 
 class LPCVD(PECVD, ArchiveSection):
