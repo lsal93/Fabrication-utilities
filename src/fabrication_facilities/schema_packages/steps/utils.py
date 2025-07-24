@@ -14,7 +14,11 @@ from nomad.datamodel.data import ArchiveSection, EntryData
 from nomad.datamodel.metainfo.basesections import ElementalComposition
 from nomad.metainfo import MEnum, Quantity, Section, SubSection
 
-from fabrication_facilities.schema_packages.utils import TimeRampPressure
+from fabrication_facilities.schema_packages.utils import (
+    TimeRampPressure,
+    TimeRampMassflow,
+    TimeRampTemperature,
+)
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (
@@ -51,6 +55,7 @@ class ICP_Column(ArchiveSection):
         unit='MHz',
     )
 
+
 class Clamping_System(ArchiveSection):
 
     m_def=Section(
@@ -85,13 +90,177 @@ class Clamping_System(ArchiveSection):
         repeats=True,
     )
 
-class Electric_Inputs(ArchiveSection):
+
+class Chuck (ArchiveSection):
 
     m_def=Section(
         description="""
-        Section containing all parameters selected to generate the plasma and
-        active on the chuck.
+        Section containing all parameters relative to the chuck.
         """
     )
 
-    
+    chuck_temperature = Quantity(
+        type=np.float64,
+        description='Temperature imposed on the chuck',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+
+    chuck_power = Quantity(
+        type=np.float64,
+        description='Power imposed on the chuck',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'W'},
+        unit='W',
+    )
+
+    chuck_frequency = Quantity(
+        type=np.float64,
+        description='Frequency impulse imposed on the chuck',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'MHz'},
+        unit='MHz',
+    )
+
+    bias = Quantity(
+        type=np.float64,
+        description='Voltage imposed on the sample by electrodes',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'V'},
+        unit='V',
+    )
+
+    temperature_ramps = SubSection(
+        section_def = TimeRampTemperature,
+        repeats=True,
+    )
+
+
+class Carrier(ArchiveSection):
+
+    m_def=Section(
+        description="""
+        Section describing a component used to carry vertically
+        """
+    )
+
+
+class Chamber(ArchiveSection):
+
+    m_def=Section(
+        description="""
+        Section describing parameters and components inside the chamber, where sample
+        is located. Eventually also the chuck and/or the item carrier could be
+        described.
+        """
+    )
+
+    chamber_pressure = Quantity(
+        type=np.float64,
+        description='Pressure in the chamber',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
+        unit='mbar',
+    )
+
+    wall_temperature = Quantity(
+        type=np.float64,
+        description='Temperature of the wall of the chamber',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+
+    chuck= SubSection(
+        section_def=Chuck,
+        repeats=False,
+    )
+
+    item_carrier = SubSection(
+        section_def = Carrier,
+        repeats = False
+    )
+
+    pressure_ramps = SubSection(
+        section_def=TimeRampPressure,
+        repeats=True,
+    )
+
+    temperature_ramps=SubSection(
+        section_def=TimeRampTemperature,
+        repeats=True,
+    )
+
+
+class Massflow_controller(FabricationChemical, ArchiveSection):
+    m_def = Section(
+        a_eln={'overview': True, 'hide': ['lab_id', 'datetime']},
+    )
+    massflow = Quantity(
+        type=np.float64,
+        description='Rate at which the gas flows',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'centimeter^3/minute',
+        },
+        unit='centimeter^3/minute',
+    )
+
+    gaseous_massflow_ramps = SubSection(
+        section_def=TimeRampMassflow,
+        repeats=True,
+    )
+
+
+class DRIE_Massflow_controller(Massflow_controller):
+    m_def = Section(
+        a_eln={'overview': True, 'hide': ['lab_id', 'datetime', 'massflow']},
+    )
+
+    priority = Quantity(
+        type=str,
+        description='Parameter describing the ordering in the chemical reactivity',
+        a_eln={'component': 'StringEditQuantity'},
+    )
+
+    inactive_state_massflow = Quantity(
+        type=np.float64,
+        description='Rate at which the gas flows in the inactive phase of DRIE',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'centimeter^3/minute',
+        },
+        unit='centimeter^3/minute',
+    )
+
+    active_state_massflow = Quantity(
+        type=np.float64,
+        description='Rate at which the gas flows in the inactive phase of DRIE',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'centimeter^3/minute',
+        },
+        unit='centimeter^3/minute',
+    )
+
+    pulse_time = Quantity(
+        type=np.float64,
+        description='Atomistic time of activity for the gas',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
+    )
+
+
+class ResistivityControl(ArchiveSection):
+    m_def = Section(
+        description='Section used in case of resistivity feedbacks',
+    )
+
+    resistivity_target = Quantity(
+        type=np.float64,
+        description='Value used as target to stop the process',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'ohm*cm'},
+        unit='ohm*cm',
+    )
+
+    increment_duration = Quantity(
+        type=np.float64,
+        description='Time used in the process to reach the target value',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute',
+    )

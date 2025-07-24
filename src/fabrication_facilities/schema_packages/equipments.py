@@ -785,8 +785,8 @@ class ICP_CVD_System(PECVD_System, ArchiveSection):
         unit='MHz',
     )
 
-#suggested name instead Well: Wet_bench_unit
-class Well(Equipment):
+
+class Wet_Bench_Unit(Equipment):
     m_def = Section(
         description="""
         Bath containing a chemical solution or pure substance to perform wet processes,

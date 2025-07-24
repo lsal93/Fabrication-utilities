@@ -502,7 +502,7 @@ class EquipmentReference(Link, ArchiveSection):
     )
 
     section = Quantity(
-        type=Instrument,
+        type=Equipment,
         a_eln={'component': 'ReferenceEditQuantity'},
     )
 

@@ -141,25 +141,6 @@ def make_line_express(list1, list2, labelx, labely, finalist, labelfigure):
 # Capire se se può ingegnerizzare meglio la funzinoe per ridurre variabili
 
 
-class Section1(ArchiveSection):
-    m_def = Section()
-
-    value = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-        },
-    )
-
-
-class Section2(Section1, EntryData):
-    m_def = Section()
-
-    value = Section1.value.m_copy()
-    value.unit = 'second'
-    value.a_eln = dict(value.a_eln, defaultDisplayUnit='second')
-
-
 class TimeRampTemperature(PlotSection, EntryData):
     m_def = Section()
 
@@ -453,70 +434,6 @@ class TimeRampRotation(PlotSection, EntryData):
             )
 
 
-class Massflow_controller(FabricationChemical, ArchiveSection):
-    m_def = Section(
-        a_eln={'overview': True, 'hide': ['lab_id', 'datetime']},
-    )
-    massflow = Quantity(
-        type=np.float64,
-        description='Rate at which the gas flows',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'centimeter^3/minute',
-        },
-        unit='centimeter^3/minute',
-    )
-
-    gaseous_massflow_ramps = SubSection(
-        section_def=TimeRampMassflow,
-        repeats=True,
-    )
-
-
-class DRIE_Massflow_controller(Massflow_controller):
-    m_def = Section(
-        a_eln={'overview': True, 'hide': ['lab_id', 'datetime', 'massflow']},
-    )
-
-    priority = Quantity(
-        type=str,
-        description='Parameter describing the ordering in the chemical reactivity',
-        a_eln={'component': 'StringEditQuantity'},
-    )
-
-    inactive_state_massflow = Quantity(
-        type=np.float64,
-        description='Rate at which the gas flows in the inactive phase of DRIE',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'centimeter^3/minute',
-        },
-        unit='centimeter^3/minute',
-    )
-
-    active_state_massflow = Quantity(
-        type=np.float64,
-        description='Rate at which the gas flows in the inactive phase of DRIE',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'centimeter^3/minute',
-        },
-        unit='centimeter^3/minute',
-    )
-
-    pulse_time = Quantity(
-        type=np.float64,
-        description='Atomistic time of activity for the gas',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
-        unit='sec',
-    )
-
-    gaseous_massflow_ramps = SubSection(
-        section_def=TimeRampMassflow,
-        repeats=True,
-    )
-
-
 class ReactiveComponents(FabricationChemical):
     m_def = Section(
         definition='Chemicals for wet fabrication steps',
@@ -568,24 +485,4 @@ class ReactiveComponents(FabricationChemical):
         type=np.float64,
         description='Final volume percentage of the reactive in the solution',
         a_eln={'component': 'NumberEditQuantity'},
-    )
-
-
-class ResistivityControl(ArchiveSection):
-    m_def = Section(
-        description='Section used in case of resistivity feedbacks',
-    )
-
-    resistivity_target = Quantity(
-        type=np.float64,
-        description='Value used as target to stop the process',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'ohm*cm'},
-        unit='ohm*cm',
-    )
-
-    increment_duration = Quantity(
-        type=np.float64,
-        description='Time used in the process to reach the target value',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
-        unit='minute',
     )

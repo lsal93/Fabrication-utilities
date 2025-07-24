@@ -26,15 +26,22 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
     FabricationProcessStepBase,
 )
 from fabrication_facilities.schema_packages.utils import (
-    DRIE_Massflow_controller,
-    FabricationChemical,
-    Massflow_controller,
-    ResistivityControl,
     TimeRampMassflow,
     TimeRampPressure,
     TimeRampTemperature,
     parse_chemical_formula,
 )
+
+from fabrication_facilities.schema_packages.steps.utils import (
+    DRIE_Massflow_controller,
+    Massflow_controller,
+    ResistivityControl,
+    ICP_Column,
+    Clamping_System,
+    Chamber,
+)
+
+
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (
@@ -113,16 +120,17 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
                     'duration',
                     'short_names',
                     'target_materials_formulas',
-                    'wall_temperature',
-                    'chuck_temperature',
-                    'chuck_power',
-                    'chuck_frequency',
-                    'chamber_pressure',
-                    'bias',
-                    'clamping',
-                    'clamping_type',
-                    'clamping_pressure',
-                    'number of loopsnotes',
+                    # 'wall_temperature',
+                    # 'chuck_temperature',
+                    # 'chuck_power',
+                    # 'chuck_frequency',
+                    # 'chamber_pressure',
+                    # 'bias',
+                    # 'clamping',
+                    # 'clamping_type',
+                    # 'clamping_pressure',
+                    'number of loops',
+                    'notes',
                 ]
             },
         },
@@ -139,67 +147,67 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
         shape=['*'],
         a_eln={'component': 'StringEditQuantity'},
     )
-    chamber_pressure = Quantity(
-        type=np.float64,
-        description='Pressure in the chamber',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
-        unit='mbar',
-    )
-    wall_temperature = Quantity(
-        type=np.float64,
-        description='Temperature of the wall of the chamber',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
-        unit='celsius',
-    )
-    chuck_temperature = Quantity(
-        type=np.float64,
-        description='Temperature imposed on the chuck',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
-        unit='celsius',
-    )
-    chuck_power = Quantity(
-        type=np.float64,
-        description='Power imposed on the chuck',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'W'},
-        unit='W',
-    )
-    chuck_frequency = Quantity(
-        type=np.float64,
-        description='Frequency impulse imposed on the chuck',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'MHz'},
-        unit='MHz',
-    )
-    bias = Quantity(
-        type=np.float64,
-        description='Voltage imposed on the sample by electrodes',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'V'},
-        unit='V',
-    )
-    clamping = Quantity(
-        type=bool,
-        description='Is clamping used in the process?',
-        a_eln={'component': 'BoolEditQuantity'},
-    )
-    clamping_type = Quantity(
-        type=MEnum(
-            [
-                'None',
-                'Mechanical',
-                'Electrostatic',
-            ]
-        ),
-        a_eln={'component': 'EnumEditQuantity'},
-    )
+    # chamber_pressure = Quantity(
+    #     type=np.float64,
+    #     description='Pressure in the chamber',
+    #     a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
+    #     unit='mbar',
+    # )
+    # wall_temperature = Quantity(
+    #     type=np.float64,
+    #     description='Temperature of the wall of the chamber',
+    #     a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+    #     unit='celsius',
+    # )
+    # chuck_temperature = Quantity(
+    #     type=np.float64,
+    #     description='Temperature imposed on the chuck',
+    #     a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+    #     unit='celsius',
+    # )
+    # chuck_power = Quantity(
+    #     type=np.float64,
+    #     description='Power imposed on the chuck',
+    #     a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'W'},
+    #     unit='W',
+    # )
+    # chuck_frequency = Quantity(
+    #     type=np.float64,
+    #     description='Frequency impulse imposed on the chuck',
+    #     a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'MHz'},
+    #     unit='MHz',
+    # )
+    # bias = Quantity(
+    #     type=np.float64,
+    #     description='Voltage imposed on the sample by electrodes',
+    #     a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'V'},
+    #     unit='V',
+    # )
+    # clamping = Quantity(
+    #     type=bool,
+    #     description='Is clamping used in the process?',
+    #     a_eln={'component': 'BoolEditQuantity'},
+    # )
+    # clamping_type = Quantity(
+    #     type=MEnum(
+    #         [
+    #             'None',
+    #             'Mechanical',
+    #             'Electrostatic',
+    #         ]
+    #     ),
+    #     a_eln={'component': 'EnumEditQuantity'},
+    # )
 
-    clamping_pressure = Quantity(
-        type=np.float64,
-        description='Pressure generated by a cooling helium flow on the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'mbar',
-        },
-        unit='mbar',
-    )
+    # clamping_pressure = Quantity(
+    #     type=np.float64,
+    #     description='Pressure generated by a cooling helium flow on the chuck',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'mbar',
+    #     },
+    #     unit='mbar',
+    # )
 
     number_of_loops = Quantity(
         type=int,
@@ -212,20 +220,30 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
         repeats=True,
     )
 
-    temperature_ramps = SubSection(
-        section_def=TimeRampTemperature,
-        repeats=True,
+    chamber = SubSection(
+        section_def=Chamber,
+        repeats=False,
     )
 
-    pressure_ramps = SubSection(
-        section_def=TimeRampPressure,
-        repeats=True,
+    clamping= SubSection(
+        section_def = Clamping_System,
+        repeats = False
     )
 
-    gaseous_massflow_ramps = SubSection(
-        section_def=TimeRampMassflow,
-        repeats=True,
-    )
+    # temperature_ramps = SubSection(
+    #     section_def=TimeRampTemperature,
+    #     repeats=True,
+    # )
+
+    # pressure_ramps = SubSection(
+    #     section_def=TimeRampPressure,
+    #     repeats=True,
+    # )
+
+    # gaseous_massflow_ramps = SubSection(
+    #     section_def=TimeRampMassflow,
+    #     repeats=True,
+    # )
 
     materials_etched = SubSection(
         section_def=FabricationChemical,
@@ -603,20 +621,20 @@ class DRIE_BOSCH(ICP_RIE, ArchiveSection):
         repeats=True,
     )
 
-    temperature_ramps = SubSection(
-        section_def=TimeRampTemperature,
-        repeats=True,
-    )
+    # temperature_ramps = SubSection(
+    #     section_def=TimeRampTemperature,
+    #     repeats=True,
+    # )
 
-    pressure_ramps = SubSection(
-        section_def=TimeRampPressure,
-        repeats=True,
-    )
+    # pressure_ramps = SubSection(
+    #     section_def=TimeRampPressure,
+    #     repeats=True,
+    # )
 
-    gaseous_massflow_ramps = SubSection(
-        section_def=TimeRampMassflow,
-        repeats=True,
-    )
+    # gaseous_massflow_ramps = SubSection(
+    #     section_def=TimeRampMassflow,
+    #     repeats=True,
+    # )
 
     outputs = SubSection(
         section_def=EtchingOutputs,
