@@ -18,6 +18,7 @@ from fabrication_facilities.schema_packages.utils import (
     TimeRampPressure,
     TimeRampMassflow,
     TimeRampTemperature,
+    FabricationChemical
 )
 
 if TYPE_CHECKING:
