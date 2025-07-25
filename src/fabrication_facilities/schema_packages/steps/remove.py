@@ -95,6 +95,7 @@ class RIEbase(FabricationProcessStepBase):
             'properties': {
                 'order': [
                     'job_number',
+                    'name',
                     'tag',
                     'id_item_processed',
                     'operator',
@@ -194,6 +195,7 @@ class ICP_RIEbase(RIEbase):
             'properties': {
                 'order': [
                     'job_number',
+                    'name',
                     'tag',
                     'id_item_processed',
                     'operator',
@@ -226,6 +228,7 @@ class DRIE_BOSCHbase(ICP_RIEbase):
             'properties': {
                 'order': [
                     'job_number',
+                    'name',
                     'tag',
                     'id_item_processed',
                     'operator',
@@ -367,6 +370,7 @@ class ICP_RIE(RIE):
                     'operator',
                     'room',
                     'id_item_processed',
+                    'wafer_side',
                     'starting_date',
                     'ending_date',
                     'step_type',
@@ -407,6 +411,7 @@ class DRIE_BOSCH(ICP_RIE):
                     'operator',
                     'room',
                     'id_item_processed',
+                    'wafer_side',
                     'starting_date',
                     'ending_date',
                     'step_type',
