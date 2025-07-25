@@ -296,7 +296,7 @@ class FabricationProcessStepBase(EntryData, ArchiveSection):
     )
     duration = Quantity(
         type=np.float64,
-        description='Time used in this single atomic step'
+        description='Time used in this single atomic step',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
     )
