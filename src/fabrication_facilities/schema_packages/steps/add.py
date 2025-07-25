@@ -33,7 +33,6 @@ from fabrication_facilities.schema_packages.utils import (
 from fabrication_facilities.schema_packages.steps.utils import (
     Massflow_controller,
     Chuck,
-    Chamber,
     ICP_Column,
     Clamping_System,
     Carrier,
@@ -255,19 +254,9 @@ class PECVDbase(LPCVDbase, ArchiveSection):
         },
     )
 
-    short_name = Quantity(
-        type=str,
-        description='Material to be deposited',
-        a_eln={
-            'component': 'StringEditQuantity',
-            'label': 'target material',
-        },
-    )
-
-    target_material_formula = Quantity(
-        type=str,
-        description='Formula of the material target. Insert only if known',
-        a_eln={'component': 'StringEditQuantity'},
+    chuck=SubSection(
+        section_def=Chuck,
+        repeats=False
     )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
