@@ -132,6 +132,11 @@ class Chuck (ArchiveSection):
         repeats=True,
     )
 
+    clamping= SubSection(
+        section_def= Clamping_System,
+        repeats=False
+    )
+
 class DRIE_Chuck(ArchiveSection):
     m_def=Section(
         description="""
@@ -212,7 +217,33 @@ class Carrier(ArchiveSection):
 
     m_def=Section(
         description="""
-        Section describing a component used to carry vertically
+        Section describing a component used to carry vertically one or more wafers
+        """
+    )
+
+    slots=Section(
+        type=int,
+        description='Total number of possible positioning for wafers',
+        a_eln={'component':'NumberEditQuantity'},
+    )
+
+    position_of_item=Section(
+        type=int,
+        a_eln={'component':'NumberEditQuantity'},
+        description="""
+        Number of the slot where the item is located. 1 is the the first
+        slot which enter in the process chamber.
+        """
+    )
+
+    position_of_dummy_wafers=Section(
+        type=int,
+        shape=['*'],
+        a_eln={'component':'NumberEditQuantity'},
+        description="""
+        Dummy wafers are used to reach uniformity in the chamber. If the
+        step do not require dummy wafers or they are not important this field could be
+        void.
         """
     )
 
@@ -222,8 +253,7 @@ class Chamber(ArchiveSection):
     m_def=Section(
         description="""
         Section describing parameters and components inside the chamber, where sample
-        is located. Eventually also the chuck and/or the item carrier could be
-        described.
+        is located. Eventually also the item carrier could be described, if useful.
         """
     )
 

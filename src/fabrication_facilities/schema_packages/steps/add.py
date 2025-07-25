@@ -102,13 +102,13 @@ class SynthesisOutputs(ArchiveSection):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        if self.thickness_obtained:
-            a = self.thickness_obtained
-            if self.duration_measured:
-                b = self.duration_measured
-                self.deposition_rate_obtained = a / b
-            else:
-                pass
+        # if self.thickness_obtained:
+        #     a = self.thickness_obtained
+        #     if self.duration_measured:
+        #         b = self.duration_measured
+        #         self.deposition_rate_obtained = a / b
+        #     else:
+        #         pass
 
 class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
@@ -177,7 +177,7 @@ class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
 
     chamber_temperature = Quantity(
         type=np.float64,
-        description='Temperature of the chamber',
+        description='Temperature of the wall of the chamber',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
         unit='celsius',
     )
@@ -188,9 +188,18 @@ class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity'},
     )
 
-    item_carrier = SubSection(
-        section_def = Carrier,
-        repeats = False
+    pressure_ramps = SubSection(
+        section_def=TimeRampPressure,
+        repeats=True,
+    )
+
+    temperature_ramps=SubSection(
+        section_def=TimeRampTemperature,
+        repeats=True,
+    )
+
+    material_elemental_composition = SubSection(
+        section_def=ElementalComposition, repeats=True
     )
 
     fluximeters = SubSection(
@@ -198,8 +207,9 @@ class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
         repeats=True,
     )
 
-    material_elemental_composition = SubSection(
-        section_def=ElementalComposition, repeats=True
+    item_carrier = SubSection(
+        section_def = Carrier,
+        repeats = False
     )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
@@ -226,7 +236,7 @@ class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
                 print('No elements provided')
             self.material_elemental_composition = elementality
 
-class PECVDbase(FabricationProcessStepBase, ArchiveSection):
+class PECVDbase(LPCVDbase, ArchiveSection):
     m_def = Section(
         description='Atomistic component of a PECVD step',
         a_eln={
@@ -260,8 +270,8 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
                     'ending_date',
                     'short_name',
                     'target_material_formula',
-                    # 'wall_temperature',
-                    # 'chuck_temperature',
+                    'chamber_temperature',
+                    'chamber_pressure',
                     # 'chuck_power',
                     # 'chuck_frequency',
                     # 'chamber_pressure',
@@ -276,20 +286,20 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
         },
     )
 
-    # short_name = Quantity(
-    #     type=str,
-    #     description='Material to be deposited',
-    #     a_eln={
-    #         'component': 'StringEditQuantity',
-    #         'label': 'target material',
-    #     },
-    # )
+    short_name = Quantity(
+        type=str,
+        description='Material to be deposited',
+        a_eln={
+            'component': 'StringEditQuantity',
+            'label': 'target material',
+        },
+    )
 
-    # target_material_formula = Quantity(
-    #     type=str,
-    #     description='Formula of the material target. Insert only if known',
-    #     a_eln={'component': 'StringEditQuantity'},
-    # )
+    target_material_formula = Quantity(
+        type=str,
+        description='Formula of the material target. Insert only if known',
+        a_eln={'component': 'StringEditQuantity'},
+    )
 
     # chamber_pressure = Quantity(
     #     type=np.float64,
@@ -404,20 +414,20 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
     #     repeats=True,
     # )
 
-    chamber = SubSection(
-        section_def=Chamber,
-        repeats=False,
-    )
+    # chamber = SubSection(
+    #     section_def=Chamber,
+    #     repeats=False,
+    # )
 
     chuck= SubSection(
         section_def=Chuck,
         repeats=False,
     )
 
-    clamping= SubSection(
-        section_def = Clamping_System,
-        repeats = False
-    )
+    # clamping= SubSection(
+    #     section_def = Clamping_System,
+    #     repeats = False
+    # )
 
     # material_elemental_composition = SubSection(
     #     section_def=ElementalComposition, repeats=True
@@ -447,14 +457,88 @@ class PECVDbase(FabricationProcessStepBase, ArchiveSection):
     #             print('No elements provided')
     #         self.material_elemental_composition = elementality
 
+class ICP_CVDbase(PECVDbase, ArchiveSection):
+    m_def = Section(
+        description='Atomistic component of an ICP CVD step',
+        a_eln={
+            'hide': [
+                'description',
+                'lab_id',
+                'datetime',
+                'comment',
+                'duration',
+                'end_time',
+                'start_time',
+                'step_type',
+                'definition_of_process_step',
+                'keywords',
+                'recipe_name',
+                'recipe_file',
+                'recipe_preview',
+                'name',
+                'description',
+                'affiliation',
+                'room',
+                'location',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'tag',
+                    'id_item_processed',
+                    'operator',
+                    'starting_date',
+                    'ending_date',
+                    'short_name',
+                    'target_material_formula',
+                    'chamber_temperature',
+                    'chamber_pressure',
+                    # 'chuck_power',
+                    # 'chuck_frequency',
+                    # 'chamber_pressure',
+                    # 'bias',
+                    # 'icp_power',
+                    # 'icp_frequency',
+                    # 'clamping',
+                    # 'clamping_type',
+                    # 'clamping_pressure',
+                    'number_of_loops',
+                    'notes',
+                ]
+            },
+        },
+    )
 
-class PECVD(FabricationProcessStep, ArchiveSection):
+    # icp_power = Quantity(
+    #     type=np.float64,
+    #     description='Power erogated in the region of the plasma',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'watt',
+    #     },
+    #     unit='watt',
+    # )
+    # icp_frequency = Quantity(
+    #     type=np.float64,
+    #     description='Frequency of current on the gases area',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'MHz',
+    #     },
+    #     unit='MHz',
+    # )
+
+    icp_column=SubSection(
+        section_def=ICP_Column,
+        repeats=False,
+    )
+
+
+class LPCVD(FabricationProcessStep, ArchiveSection):
     m_def = Section(
         description="""
-        Deposition of a solid material onto a substrate by chemical reaction of a
-        gaseous precursor or mixture of precursors, commonly initiated by heat to create
-        a plasma. PECVD uses temperature tipically lower of LPCVD but relyies on an
-        electrode system on the sample.
+        Deposition of a solid material onto a substrate by chemical reaction of
+        a gaseous precursor or mixture of precursors, commonly initiated by heat.
         """,
         a_eln={
             'hide': [
@@ -525,7 +609,7 @@ class PECVD(FabricationProcessStep, ArchiveSection):
     )
 
     synthesis_steps = SubSection(
-        section_def=PECVDbase,
+        section_def=LPCVDbase,
         repeats=True,
     )
 
@@ -535,9 +619,14 @@ class PECVD(FabricationProcessStep, ArchiveSection):
     )
 
 
-class ICP_CVDbase(PECVDbase, ArchiveSection):
+class PECVD(LPCVD, ArchiveSection):
     m_def = Section(
-        description='Atomistic component of an ICP CVD step',
+        description="""
+        Deposition of a solid material onto a substrate by chemical reaction of a
+        gaseous precursor or mixture of precursors, commonly initiated by heat to create
+        a plasma. PECVD uses temperature tipically lower of LPCVD but relyies on an
+        electrode system on the sample.
+        """,
         a_eln={
             'hide': [
                 'description',
@@ -547,64 +636,40 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
                 'duration',
                 'end_time',
                 'start_time',
-                'step_type',
-                'definition_of_process_step',
-                'keywords',
-                'recipe_name',
-                'recipe_file',
-                'recipe_preview',
-                'name',
-                'description',
-                'affiliation',
-                'room',
-                'location',
+                'tag',
             ],
             'properties': {
                 'order': [
                     'job_number',
-                    'tag',
-                    'id_item_processed',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
                     'operator',
+                    'room',
+                    'id_item_processed',
                     'starting_date',
                     'ending_date',
-                    'short_name',
-                    'target_material_formula',
-                    # 'wall_temperature',
-                    # 'chuck_temperature',
-                    # 'chuck_power',
-                    # 'chuck_frequency',
-                    # 'chamber_pressure',
-                    # 'bias',
-                    # 'icp_power',
-                    # 'icp_frequency',
-                    # 'clamping',
-                    # 'clamping_type',
-                    # 'clamping_pressure',
-                    'number_of_loops',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'thickness_target',
+                    'duration_target',
+                    'deposition_rate_target',
                     'notes',
                 ]
             },
         },
     )
 
-    # icp_power = Quantity(
-    #     type=np.float64,
-    #     description='Power erogated in the region of the plasma',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'watt',
-    #     },
-    #     unit='watt',
-    # )
-    # icp_frequency = Quantity(
-    #     type=np.float64,
-    #     description='Frequency of current on the gases area',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'MHz',
-    #     },
-    #     unit='MHz',
-    # )
+    synthesis_steps = SubSection(
+        section_def=PECVDbase,
+        repeats=True,
+    )
+
 
 
 class ICP_CVD(PECVD, ArchiveSection):
@@ -655,109 +720,6 @@ class ICP_CVD(PECVD, ArchiveSection):
 
     synthesis_steps = SubSection(
         section_def=ICP_CVDbase,
-        repeats=True,
-    )
-
-
-class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
-    m_def = Section(
-        description='Atomistic component of a general LPCVD step',
-        a_eln={
-            'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
-                'step_type',
-                'definition_of_process_step',
-                'keywords',
-                'recipe_name',
-                'recipe_file',
-                'recipe_preview',
-                'name',
-                'description',
-                'affiliation',
-                'room',
-                'location',
-            ],
-            'properties': {
-                'order': [
-                    'job_number',
-                    'tag',
-                    'id_item_processed',
-                    'operator',
-                    'starting_date',
-                    'ending_date',
-                    'short_name',
-                    'target_material_formula',
-                    'chamber_temperature',
-                    'chamber_pressure',
-                    # 'chuck_temperature',
-                    # 'clamping',
-                    # 'clamping_type',
-                    # 'clamping_pressure',
-                    'number_of_loops',
-                    'notes',
-                ],
-            },
-        },
-    )
-
-
-    item_carrier = SubSection(
-        section_def = Carrier,
-        repeats = False
-    )
-
-class LPCVD(PECVD, ArchiveSection):
-    m_def = Section(
-        description="""
-        Deposition of a solid material onto a substrate by chemical reaction of
-        a gaseous precursor or mixture of precursors, commonly initiated by heat.
-        """,
-        a_eln={
-            'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
-                'tag',
-            ],
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'description',
-                    'affiliation',
-                    'location',
-                    'operator',
-                    'room',
-                    'id_item_processed',
-                    'starting_date',
-                    'ending_date',
-                    'step_type',
-                    'definition_of_process_step',
-                    'keywords',
-                    'recipe_name',
-                    'recipe_file',
-                    'recipe_preview',
-                    'thickness_target',
-                    'duration_target',
-                    'deposition_rate_target',
-                    'notes',
-                ]
-            },
-        },
-    )
-
-    synthesis_steps = SubSection(
-        section_def=LPCVDbase,
         repeats=True,
     )
 
