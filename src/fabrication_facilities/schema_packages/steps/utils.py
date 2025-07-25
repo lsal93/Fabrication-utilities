@@ -255,45 +255,6 @@ class Carrier(ArchiveSection):
     )
 
 
-class Chamber(ArchiveSection):
-
-    m_def=Section(
-        description="""
-        Section describing parameters and components inside the chamber, where sample
-        is located. Eventually also the item carrier could be described, if useful.
-        """
-    )
-
-    chamber_pressure = Quantity(
-        type=np.float64,
-        description='Pressure in the chamber',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
-        unit='mbar',
-    )
-
-    wall_temperature = Quantity(
-        type=np.float64,
-        description='Temperature of the wall of the chamber',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
-        unit='celsius',
-    )
-
-    item_carrier = SubSection(
-        section_def = Carrier,
-        repeats = False
-    )
-
-    pressure_ramps = SubSection(
-        section_def=TimeRampPressure,
-        repeats=True,
-    )
-
-    temperature_ramps=SubSection(
-        section_def=TimeRampTemperature,
-        repeats=True,
-    )
-
-
 class Massflow_controller(FabricationChemical, ArchiveSection):
     m_def = Section(
         a_eln={'overview': True, 'hide': ['lab_id', 'datetime']},

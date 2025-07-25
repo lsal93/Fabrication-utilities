@@ -39,7 +39,7 @@ from fabrication_facilities.schema_packages.steps.utils import (
     ResistivityControl,
     ICP_Column,
     Clamping_System,
-    Chamber,
+    Carrier
     Chuck,
     DRIE_Chuck
 )
