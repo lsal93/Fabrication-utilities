@@ -85,7 +85,7 @@ class SynthesisOutputs(ArchiveSection):
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
 
-class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
+class LPCVDbase(FabricationProcessStepBase):
     m_def = Section(
         description='Atomistic component of a general LPCVD step',
         a_eln={
@@ -193,7 +193,7 @@ class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
                 print('No elements provided')
             self.material_elemental_composition = elementality
 
-class PECVDbase(LPCVDbase, ArchiveSection):
+class PECVDbase(LPCVDbase):
     m_def = Section(
         description='Atomistic component of a PECVD step',
         a_eln={
@@ -258,7 +258,7 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
     )
 
 
-class LPCVD(FabricationProcessStep, ArchiveSection):
+class LPCVD(FabricationProcessStep):
     m_def = Section(
         description="""
         Deposition of a solid material onto a substrate by chemical reaction of
@@ -337,7 +337,7 @@ class LPCVD(FabricationProcessStep, ArchiveSection):
     )
 
 
-class PECVD(LPCVD, ArchiveSection):
+class PECVD(LPCVD):
     m_def = Section(
         description="""
         Deposition of a solid material onto a substrate by chemical reaction of a
@@ -394,7 +394,7 @@ class PECVD(LPCVD, ArchiveSection):
 
 
 
-class ICP_CVD(PECVD, ArchiveSection):
+class ICP_CVD(PECVD):
     m_def = Section(
         description="""
         Deposition of a solid material onto a substrate by chemical reaction of a

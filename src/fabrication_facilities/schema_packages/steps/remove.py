@@ -88,7 +88,7 @@ class EtchingOutputs(ArchiveSection):
     )
 
 
-class RIEbase(FabricationProcessStepBase, ArchiveSection):
+class RIEbase(FabricationProcessStepBase):
     m_def = Section(
         description='Atomistic component of a RIE step',
         a_eln={
@@ -257,7 +257,7 @@ class RIEbase(FabricationProcessStepBase, ArchiveSection):
             self.materials_etched = chems
 
 
-class RIE(FabricationProcessStep, ArchiveSection):
+class RIE(FabricationProcessStep):
     m_def = Section(
         description="""
         Form of plasma etching  in which the wafer is placed on a radio-frequency-driven
@@ -344,7 +344,7 @@ class RIE(FabricationProcessStep, ArchiveSection):
     )
 
 
-class ICP_RIEbase(RIEbase, ArchiveSection):
+class ICP_RIEbase(RIEbase):
     m_def = Section(
         description='Atomistic component of an ICP RIE step',
         a_eln={
@@ -422,7 +422,7 @@ class ICP_RIEbase(RIEbase, ArchiveSection):
     )
 
 
-class ICP_RIE(RIE, ArchiveSection):
+class ICP_RIE(RIE):
     m_def = Section(
         description="""
         Dry etching method by which energy is magnetically coupled into the
@@ -473,7 +473,7 @@ class ICP_RIE(RIE, ArchiveSection):
     )
 
 
-class DRIE_BOSCHbase(ICP_RIEbase, ArchiveSection):
+class DRIE_BOSCHbase(ICP_RIEbase):
     m_def = Section(
         a_eln={
             'hide': [
@@ -585,7 +585,7 @@ class DRIE_BOSCHbase(ICP_RIEbase, ArchiveSection):
 
 
 
-class DRIE_BOSCH(ICP_RIE, ArchiveSection):
+class DRIE_BOSCH(ICP_RIE):
     m_def = Section(
         a_eln={
             'hide': [
@@ -632,7 +632,7 @@ class DRIE_BOSCH(ICP_RIE, ArchiveSection):
     )
 
 
-class WetEtchingbase(FabricationProcessStepBase, ArchiveSection):
+class WetEtchingbase(FabricationProcessStepBase):
     m_def = Section(
         description="""
         Wet etching is a material removal process that uses liquid chemicals or etchants
@@ -830,7 +830,7 @@ class WetEtchingbase(FabricationProcessStepBase, ArchiveSection):
             self.reactives_used_to_etch = reactives
 
 
-class WetEtching(FabricationProcessStep, ArchiveSection):
+class WetEtching(FabricationProcessStep):
     m_def = Section(
         a_eln={
             'hide': [
@@ -982,7 +982,7 @@ class WetCleaningbase(WetEtchingbase):
     )
 
 
-class WetCleaning(FabricationProcessStep, ArchiveSection):
+class WetCleaning(FabricationProcessStep):
     m_def = Section(
         a_eln={
             'hide': [

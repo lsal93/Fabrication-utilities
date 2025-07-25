@@ -243,7 +243,7 @@ class ListofProductType(EntryData, ArchiveSection):
         super().normalize(archive, logger)
 
 
-class FabricationProcessStepBase(EntryData, ArchiveSection):
+class FabricationProcessStepBase(ArchiveSection):
     m_def = Section(
         definition="""
         Atomistic component of a generic fabrication step, it should be inherited
@@ -479,7 +479,7 @@ class EquipmentReference(Link, ArchiveSection):
                 raise e
 
 
-class FabricationProcessStep(FabricationProcessStepBase, EntryData):
+class FabricationProcessStep(FabricationProcessStepBase):
     m_def = Section(
         a_eln={
             'hide':[
