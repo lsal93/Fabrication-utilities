@@ -78,12 +78,12 @@ class RIE_Etcher(Equipment, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
-                'lab_id',
                 'datetime',
             ],
             'properties': {
                 'order': [
                     'name',
+                    'lab_id',
                     'description',
                     'affiliation',
                     'institution',
@@ -299,12 +299,12 @@ class ICP_RIE_Etcher(RIE_Etcher, ArchiveSection):
         description='Dry etching class for instruments where a plasma is involved',
         a_eln={
             'hide': [
-                'lab_id',
                 'datetime',
             ],
             'properties': {
                 'order': [
                     'name',
+                    'lab_id',
                     'description',
                     'affiliation',
                     'institution',
@@ -394,12 +394,12 @@ class DRIE_BOSCH_Etcher(ICP_RIE_Etcher, ArchiveSection):
         description='Dry etching instrument for deep geometries',
         a_eln={
             'hide': [
-                'lab_id',
                 'datetime',
             ],
             'properties': {
                 'order': [
                     'name',
+                    'lab_id',
                     'description',
                     'affiliation',
                     'institution',
@@ -442,12 +442,12 @@ class LPCVD_System(Equipment, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
-                'lab_id',
                 'datetime',
             ],
             'properties': {
                 'order': [
                     'name',
+                    'lab_id',
                     'description',
                     'affiliation',
                     'institution',
@@ -598,12 +598,12 @@ class PECVD_System(LPCVD_System, ArchiveSection):
         description='Class instrument for PECVD procedures',
         a_eln={
             'hide': [
-                'lab_id',
                 'datetime',
             ],
             'properties': {
                 'order': [
                     'name',
+                    'lab_id',
                     'inventary_code',
                     'affiliation',
                     'product_model',
@@ -702,12 +702,12 @@ class ICP_CVD_System(PECVD_System, ArchiveSection):
         description='Class for instruments devoted to ICP_CVD procedures',
         a_eln={
             'hide': [
-                'lab_id',
                 'datetime',
             ],
             'properties': {
                 'order': [
                     'name',
+                    'lab_id',
                     'inventary_code',
                     'affiliation',
                     'product_model',

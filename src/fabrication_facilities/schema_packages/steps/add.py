@@ -89,25 +89,6 @@ class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
         description='Atomistic component of a general LPCVD step',
         a_eln={
-            'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
-                'step_type',
-                'definition_of_process_step',
-                'keywords',
-                'recipe_name',
-                'recipe_file',
-                'recipe_preview',
-                'description',
-                'affiliation',
-                'room',
-                'location',
-            ],
             'properties': {
                 'order': [
                     'job_number',
@@ -117,6 +98,7 @@ class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
                     'operator',
                     'starting_date',
                     'ending_date',
+                    'duration',
                     'short_name',
                     'target_material_formula',
                     'chamber_temperature',
@@ -152,7 +134,7 @@ class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
 
     chamber_temperature = Quantity(
         type=np.float64,
-        description='Temperature of the wall of the chamber',
+        description='Temperature of the chamber',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
         unit='celsius',
     )
@@ -215,25 +197,6 @@ class PECVDbase(LPCVDbase, ArchiveSection):
     m_def = Section(
         description='Atomistic component of a PECVD step',
         a_eln={
-            'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
-                'step_type',
-                'definition_of_process_step',
-                'keywords',
-                'recipe_name',
-                'recipe_file',
-                'recipe_preview',
-                'description',
-                'affiliation',
-                'room',
-                'location',
-            ],
             'properties': {
                 'order': [
                     'job_number',
@@ -254,6 +217,8 @@ class PECVDbase(LPCVDbase, ArchiveSection):
         },
     )
 
+    LPCVDbase.chamber_temperature.description='Temperature of the wall of the chamber'
+
     chuck=SubSection(
         section_def=Chuck,
         repeats=False
@@ -267,25 +232,6 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
     m_def = Section(
         description='Atomistic component of an ICP CVD step',
         a_eln={
-            'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
-                'step_type',
-                'definition_of_process_step',
-                'keywords',
-                'recipe_name',
-                'recipe_file',
-                'recipe_preview',
-                'description',
-                'affiliation',
-                'room',
-                'location',
-            ],
             'properties': {
                 'order': [
                     'job_number',
@@ -320,14 +266,8 @@ class LPCVD(FabricationProcessStep, ArchiveSection):
         """,
         a_eln={
             'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
                 'tag',
+                'duration',
             ],
             'properties': {
                 'order': [
@@ -407,14 +347,8 @@ class PECVD(LPCVD, ArchiveSection):
         """,
         a_eln={
             'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
                 'tag',
+                'duration',
             ],
             'properties': {
                 'order': [
@@ -470,14 +404,8 @@ class ICP_CVD(PECVD, ArchiveSection):
         """,
         a_eln={
             'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
                 'tag',
+                'duration',
             ],
             'properties': {
                 'order': [

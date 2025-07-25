@@ -243,44 +243,37 @@ class ListofProductType(EntryData, ArchiveSection):
         super().normalize(archive, logger)
 
 
-class FabricationProcessStepBase(ProcessStep, ArchiveSection):
+class FabricationProcessStepBase(EntryData, ArchiveSection):
     m_def = Section(
+        definition="""
+        Atomistic component of a generic fabrication step, it should be inherited
+        """,
         a_eln={
-            'hide': [
-                'comment',
-                'start_time',
-            ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
-                    'description',
-                    'affiliation',
-                    'location',
-                    'operator',
-                    'room',
+                    'tag',
                     'id_item_processed',
+                    # 'description',
+                    # 'affiliation',
+                    # 'location',
+                    'operator',
+                    # 'room',
                     'starting_date',
                     'ending_date',
                     'duration',
-                    'step_type',
-                    'definition_of_process_step',
-                    'keywords',
-                    'recipe_name',
-                    'recipe_file',
-                    'recipe_preview',
-                    'tag',
+                    # 'step_type',
+                    # 'definition_of_process_step',
+                    # 'recipe_name',
+                    # 'recipe_file',
+                    # 'recipe_preview',
                     'notes',
                 ],
             },
         },
     )
 
-    duration = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
-        unit='minute',
-    )
     job_number = Quantity(
         type=int,
         a_eln={'component': 'NumberEditQuantity'},
@@ -289,23 +282,7 @@ class FabricationProcessStepBase(ProcessStep, ArchiveSection):
         type=str,
         a_eln={'component': 'StringEditQuantity'},
     )
-    description = Quantity(
-        type=str,
-        a_eln={'component': 'RichTextEditQuantity'},
-    )
-    affiliation = Quantity(
-        type=MEnum('NFFA-DI', 'iENTRANCE@ENL'),
-        a_eln={'component': 'EnumEditQuantity'},
-    )
     operator = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    location = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    room = Quantity(
         type=str,
         a_eln={'component': 'StringEditQuantity'},
     )
@@ -317,43 +294,24 @@ class FabricationProcessStepBase(ProcessStep, ArchiveSection):
         type=Datetime,
         a_eln={'component': 'DateTimeEditQuantity'},
     )
-    step_type = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
+    duration = Quantity(
+        type=np.float64,
+        description='Time used in this single atomic step'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute',
     )
     id_item_processed = Quantity(
         type=str,
         a_eln={'component': 'StringEditQuantity'},
     )
-    definition_of_process_step = Quantity(
-        type=EquipmentTechnique,
-        a_eln={'component': 'ReferenceEditQuantity'},
-    )
-    keywords = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    recipe_name = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    recipe_file = Quantity(
-        type=str,
-        a_eln={'component': 'FileEditQuantity'},
-    )
-    recipe_preview = Quantity(
-        type=str,
-        a_eln={'component': 'RichTextEditQuantity'},
-    )
-    notes = Quantity(
-        type=str,
-        a_eln={'component': 'RichTextEditQuantity'},
-    )
-
     tag = Quantity(
         type=str,
         description='Role of the step in fabrication (effective, conditioning, etc.)',
         a_eln={'component': 'StringEditQuantity'},
+    )
+    notes = Quantity(
+        type=str,
+        a_eln={'component': 'RichTextEditQuantity'},
     )
 
 
@@ -524,10 +482,9 @@ class EquipmentReference(Link, ArchiveSection):
 class FabricationProcessStep(FabricationProcessStepBase, EntryData):
     m_def = Section(
         a_eln={
-            'hide': [
-                'comment',
-                'start_time',
-                'duration',
+            'hide':[
+                'tag',
+                'duaration',
             ],
             'properties': {
                 'order': [
@@ -553,15 +510,51 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
         },
     )
 
+    description = Quantity(
+        type=str,
+        a_eln={'component': 'RichTextEditQuantity'},
+    )
+    affiliation = Quantity(
+        type=MEnum('NFFA-DI', 'iENTRANCE@ENL'),
+        a_eln={'component': 'EnumEditQuantity'},
+    )
+    location = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    room = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    step_type = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    definition_of_process_step = Quantity(
+        type=EquipmentTechnique,
+        a_eln={'component': 'ReferenceEditQuantity'},
+    )
+    keywords = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    recipe_name = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    recipe_file = Quantity(
+        type=str,
+        a_eln={'component': 'FileEditQuantity'},
+    )
+    recipe_preview = Quantity(
+        type=str,
+        a_eln={'component': 'RichTextEditQuantity'},
+    )
+
     instruments = SubSection(
         section_def=EquipmentReference,
         repeats=True,
     )
-
-    # item_placement = SubSection(
-    #     section_def=ItemPlacement,
-    #     repeats=False,
-    # )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         if self.instruments.section is not None:
