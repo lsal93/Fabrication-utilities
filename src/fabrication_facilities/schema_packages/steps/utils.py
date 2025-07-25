@@ -21,6 +21,8 @@ from fabrication_facilities.schema_packages.utils import (
     FabricationChemical
 )
 
+from fabrication_facilities.schema_packages.Items import ItemPlacement
+
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (
         EntryArchive,
@@ -135,6 +137,11 @@ class Chuck (ArchiveSection):
     clamping= SubSection(
         section_def= Clamping_System,
         repeats=False
+    )
+
+    item_placement=SubSection(
+        section_def=ItemPlacement,
+        repeats=False,
     )
 
 class DRIE_Chuck(ArchiveSection):

@@ -56,9 +56,7 @@ class SynthesisOutputs(ArchiveSection):
             'properties': {
                 'order': [
                     'job_number',
-                    #                    'thickness_obtained',
                     'duration_measured',
-                    #                    'deposition_rate_obtained',
                 ],
             }
         },
@@ -70,12 +68,6 @@ class SynthesisOutputs(ArchiveSection):
         a_eln={'component': 'NumberEditQuantity'},
     )
 
-    # thickness_obtained = Quantity(
-    #     type=np.float64,
-    #     description='Thickness obtained as output',
-    #     a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'nm'},
-    #     unit='nm',
-    # )
     duration_measured = Quantity(
         type=np.float64,
         description='Real time employed',
@@ -85,15 +77,6 @@ class SynthesisOutputs(ArchiveSection):
         },
         unit='minute',
     )
-    # deposition_rate_obtained = Quantity(
-    #     type=np.float64,
-    #     description='Deposition rate as output',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'nm/minute',
-    #     },
-    #     unit='nm/minute',
-    # )
 
     control_parameter_profile = SubSection(
         section_def=TimeRampTemperature,
@@ -102,13 +85,6 @@ class SynthesisOutputs(ArchiveSection):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        # if self.thickness_obtained:
-        #     a = self.thickness_obtained
-        #     if self.duration_measured:
-        #         b = self.duration_measured
-        #         self.deposition_rate_obtained = a / b
-        #     else:
-        #         pass
 
 class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
     m_def = Section(
@@ -128,7 +104,6 @@ class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
                 'recipe_name',
                 'recipe_file',
                 'recipe_preview',
-                'name',
                 'description',
                 'affiliation',
                 'room',
@@ -137,6 +112,7 @@ class LPCVDbase(FabricationProcessStepBase, ArchiveSection):
             'properties': {
                 'order': [
                     'job_number',
+                    'name',
                     'tag',
                     'id_item_processed',
                     'operator',
@@ -254,7 +230,6 @@ class PECVDbase(LPCVDbase, ArchiveSection):
                 'recipe_name',
                 'recipe_file',
                 'recipe_preview',
-                'name',
                 'description',
                 'affiliation',
                 'room',
@@ -263,6 +238,7 @@ class PECVDbase(LPCVDbase, ArchiveSection):
             'properties': {
                 'order': [
                     'job_number',
+                    'name',
                     'tag',
                     'id_item_processed',
                     'operator',
@@ -272,13 +248,6 @@ class PECVDbase(LPCVDbase, ArchiveSection):
                     'target_material_formula',
                     'chamber_temperature',
                     'chamber_pressure',
-                    # 'chuck_power',
-                    # 'chuck_frequency',
-                    # 'chamber_pressure',
-                    # 'bias',
-                    # 'clamping',
-                    # 'clamping_type',
-                    # 'clamping_pressure',
                     'number_of_loops',
                     'notes',
                 ]
@@ -301,161 +270,9 @@ class PECVDbase(LPCVDbase, ArchiveSection):
         a_eln={'component': 'StringEditQuantity'},
     )
 
-    # chamber_pressure = Quantity(
-    #     type=np.float64,
-    #     description='Pressure in the chamber',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'mbar',
-    #     },
-    #     unit='mbar',
-    # )
-
-    # wall_temperature = Quantity(
-    #     type=np.float64,
-    #     description='Temperature of the chamber walls',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'celsius',
-    #     },
-    #     unit='celsius',
-    # )
-
-    # chuck_temperature = Quantity(
-    #     type=np.float64,
-    #     description='Temperature of the chuck',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'celsius',
-    #     },
-    #     unit='celsius',
-    # )
-
-    # chuck_power = Quantity(
-    #     type=np.float64,
-    #     description='Power erogated on the chuck by the electrodes',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'watt',
-    #     },
-    #     unit='watt',
-    # )
-
-    # chuck_frequency = Quantity(
-    #     type=np.float64,
-    #     description='Frequency of current on the chuck by the electrodes',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'MHz',
-    #     },
-    #     unit='MHz',
-    # )
-
-    # bias = Quantity(
-    #     type=np.float64,
-    #     description='Bias voltage in the chamber',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'volt',
-    #     },
-    #     unit='volt',
-    # )
-
-    # clamping = Quantity(
-    #     type=bool,
-    #     description='Is clamping used in the process?',
-    #     a_eln={'component': 'BoolEditQuantity'},
-    # )
-
-    # clamping_type = Quantity(
-    #     type=MEnum(
-    #         [
-    #             'None',
-    #             'Mechanical',
-    #             'Electrostatic',
-    #         ]
-    #     ),
-    #     a_eln={'component': 'EnumEditQuantity'},
-    # )
-
-    # clamping_pressure = Quantity(
-    #     type=np.float64,
-    #     description='Pressure generated by a cooling helium flow on the chuck',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'mbar',
-    #     },
-    #     unit='mbar',
-    # )
-
-    # number_of_loops = Quantity(
-    #     type=int,
-    #     description='Times for which this step is repeated with equal parameters',
-    #     a_eln={'component': 'NumberEditQuantity'},
-    # )
-
-    # temperature_ramps = SubSection(
-    #     section_def=TimeRampTemperature,
-    #     repeats=True,
-    # )
-
-    # pressure_ramps = SubSection(
-    #     section_def=TimeRampPressure,
-    #     repeats=True,
-    # )
-
-    # gaseous_massflow_ramps = SubSection(
-    #     section_def=TimeRampMassflow,
-    #     repeats=True,
-    # )
-
-    # fluximeters = SubSection(
-    #     section_def=Massflow_controller,
-    #     repeats=True,
-    # )
-
-    # chamber = SubSection(
-    #     section_def=Chamber,
-    #     repeats=False,
-    # )
-
-    chuck= SubSection(
-        section_def=Chuck,
-        repeats=False,
-    )
-
-    # clamping= SubSection(
-    #     section_def = Clamping_System,
-    #     repeats = False
-    # )
-
-    # material_elemental_composition = SubSection(
-    #     section_def=ElementalComposition, repeats=True
-    # )
-
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         if self.target_material_formula:
             super().normalize(archive, logger)
-    #         elements, counts = parse_chemical_formula(self.target_material_formula)
-    #         total = 0
-    #         for token in counts:
-    #             total += int(token)
-    #         mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
-    #         if total != 0:
-    #             elemental_fraction = np.array(counts) / total
-    #             elementality = []
-    #             i = 0
-    #             for entry in elements:
-    #                 elemental_try = ElementalComposition()
-    #                 elemental_try.element = entry
-    #                 elemental_try.atomic_fraction = elemental_fraction[i]
-    #                 mass_frac = (am[an[entry]] * counts[i]) / mass
-    #                 elemental_try.mass_fraction = mass_frac
-    #                 i += 1
-    #                 elementality.append(elemental_try)
-    #         else:
-    #             print('No elements provided')
-    #         self.material_elemental_composition = elementality
 
 class ICP_CVDbase(PECVDbase, ArchiveSection):
     m_def = Section(
@@ -475,7 +292,6 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
                 'recipe_name',
                 'recipe_file',
                 'recipe_preview',
-                'name',
                 'description',
                 'affiliation',
                 'room',
@@ -484,6 +300,7 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
             'properties': {
                 'order': [
                     'job_number',
+                    'name',
                     'tag',
                     'id_item_processed',
                     'operator',
@@ -493,40 +310,12 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
                     'target_material_formula',
                     'chamber_temperature',
                     'chamber_pressure',
-                    # 'chuck_power',
-                    # 'chuck_frequency',
-                    # 'chamber_pressure',
-                    # 'bias',
-                    # 'icp_power',
-                    # 'icp_frequency',
-                    # 'clamping',
-                    # 'clamping_type',
-                    # 'clamping_pressure',
                     'number_of_loops',
                     'notes',
                 ]
             },
         },
     )
-
-    # icp_power = Quantity(
-    #     type=np.float64,
-    #     description='Power erogated in the region of the plasma',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'watt',
-    #     },
-    #     unit='watt',
-    # )
-    # icp_frequency = Quantity(
-    #     type=np.float64,
-    #     description='Frequency of current on the gases area',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'MHz',
-    #     },
-    #     unit='MHz',
-    # )
 
     icp_column=SubSection(
         section_def=ICP_Column,
@@ -648,6 +437,7 @@ class PECVD(LPCVD, ArchiveSection):
                     'operator',
                     'room',
                     'id_item_processed',
+                    'wafer_side',
                     'starting_date',
                     'ending_date',
                     'step_type',
@@ -663,6 +453,15 @@ class PECVD(LPCVD, ArchiveSection):
                 ]
             },
         },
+    )
+
+    wafer_side=  Quantity(
+        type=MEnum(
+            'front',
+            'back',
+        ),
+        description='Side exposed in the process',
+        a_eln={'component':'EnumEditQuantity'}
     )
 
     synthesis_steps = SubSection(

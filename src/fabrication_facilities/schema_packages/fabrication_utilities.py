@@ -409,12 +409,12 @@ class Equipment(Instrument, EntryData, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [
-                'lab_id',
                 'datetime',
             ],
             'properties': {
                 'order': [
                     'name',
+                    'lab_id',
                     'description',
                     'affiliation',
                     'institution',
@@ -428,6 +428,11 @@ class Equipment(Instrument, EntryData, ArchiveSection):
                 ],
             },
         }
+    )
+    lab_id=Quantity(
+        type=str,
+        description='ID assigned by lab for findability',
+        a_eln={'component':'StringEditQuantity', 'label': 'id'}
     )
     inventary_code = Quantity(
         type=int,
@@ -553,10 +558,10 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
         repeats=True,
     )
 
-    item_placement = SubSection(
-        section_def=ItemPlacement,
-        repeats=False,
-    )
+    # item_placement = SubSection(
+    #     section_def=ItemPlacement,
+    #     repeats=False,
+    # )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         if self.instruments.section is not None:
