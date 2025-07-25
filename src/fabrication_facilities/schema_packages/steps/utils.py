@@ -221,13 +221,13 @@ class Carrier(ArchiveSection):
         """
     )
 
-    slots=Section(
+    slots=Quantity(
         type=int,
         description='Total number of possible positioning for wafers',
         a_eln={'component':'NumberEditQuantity'},
     )
 
-    position_of_item=Section(
+    position_of_item=Quantity(
         type=int,
         a_eln={'component':'NumberEditQuantity'},
         description="""
@@ -236,7 +236,7 @@ class Carrier(ArchiveSection):
         """
     )
 
-    position_of_dummy_wafers=Section(
+    position_of_dummy_wafers=Quantity(
         type=int,
         shape=['*'],
         a_eln={'component':'NumberEditQuantity'},
