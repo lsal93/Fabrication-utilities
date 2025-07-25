@@ -479,7 +479,7 @@ class EquipmentReference(Link, ArchiveSection):
                 raise e
 
 
-class FabricationProcessStep(FabricationProcessStepBase):
+class FabricationProcessStep(FabricationProcessStepBase, EntryData):
     m_def = Section(
         a_eln={
             'hide':[
