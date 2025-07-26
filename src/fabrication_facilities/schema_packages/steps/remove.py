@@ -456,13 +456,13 @@ class WetEtchingbase(FabricationProcessStepBase):
                 'order': [
                     'job_number',
                     'name',
+                    'tag',
                     'description',
                     'operator',
                     'id_item_processed',
                     'starting_date',
                     'ending_date',
                     'duration',
-                    'tag',
                     'short_names',
                     'target_materials_formulas',
                     'etching_reactives',
@@ -614,17 +614,74 @@ class WetEtchingbase(FabricationProcessStepBase):
             self.reactives_used_to_etch = reactives
 
 
+class WetCleaningbase(WetEtchingbase):
+    m_def = Section(
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'tag',
+                    'description',
+                    'operator',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'duration',
+                    'short_names',
+                    'target_materials_formulas',
+                    'etching_reactives',
+                    'etching_reactives_formulas',
+                    'etching_temperature',
+                    'etching_duration',
+                    'filtering_system',
+                    'recycle_system',
+                    'initial_rinsing_cycles',
+                    'initial_rinsing_duration',
+                    'wetting',
+                    'wetting_duration',
+                    'ultrasounds_required',
+                    'ultrasounds_frequency',
+                    'ultrasounds_duration',
+                    'notes',
+                ]
+            },
+        },
+    )
+    initial_rinsing_cycles = Quantity(
+        type=int,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+    initial_rinsing_duration = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute',
+    )
+    etching_temperature = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+            'label': 'cleaning temperature',
+        },
+        unit='celsius',
+    )
+    etching_duration = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'minute',
+            'label': 'cleaning duration',
+        },
+        unit='minute',
+    )
+
+
 class WetEtching(FabricationProcessStep):
     m_def = Section(
         a_eln={
             'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
                 'duration',
-                'end_time',
-                'start_time',
                 'tag',
             ],
             'properties': {
@@ -683,100 +740,11 @@ class WetEtching(FabricationProcessStep):
     )
 
 
-class WetCleaningbase(WetEtchingbase):
-    m_def = Section(
-        a_eln={
-            'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
-                'step_type',
-                'definition_of_process_step',
-                'keywords',
-                'recipe_name',
-                'recipe_file',
-                'recipe_preview',
-                'name',
-                'description',
-                'affiliation',
-                'room',
-                'location',
-            ],
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'description',
-                    'operator',
-                    'id_item_processed',
-                    'starting_date',
-                    'ending_date',
-                    'duration',
-                    'tag',
-                    'short_names',
-                    'target_materials_formulas',
-                    'etching_reactives',
-                    'etching_reactives_formulas',
-                    'etching_temperature',
-                    'etching_duration',
-                    'filtering_system',
-                    'recycle_system',
-                    'initial_rinsing_cycles',
-                    'initial_rinsing_duration',
-                    'wetting',
-                    'wetting_duration',
-                    'ultrasounds_required',
-                    'ultrasounds_frequency',
-                    'ultrasounds_duration',
-                    'notes',
-                ]
-            },
-        },
-    )
-    initial_rinsing_cycles = Quantity(
-        type=int,
-        a_eln={'component': 'NumberEditQuantity'},
-    )
-    initial_rinsing_duration = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
-        unit='minute',
-    )
-    etching_temperature = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-            'label': 'cleaning duration',
-        },
-        unit='celsius',
-    )
-    etching_duration = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'minute',
-            'label': 'cleaning duration',
-        },
-        unit='minute',
-    )
-
-
 class WetCleaning(FabricationProcessStep):
     m_def = Section(
         a_eln={
             'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
                 'duration',
-                'end_time',
-                'start_time',
                 'tag',
             ],
             'properties': {

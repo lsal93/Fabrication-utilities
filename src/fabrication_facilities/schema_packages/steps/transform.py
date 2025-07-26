@@ -18,9 +18,11 @@ from nomad.metainfo import (
 
 from fabrication_facilities.schema_packages.fabrication_utilities import (
     FabricationProcessStep,
+    FabricationProcessStepBase
 )
 from fabrication_facilities.schema_packages.utils import (
     parse_chemical_formula,
+    TimeRampTemperature
 )
 
 if TYPE_CHECKING:
@@ -32,6 +34,86 @@ if TYPE_CHECKING:
     )
 
 m_package = Package(name='Add processes schema')
+
+
+
+class Bakingbase(FabricationProcessStepBase):
+    m_def = Section(
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'tag',
+                    'id_item_processed',
+                    'operator',
+                    'starting_date',
+                    'ending_date',
+                    'duration',
+                    'baking_temperature',
+                    'baking_pressure',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    baking_temperature = Quantity(
+        type=np.float64,
+        description="""
+        Temperature imposed on the oven or thermal plate to perform the baking step
+        """,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+
+    baking_pressure = Quantity(
+        type=np.float64,
+        description = "Pressure of the system used. By default the atmospheric"
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+            'default': 1013.25,
+        },
+        unit='mbar',
+    )
+
+    temperature_ramps=SubSection(
+        section_def=TimeRampTemperature,
+        repeats=True,
+    )
+
+
+class Baking(FabricationProcessStep):
+    m_def=Section(
+                a_eln={
+            'hide':[
+                'tag',
+                'duaration',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'notes',
+                ],
+            },
+        },
+    )
 
 
 class EBL(FabricationProcessStep, ArchiveSection):
@@ -430,57 +512,6 @@ class ResistDevelopment(FabricationProcessStep, ArchiveSection):
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'sec',
         },
-        unit='sec',
-    )
-
-
-class Baking(FabricationProcessStep, ArchiveSection):
-    m_def = Section(
-        a_eln={
-            'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
-            ],
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'description',
-                    'affiliation',
-                    'location',
-                    'operator',
-                    'room',
-                    'id_item_processed',
-                    'starting_date',
-                    'ending_date',
-                    'step_type',
-                    'definition_of_process_step',
-                    'keywords',
-                    'recipe_name',
-                    'recipe_file',
-                    'recipe_preview',
-                    'chuck_temperature',
-                    'duration',
-                    'notes',
-                ]
-            },
-        },
-    )
-
-    chuck_temperature = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
-        unit='celsius',
-    )
-
-    duration = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
     )
 
