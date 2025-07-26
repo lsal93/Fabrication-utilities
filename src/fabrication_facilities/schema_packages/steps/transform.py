@@ -69,7 +69,7 @@ class Bakingbase(FabricationProcessStepBase):
 
     baking_pressure = Quantity(
         type=np.float64,
-        description = "Pressure of the system used. By default the atmospheric"
+        description = "Pressure of the system used. By default the atmospheric",
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'mbar',
@@ -86,7 +86,7 @@ class Bakingbase(FabricationProcessStepBase):
 
 class Baking(FabricationProcessStep):
     m_def=Section(
-                a_eln={
+        a_eln={
             'hide':[
                 'tag',
                 'duaration',
