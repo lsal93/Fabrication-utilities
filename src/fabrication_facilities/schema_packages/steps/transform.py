@@ -89,7 +89,7 @@ class Baking(FabricationProcessStep):
         a_eln={
             'hide':[
                 'tag',
-                'duaration',
+                'duration',
             ],
             'properties': {
                 'order': [
@@ -113,6 +113,11 @@ class Baking(FabricationProcessStep):
                 ],
             },
         },
+    )
+
+    baking_steps=SubSection(
+        section_def=Bakingbase,
+        repeats=True,
     )
 
 
