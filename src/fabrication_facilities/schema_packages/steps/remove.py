@@ -643,8 +643,13 @@ class WetEtchingOutputs(ArchiveSection):
     )
 
 
-class WetCleaningbase(WetEtchingbase):
+class WetCleaningbase(FabricationProcessStepBase): #WetEtchingbase):
     m_def = Section(
+        description="""
+        Atomistic components of a fabrication process step where de ionized water is
+        used to remove remaining chemicals on an item. It is used for example as an
+        intermadiate step of some wet etching procedures like the RCA cleaning.
+        """,
         a_eln={
             'properties': {
                 'order': [
@@ -657,17 +662,17 @@ class WetCleaningbase(WetEtchingbase):
                     'starting_date',
                     'ending_date',
                     'duration',
-                    'short_names',
-                    'target_materials_formulas',
-                    'etching_reactives',
-                    'etching_reactives_formulas',
-                    'etching_temperature',
-                    'etching_duration',
+                    # 'short_names',
+                    # 'target_materials_formulas',
+                    # 'etching_reactives',
+                    # 'etching_reactives_formulas',
+                    # 'etching_temperature',
+                    # 'etching_duration',
                     'pump'
-                    'initial_dumping_cycles',
-                    'initial_dumping_duration',
-                    'wetting',
-                    'wetting_duration',
+                    'dumping_cycles',
+                    'dumping_drain_duration',
+                    # 'wetting',
+                    # 'wetting_duration',
                     'ultrasounds_required',
                     'ultrasounds_frequency',
                     'ultrasounds_duration',
@@ -677,34 +682,37 @@ class WetCleaningbase(WetEtchingbase):
         },
     )
 
-    initial_dumping_cycles = Quantity(
+    dumping_cycles = Quantity(
         type=int,
         a_eln={'component': 'NumberEditQuantity'},
     )
-    initial_dumping_duration = Quantity(
+    dumping_drain_duration = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
     )
-    etching_temperature = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-            'label': 'cleaning temperature',
-        },
-        unit='celsius',
+    # etching_temperature = Quantity(
+    #     type=np.float64,
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'celsius',
+    #         'label': 'cleaning temperature',
+    #     },
+    #     unit='celsius',
+    # )
+    # etching_duration = Quantity(
+    #     type=np.float64,
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'minute',
+    #         'label': 'cleaning duration',
+    #     },
+    #     unit='minute',
+    # )
+    resistivity_control = SubSection(
+        section_def=ResistivityControl,
+        repeats=False,
     )
-    etching_duration = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'minute',
-            'label': 'cleaning duration',
-        },
-        unit='minute',
-    )
-
 
 class WetEtching(FabricationProcessStep):
     m_def = Section(

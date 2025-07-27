@@ -31,6 +31,8 @@ from nomad.metainfo import (
     SubSection,
 )
 
+from nomad.datamodel.metainfo.eln import Instrument
+
 from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
 from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
@@ -40,7 +42,8 @@ from fabrication_facilities.schema_packages.utils import (
 from fabrication_facilities.schema_packages.equipments.utils import(
     ChuckCapabilities,
     ICP_ColumnCapabilities,
-    Massflow_parameter
+    Massflow_parameter,
+    CarrierDescription
 )
 
 if TYPE_CHECKING:
@@ -54,7 +57,7 @@ if TYPE_CHECKING:
 m_package = Package(name='Equipments specific definitions ')
 
 
-class BakingFurnace(Equipment, ArchiveSection):
+class BakingFurnace(Equipment):
     m_def = Section(
         a_eln={
             'hide': [
@@ -124,7 +127,7 @@ class BakingFurnace(Equipment, ArchiveSection):
     )
 
 
-class RIE_Etcher(Equipment, ArchiveSection):
+class RIE_Etcher(Equipment):
     m_def = Section(
         a_eln={
             'hide': [
@@ -214,7 +217,7 @@ class RIE_Etcher(Equipment, ArchiveSection):
     )
 
 
-class ICP_RIE_Etcher(RIE_Etcher, ArchiveSection):
+class ICP_RIE_Etcher(RIE_Etcher):
     m_def = Section(
         description='Dry etching class for instruments where a plasma is involved',
         a_eln={
@@ -250,7 +253,7 @@ class ICP_RIE_Etcher(RIE_Etcher, ArchiveSection):
         repeats=False,
     )
 
-class DRIE_BOSCH_Etcher(ICP_RIE_Etcher, ArchiveSection):
+class DRIE_BOSCH_Etcher(ICP_RIE_Etcher):
     m_def = Section(
         description='Dry etching instrument for deep geometries',
         a_eln={
@@ -282,7 +285,224 @@ class DRIE_BOSCH_Etcher(ICP_RIE_Etcher, ArchiveSection):
     )
 
 
-class LPCVD_System(Equipment, ArchiveSection):
+class Wet_Bench_Unit(Equipment):
+    m_def = Section(
+        description="""
+        Bath containing a chemical solution or pure substance to perform wet processes,
+        """,
+        a_eln={
+            'hide':[
+                'datetime',
+            ],
+            'properties':{
+                'order':[
+                    'name',
+                    'lab_id',
+                    'description',
+                    'affiliation',
+                    'institution',
+                    'product_model',
+                    'manufacturer_name',
+                    'inventary_code',
+                    'is_bookable',
+                    'automatic_loading',
+                    'contamination_class',
+                    'volume_of_solution',
+                    'min_bath_temperature',
+                    'max_bath_temperature',
+                    'max_overflow_time',
+                    'pumping_mechanism',
+                    'solution_renewal',
+                    'max_number_of_repetitions',
+                ]
+            }
+        }
+    )
+
+    hood_system = Quantity(
+        type=str,
+        description="""
+        Name of the hood system used for safety. It could be used also to identify the
+        location of each tank in the labs.
+        """,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+
+    volume_of_solution = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'liter'},
+        unit='liter',
+    )
+
+    min_bath_temperature = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+
+    max_bath_temperature = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+
+    # max_overflow_time = Quantity(
+    #     type=np.float64,
+    #     description='Maximum amount of flow at disposal',
+    #     a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+    #     unit='sec',
+    # )
+
+    pumping_mechanism = Quantity(
+        type=bool,
+        description='There is a filtering system for the bath?',
+        a_eln={'component': 'BoolEditQuantity'},
+    )
+
+    # recycle_mechanism = Quantity(
+    #     type=bool,
+    #     description='There is a filtering system for the bath?',
+    #     a_eln={'component': 'BoolEditQuantity'},
+    # )
+
+    solution_renewal = Quantity(
+        type=str,
+        description='Frequency of the renewal of the solution in the bath',
+        a_eln={'component': 'StringEditQuantity'},
+    )
+
+    max_number_of_repetitions = Quantity(
+        type=int,
+        description='Maximum number of successive steps allowed for that well',
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+
+    max_time_of_usage=Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
+    )
+
+    ultrasounds_required = Quantity(
+        type=bool,
+        a_eln={
+            'component': 'BoolEditQuantity',
+        },
+    )
+
+    reactives = SubSection(section_def=ReactiveComponents, repeats=True)
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        if self.volume_of_solution is not None:
+            super().normalize(archive, logger)
+            for token in self.reactives:
+                self.token.final_solution_concentration = (
+                    self.token.initial_concentration
+                    * self.token.dispensed_volume
+                    / self.volume_of_solution
+                )
+
+
+class Dump_Rinser(Equipment):
+    m_def=Section(
+        a_eln={
+            'hide':[
+                'datetime',
+            ],
+            'properties':{
+                'order':[
+                    'name',
+                    'lab_id',
+                    'description',
+                    'affiliation',
+                    'institution',
+                    'product_model',
+                    'manufacturer_name',
+                    'inventary_code',
+                    'is_bookable',
+                    'automatic_loading',
+                    'contamination_class',
+                    'max_overflow_time',
+                    'pumping_mechanism',
+                    'cycles_drain_time',
+                    'final_drain_time',
+                    'resistivity_cut_off',
+                    'notes',
+                ]
+            }
+        }
+    )
+
+    resistivity_cut_off = Quantity(
+        type=np.float64,
+        description='Value used as target to stop the process',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'ohm*cm'},
+        unit='ohm*cm',
+    )
+
+    max_overflow_time = Quantity(
+        type=np.float64,
+        description='Maximum amount of flow at disposal',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
+    )
+
+
+class Wet_Bench(Instrument, ArchiveSection):
+    m_def=Section(
+        a_eln=Section(
+            'hide':[
+                'datetime',
+            ],
+            'properties':{
+                'order':[
+                    'name',
+                    'lab_id',
+                    'description',
+                    'institution',
+                    'product_model',
+                    'manufacturer_name',
+                    'inventary_code',
+                    'notes',
+                ]
+            }
+        )
+    )
+
+    lab_id = Quantity(
+        type=str,
+        description='ID assigned by lab for findability',
+        a_eln={'component': 'StringEditQuantity', 'label': 'id'},
+    )
+    inventary_code = Quantity(
+        type=int,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+    institution = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    manufacturer_name = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    product_model = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+
+    notes = Quantity(
+        type=str,
+        a_eln={
+            'component': 'RichTextEditQuantity',
+        },
+    )
+
+    tanks=SubSection(section_def=Wet_Bench_Unit, repeats=True)
+    dumping_rinser=SubSection(section_def=Dump_Rinser, repeats=True)
+
+
+class LPCVD_System(Equipment):
     m_def = Section(
         a_eln={
             'hide': [
@@ -304,15 +524,8 @@ class LPCVD_System(Equipment, ArchiveSection):
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
-                    'min_wall_temperature',
-                    'max_wall_temperature',
-                    'min_chuck_temperature',
-                    'max_chuck_temperature',
-                    'clamping',
-                    'mechanical_clamping',
-                    'electrostatic_clamping',
-                    'min_clamping_pressure',
-                    'max_clamping_pressure',
+                    'min_chamber_temperature',
+                    'max_chamber_temperature',
                     'notes',
                 ],
             },
@@ -348,7 +561,7 @@ class LPCVD_System(Equipment, ArchiveSection):
         unit='mbar',
     )
 
-    min_wall_temperature = Quantity(
+    min_chamber_temperature = Quantity(
         type=np.float64,
         description='Minimal temperature at disposal for the wall',
         a_eln={
@@ -358,7 +571,7 @@ class LPCVD_System(Equipment, ArchiveSection):
         unit='celsius',
     )
 
-    max_wall_temperature = Quantity(
+    max_chamber_temperature = Quantity(
         type=np.float64,
         description='Maximal temperature of the wall',
         a_eln={
@@ -368,76 +581,19 @@ class LPCVD_System(Equipment, ArchiveSection):
         unit='celsius',
     )
 
-    min_chuck_temperature = Quantity(
-        type=np.float64,
-        description='Minimal temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-
-    max_chuck_temperature = Quantity(
-        type=np.float64,
-        description='Maximal temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-
-    clamping = Quantity(
-        type=bool,
-        description='Is a system for clamping available?',
-        a_eln={
-            'component': 'BoolEditQuantity',
-        },
-    )
-
-    electrostatic_clamping = Quantity(
-        type=bool,
-        description='Is electrostatic clamping available',
-        a_eln={
-            'component': 'BoolEditQuantity',
-        },
-    )
-
-    mechanical_clamping = Quantity(
-        type=bool,
-        description='Is mechanical clamping available',
-        a_eln={
-            'component': 'BoolEditQuantity',
-        },
-    )
-
-    min_clamping_pressure = Quantity(
-        type=np.float64,
-        description='Minimum pressure needed on chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'mbar',
-        },
-        unit='mbar',
-    )
-    max_clamping_pressure = Quantity(
-        type=np.float64,
-        description='Maximum pressure needed on chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'mbar',
-        },
-        unit='mbar',
-    )
-
     gases = SubSection(
         section_def=Massflow_parameter,
         repeats=True,
     )
 
+    allowed_carriers = SubSection(
+        section_def=CarrierDescription,
+        repeats=True,
+    )
 
-class PECVD_System(LPCVD_System, ArchiveSection):
+
+
+class PECVD_System(Equipment):
     m_def = Section(
         description='Class instrument for PECVD procedures',
         a_eln={
@@ -448,100 +604,86 @@ class PECVD_System(LPCVD_System, ArchiveSection):
                 'order': [
                     'name',
                     'lab_id',
-                    'inventary_code',
+                    'description',
                     'affiliation',
-                    'product_model',
                     'institution',
+                    'product_model',
                     'manufacturer_name',
+                    'inventary_code',
                     'is_bookable',
                     'automatic_loading',
-                    'description',
                     'contamination_class',
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
-                    'min_wall_temperature',
-                    'max_wall_temperature',
-                    'min_chuck_temperature',
-                    'max_chuck_temperature',
-                    'min_chuck_power',
-                    'max_chuck_power',
-                    'min_chuck_frequency',
-                    'max_chuck_frequency',
-                    'min_bias',
-                    'max_bias',
-                    'clamping',
-                    'mechanical_clamping',
-                    'electrostatic_clamping',
-                    'min_clamping_pressure',
-                    'max_clamping_pressure',
+                    'min_chamebr_temperature',
+                    'max_chamber_temperature',,
                     'notes',
                 ],
             },
         },
     )
 
-    min_chuck_power = Quantity(
-        type=np.float64,
-        description='Minimal power erogated on the chuck',
+    vacuum_system_name = Quantity(
+        type=str,
+        description='Type of vacuum pump adopted',
         a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
+            'component': 'StringEditQuantity',
         },
-        unit='watt',
     )
 
-    max_chuck_power = Quantity(
+    min_chamber_pressure = Quantity(
         type=np.float64,
-        description='Maximal power erogated on the chuck',
+        description='Minimal pressure available',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
+            'defaultDisplayUnit': 'mbar',
         },
-        unit='watt',
+        unit='mbar',
     )
 
-    min_chuck_frequency = Quantity(
+    max_chamber_pressure = Quantity(
         type=np.float64,
-        description='Minimal frequency of current on the chuck',
+        description='Maximal pressure available',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
+            'defaultDisplayUnit': 'mbar',
         },
-        unit='MHz',
+        unit='mbar',
     )
-    max_chuck_frequency = Quantity(
+
+    min_chamber_temperature = Quantity(
         type=np.float64,
-        description='Maximal frequency of current on the chuck',
+        description='Minimal temperature at disposal for the wall',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
+            'defaultDisplayUnit': 'celsius',
         },
-        unit='MHz',
+        unit='celsius',
     )
 
-    min_bias = Quantity(
+    max_chamber_temperature = Quantity(
         type=np.float64,
-        description='Minimal bias voltage in the chamber',
+        description='Maximal temperature of the wall',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'volt',
+            'defaultDisplayUnit': 'celsius',
         },
-        unit='volt',
+        unit='celsius',
     )
 
-    max_bias = Quantity(
-        type=np.float64,
-        description='Maximal bias voltage in the chamber',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'volt',
-        },
-        unit='volt',
+    gases = SubSection(
+        section_def=Massflow_parameter,
+        repeats=True,
+    )
+
+    chuck=SubSection(
+        section_def=ChuckCapabilities,
+        repeats=False,
     )
 
 
-class ICP_CVD_System(PECVD_System, ArchiveSection):
+class ICP_CVD_System(PECVD_System):
     m_def = Section(
         description='Class for instruments devoted to ICP_CVD procedures',
         a_eln={
@@ -552,157 +694,30 @@ class ICP_CVD_System(PECVD_System, ArchiveSection):
                 'order': [
                     'name',
                     'lab_id',
-                    'inventary_code',
+                    'description',
                     'affiliation',
-                    'product_model',
                     'institution',
+                    'product_model',
                     'manufacturer_name',
+                    'inventary_code',
                     'is_bookable',
                     'automatic_loading',
-                    'description',
                     'contamination_class',
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
-                    'min_wall_temperature',
-                    'max_wall_temperature',
-                    'min_chuck_temperature',
-                    'max_chuck_temperature',
-                    'min_chuck_power',
-                    'max_chuck_power',
-                    'min_chuck_frequency',
-                    'max_chuck_frequency',
-                    'min_icp_power',
-                    'max_icp_power',
-                    'min_icp_frequency',
-                    'max_icp_frequency',
-                    'min_bias',
-                    'max_bias',
-                    'clamping',
-                    'mechanical_clamping',
-                    'electrostatic_clamping',
-                    'min_clamping_pressure',
-                    'max_clamping_pressure',
+                    'min_chamber_temperature',
+                    'max_chamber_temperature',
                     'notes',
                 ],
             },
         },
     )
 
-    min_icp_power = Quantity(
-        type=np.float64,
-        description='Minimal power erogated in the region of the plasma',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
+    icp_parameters=SubSection(
+        section_def=ICP_ColumnCapabilities,
+        repeats=False
     )
-
-    max_icp_power = Quantity(
-        type=np.float64,
-        description='Maximal power erogated in the region of the plasma',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
-
-    min_icp_frequency = Quantity(
-        type=np.float64,
-        description='Minimal frequency of current on the gases area',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
-    )
-
-    max_icp_frequency = Quantity(
-        type=np.float64,
-        description='Maximal frequency of current on the gases area',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
-    )
-
-
-class Wet_Bench_Unit(Equipment):
-    m_def = Section(
-        description="""
-        Bath containing a chemical solution or pure substance to perform wet processes,
-        """,
-    )
-
-    hood_system = Quantity(
-        type=str,
-        description='Name of the hood system used for safety',
-        a_eln={'component': 'StringEditQuantity'},
-    )
-
-    volume_of_solution = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'liter'},
-        unit='liter',
-    )
-
-    min_bath_temperature = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
-        unit='celsius',
-    )
-
-    max_bath_temperature = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
-        unit='celsius',
-    )
-
-    max_overflow = Quantity(
-        type=np.float64,
-        description='Maximum amount of flow at disposal',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'liter'},
-        unit='liter',
-    )
-
-    filtering_mechanism = Quantity(
-        type=bool,
-        description='There is a filtering system for the bath?',
-        a_eln={'component': 'BoolEditQuantity'},
-    )
-
-    recycle_mechanism = Quantity(
-        type=bool,
-        description='There is a filtering system for the bath?',
-        a_eln={'component': 'BoolEditQuantity'},
-    )
-
-    solution_renewal = Quantity(
-        type=str,
-        description='Frequency of the renewal of the solution in the bath',
-        a_eln={'component': 'StringEditQuantity'},
-    )
-
-    max_number_of_repetitions = Quantity(
-        type=int,
-        description='Maximum number of successive steps allowed for that well',
-        a_eln={'component': 'NumberEditQuantity'},
-    )
-
-    reactives = SubSection(section_def=ReactiveComponents, repeats=True)
-
-    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        if self.volume_of_solution is not None:
-            super().normalize(archive, logger)
-            for token in self.reactives:
-                self.token.final_solution_concentration = (
-                    self.token.initial_concentration
-                    * self.token.dispensed_volume
-                    / self.volume_of_solution
-                )
 
 
 class ElectronBeamLithographer(Equipment, ArchiveSection):

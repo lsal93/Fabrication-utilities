@@ -215,3 +215,17 @@ class ICP_ColumnCapabilities(ArchiveSection):
         },
         unit='MHz',
     )
+
+class CarrierDescription(ArchiveSection):
+
+    m_def = Section(
+        description="""
+        Section describing a component used to carry vertically one or more wafers
+        """
+    )
+
+    slots = Quantity(
+        type=int,
+        description='Total number of possible positioning for wafers',
+        a_eln={'component': 'NumberEditQuantity'},
+    )
