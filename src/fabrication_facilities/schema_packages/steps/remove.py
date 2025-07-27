@@ -25,26 +25,21 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
     FabricationProcessStep,
     FabricationProcessStepBase,
 )
+from fabrication_facilities.schema_packages.steps.utils import (
+    Carrier,
+    Chuck,
+    DRIE_Chuck,
+    DRIE_Massflow_controller,
+    ICP_Column,
+    Massflow_controller,
+    ResistivityControl,
+)
 from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
-    TimeRampMassflow,
     TimeRampPressure,
     TimeRampTemperature,
     parse_chemical_formula,
 )
-
-from fabrication_facilities.schema_packages.steps.utils import (
-    DRIE_Massflow_controller,
-    Massflow_controller,
-    ResistivityControl,
-    ICP_Column,
-    Clamping_System,
-    Carrier,
-    Chuck,
-    DRIE_Chuck
-)
-
-
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (
@@ -149,7 +144,7 @@ class RIEbase(FabricationProcessStepBase):
         repeats=True,
     )
 
-    temperature_ramps=SubSection(
+    temperature_ramps = SubSection(
         section_def=TimeRampTemperature,
         repeats=True,
     )
@@ -159,7 +154,7 @@ class RIEbase(FabricationProcessStepBase):
         repeats=True,
     )
 
-    chuck= SubSection(
+    chuck = SubSection(
         section_def=Chuck,
         repeats=False,
     )
@@ -169,10 +164,7 @@ class RIEbase(FabricationProcessStepBase):
         repeats=True,
     )
 
-    item_carrier = SubSection(
-        section_def = Carrier,
-        repeats = False
-    )
+    item_carrier = SubSection(section_def=Carrier, repeats=False)
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
@@ -213,7 +205,7 @@ class ICP_RIEbase(RIEbase):
         },
     )
 
-    icp_column=SubSection(
+    icp_column = SubSection(
         section_def=ICP_Column,
         repeats=False,
     )
@@ -251,7 +243,7 @@ class DRIE_BOSCHbase(ICP_RIEbase):
         repeats=True,
     )
 
-    chuck= SubSection(
+    chuck = SubSection(
         section_def=DRIE_Chuck,
         repeats=False,
     )
@@ -304,13 +296,13 @@ class RIE(FabricationProcessStep):
         },
     )
 
-    wafer_side=  Quantity(
+    wafer_side = Quantity(
         type=MEnum(
             'front',
             'back',
         ),
         description='Side exposed in the process',
-        a_eln={'component':'EnumEditQuantity'}
+        a_eln={'component': 'EnumEditQuantity'},
     )
 
     depth_target = Quantity(

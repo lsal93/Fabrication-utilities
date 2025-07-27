@@ -18,11 +18,11 @@ from nomad.metainfo import (
 
 from fabrication_facilities.schema_packages.fabrication_utilities import (
     FabricationProcessStep,
-    FabricationProcessStepBase
+    FabricationProcessStepBase,
 )
 from fabrication_facilities.schema_packages.utils import (
+    TimeRampTemperature,
     parse_chemical_formula,
-    TimeRampTemperature
 )
 
 if TYPE_CHECKING:
@@ -34,7 +34,6 @@ if TYPE_CHECKING:
     )
 
 m_package = Package(name='Add processes schema')
-
 
 
 class Bakingbase(FabricationProcessStepBase):
@@ -69,7 +68,7 @@ class Bakingbase(FabricationProcessStepBase):
 
     baking_pressure = Quantity(
         type=np.float64,
-        description = "Pressure of the system used. By default the atmospheric",
+        description='Pressure of the system used. By default the atmospheric',
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'mbar',
@@ -78,16 +77,16 @@ class Bakingbase(FabricationProcessStepBase):
         unit='mbar',
     )
 
-    temperature_ramps=SubSection(
+    temperature_ramps = SubSection(
         section_def=TimeRampTemperature,
         repeats=True,
     )
 
 
 class Baking(FabricationProcessStep):
-    m_def=Section(
+    m_def = Section(
         a_eln={
-            'hide':[
+            'hide': [
                 'tag',
                 'duration',
             ],
@@ -115,7 +114,7 @@ class Baking(FabricationProcessStep):
         },
     )
 
-    baking_steps=SubSection(
+    baking_steps = SubSection(
         section_def=Bakingbase,
         repeats=True,
     )

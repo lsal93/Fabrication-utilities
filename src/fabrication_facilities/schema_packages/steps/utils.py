@@ -10,30 +10,23 @@ from typing import (
 )
 
 import numpy as np
-from nomad.datamodel.data import ArchiveSection, EntryData
-from nomad.datamodel.metainfo.basesections import ElementalComposition
+from nomad.datamodel.data import ArchiveSection
 from nomad.metainfo import MEnum, Quantity, Section, SubSection
 
+from fabrication_facilities.schema_packages.Items import ItemPlacement
 from fabrication_facilities.schema_packages.utils import (
-    TimeRampPressure,
+    FabricationChemical,
     TimeRampMassflow,
+    TimeRampPressure,
     TimeRampTemperature,
-    FabricationChemical
 )
 
-from fabrication_facilities.schema_packages.Items import ItemPlacement
-
 if TYPE_CHECKING:
-    from nomad.datamodel.datamodel import (
-        EntryArchive,
-    )
-    from structlog.stdlib import (
-        BoundLogger,
-    )
+    pass
+
 
 class ICP_Column(ArchiveSection):
-
-    m_def=Section(
+    m_def = Section(
         description="""
         Section used to describe component to obtaine inductively coupled plasma
         """
@@ -60,8 +53,7 @@ class ICP_Column(ArchiveSection):
 
 
 class Clamping_System(ArchiveSection):
-
-    m_def=Section(
+    m_def = Section(
         description="""
         Class describing all parameters useful for clamping, if used during the step.
         """
@@ -94,8 +86,8 @@ class Clamping_System(ArchiveSection):
     )
 
 
-class Chuck (ArchiveSection):
-    m_def=Section(
+class Chuck(ArchiveSection):
+    m_def = Section(
         description="""
         Section containing all parameters relative to the chuck.
         """
@@ -130,22 +122,20 @@ class Chuck (ArchiveSection):
     )
 
     temperature_ramps = SubSection(
-        section_def = TimeRampTemperature,
+        section_def=TimeRampTemperature,
         repeats=True,
     )
 
-    clamping= SubSection(
-        section_def= Clamping_System,
-        repeats=False
-    )
+    clamping = SubSection(section_def=Clamping_System, repeats=False)
 
-    item_placement=SubSection(
+    item_placement = SubSection(
         section_def=ItemPlacement,
         repeats=False,
     )
 
+
 class DRIE_Chuck(ArchiveSection):
-    m_def=Section(
+    m_def = Section(
         description="""
         Section containing all parameters relative to the chuck in a DRIE process. The
         main property is the existence of an alternate powering for electrical data,
@@ -215,43 +205,42 @@ class DRIE_Chuck(ArchiveSection):
     )
 
     temperature_ramps = SubSection(
-        section_def = TimeRampTemperature,
+        section_def=TimeRampTemperature,
         repeats=True,
     )
 
 
 class Carrier(ArchiveSection):
-
-    m_def=Section(
+    m_def = Section(
         description="""
         Section describing a component used to carry vertically one or more wafers
         """
     )
 
-    slots=Quantity(
+    slots = Quantity(
         type=int,
         description='Total number of possible positioning for wafers',
-        a_eln={'component':'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity'},
     )
 
-    position_of_item=Quantity(
+    position_of_item = Quantity(
         type=int,
-        a_eln={'component':'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity'},
         description="""
         Number of the slot where the item is located. 1 is the the first
         slot which enter in the process chamber.
-        """
+        """,
     )
 
-    position_of_dummy_wafers=Quantity(
+    position_of_dummy_wafers = Quantity(
         type=int,
         shape=['*'],
-        a_eln={'component':'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity'},
         description="""
         Dummy wafers are used to reach uniformity in the chamber. If the
         step do not require dummy wafers or they are not important this field could be
         void.
-        """
+        """,
     )
 
 

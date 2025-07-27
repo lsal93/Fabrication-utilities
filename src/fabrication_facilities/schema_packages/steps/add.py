@@ -22,20 +22,16 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
     FabricationProcessStep,
     FabricationProcessStepBase,
 )
+from fabrication_facilities.schema_packages.steps.utils import (
+    Carrier,
+    Chuck,
+    ICP_Column,
+    Massflow_controller,
+)
 from fabrication_facilities.schema_packages.utils import (
-    FabricationChemical,
-    TimeRampMassflow,
     TimeRampPressure,
     TimeRampTemperature,
     parse_chemical_formula,
-)
-
-from fabrication_facilities.schema_packages.steps.utils import (
-    Massflow_controller,
-    Chuck,
-    ICP_Column,
-    Clamping_System,
-    Carrier,
 )
 
 if TYPE_CHECKING:
@@ -84,6 +80,7 @@ class SynthesisOutputs(ArchiveSection):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
+
 
 class LPCVDbase(FabricationProcessStepBase):
     m_def = Section(
@@ -150,7 +147,7 @@ class LPCVDbase(FabricationProcessStepBase):
         repeats=True,
     )
 
-    temperature_ramps=SubSection(
+    temperature_ramps = SubSection(
         section_def=TimeRampTemperature,
         repeats=True,
     )
@@ -164,10 +161,7 @@ class LPCVDbase(FabricationProcessStepBase):
         repeats=True,
     )
 
-    item_carrier = SubSection(
-        section_def = Carrier,
-        repeats = False
-    )
+    item_carrier = SubSection(section_def=Carrier, repeats=False)
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
@@ -193,6 +187,7 @@ class LPCVDbase(FabricationProcessStepBase):
                 print('No elements provided')
             self.material_elemental_composition = elementality
 
+
 class PECVDbase(LPCVDbase):
     m_def = Section(
         description='Atomistic component of a PECVD step',
@@ -217,16 +212,14 @@ class PECVDbase(LPCVDbase):
         },
     )
 
-    LPCVDbase.chamber_temperature.description='Temperature of the wall of the chamber'
+    LPCVDbase.chamber_temperature.description = 'Temperature of the wall of the chamber'
 
-    chuck=SubSection(
-        section_def=Chuck,
-        repeats=False
-    )
+    chuck = SubSection(section_def=Chuck, repeats=False)
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         if self.target_material_formula:
             super().normalize(archive, logger)
+
 
 class ICP_CVDbase(PECVDbase, ArchiveSection):
     m_def = Section(
@@ -252,7 +245,7 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
         },
     )
 
-    icp_column=SubSection(
+    icp_column = SubSection(
         section_def=ICP_Column,
         repeats=False,
     )
@@ -378,20 +371,19 @@ class PECVD(LPCVD):
         },
     )
 
-    wafer_side=  Quantity(
+    wafer_side = Quantity(
         type=MEnum(
             'front',
             'back',
         ),
         description='Side exposed in the process',
-        a_eln={'component':'EnumEditQuantity'}
+        a_eln={'component': 'EnumEditQuantity'},
     )
 
     synthesis_steps = SubSection(
         section_def=PECVDbase,
         repeats=True,
     )
-
 
 
 class ICP_CVD(PECVD):

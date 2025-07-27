@@ -28,7 +28,6 @@ from nomad.datamodel.data import (
 from nomad.datamodel.metainfo.basesections import (
     ElementalComposition,
     Entity,
-    ProcessStep,
 )
 from nomad.datamodel.metainfo.eln import Chemical, Instrument
 from nomad.datamodel.metainfo.workflow import Link
@@ -43,7 +42,6 @@ from nomad.metainfo import (
 
 from fabrication_facilities.schema_packages.Items import (
     Item,
-    ItemPlacement,
     ItemsPermitted,
 )
 from fabrication_facilities.schema_packages.utils import parse_chemical_formula
@@ -378,10 +376,10 @@ class Equipment(Instrument, EntryData, ArchiveSection):
             },
         }
     )
-    lab_id=Quantity(
+    lab_id = Quantity(
         type=str,
         description='ID assigned by lab for findability',
-        a_eln={'component':'StringEditQuantity', 'label': 'id'}
+        a_eln={'component': 'StringEditQuantity', 'label': 'id'},
     )
     inventary_code = Quantity(
         type=int,
@@ -473,7 +471,7 @@ class EquipmentReference(Link, ArchiveSection):
 class FabricationProcessStep(FabricationProcessStepBase, EntryData):
     m_def = Section(
         a_eln={
-            'hide':[
+            'hide': [
                 'tag',
                 'duaration',
             ],
