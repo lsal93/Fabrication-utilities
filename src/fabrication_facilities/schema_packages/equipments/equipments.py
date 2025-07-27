@@ -37,6 +37,11 @@ from fabrication_facilities.schema_packages.utils import (
     ReactiveComponents,
 )
 
+from fabrication_facilities.schema_packages.equipments.utils import(
+    ChuckCapabilities,
+    ICP_ColumnCapabilities,
+)
+
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (
         EntryArchive,
@@ -74,6 +79,76 @@ class Massflow_parameter(FabricationChemical, ArchiveSection):
     )
 
 
+class BakingFurnace(Equipment, ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'lab_id',
+                    'description',
+                    'affiliation',
+                    'institution',
+                    'product_model',
+                    'manufacturer_name',
+                    'inventary_code',
+                    'is_bookable',
+                    'automatic_loading',
+                    'contamination_class',
+                    'min_baking_temperature',
+                    'max_baking_temperature',
+                    'min_baking_pressure',
+                    'max_baking_pressure',
+                    'notes',
+                ],
+            },
+        }
+    )
+
+    min_baking_temperature = Quantity(
+        type=np.float64,
+        description='Minimal temperature available in the chamber',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    max_baking_temperature = Quantity(
+        type=np.float64,
+        description='Maximal temperature available in the chamber',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    min_baking_pressure = Quantity(
+        type=np.float64,
+        description='Minimal pressure available in the chamber',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
+
+    max_baking_pressure = Quantity(
+        type=np.float64,
+        description='Maximal pressure available in the chamber',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
+
+
 class RIE_Etcher(Equipment, ArchiveSection):
     m_def = Section(
         a_eln={
@@ -96,21 +171,8 @@ class RIE_Etcher(Equipment, ArchiveSection):
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
-                    'min_wall_temperature',
-                    'max_wall_temperature',
-                    'min_chuck_temperature',
-                    'max_chuck_temperature',
-                    'min_chuck_power',
-                    'max_chuck_power',
-                    'min_chuck_frequency',
-                    'max_chuck_frequency',
-                    'min_bias',
-                    'max_bias',
-                    'clamping',
-                    'mechanical_clamping',
-                    'electrostatic_clamping',
-                    'min_clamping_pressure',
-                    'max_clamping_pressure',
+                    'min_chamber_temperature',
+                    'max_chamber_temperature',
                     'notes',
                 ],
             },
@@ -146,7 +208,7 @@ class RIE_Etcher(Equipment, ArchiveSection):
         unit='mbar',
     )
 
-    min_wall_temperature = Quantity(
+    min_chamber_temperature = Quantity(
         type=np.float64,
         description='Minimal temperature at disposal for the wall',
         a_eln={
@@ -156,7 +218,7 @@ class RIE_Etcher(Equipment, ArchiveSection):
         unit='celsius',
     )
 
-    max_wall_temperature = Quantity(
+    max_chamber_temperature = Quantity(
         type=np.float64,
         description='Maximal temperature of the wall',
         a_eln={
@@ -166,131 +228,14 @@ class RIE_Etcher(Equipment, ArchiveSection):
         unit='celsius',
     )
 
-    min_chuck_temperature = Quantity(
-        type=np.float64,
-        description='Minimal temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-
-    max_chuck_temperature = Quantity(
-        type=np.float64,
-        description='Maximal temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-
-    min_chuck_power = Quantity(
-        type=np.float64,
-        description='Minimal power erogated on the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
-
-    max_chuck_power = Quantity(
-        type=np.float64,
-        description='Maximal power erogated on the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
-
-    min_chuck_frequency = Quantity(
-        type=np.float64,
-        description='Minimal frequency of current on the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
-    )
-    max_chuck_frequency = Quantity(
-        type=np.float64,
-        description='Maximal frequency of current on the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
-    )
-
-    min_bias = Quantity(
-        type=np.float64,
-        description='Minimal bias voltage in the chamber',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'volt',
-        },
-        unit='volt',
-    )
-
-    max_bias = Quantity(
-        type=np.float64,
-        description='Maximal bias voltage in the chamber',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'volt',
-        },
-        unit='volt',
-    )
-
-    clamping = Quantity(
-        type=bool,
-        description='Is a system for clamping available?',
-        a_eln={
-            'component': 'BoolEditQuantity',
-        },
-    )
-
-    electrostatic_clamping = Quantity(
-        type=bool,
-        description='Is electrostatic clamping available',
-        a_eln={
-            'component': 'BoolEditQuantity',
-        },
-    )
-
-    mechanical_clamping = Quantity(
-        type=bool,
-        description='Is mechanical clamping available',
-        a_eln={
-            'component': 'BoolEditQuantity',
-        },
-    )
-
-    min_clamping_pressure = Quantity(
-        type=np.float64,
-        description='Minimum pressure needed on chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'mbar',
-        },
-        unit='mbar',
-    )
-    max_clamping_pressure = Quantity(
-        type=np.float64,
-        description='Maximum pressure needed on chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'mbar',
-        },
-        unit='mbar',
-    )
-
     gases = SubSection(
         section_def=Massflow_parameter,
         repeats=True,
+    )
+
+    chuck=SubSection(
+        section_def=ChuckCapabilities,
+        repeats=False,
     )
 
 
@@ -317,77 +262,18 @@ class ICP_RIE_Etcher(RIE_Etcher, ArchiveSection):
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
-                    'min_wall_temperature',
-                    'max_wall_temperature',
-                    'min_chuck_temperature',
-                    'max_chuck_temperature',
-                    'min_chuck_power',
-                    'max_chuck_power',
-                    'min_chuck_frequency',
-                    'max_chuck_frequency',
-                    'min_icp_power',
-                    'max_icp_power',
-                    'min_icp_frequency',
-                    'max_icp_frequency',
-                    'min_bias',
-                    'max_bias',
-                    'clamping',
-                    'mechanical_clamping',
-                    'electrostatic_clamping',
-                    'min_clamping_pressure',
-                    'max_clamping_pressure',
+                    'min_chamber_temperature',
+                    'max_chamber_temperature',
                     'notes',
                 ],
             },
         },
     )
 
-    min_icp_power = Quantity(
-        type=np.float64,
-        description='Minimal power erogated in the region of the plasma',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
+    icp_parameters=SubSection(
+        section_def=ICP_ColumnCapabilities,
+        repeats=False,
     )
-
-    max_icp_power = Quantity(
-        type=np.float64,
-        description='Maximal power erogated in the region of the plasma',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'watt',
-        },
-        unit='watt',
-    )
-
-    min_icp_frequency = Quantity(
-        type=np.float64,
-        description='Minimal frequency of current on the gases area',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
-    )
-
-    max_icp_frequency = Quantity(
-        type=np.float64,
-        description='Maximal frequency of current on the gases area',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
-    )
-
-
-###############
-# In futuro si deve aggiungere una sezione per gli items permessi ma per farlo
-# bisogna prima lavorare sugli items stessi...
-###############
-
 
 class DRIE_BOSCH_Etcher(ICP_RIE_Etcher, ArchiveSection):
     m_def = Section(
@@ -412,25 +298,8 @@ class DRIE_BOSCH_Etcher(ICP_RIE_Etcher, ArchiveSection):
                     'min_chamber_pressure',
                     'max_chamber_pressure',
                     'vacuum_system_name',
-                    'min_wall_temperature',
-                    'max_wall_temperature',
-                    'min_chuck_temperature',
-                    'max_chuck_temperature',
-                    'min_chuck_power',
-                    'max_chuck_power',
-                    'min_chuck_frequency',
-                    'max_chuck_frequency',
-                    'min_icp_power',
-                    'max_icp_power',
-                    'min_icp_frequency',
-                    'max_icp_frequency',
-                    'min_bias',
-                    'max_bias',
-                    'clamping',
-                    'mechanical_clamping',
-                    'electrostatic_clamping',
-                    'min_clamping_pressure',
-                    'max_clamping_pressure',
+                    'min_chamber_temperature',
+                    'max_chamber_temperature',
                     'notes',
                 ],
             },
@@ -859,52 +728,6 @@ class Wet_Bench_Unit(Equipment):
                     * self.token.dispensed_volume
                     / self.volume_of_solution
                 )
-
-
-class BakingFurnace(Equipment, ArchiveSection):
-    m_def = Section(
-        a_eln={
-            'hide': [
-                'lab_id',
-                'datetime',
-            ],
-            'properties': {
-                'order': [
-                    'name',
-                    'inventary_code',
-                    'affiliation',
-                    'product_model',
-                    'institution',
-                    'manufacturer_name',
-                    'is_bookable',
-                    'automatic_loading',
-                    'description',
-                    'min_chuck_temperature',
-                    'max_chuck_temperature',
-                ],
-            },
-        }
-    )
-
-    min_chuck_temperature = Quantity(
-        type=np.float64,
-        description='Minimal temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-
-    max_chuck_temperature = Quantity(
-        type=np.float64,
-        description='Maximal temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
 
 
 class ElectronBeamLithographer(Equipment, ArchiveSection):

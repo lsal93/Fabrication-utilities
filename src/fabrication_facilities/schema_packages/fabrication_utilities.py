@@ -386,12 +386,8 @@ class Equipment(Instrument, EntryData, ArchiveSection):
         a_eln={'component': 'NumberEditQuantity'},
     )
     affiliation = Quantity(
-        type=MEnum(
-            'NFFA-DI',
-            'iENTRANCE@ENL',
-            'other',
-        ),
-        a_eln={'component': 'EnumEditQuantity'},
+        type= str,
+        a_eln={'component': 'StringditQuantity'},
     )
     institution = Quantity(
         type=str,
@@ -504,8 +500,8 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
         a_eln={'component': 'RichTextEditQuantity'},
     )
     affiliation = Quantity(
-        type=MEnum('NFFA-DI', 'iENTRANCE@ENL'),
-        a_eln={'component': 'EnumEditQuantity'},
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
     )
     location = Quantity(
         type=str,
