@@ -394,10 +394,10 @@ class Wet_Bench_Unit(Equipment):
         if self.volume_of_solution is not None:
             super().normalize(archive, logger)
             for token in self.reactives:
-                self.token.final_solution_concentration = (
-                    self.token.initial_concentration
-                    * self.token.dispensed_volume
-                    / self.volume_of_solution
+                token.final_solution_concentration = (
+                    token.initial_concentration
+                    * token.dispensed_volume
+                    / (100*self.volume_of_solution)
                 )
 
 
@@ -446,7 +446,7 @@ class Dump_Rinser(Equipment):
     )
 
 
-class Wet_Bench(Instrument, ArchiveSection):
+class Wet_Bench(Instrument, EntryData, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [

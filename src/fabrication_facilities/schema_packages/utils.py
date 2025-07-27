@@ -449,10 +449,11 @@ class ReactiveComponents(FabricationChemical):
             'properties': {
                 'order': [
                     'name',
-                    'chemmical_formula',
+                    'chemical_formula',
                     'description',
-                    'initial_concentration',
                     'purity_level',
+                    'initial_concentration',
+                    'dispensed_volume',
                     'final_solution_concentration',
                 ],
             },
@@ -478,7 +479,8 @@ class ReactiveComponents(FabricationChemical):
     dispensed_volume = Quantity(
         type=np.float64,
         description='Volume of reactive used to generate the final solution',
-        a_eln={'component': 'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'liter'},
+        unit='liter'
     )
 
     final_solution_concentration = Quantity(
