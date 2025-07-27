@@ -387,7 +387,7 @@ class Equipment(Instrument, EntryData, ArchiveSection):
     )
     affiliation = Quantity(
         type= str,
-        a_eln={'component': 'StringditQuantity'},
+        a_eln={'component': 'StringEditQuantity'},
     )
     institution = Quantity(
         type=str,
