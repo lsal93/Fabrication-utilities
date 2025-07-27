@@ -2,7 +2,7 @@ from typing import (
     TYPE_CHECKING,
 )
 
-#import numpy as np
+import numpy as np
 from nomad.datamodel.data import ArchiveSection
 from nomad.metainfo import Quantity, Section, SubSection
 
