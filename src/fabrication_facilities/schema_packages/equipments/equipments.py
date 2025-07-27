@@ -450,7 +450,7 @@ class Dump_Rinser(Equipment):
 
 class Wet_Bench(Instrument, ArchiveSection):
     m_def=Section(
-        a_eln=Section(
+        a_eln={
             'hide':[
                 'datetime',
             ],
@@ -466,8 +466,9 @@ class Wet_Bench(Instrument, ArchiveSection):
                     'notes',
                 ]
             }
-        )
+        }
     )
+
 
     lab_id = Quantity(
         type=str,
@@ -617,7 +618,7 @@ class PECVD_System(Equipment):
                     'max_chamber_pressure',
                     'vacuum_system_name',
                     'min_chamebr_temperature',
-                    'max_chamber_temperature',,
+                    'max_chamber_temperature',
                     'notes',
                 ],
             },
