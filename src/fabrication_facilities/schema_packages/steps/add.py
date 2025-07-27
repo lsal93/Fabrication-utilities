@@ -432,15 +432,15 @@ class ICP_CVD(PECVD):
     )
 
 
-class Coating (FabricationProcessStep):
-    m_def=Section(
+class Coating(FabricationProcessStep):
+    m_def = Section(
         a_eln={
-            'hide':[
+            'hide': [
                 'tag',
                 'duration',
             ],
-            'properties':{
-                'order':[
+            'properties': {
+                'order': [
                     'job_number',
                     'name',
                     'description',
@@ -460,7 +460,7 @@ class Coating (FabricationProcessStep):
                     'recipe_preview',
                     'notes',
                 ]
-            }
+            },
         }
     )
 
@@ -472,6 +472,7 @@ class Coating (FabricationProcessStep):
         description='Side exposed in the process',
         a_eln={'component': 'EnumEditQuantity'},
     )
+
 
 class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     m_def = Section(

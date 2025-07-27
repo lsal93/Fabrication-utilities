@@ -13,6 +13,7 @@ from fabrication_facilities.schema_packages.utils import (
 if TYPE_CHECKING:
     pass
 
+
 class Massflow_parameter(FabricationChemical, ArchiveSection):
     m_def = Section(
         description='Class to describe flux of gases in fluximeters',
@@ -37,6 +38,7 @@ class Massflow_parameter(FabricationChemical, ArchiveSection):
         },
         unit='centimeter^3/minute',
     )
+
 
 class Clamping_Capabilities(ArchiveSection):
     m_def = Section(
@@ -79,6 +81,7 @@ class Clamping_Capabilities(ArchiveSection):
         },
         unit='mbar',
     )
+
 
 class ChuckCapabilities(ArchiveSection):
     m_def = Section(
@@ -216,8 +219,8 @@ class ICP_ColumnCapabilities(ArchiveSection):
         unit='MHz',
     )
 
-class CarrierDescription(ArchiveSection):
 
+class CarrierDescription(ArchiveSection):
     m_def = Section(
         description="""
         Section describing a component used to carry vertically one or more wafers

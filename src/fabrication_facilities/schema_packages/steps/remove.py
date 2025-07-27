@@ -330,12 +330,12 @@ class RIE(FabricationProcessStep):
         unit='nm/minute',
     )
 
-    endpoint=Quantity(
+    endpoint = Quantity(
         type=bool,
         description="""
         The process uses a time or is performed with an endpoint for some parameters
         """,
-        a_eln={'component':'BoolEditQuantity'}
+        a_eln={'component': 'BoolEditQuantity'},
     )
 
     etching_steps = SubSection(
@@ -643,7 +643,7 @@ class WetEtchingOutputs(ArchiveSection):
     )
 
 
-class WetCleaningbase(FabricationProcessStepBase): #WetEtchingbase):
+class WetCleaningbase(FabricationProcessStepBase):  # WetEtchingbase):
     m_def = Section(
         description="""
         Atomistic components of a fabrication process step where de ionized water is
@@ -668,8 +668,7 @@ class WetCleaningbase(FabricationProcessStepBase): #WetEtchingbase):
                     # 'etching_reactives_formulas',
                     # 'etching_temperature',
                     # 'etching_duration',
-                    'pump'
-                    'dumping_cycles',
+                    'pumpdumping_cycles',
                     'dumping_drain_duration',
                     # 'wetting',
                     # 'wetting_duration',
@@ -713,6 +712,7 @@ class WetCleaningbase(FabricationProcessStepBase): #WetEtchingbase):
         section_def=ResistivityControl,
         repeats=False,
     )
+
 
 class WetEtching(FabricationProcessStep):
     m_def = Section(
@@ -768,12 +768,12 @@ class WetEtching(FabricationProcessStep):
         unit='nm/minute',
     )
 
-    endpoint=Quantity(
+    endpoint = Quantity(
         type=bool,
         description="""
         The process uses a time or is performed with an endpoint for some parameters
         """,
-        a_eln={'component':'BoolEditQuantity'}
+        a_eln={'component': 'BoolEditQuantity'},
     )
 
     etching_steps = SubSection(
@@ -819,12 +819,12 @@ class WetCleaning(FabricationProcessStep):
         }
     )
 
-    endpoint=Quantity(
+    endpoint = Quantity(
         type=bool,
         description="""
         The process uses a time or is performed with an endpoint for some parameters
         """,
-        a_eln={'component':'BoolEditQuantity'}
+        a_eln={'component': 'BoolEditQuantity'},
     )
 
     cleaning_steps = SubSection(

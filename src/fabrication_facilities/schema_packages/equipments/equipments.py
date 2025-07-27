@@ -24,6 +24,7 @@ import numpy as np
 from nomad.datamodel.data import (
     ArchiveSection,
 )
+from nomad.datamodel.metainfo.eln import Instrument
 from nomad.metainfo import (
     Package,
     Quantity,
@@ -31,19 +32,15 @@ from nomad.metainfo import (
     SubSection,
 )
 
-from nomad.datamodel.metainfo.eln import Instrument
-
-from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
-from fabrication_facilities.schema_packages.utils import (
-    FabricationChemical,
-    ReactiveComponents,
-)
-
-from fabrication_facilities.schema_packages.equipments.utils import(
+from fabrication_facilities.schema_packages.equipments.utils import (
+    CarrierDescription,
     ChuckCapabilities,
     ICP_ColumnCapabilities,
     Massflow_parameter,
-    CarrierDescription
+)
+from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
+from fabrication_facilities.schema_packages.utils import (
+    ReactiveComponents,
 )
 
 if TYPE_CHECKING:
@@ -211,7 +208,7 @@ class RIE_Etcher(Equipment):
         repeats=True,
     )
 
-    chuck=SubSection(
+    chuck = SubSection(
         section_def=ChuckCapabilities,
         repeats=False,
     )
@@ -248,10 +245,11 @@ class ICP_RIE_Etcher(RIE_Etcher):
         },
     )
 
-    icp_parameters=SubSection(
+    icp_parameters = SubSection(
         section_def=ICP_ColumnCapabilities,
         repeats=False,
     )
+
 
 class DRIE_BOSCH_Etcher(ICP_RIE_Etcher):
     m_def = Section(
@@ -291,11 +289,11 @@ class Wet_Bench_Unit(Equipment):
         Bath containing a chemical solution or pure substance to perform wet processes,
         """,
         a_eln={
-            'hide':[
+            'hide': [
                 'datetime',
             ],
-            'properties':{
-                'order':[
+            'properties': {
+                'order': [
                     'name',
                     'lab_id',
                     'description',
@@ -315,8 +313,8 @@ class Wet_Bench_Unit(Equipment):
                     'solution_renewal',
                     'max_number_of_repetitions',
                 ]
-            }
-        }
+            },
+        },
     )
 
     hood_system = Quantity(
@@ -377,7 +375,7 @@ class Wet_Bench_Unit(Equipment):
         a_eln={'component': 'NumberEditQuantity'},
     )
 
-    max_time_of_usage=Quantity(
+    max_time_of_usage = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
@@ -404,13 +402,13 @@ class Wet_Bench_Unit(Equipment):
 
 
 class Dump_Rinser(Equipment):
-    m_def=Section(
+    m_def = Section(
         a_eln={
-            'hide':[
+            'hide': [
                 'datetime',
             ],
-            'properties':{
-                'order':[
+            'properties': {
+                'order': [
                     'name',
                     'lab_id',
                     'description',
@@ -429,7 +427,7 @@ class Dump_Rinser(Equipment):
                     'resistivity_cut_off',
                     'notes',
                 ]
-            }
+            },
         }
     )
 
@@ -449,13 +447,13 @@ class Dump_Rinser(Equipment):
 
 
 class Wet_Bench(Instrument, ArchiveSection):
-    m_def=Section(
+    m_def = Section(
         a_eln={
-            'hide':[
+            'hide': [
                 'datetime',
             ],
-            'properties':{
-                'order':[
+            'properties': {
+                'order': [
                     'name',
                     'lab_id',
                     'description',
@@ -465,10 +463,9 @@ class Wet_Bench(Instrument, ArchiveSection):
                     'inventary_code',
                     'notes',
                 ]
-            }
+            },
         }
     )
-
 
     lab_id = Quantity(
         type=str,
@@ -499,8 +496,8 @@ class Wet_Bench(Instrument, ArchiveSection):
         },
     )
 
-    tanks=SubSection(section_def=Wet_Bench_Unit, repeats=True)
-    dumping_rinser=SubSection(section_def=Dump_Rinser, repeats=True)
+    tanks = SubSection(section_def=Wet_Bench_Unit, repeats=True)
+    dumping_rinser = SubSection(section_def=Dump_Rinser, repeats=True)
 
 
 class LPCVD_System(Equipment):
@@ -593,7 +590,6 @@ class LPCVD_System(Equipment):
     )
 
 
-
 class PECVD_System(Equipment):
     m_def = Section(
         description='Class instrument for PECVD procedures',
@@ -678,7 +674,7 @@ class PECVD_System(Equipment):
         repeats=True,
     )
 
-    chuck=SubSection(
+    chuck = SubSection(
         section_def=ChuckCapabilities,
         repeats=False,
     )
@@ -715,10 +711,7 @@ class ICP_CVD_System(PECVD_System):
         },
     )
 
-    icp_parameters=SubSection(
-        section_def=ICP_ColumnCapabilities,
-        repeats=False
-    )
+    icp_parameters = SubSection(section_def=ICP_ColumnCapabilities, repeats=False)
 
 
 class ElectronBeamLithographer(Equipment, ArchiveSection):
