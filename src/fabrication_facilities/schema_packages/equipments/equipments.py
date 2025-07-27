@@ -23,6 +23,7 @@ from typing import (
 import numpy as np
 from nomad.datamodel.data import (
     ArchiveSection,
+    EntryData
 )
 from nomad.datamodel.metainfo.eln import Instrument
 from nomad.metainfo import (
