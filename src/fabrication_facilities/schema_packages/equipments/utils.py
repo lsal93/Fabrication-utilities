@@ -6,12 +6,37 @@ import numpy as np
 from nomad.datamodel.data import ArchiveSection
 from nomad.metainfo import Quantity, Section, SubSection
 
-#from fabrication_facilities.schema_packages.utils import (
-#    FabricationChemical,
-#)
+from fabrication_facilities.schema_packages.utils import (
+    FabricationChemical,
+)
 
 if TYPE_CHECKING:
     pass
+
+class Massflow_parameter(FabricationChemical, ArchiveSection):
+    m_def = Section(
+        description='Class to describe flux of gases in fluximeters',
+        a_eln={'hide': ['lab_id', 'datetime']},
+    )
+
+    min_massflow = Quantity(
+        type=np.float64,
+        description='Minimum rate at which the gas flows',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'centimeter^3/minute',
+        },
+        unit='centimeter^3/minute',
+    )
+    max_massflow = Quantity(
+        type=np.float64,
+        description='Macimum rate at which the gas flows',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'centimeter^3/minute',
+        },
+        unit='centimeter^3/minute',
+    )
 
 class Clamping_Capabilities(ArchiveSection):
     m_def = Section(

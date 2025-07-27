@@ -383,6 +383,7 @@ class ICP_RIE(RIE):
                     'depth_target',
                     'duration_target',
                     'etching_rate_target',
+                    'endpoint',
                     'notes',
                 ]
             },
@@ -421,6 +422,8 @@ class DRIE_BOSCH(ICP_RIE):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'endpoint',
+                    'notes',
                 ]
             },
         }
@@ -673,7 +676,7 @@ class WetCleaningbase(WetEtchingbase):
             },
         },
     )
-    
+
     initial_dumping_cycles = Quantity(
         type=int,
         a_eln={'component': 'NumberEditQuantity'},
@@ -801,10 +804,19 @@ class WetCleaning(FabricationProcessStep):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'endpoint',
                     'notes',
                 ]
             },
         }
+    )
+
+    endpoint=Quantity(
+        type=bool,
+        description="""
+        The process uses a time or is performed with an endpoint for some parameters
+        """,
+        a_eln={'component':'BoolEditQuantity'}
     )
 
     cleaning_steps = SubSection(
