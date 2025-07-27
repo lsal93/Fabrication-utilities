@@ -62,7 +62,7 @@ class EtchingOutputs(ArchiveSection):
                 ],
             }
         },
-        description='Set of parameters obtained in an etching process',
+        description='Set of parameters obtained in a dry etching process',
     )
 
     job_number = Quantity(
@@ -290,6 +290,7 @@ class RIE(FabricationProcessStep):
                     'depth_target',
                     'duration_target',
                     'etching_rate_target',
+                    'endpoint',
                     'notes',
                 ]
             },
@@ -327,6 +328,14 @@ class RIE(FabricationProcessStep):
             'defaultDisplayUnit': 'nm/minute',
         },
         unit='nm/minute',
+    )
+
+    endpoint=Quantity(
+        type=bool,
+        description="""
+        The process uses a time or is performed with an endpoint for some parameters
+        """,
+        a_eln={'component':'BoolEditQuantity'}
     )
 
     etching_steps = SubSection(
@@ -460,8 +469,7 @@ class WetEtchingbase(FabricationProcessStepBase):
                     'etching_reactives',
                     'etching_reactives_formulas',
                     'etching_temperature',
-                    'filtering_system',
-                    'recycle_system',
+                    'pump',
                     'wetting',
                     'wetting_duration',
                     'ultrasounds_required',
@@ -474,16 +482,16 @@ class WetEtchingbase(FabricationProcessStepBase):
         },
     )
 
-    filtering_system = Quantity(
+    pump = Quantity(
         type=bool,
-        description='During the process is a filtering of the solution provided?',
+        description='During the process is the pump in action?',
         a_eln={'component': 'BoolEditQuantity'},
     )
-    recycle_system = Quantity(
-        type=bool,
-        description='During the process is a recycle of the solution provided?',
-        a_eln={'component': 'BoolEditQuantity'},
-    )
+    # recycle_system = Quantity(
+    #     type=bool,
+    #     description='During the process is a recycle of the solution provided?',
+    #     a_eln={'component': 'BoolEditQuantity'},
+    # )
     short_names = Quantity(
         type=str,
         description='Materials to be etched',
@@ -606,6 +614,32 @@ class WetEtchingbase(FabricationProcessStepBase):
             self.reactives_used_to_etch = reactives
 
 
+class WetEtchingOutputs(ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'duration_measured',
+                ],
+            }
+        },
+        description='Set of parameters obtained in a wet process',
+    )
+
+    job_number = Quantity(
+        type=int,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+
+    duration_measured = Quantity(
+        type=np.float64,
+        description='Real time of the process ad output',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
+    )
+
+
 class WetCleaningbase(WetEtchingbase):
     m_def = Section(
         a_eln={
@@ -626,10 +660,9 @@ class WetCleaningbase(WetEtchingbase):
                     'etching_reactives_formulas',
                     'etching_temperature',
                     'etching_duration',
-                    'filtering_system',
-                    'recycle_system',
-                    'initial_rinsing_cycles',
-                    'initial_rinsing_duration',
+                    'pump'
+                    'initial_dumping_cycles',
+                    'initial_dumping_duration',
                     'wetting',
                     'wetting_duration',
                     'ultrasounds_required',
@@ -640,11 +673,12 @@ class WetCleaningbase(WetEtchingbase):
             },
         },
     )
-    initial_rinsing_cycles = Quantity(
+    
+    initial_dumping_cycles = Quantity(
         type=int,
         a_eln={'component': 'NumberEditQuantity'},
     )
-    initial_rinsing_duration = Quantity(
+    initial_dumping_duration = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
@@ -697,6 +731,8 @@ class WetEtching(FabricationProcessStep):
                     'depth_target',
                     'duration_target',
                     'erching_rate_target',
+                    'endpoint',
+                    'notes',
                 ]
             },
         }
@@ -721,13 +757,21 @@ class WetEtching(FabricationProcessStep):
         unit='nm/minute',
     )
 
+    endpoint=Quantity(
+        type=bool,
+        description="""
+        The process uses a time or is performed with an endpoint for some parameters
+        """,
+        a_eln={'component':'BoolEditQuantity'}
+    )
+
     etching_steps = SubSection(
         section_def=WetEtchingbase,
         repeats=True,
     )
 
     outputs = SubSection(
-        section_def=EtchingOutputs,
+        section_def=WetEtchingOutputs,
         repeats=False,
     )
 
@@ -757,6 +801,7 @@ class WetCleaning(FabricationProcessStep):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
+                    'notes',
                 ]
             },
         }
@@ -768,7 +813,7 @@ class WetCleaning(FabricationProcessStep):
     )
 
     outputs = SubSection(
-        section_def=EtchingOutputs,
+        section_def=WetEtchingOutputs,
         repeats=False,
     )
 

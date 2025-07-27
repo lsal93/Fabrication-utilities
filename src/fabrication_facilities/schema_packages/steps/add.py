@@ -432,6 +432,47 @@ class ICP_CVD(PECVD):
     )
 
 
+class Coating (FabricationProcessStep):
+    m_def=Section(
+        a_eln={
+            'hide':[
+                'tag',
+                'duration',
+            ],
+            'properties':{
+                'order':[
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'wafer_side',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'notes',
+                ]
+            }
+        }
+    )
+
+    wafer_side = Quantity(
+        type=MEnum(
+            'front',
+            'back',
+        ),
+        description='Side exposed in the process',
+        a_eln={'component': 'EnumEditQuantity'},
+    )
+
 class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
     m_def = Section(
         a_eln={
