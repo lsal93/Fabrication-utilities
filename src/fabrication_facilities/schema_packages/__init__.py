@@ -70,7 +70,7 @@ Remove_entry_point = RemoveEntryPoint(
 
 class EquipmentsEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.equipments import (
+        from fabrication_facilities.schema_packages.equipments.equipments import (
             m_package,
         )
 
