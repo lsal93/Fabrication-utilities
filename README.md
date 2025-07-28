@@ -168,4 +168,4 @@ To run the check for updates locally, follow the instructions on [`cruft` websit
 ## Main contributors
 | Name | E-mail     |
 |------|------------|
-| Matteo Bontorno | [mbontorn@sissa.it](mailto:mbontorn@sissa.it)
+| Matteo Bontorno | [mbontorno@fbk.eu](mailto:mbontorno@fbk.eu)
