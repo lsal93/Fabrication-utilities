@@ -168,29 +168,32 @@ class LPCVDbase(FabricationProcessStepBase):
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
         if self.target_material_formula:
-            elements, counts = parse_chemical_formula(self.target_material_formula)
-            total = 0
-            for token in counts:
-                total += int(token)
-            mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
-            if total != 0:
-                elemental_fraction = np.array(counts) / total
-                elementality = []
-                i = 0
-                for entry in elements:
-                    elemental_try = ElementalComposition()
-                    elemental_try.element = entry
-                    elemental_try.atomic_fraction = elemental_fraction[i]
-                    mass_frac = (am[an[entry]] * counts[i]) / mass
-                    elemental_try.mass_fraction = mass_frac
-                    i += 1
-                    elementality.append(elemental_try)
-            else:
-                print('No elements provided')
-            self.material_elemental_composition = elementality
+            self.material_elemental_composition=generate_elementality(
+                self.target_material_formula
+            )
+            # elements, counts = parse_chemical_formula(self.target_material_formula)
+            # total = 0
+            # for token in counts:
+            #     total += int(token)
+            # mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
+            # if total != 0:
+            #     elemental_fraction = np.array(counts) / total
+            #     elementality = []
+            #     i = 0
+            #     for entry in elements:
+            #         elemental_try = ElementalComposition()
+            #         elemental_try.element = entry
+            #         elemental_try.atomic_fraction = elemental_fraction[i]
+            #         mass_frac = (am[an[entry]] * counts[i]) / mass
+            #         elemental_try.mass_fraction = mass_frac
+            #         i += 1
+            #         elementality.append(elemental_try)
+            # else:
+            #     print('No elements provided')
+            # self.material_elemental_composition = elementality
 
 
-class PECVDbase(LPCVDbase):
+class PECVDbase(FabricationProcessStepBase): #LPCVDbase):
     m_def = Section(
         description='Atomistic component of a PECVD step',
         a_eln={
@@ -214,13 +217,69 @@ class PECVDbase(LPCVDbase):
         },
     )
 
-    LPCVDbase.chamber_temperature.description = 'Temperature of the wall of the chamber'
+    # LPCVDbase.chamber_temperature.description = 'Temperature of the wall of the chamber'
+    short_name = Quantity(
+        type=str,
+        description='Material to be deposited',
+        a_eln={
+            'component': 'StringEditQuantity',
+            'label': 'target material',
+        },
+    )
+
+    target_material_formula = Quantity(
+        type=str,
+        description='Formula of the material target. Insert only if known',
+        a_eln={'component': 'StringEditQuantity'},
+    )
+
+    chamber_pressure = Quantity(
+        type=np.float64,
+        description='Pressure in the chamber',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
+        unit='mbar',
+    )
+
+    chamber_temperature = Quantity(
+        type=np.float64,
+        description='Temperature of the chamber',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+
+    number_of_loops = Quantity(
+        type=int,
+        description='Times for which this step is repeated with equal parameters',
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+
+    pressure_ramps = SubSection(
+        section_def=TimeRampPressure,
+        repeats=True,
+    )
+
+    temperature_ramps = SubSection(
+        section_def=TimeRampTemperature,
+        repeats=True,
+    )
+
+    material_elemental_composition = SubSection(
+        section_def=ElementalComposition, repeats=True
+    )
+
+    fluximeters = SubSection(
+        section_def=Massflow_controller,
+        repeats=True,
+    )
 
     chuck = SubSection(section_def=Chuck, repeats=False)
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
         if self.target_material_formula:
-            super().normalize(archive, logger)
+            self.material_elemental_composition=generate_elementality(
+                self.target_material_formula
+            )
 
 
 class ICP_CVDbase(PECVDbase, ArchiveSection):
@@ -431,48 +490,6 @@ class ICP_CVD(PECVD):
     synthesis_steps = SubSection(
         section_def=ICP_CVDbase,
         repeats=True,
-    )
-
-
-class Coating(FabricationProcessStep):
-    m_def = Section(
-        a_eln={
-            'hide': [
-                'tag',
-                'duration',
-            ],
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'description',
-                    'affiliation',
-                    'location',
-                    'operator',
-                    'room',
-                    'id_item_processed',
-                    'wafer_side',
-                    'starting_date',
-                    'ending_date',
-                    'step_type',
-                    'definition_of_process_step',
-                    'keywords',
-                    'recipe_name',
-                    'recipe_file',
-                    'recipe_preview',
-                    'notes',
-                ]
-            },
-        }
-    )
-
-    wafer_side = Quantity(
-        type=MEnum(
-            'front',
-            'back',
-        ),
-        description='Side exposed in the process',
-        a_eln={'component': 'EnumEditQuantity'},
     )
 
 
@@ -726,29 +743,10 @@ class Spin_Coating(FabricationProcessStep):
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
         if self.chemical_formula is not None:
-            self.resist_elemental_composition = generate_elementality(self.chemical_formula)
-            # elements, counts = parse_chemical_formula(self.chemical_formula)
-            # total = 0
-            # for token in counts:
-            #     total += int(token)
-            # mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
-            # if total != 0:
-            #     elemental_fraction = np.array(counts) / total
-            #     elementality = []
-            #     i = 0
-            #     for entry in elements:
-            #         elemental_try = ElementalComposition()
-            #         elemental_try.element = entry
-            #         elemental_try.atomic_fraction = elemental_fraction[i]
-            #         mass_frac = (am[an[entry]] * counts[i]) / mass
-            #         elemental_try.mass_fraction = mass_frac
-            #         i += 1
-            #         elementality.append(elemental_try)
-            # else:
-            #     print('No elements provided')
-            # self.resist_elemental_composition = elementality
+            self.resist_elemental_composition = generate_elementality(
+                self.chemical_formula
+            )
 
-### Generare funzione che prende la variabile formula chimica e poi appende le classi
 
 
 class Bonding(FabricationProcessStep, ArchiveSection):
