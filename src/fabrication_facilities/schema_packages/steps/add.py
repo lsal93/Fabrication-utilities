@@ -31,7 +31,9 @@ from fabrication_facilities.schema_packages.steps.utils import (
 from fabrication_facilities.schema_packages.utils import (
     TimeRampPressure,
     TimeRampTemperature,
+    TimeRampRotation,
     parse_chemical_formula,
+    generate_elementality,
 )
 
 if TYPE_CHECKING:
@@ -474,17 +476,12 @@ class Coating(FabricationProcessStep):
     )
 
 
-class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
+class Spin_Coating(FabricationProcessStep):
     m_def = Section(
         a_eln={
             'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
                 'duration',
-                'end_time',
-                'start_time',
+                'tag',
             ],
             'properties': {
                 'order': [
@@ -508,22 +505,26 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
                     'chemical_formula',
                     'thickness_target',
                     'hdms_required',
-                    'exposure_required',
-                    'exposure_intensity',
-                    'exposure_duration',
-                    'peb_required',
-                    'peb_duration',
-                    'peb_temperature',
-                    'dewetting_duration',
-                    'dewetting_temperature',
+                    'hdms_temperature',
+                    'priming_duration',
+                    # 'exposure_required',
+                    # 'exposure_intensity',
+                    # 'exposure_duration',
+                    # 'peb_required',
+                    # 'peb_duration',
+                    # 'peb_temperature',
+                    # 'dewetting_duration',
+                    # 'dewetting_temperature',
+                    'dispensing_mode',
+                    'dispensing_locus',
                     'spin_dispensed_volume',
                     'spin_frequency',
                     'spin_angular_acceleration',
                     'spin_duration',
-                    'baking_required',
-                    'baking_duration',
-                    'baking_temperature',
-                    'thickness_measured',
+                    # 'baking_required',
+                    # 'baking_duration',
+                    # 'baking_temperature',
+                    # 'thickness_measured',
                     'notes',
                 ]
             },
@@ -556,70 +557,92 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
         description='The recipe use the hdms?',
         a_eln={'component': 'BoolEditQuantity'},
     )
-    exposure_required = Quantity(
-        type=bool,
-        description='The recipe use exposure?',
-        a_eln={'component': 'BoolEditQuantity'},
-    )
-    exposure_intensity = Quantity(
+    hdms_temperature = Quantity(
         type=np.float64,
-        description='Power per area in the exposure',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'mwatt/cm^2',
-        },
-        unit='mwatt/cm^2',
+        description='Temperature of the primer',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
+        unit='celsius'
     )
-    exposure_duration = Quantity(
+    priming_duration=Quantity(
         type=np.float64,
-        description='The duration of the exposure',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
-        },
-        unit='sec',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'sec'},
+        unit='sec'
     )
-    peb_required = Quantity(
-        type=bool,
-        description='The recipe needs PEB?',
-        a_eln={'component': 'BoolEditQuantity'},
+    dispensing_mode=Quantity(
+        type=Menum(
+            'auto',
+            'manual',
+        ),
+        a_eln={'component':'EnumEditQuantity'},
     )
-    peb_duration = Quantity(
-        type=np.float64,
-        description='The duration of the peb',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
-        },
-        unit='sec',
+    dispensing_locus=Quantity(
+        type=str,
+        a_eln={'component':'StringEditQuantity'},
     )
-    peb_temperature = Quantity(
-        type=np.float64,
-        description='The temperature of the peb',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-    dewetting_duration = Quantity(
-        type=np.float64,
-        description='The duration of the dewetting',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'minute',
-        },
-        unit='minute',
-    )
-    dewetting_temperature = Quantity(
-        type=np.float64,
-        description='The temperaure of the dewetting',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
+    # exposure_required = Quantity(
+    #     type=bool,
+    #     description='The recipe use exposure?',
+    #     a_eln={'component': 'BoolEditQuantity'},
+    # )
+    # exposure_intensity = Quantity(
+    #     type=np.float64,
+    #     description='Power per area in the exposure',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'mwatt/cm^2',
+    #     },
+    #     unit='mwatt/cm^2',
+    # )
+    # exposure_duration = Quantity(
+    #     type=np.float64,
+    #     description='The duration of the exposure',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'sec',
+    #     },
+    #     unit='sec',
+    # )
+    # peb_required = Quantity(
+    #     type=bool,
+    #     description='The recipe needs PEB?',
+    #     a_eln={'component': 'BoolEditQuantity'},
+    # )
+    # peb_duration = Quantity(
+    #     type=np.float64,
+    #     description='The duration of the peb',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'sec',
+    #     },
+    #     unit='sec',
+    # )
+    # peb_temperature = Quantity(
+    #     type=np.float64,
+    #     description='The temperature of the peb',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'celsius',
+    #     },
+    #     unit='celsius',
+    # )
+    # dewetting_duration = Quantity(
+    #     type=np.float64,
+    #     description='The duration of the dewetting',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'minute',
+    #     },
+    #     unit='minute',
+    # )
+    # dewetting_temperature = Quantity(
+    #     type=np.float64,
+    #     description='The temperaure of the dewetting',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'celsius',
+    #     },
+    #     unit='celsius',
+    # )
     spin_dispensed_volume = Quantity(
         type=np.float64,
         description='Solution dispensed',
@@ -656,68 +679,79 @@ class Spin_Coating(Chemical, FabricationProcessStep, ArchiveSection):
         },
         unit='sec',
     )
-    baking_required = Quantity(
-        type=bool,
-        description='The recipe use baking?',
-        a_eln={
-            'component': 'BoolEditQuantity',
-        },
-    )
-    baking_duration = Quantity(
-        type=np.float64,
-        description='The duration of the baking',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'minute',
-        },
-        unit='minute',
-    )
-    baking_temperature = Quantity(
-        type=np.float64,
-        description='The temperaure of the baking',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-    thickness_measured = Quantity(
-        type=np.float64,
-        description='Actual amount of resist deposited',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm',
-        },
-        unit='nm',
-    )
+    # baking_required = Quantity(
+    #     type=bool,
+    #     description='The recipe use baking?',
+    #     a_eln={
+    #         'component': 'BoolEditQuantity',
+    #     },
+    # )
+    # baking_duration = Quantity(
+    #     type=np.float64,
+    #     description='The duration of the baking',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'minute',
+    #     },
+    #     unit='minute',
+    # )
+    # baking_temperature = Quantity(
+    #     type=np.float64,
+    #     description='The temperaure of the baking',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'celsius',
+    #     },
+    #     unit='celsius',
+    # )
+    # thickness_measured = Quantity(
+    #     type=np.float64,
+    #     description='Actual amount of resist deposited',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'nm',
+    #     },
+    #     unit='nm',
+    # )
 
     resist_elemental_composition = SubSection(
         section_def=ElementalComposition, repeats=True
     )
 
+    rotation_ramp=SubSection(
+        section_def=TimeRampRotation,
+        repeats=False,
+    )
+
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
         if self.chemical_formula:
-            elements, counts = parse_chemical_formula(self.chemical_formula)
-            total = 0
-            for token in counts:
-                total += int(token)
-            mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
-            if total != 0:
-                elemental_fraction = np.array(counts) / total
-                elementality = []
-                i = 0
-                for entry in elements:
-                    elemental_try = ElementalComposition()
-                    elemental_try.element = entry
-                    elemental_try.atomic_fraction = elemental_fraction[i]
-                    mass_frac = (am[an[entry]] * counts[i]) / mass
-                    elemental_try.mass_fraction = mass_frac
-                    i += 1
-                    elementality.append(elemental_try)
-            else:
-                print('No elements provided')
-            self.resist_elemental_composition = elementality
+            generate_elementality(
+                self.chemical_formula,
+                self.resist_elemental_composition
+            )
+            # elements, counts = parse_chemical_formula(self.chemical_formula)
+            # total = 0
+            # for token in counts:
+            #     total += int(token)
+            # mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
+            # if total != 0:
+            #     elemental_fraction = np.array(counts) / total
+            #     elementality = []
+            #     i = 0
+            #     for entry in elements:
+            #         elemental_try = ElementalComposition()
+            #         elemental_try.element = entry
+            #         elemental_try.atomic_fraction = elemental_fraction[i]
+            #         mass_frac = (am[an[entry]] * counts[i]) / mass
+            #         elemental_try.mass_fraction = mass_frac
+            #         i += 1
+            #         elementality.append(elemental_try)
+            # else:
+            #     print('No elements provided')
+            # self.resist_elemental_composition = elementality
+
+### Generare funzione che prende la variabile formula chimica e poi appende le classi
 
 
 class Bonding(FabricationProcessStep, ArchiveSection):
