@@ -73,7 +73,7 @@ def parse_chemical_formula(formula):
 
     return elements, counts
 
-def generate_elementality(formula, finalist):
+def generate_elementality(formula):
     elements, counts = parse_chemical_formula(formula)
     total = 0
     for token in counts:
@@ -93,7 +93,8 @@ def generate_elementality(formula, finalist):
             elementality.append(elemental_try)
     else:
         print('No elements provided')
-    finalist = elementality
+
+    return elementality
 
 class FabricationChemical(Chemical, ArchiveSection):
     m_def = Section(
