@@ -171,26 +171,6 @@ class LPCVDbase(FabricationProcessStepBase):
             self.material_elemental_composition=generate_elementality(
                 self.target_material_formula
             )
-            # elements, counts = parse_chemical_formula(self.target_material_formula)
-            # total = 0
-            # for token in counts:
-            #     total += int(token)
-            # mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
-            # if total != 0:
-            #     elemental_fraction = np.array(counts) / total
-            #     elementality = []
-            #     i = 0
-            #     for entry in elements:
-            #         elemental_try = ElementalComposition()
-            #         elemental_try.element = entry
-            #         elemental_try.atomic_fraction = elemental_fraction[i]
-            #         mass_frac = (am[an[entry]] * counts[i]) / mass
-            #         elemental_try.mass_fraction = mass_frac
-            #         i += 1
-            #         elementality.append(elemental_try)
-            # else:
-            #     print('No elements provided')
-            # self.material_elemental_composition = elementality
 
 
 class PECVDbase(FabricationProcessStepBase): #LPCVDbase):
@@ -206,6 +186,7 @@ class PECVDbase(FabricationProcessStepBase): #LPCVDbase):
                     'operator',
                     'starting_date',
                     'ending_date',
+                    'duration',
                     'short_name',
                     'target_material_formula',
                     'chamber_temperature',
@@ -217,7 +198,6 @@ class PECVDbase(FabricationProcessStepBase): #LPCVDbase):
         },
     )
 
-    # LPCVDbase.chamber_temperature.description = 'Temperature of the wall of the chamber'
     short_name = Quantity(
         type=str,
         description='Material to be deposited',
@@ -295,6 +275,7 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
                     'operator',
                     'starting_date',
                     'ending_date',
+                    'duration',
                     'short_name',
                     'target_material_formula',
                     'chamber_temperature',

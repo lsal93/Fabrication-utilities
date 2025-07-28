@@ -68,11 +68,10 @@ class Bakingbase(FabricationProcessStepBase):
 
     baking_pressure = Quantity(
         type=np.float64,
-        description='Pressure of the system used. By default the atmospheric',
+        description='Pressure of the system used. If not specified is the atmospheric',
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'mbar',
-            'default': 1013.25,
         },
         unit='mbar',
     )
@@ -119,19 +118,19 @@ class Baking(FabricationProcessStep):
         repeats=True,
     )
 
+class DirectLitoOutputs(ArchiveSection):
+    m_def=Section()
 
-class EBL(FabricationProcessStep, ArchiveSection):
+    current_measured=Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'pC'},
+        unit='pC',
+    )
+
+
+class EBL(FabricationProcessStep):
     m_def = Section(
         a_eln={
-            'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
-            ],
             'properties': {
                 'order': [
                     'job_number',
@@ -144,6 +143,7 @@ class EBL(FabricationProcessStep, ArchiveSection):
                     'id_item_processed',
                     'starting_date',
                     'ending_date',
+                    'duration',
                     'step_type',
                     'definition_of_process_step',
                     'keywords',
@@ -151,6 +151,8 @@ class EBL(FabricationProcessStep, ArchiveSection):
                     'recipe_file',
                     'recipe_preview',
                     'area_dose',
+                    'line_dose',
+                    'dot_dose',
                     'writing_field_dimension',
                     'address_size',
                     'clock',
@@ -181,6 +183,24 @@ class EBL(FabricationProcessStep, ArchiveSection):
             'defaultDisplayUnit': 'uC/centimeter^2',
         },
         unit='uC/centimeter^2',
+    )
+    dot_dose = Quantity(
+        type=np.float64,
+        description='Dose used in the process for single points',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'pC',
+        },
+        unit='pC',
+    )
+    line_dose = Quantity(
+        type=np.float64,
+        description='Dose per length used in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'uC/centimeter',
+        },
+        unit='pC/centimeter',
     )
     writing_field_dimension = Quantity(
         type=np.float64,
@@ -269,19 +289,15 @@ class EBL(FabricationProcessStep, ArchiveSection):
         unit='nm',
     )
 
+    outputs=SubSection(
+        section_def=DirectLitoOutputs,
+        repeats=False,
+    )
 
-class FIB(FabricationProcessStep, ArchiveSection):
+
+class FIB(FabricationProcessStep):
     m_def = Section(
         a_eln={
-            'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
-            ],
             'properties': {
                 'order': [
                     'job_number',
@@ -294,6 +310,7 @@ class FIB(FabricationProcessStep, ArchiveSection):
                     'id_item_processed',
                     'starting_date',
                     'ending_date',
+                    'duration',
                     'step_type',
                     'definition_of_process_step',
                     'keywords',
@@ -417,18 +434,9 @@ class FIB(FabricationProcessStep, ArchiveSection):
     )
 
 
-class ResistDevelopment(FabricationProcessStep, ArchiveSection):
+class ResistDevelopment(FabricationProcessStep):
     m_def = Section(
         a_eln={
-            'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
-            ],
             'properties': {
                 'order': [
                     'job_number',
@@ -441,6 +449,7 @@ class ResistDevelopment(FabricationProcessStep, ArchiveSection):
                     'id_item_processed',
                     'starting_date',
                     'ending_date',
+                    'duration',
                     'step_type',
                     'definition_of_process_step',
                     'keywords',
