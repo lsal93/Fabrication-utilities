@@ -725,7 +725,7 @@ class Spin_Coating(FabricationProcessStep):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        if self.chemical_formula:
+        if self.chemical_formula is not None:
             generate_elementality(
                 self.chemical_formula,
                 self.resist_elemental_composition
