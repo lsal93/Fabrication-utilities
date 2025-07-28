@@ -569,7 +569,7 @@ class Spin_Coating(FabricationProcessStep):
         unit='sec'
     )
     dispensing_mode=Quantity(
-        type=Menum(
+        type=MEnum(
             'auto',
             'manual',
         ),
