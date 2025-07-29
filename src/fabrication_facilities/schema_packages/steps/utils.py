@@ -15,12 +15,12 @@ from nomad.metainfo import MEnum, Quantity, Section, SubSection
 
 from fabrication_facilities.schema_packages.Items import ItemPlacement
 from fabrication_facilities.schema_packages.utils import (
+    BeamSource,
     FabricationChemical,
     TimeRampMassflow,
     TimeRampPressure,
     TimeRampRotation,
     TimeRampTemperature,
-    BeamSource,
 )
 
 if TYPE_CHECKING:

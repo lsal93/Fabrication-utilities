@@ -35,10 +35,11 @@ from fabrication_facilities.schema_packages.equipments.utils import (
     ChuckCapabilities,
     ICP_ColumnCapabilities,
     Massflow_parameter,
-    SpinnerSpinParameters
+    SpinnerSpinParameters,
 )
 from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
 from fabrication_facilities.schema_packages.utils import (
+    BeamSource,
     ReactiveComponents,
 )
 
@@ -745,12 +746,9 @@ class Spinner(Equipment):
         },
     )
 
-    item_contact_type=Quantity(
-        type=str,
-        a_eln={'component':'StringEditQuantity'}
-    )
+    item_contact_type = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
 
-    spin_capabilities=SubSection(
+    spin_capabilities = SubSection(
         section_def=SpinnerSpinParameters,
         repeats=False,
     )
@@ -833,6 +831,7 @@ class ElectronBeamLithographer(Equipment):
     )
 
     beam_source_available = SubSection(section_def=BeamSource, repeats=False)
+
 
 class FocusedIonBeamLithographer(ElectronBeamLithographer):
     m_def = Section(

@@ -6,10 +6,7 @@ import numpy as np
 from nomad.datamodel.data import ArchiveSection
 from nomad.metainfo import Quantity, Section, SubSection
 
-from fabrication_facilities.schema_packages.utils import (
-    FabricationChemical,
-    BeamSource
-)
+from fabrication_facilities.schema_packages.utils import FabricationChemical
 
 if TYPE_CHECKING:
     pass
@@ -234,8 +231,9 @@ class CarrierDescription(ArchiveSection):
         a_eln={'component': 'NumberEditQuantity'},
     )
 
+
 class SpinnerSpinParameters(ArchiveSection):
-    m_def=Section()
+    m_def = Section()
 
     min_spin_frequency = Quantity(
         type=np.float64,
@@ -266,8 +264,9 @@ class SpinnerSpinParameters(ArchiveSection):
         unit='revolutions_per_minute/sec',
     )
 
+
 class BeamColumnCapabilites(ArchiveSection):
-    m_def=Section()
+    m_def = Section()
 
     min_tension = Quantity(
         type=np.float64,
@@ -309,7 +308,7 @@ class BeamColumnCapabilites(ArchiveSection):
 
 
 class WritngCapabilities(ArchiveSection):
-    m_def=Section()
+    m_def = Section()
 
     min_area_dose = Quantity(
         type=np.float64,
