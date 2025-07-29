@@ -20,14 +20,14 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
     FabricationProcessStep,
     FabricationProcessStepBase,
 )
+from fabrication_facilities.schema_packages.steps.utils import (
+    Alignment,
+    BeamColumn,
+    WritingParameters,
+)
 from fabrication_facilities.schema_packages.utils import (
     TimeRampTemperature,
     parse_chemical_formula,
-)
-from fabrication_facilities.schema_packages.steps.utils import(
-    BeamColumn,
-    WritingParameters,
-    Alignment
 )
 
 if TYPE_CHECKING:
@@ -123,29 +123,30 @@ class Baking(FabricationProcessStep):
         repeats=True,
     )
 
-class DirectLitoOutputs(ArchiveSection):
-    m_def=Section()
 
-    current_measured=Quantity(
+class DirectLitoOutputs(ArchiveSection):
+    m_def = Section()
+
+    current_measured = Quantity(
         type=np.float64,
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'pC'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'pC'},
         unit='pC',
     )
 
-    duration_measured=Quantity(
+    duration_measured = Quantity(
         type=np.float64,
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
-        unit='minute'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute',
     )
 
-    angular_intensity=Quantity(
+    angular_intensity = Quantity(
         type=np.float64,
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'mampere/sr'},
-        unit='mampere/sr'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mampere/sr'},
+        unit='mampere/sr',
     )
 
 
-class EBLbase(FabricationProcessStepbase):
+class EBLbase(FabricationProcessStepBase):
     m_def = Section(
         a_eln={
             'properties': {
@@ -164,14 +165,6 @@ class EBLbase(FabricationProcessStepbase):
             },
         },
     )
-    recipe_name = Quantity(
-        type=str,
-        description='Name of the file that contains the geometry to impress',
-        a_eln={
-            'label': 'file CAD name',
-            'component': 'StringEditQuantity',
-        },
-    )
 
     chamber_pressure = Quantity(
         type=np.float64,
@@ -183,29 +176,23 @@ class EBLbase(FabricationProcessStepbase):
         unit='mbar',
     )
 
-    writing_settings= SubSection(
+    writing_settings = SubSection(
         section_def=WritingParameters,
         repeats=False,
     )
 
-    beam_column= SubSection(
-        section_def=BeamColumn,
-        repeats=False
-    )
+    beam_column = SubSection(section_def=BeamColumn, repeats=False)
 
-    alignment=SubSection(
-        section_def=Alignment,
-        repeats=False
-    )
+    alignment = SubSection(section_def=Alignment, repeats=False)
 
 
 class EBL(FabricationProcessStep):
     m_def = Section(
         a_eln={
-            'hide':[
+            'hide': [
                 'duration',
                 'tag',
-            ]
+            ],
             'properties': {
                 'order': [
                     'job_number',
@@ -252,15 +239,15 @@ class EBL(FabricationProcessStep):
         description='Duration of the process',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'minutes',
+            'defaultDisplayUnit': 'minute',
         },
-        unit='minutes',
+        unit='minute',
     )
-    writing_steps= SubSection(
+    writing_steps = SubSection(
         section_def=EBLbase,
         repeats=True,
     )
-    outputs=SubSection(
+    outputs = SubSection(
         section_def=DirectLitoOutputs,
         repeats=False,
     )

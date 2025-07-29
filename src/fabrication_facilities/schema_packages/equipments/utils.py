@@ -232,4 +232,3 @@ class CarrierDescription(ArchiveSection):
         description='Total number of possible positioning for wafers',
         a_eln={'component': 'NumberEditQuantity'},
     )
-

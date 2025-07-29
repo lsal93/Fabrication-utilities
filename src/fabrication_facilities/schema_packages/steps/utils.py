@@ -18,6 +18,7 @@ from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
     TimeRampMassflow,
     TimeRampPressure,
+    TimeRampRotation,
     TimeRampTemperature,
 )
 
@@ -87,7 +88,6 @@ class Clamping_System(ArchiveSection):
 
 
 class Chuck(ArchiveSection):
-
     m_def = Section(
         description="""
         Section containing all parameters relative to the chuck.
@@ -337,8 +337,9 @@ class ResistivityControl(ArchiveSection):
         unit='minute',
     )
 
+
 class SpinningComponent(ArchiveSection):
-    m_def=Section()
+    m_def = Section()
 
     spin_frequency = Quantity(
         type=np.float64,
@@ -368,36 +369,35 @@ class SpinningComponent(ArchiveSection):
         unit='sec',
     )
 
-    rotation_ramp=SubSection(
+    rotation_ramp = SubSection(
         section_def=TimeRampRotation,
         repeats=False,
     )
 
-class Priming(ArchiveSection):
-    m_def=Section()
 
-    primer_type= Quantity(
-        type=str,
-        a_eln={'component':'StringEditQuantity'}
-    )
+class Priming(ArchiveSection):
+    m_def = Section()
+
+    primer_type = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
     primer_temperature = Quantity(
         type=np.float64,
         description='Temperature of the primer',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
-        unit='celsius'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
     )
-    priming_duration=Quantity(
+    priming_duration = Quantity(
         type=np.float64,
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'sec'},
-        unit='sec'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
     )
+
 
 class DeIonizedWaterRinsing(ArchiveSection):
-    m_def=Section()
+    m_def = Section()
 
-    rinsing_cycles=Quantity(
+    rinsing_cycles = Quantity(
         type=int,
-        a_eln={'component':'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity'},
     )
 
     rinsing_duration = Quantity(
@@ -406,8 +406,9 @@ class DeIonizedWaterRinsing(ArchiveSection):
         unit='sec',
     )
 
+
 class DeIonizedWaterDumping(ArchiveSection):
-    m_def=Section()
+    m_def = Section()
 
     dumping_cycles = Quantity(
         type=int,
@@ -419,21 +420,17 @@ class DeIonizedWaterDumping(ArchiveSection):
         unit='minute',
     )
 
+
 class BeamSource(ArchiveSection):
-    m_def=Section()
+    m_def = Section()
 
-    emitter_material=Quantity(
-        type=str,
-        a_eln={'component':'StringEditQuantity'}
-    )
+    emitter_material = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
 
-    probe=Quantity(
-        type=str,
-        a_eln={'component':'StringEditQuantity'}
-    )
+    probe = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+
 
 class BeamColumn(ArchiveSection):
-    m_def=Section()
+    m_def = Section()
 
     tension = Quantity(
         type=np.float64,
@@ -455,21 +452,19 @@ class BeamColumn(ArchiveSection):
         unit='pampere',
     )
 
-    beam_source= SubSection(
-        section_def=BeamSource,
-        repeats=False
-    )
+    beam_source = SubSection(section_def=BeamSource, repeats=False)
 
 
 class Alignment(ArchiveSection):
-    m_def=Section()
+    m_def = Section()
 
-    alignment_mode=Quantity(
+    alignment_mode = Quantity(
         type=MEnum(
             'No alignment',
             'Manual',
             'Auto',
-        )
+        ),
+        a_eln={'component': 'EnumEditQuantity'},
     )
     alignment_max_error = Quantity(
         type=np.float64,
@@ -481,8 +476,9 @@ class Alignment(ArchiveSection):
         unit='nm',
     )
 
+
 class WritingParameters(ArchiveSection):
-    m_def=Section()
+    m_def = Section()
 
     area_dose = Quantity(
         type=np.float64,

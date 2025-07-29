@@ -21,10 +21,7 @@ from typing import (
 )
 
 import numpy as np
-from nomad.datamodel.data import (
-    ArchiveSection,
-    EntryData
-)
+from nomad.datamodel.data import ArchiveSection, EntryData
 from nomad.datamodel.metainfo.eln import Instrument
 from nomad.metainfo import (
     Package,
@@ -398,7 +395,7 @@ class Wet_Bench_Unit(Equipment):
                 token.final_solution_concentration = (
                     token.initial_concentration
                     * token.dispensed_volume
-                    / (100*self.volume_of_solution)
+                    / (100 * self.volume_of_solution)
                 )
 
 
@@ -716,7 +713,7 @@ class ICP_CVD_System(PECVD_System):
 
 
 class Spinner(Equipment):
-    m_def=Section(
+    m_def = Section(
         description="""
         Class for instruments devoted to spinning procedures like resist depositions.
         """,
@@ -740,10 +737,10 @@ class Spinner(Equipment):
                     'min_spin_frequency',
                     'max_spin_frequency',
                     'max_spin_angular_acceleration',
-                    'notes'
+                    'notes',
                 ]
-            }
-        }
+            },
+        },
     )
 
     min_spin_frequency = Quantity(
@@ -1167,52 +1164,6 @@ class FocusedIonBeamLithographer(Equipment, ArchiveSection):
 
 
 class ResistDeveloper(Equipment, ArchiveSection):
-    m_def = Section(
-        a_eln={
-            'hide': [
-                'lab_id',
-                'datetime',
-            ],
-            'properties': {
-                'order': [
-                    'name',
-                    'inventary_code',
-                    'affiliation',
-                    'product_model',
-                    'institution',
-                    'manufacturer_name',
-                    'is_bookable',
-                    'automatic_loading',
-                    'description',
-                    'min_chuck_temperature',
-                    'max_chuck_temperature',
-                ],
-            },
-        }
-    )
-
-    min_chuck_temperature = Quantity(
-        type=np.float64,
-        description='Minimal temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-
-    max_chuck_temperature = Quantity(
-        type=np.float64,
-        description='Maximal temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-
-
-class Spinner(Equipment, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [

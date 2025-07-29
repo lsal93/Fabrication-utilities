@@ -28,13 +28,13 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
 from fabrication_facilities.schema_packages.steps.utils import (
     Carrier,
     Chuck,
+    DeIonizedWaterRinsing,
     DRIE_Chuck,
     DRIE_Massflow_controller,
     ICP_Column,
     Massflow_controller,
     ResistivityControl,
     SpinningComponent,
-    DeIonizedWaterRinsing,
 )
 from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
@@ -842,10 +842,10 @@ class WetCleaning(FabricationProcessStep):
 
 
 class SpinResistDevelopmentbase(FabricationProcessStepBase):
-    m_def=Section(
+    m_def = Section(
         a_eln={
-            'properties':{
-                'order':[
+            'properties': {
+                'order': [
                     'job_number',
                     'name',
                     'tag',
@@ -871,7 +871,7 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
             'auto',
             'manual',
         ),
-        a_eln={'component':'EnumEditQuantity'}
+        a_eln={'component': 'EnumEditQuantity'},
     )
     developing_solution = Quantity(
         type=str,
@@ -897,31 +897,25 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
         },
         unit='celsius',
     )
-    number_of_loops=Quantity(
+    number_of_loops = Quantity(
         type=int,
-        a_eln={'component':'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity'},
     )
 
-    spin_parameters=SubSection(
-        section_def=SpinningComponent,
-        repeats=False
-    )
+    spin_parameters = SubSection(section_def=SpinningComponent, repeats=False)
 
-    rinsing=SubSection(
-        section_def=DeIonizedWaterRinsing,
-        repeats=False
-    )
+    rinsing = SubSection(section_def=DeIonizedWaterRinsing, repeats=False)
 
 
 class SpinResistDevelopment(FabricationProcessStep):
-    m_def=Section(
+    m_def = Section(
         a_eln={
-            'hide':[
+            'hide': [
                 'tag',
                 'duration',
-            ]
-            'properties':{
-                'order':[
+            ],
+            'properties': {
+                'order': [
                     'job_number',
                     'name',
                     'description',
@@ -940,14 +934,15 @@ class SpinResistDevelopment(FabricationProcessStep):
                     'recipe_preview',
                     'notes',
                 ]
-            }
+            },
         }
     )
 
-    development_steps=SubSection(
+    development_steps = SubSection(
         section_def=SpinResistDevelopmentbase,
         repeats=True,
     )
+
 
 class ResistDevelopmentbase(FabricationProcessStepBase):
     m_def = Section(
@@ -982,7 +977,7 @@ class ResistDevelopmentbase(FabricationProcessStepBase):
             'auto',
             'manual',
         ),
-        a_eln={'component':'EnumEditQuantity'}
+        a_eln={'component': 'EnumEditQuantity'},
     )
     developing_solution = Quantity(
         type=str,
@@ -1040,6 +1035,7 @@ class ResistDevelopmentbase(FabricationProcessStepBase):
         },
         unit='sec',
     )
+
 
 class ResistDevelopment(FabricationProcessStep):
     m_def = Section(

@@ -3,8 +3,6 @@ from typing import (
 )
 
 import numpy as np
-from ase.data import atomic_masses as am
-from ase.data import atomic_numbers as an
 from nomad.datamodel.data import (
     ArchiveSection,
 )
@@ -27,15 +25,14 @@ from fabrication_facilities.schema_packages.steps.utils import (
     Chuck,
     ICP_Column,
     Massflow_controller,
+    Priming,
     SpinningComponent,
-    Priming
 )
 from fabrication_facilities.schema_packages.utils import (
     TimeRampPressure,
     TimeRampTemperature,
-    TimeRampRotation,
-    parse_chemical_formula,
     generate_elementality,
+    parse_chemical_formula,
 )
 
 if TYPE_CHECKING:
@@ -170,12 +167,12 @@ class LPCVDbase(FabricationProcessStepBase):
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
         if self.target_material_formula:
-            self.material_elemental_composition=generate_elementality(
+            self.material_elemental_composition = generate_elementality(
                 self.target_material_formula
             )
 
 
-class PECVDbase(FabricationProcessStepBase): #LPCVDbase):
+class PECVDbase(FabricationProcessStepBase):  # LPCVDbase):
     m_def = Section(
         description='Atomistic component of a PECVD step',
         a_eln={
@@ -259,7 +256,7 @@ class PECVDbase(FabricationProcessStepBase): #LPCVDbase):
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
         if self.target_material_formula:
-            self.material_elemental_composition=generate_elementality(
+            self.material_elemental_composition = generate_elementality(
                 self.target_material_formula
             )
 
@@ -513,23 +510,23 @@ class Spin_Coatingbase(FabricationProcessStepBase):
         description='Resist formula. Insert only if known',
         a_eln={'component': 'StringEditQuantity'},
     )
-    resist_type=Quantity(
+    resist_type = Quantity(
         type=MEnum(
             'positive',
             'negative',
         ),
-        a_eln={'component':'EnumEditQuantity'},
+        a_eln={'component': 'EnumEditQuantity'},
     )
-    dispensing_mode=Quantity(
+    dispensing_mode = Quantity(
         type=MEnum(
             'auto',
             'manual',
         ),
-        a_eln={'component':'EnumEditQuantity'},
+        a_eln={'component': 'EnumEditQuantity'},
     )
-    dispensing_locus=Quantity(
+    dispensing_locus = Quantity(
         type=str,
-        a_eln={'component':'StringEditQuantity'},
+        a_eln={'component': 'StringEditQuantity'},
     )
     dispensed_volume = Quantity(
         type=np.float64,
@@ -545,15 +542,9 @@ class Spin_Coatingbase(FabricationProcessStepBase):
         section_def=ElementalComposition, repeats=True
     )
 
-    priming=SubSection(
-        section_def=Priming,
-        repeats=False
-    )
+    priming = SubSection(section_def=Priming, repeats=False)
 
-    spin_phase=SubSection(
-        section_def=SpinningComponent,
-        repeats=False
-    )
+    spin_phase = SubSection(section_def=SpinningComponent, repeats=False)
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
@@ -561,6 +552,7 @@ class Spin_Coatingbase(FabricationProcessStepBase):
             self.resist_elemental_composition = generate_elementality(
                 self.chemical_formula
             )
+
 
 class Spin_Coating(FabricationProcessStep):
     m_def = Section(
@@ -614,10 +606,7 @@ class Spin_Coating(FabricationProcessStep):
         unit='nm',
     )
 
-    spin_coating_steps=SubSection(
-        section_def=Spin_Coatingbase,
-        repeats=True
-    )
+    spin_coating_steps = SubSection(section_def=Spin_Coatingbase, repeats=True)
 
 
 class Bonding(FabricationProcessStep, ArchiveSection):

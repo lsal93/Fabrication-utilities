@@ -73,6 +73,7 @@ def parse_chemical_formula(formula):
 
     return elements, counts
 
+
 def generate_elementality(formula):
     elements, counts = parse_chemical_formula(formula)
     total = 0
@@ -95,6 +96,7 @@ def generate_elementality(formula):
         print('No elements provided')
 
     return elementality
+
 
 class FabricationChemical(Chemical, ArchiveSection):
     m_def = Section(
@@ -501,8 +503,8 @@ class ReactiveComponents(FabricationChemical):
     dispensed_volume = Quantity(
         type=np.float64,
         description='Volume of reactive used to generate the final solution',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit':'liter'},
-        unit='liter'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'liter'},
+        unit='liter',
     )
 
     final_solution_concentration = Quantity(
