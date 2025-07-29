@@ -41,7 +41,6 @@ from fabrication_facilities.schema_packages.equipments.utils import (
 )
 from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
 from fabrication_facilities.schema_packages.utils import (
-    BeamSource,
     ReactiveComponents,
 )
 

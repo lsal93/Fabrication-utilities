@@ -6,7 +6,10 @@ import numpy as np
 from nomad.datamodel.data import ArchiveSection
 from nomad.metainfo import Quantity, Section, SubSection
 
-from fabrication_facilities.schema_packages.utils import FabricationChemical
+from fabrication_facilities.schema_packages.utils import(
+    FabricationChemical,
+    BeamSource
+)
 
 if TYPE_CHECKING:
     pass
