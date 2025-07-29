@@ -31,13 +31,13 @@ from nomad.metainfo import (
 )
 
 from fabrication_facilities.schema_packages.equipments.utils import (
+    BeamColumnCapabilites,
     CarrierDescription,
     ChuckCapabilities,
     ICP_ColumnCapabilities,
     Massflow_parameter,
     SpinnerSpinParameters,
-    BeamColumnCapabilites,
-    WritingCapabilities
+    WritingCapabilities,
 )
 from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
 from fabrication_facilities.schema_packages.utils import (
@@ -832,15 +832,12 @@ class ElectronBeamLithographer(Equipment):
     )
 
     # beam_source_available = SubSection(section_def=BeamSource, repeats=False)
-    beam_column_capabilities=SubSection(
-        section_def=BeamColumnCapabilites,
-        repeats=False
+    beam_column_capabilities = SubSection(
+        section_def=BeamColumnCapabilites, repeats=False
     )
 
-    writing_capabilities=SubSection(
-        section_def=WritingCapabilities,
-        repeats=False
-    )
+    writing_capabilities = SubSection(section_def=WritingCapabilities, repeats=False)
+
 
 class FocusedIonBeamLithographer(ElectronBeamLithographer):
     m_def = Section(

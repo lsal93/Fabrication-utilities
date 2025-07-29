@@ -6,10 +6,7 @@ import numpy as np
 from nomad.datamodel.data import ArchiveSection
 from nomad.metainfo import Quantity, Section, SubSection
 
-from fabrication_facilities.schema_packages.utils import(
-    FabricationChemical,
-    BeamSource
-)
+from fabrication_facilities.schema_packages.utils import BeamSource, FabricationChemical
 
 if TYPE_CHECKING:
     pass
@@ -311,8 +308,9 @@ class BeamColumnCapabilites(ArchiveSection):
 
     beam_source_available = SubSection(section_def=BeamSource, repeats=False)
 
+
 class WritingCapabilities(ArchiveSection):
-    m_def=Section()
+    m_def = Section()
 
     min_area_dose = Quantity(
         type=np.float64,
