@@ -24,6 +24,11 @@ from fabrication_facilities.schema_packages.utils import (
     TimeRampTemperature,
     parse_chemical_formula,
 )
+from fabrication_facilities.schema_packages.steps.utils import(
+    BeamColumn,
+    WritingParameters,
+    Alignment
+)
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (
@@ -127,41 +132,33 @@ class DirectLitoOutputs(ArchiveSection):
         unit='pC',
     )
 
+    duration_measured=Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute'
+    )
 
-class EBL(FabricationProcessStep):
+    angular_intensity=Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'mampere/sr'},
+        unit='mampere/sr'
+    )
+
+
+class EBLbase(FabricationProcessStepbase):
     m_def = Section(
         a_eln={
             'properties': {
                 'order': [
                     'job_number',
                     'name',
-                    'description',
-                    'affiliation',
-                    'location',
-                    'operator',
-                    'room',
+                    'tag',
                     'id_item_processed',
+                    'operator',
                     'starting_date',
                     'ending_date',
                     'duration',
-                    'step_type',
-                    'definition_of_process_step',
-                    'keywords',
-                    'recipe_name',
-                    'recipe_file',
-                    'recipe_preview',
-                    'area_dose',
-                    'line_dose',
-                    'dot_dose',
-                    'writing_field_dimension',
-                    'address_size',
-                    'clock',
                     'chamber_pressure',
-                    'chuck_temperature',
-                    'tension',
-                    'current',
-                    'alignment_required',
-                    'alignment_max_error',
                     'notes',
                 ]
             },
@@ -175,78 +172,7 @@ class EBL(FabricationProcessStep):
             'component': 'StringEditQuantity',
         },
     )
-    area_dose = Quantity(
-        type=np.float64,
-        description='Dose per area used in the process',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'uC/centimeter^2',
-        },
-        unit='uC/centimeter^2',
-    )
-    dot_dose = Quantity(
-        type=np.float64,
-        description='Dose used in the process for single points',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'pC',
-        },
-        unit='pC',
-    )
-    line_dose = Quantity(
-        type=np.float64,
-        description='Dose per length used in the process',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'uC/centimeter',
-        },
-        unit='pC/centimeter',
-    )
-    writing_field_dimension = Quantity(
-        type=np.float64,
-        description='Area covered globally in the process',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'um^2',
-        },
-        unit='um^2',
-    )
-    address_size = Quantity(
-        type=np.float64,
-        description='The minimum distance covered per step in the process',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm',
-        },
-        unit='nm',
-    )
-    clock = Quantity(
-        type=np.float64,
-        description='Frequency used',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
-    )
-    current = Quantity(
-        type=np.float64,
-        description='Current provided',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'pampere',
-        },
-        unit='pampere',
-    )
-    duration = Quantity(
-        type=np.float64,
-        description='Duration of the process',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'minutes',
-        },
-        unit='minutes',
-    )
+
     chamber_pressure = Quantity(
         type=np.float64,
         description='Pressure in the chamber',
@@ -256,39 +182,84 @@ class EBL(FabricationProcessStep):
         },
         unit='mbar',
     )
-    chuck_temperature = Quantity(
-        type=np.float64,
-        description='Temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-    tension = Quantity(
-        type=np.float64,
-        description='Voltage accelerating the electrons',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'volt',
-        },
-        unit='volt',
-    )
-    alignment_required = Quantity(
-        type=bool,
-        description='Alignment is required in the patterning?',
-        a_eln={'component': 'BoolEditQuantity'},
-    )
-    alignment_max_error = Quantity(
-        type=np.float64,
-        description='Maximum error allowed in the alignment',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm',
-        },
-        unit='nm',
+
+    writing_settings= SubSection(
+        section_def=WritingParameters,
+        repeats=False,
     )
 
+    beam_column= SubSection(
+        section_def=BeamColumn,
+        repeats=False
+    )
+
+    alignment=SubSection(
+        section_def=Alignment,
+        repeats=False
+    )
+
+
+class EBL(FabricationProcessStep):
+    m_def = Section(
+        a_eln={
+            'hide':[
+                'duration',
+                'tag',
+            ]
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'wafer_side',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'duration_target',
+                    'notes',
+                ]
+            },
+        },
+    )
+    recipe_name = Quantity(
+        type=str,
+        description='Name of the file that contains the geometry to impress',
+        a_eln={
+            'label': 'file CAD name',
+            'component': 'StringEditQuantity',
+        },
+    )
+    recipe_file = Quantity(
+        type=str,
+        description='Name of the file that contains the geometry to impress',
+        a_eln={
+            'label': 'file CAD',
+            'component': 'FileEditQuantity',
+        },
+    )
+    duration_target = Quantity(
+        type=np.float64,
+        description='Duration of the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'minutes',
+        },
+        unit='minutes',
+    )
+    writing_steps= SubSection(
+        section_def=EBLbase,
+        repeats=True,
+    )
     outputs=SubSection(
         section_def=DirectLitoOutputs,
         repeats=False,
@@ -431,101 +402,6 @@ class FIB(FabricationProcessStep):
         type=int,
         description='Iteration of the process',
         a_eln={'component': 'NumberEditQuantity'},
-    )
-
-
-class ResistDevelopment(FabricationProcessStep):
-    m_def = Section(
-        a_eln={
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'description',
-                    'affiliation',
-                    'location',
-                    'operator',
-                    'room',
-                    'id_item_processed',
-                    'starting_date',
-                    'ending_date',
-                    'duration',
-                    'step_type',
-                    'definition_of_process_step',
-                    'keywords',
-                    'recipe_name',
-                    'recipe_file',
-                    'recipe_preview',
-                    'developing_solution',
-                    'developing_solution_proportions',
-                    'developing_duration',
-                    'developing_temperature',
-                    'stopping_solution',
-                    'stopping_solution_proportions',
-                    'stopping_duration',
-                    'cleaning_solution',
-                    'cleaning_solution_proportions',
-                    'cleaning_duration',
-                    'notes',
-                ]
-            },
-        },
-    )
-    developing_solution = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    developing_solution_proportions = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    developing_duration = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'minute',
-        },
-        unit='minute',
-    )
-    developing_temperature = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-    stopping_solution = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    stopping_solution_proportions = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    stopping_duration = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
-        },
-        unit='sec',
-    )
-    cleaning_solution = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    cleaning_solution_proportions = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    cleaning_duration = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
-        },
-        unit='sec',
     )
 
 

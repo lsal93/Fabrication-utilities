@@ -27,6 +27,8 @@ from fabrication_facilities.schema_packages.steps.utils import (
     Chuck,
     ICP_Column,
     Massflow_controller,
+    SpinningComponent,
+    Priming
 )
 from fabrication_facilities.schema_packages.utils import (
     TimeRampPressure,
@@ -474,55 +476,25 @@ class ICP_CVD(PECVD):
     )
 
 
-class Spin_Coating(FabricationProcessStep):
+class Spin_Coatingbase(FabricationProcessStepBase):
     m_def = Section(
         a_eln={
-            'hide': [
-                'duration',
-                'tag',
-            ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
-                    'description',
-                    'affiliation',
-                    'location',
-                    'operator',
-                    'room',
+                    'tag',
                     'id_item_processed',
+                    'operator',
                     'starting_date',
                     'ending_date',
-                    'step_type',
-                    'definition_of_process_step',
-                    'keywords',
-                    'recipe_name',
-                    'recipe_file',
-                    'recipe_preview',
+                    'duration',
                     'short_name',
                     'chemical_formula',
-                    'thickness_target',
-                    'hdms_required',
-                    'hdms_temperature',
-                    'priming_duration',
-                    # 'exposure_required',
-                    # 'exposure_intensity',
-                    # 'exposure_duration',
-                    # 'peb_required',
-                    # 'peb_duration',
-                    # 'peb_temperature',
-                    # 'dewetting_duration',
-                    # 'dewetting_temperature',
+                    'resist_type',
                     'dispensing_mode',
                     'dispensing_locus',
-                    'spin_dispensed_volume',
-                    'spin_frequency',
-                    'spin_angular_acceleration',
-                    'spin_duration',
-                    # 'baking_required',
-                    # 'baking_duration',
-                    # 'baking_temperature',
-                    # 'thickness_measured',
+                    'dispensed_volume',
                     'notes',
                 ]
             },
@@ -541,30 +513,12 @@ class Spin_Coating(FabricationProcessStep):
         description='Resist formula. Insert only if known',
         a_eln={'component': 'StringEditQuantity'},
     )
-    thickness_target = Quantity(
-        type=np.float64,
-        description='Amount of resist to be deposited',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm',
-        },
-        unit='nm',
-    )
-    hdms_required = Quantity(
-        type=bool,
-        description='The recipe use the hdms?',
-        a_eln={'component': 'BoolEditQuantity'},
-    )
-    hdms_temperature = Quantity(
-        type=np.float64,
-        description='Temperature of the primer',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
-        unit='celsius'
-    )
-    priming_duration=Quantity(
-        type=np.float64,
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'sec'},
-        unit='sec'
+    resist_type=Quantity(
+        type=MEnum(
+            'positive',
+            'negative',
+        ),
+        a_eln={'component':'EnumEditQuantity'},
     )
     dispensing_mode=Quantity(
         type=MEnum(
@@ -577,71 +531,7 @@ class Spin_Coating(FabricationProcessStep):
         type=str,
         a_eln={'component':'StringEditQuantity'},
     )
-    # exposure_required = Quantity(
-    #     type=bool,
-    #     description='The recipe use exposure?',
-    #     a_eln={'component': 'BoolEditQuantity'},
-    # )
-    # exposure_intensity = Quantity(
-    #     type=np.float64,
-    #     description='Power per area in the exposure',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'mwatt/cm^2',
-    #     },
-    #     unit='mwatt/cm^2',
-    # )
-    # exposure_duration = Quantity(
-    #     type=np.float64,
-    #     description='The duration of the exposure',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'sec',
-    #     },
-    #     unit='sec',
-    # )
-    # peb_required = Quantity(
-    #     type=bool,
-    #     description='The recipe needs PEB?',
-    #     a_eln={'component': 'BoolEditQuantity'},
-    # )
-    # peb_duration = Quantity(
-    #     type=np.float64,
-    #     description='The duration of the peb',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'sec',
-    #     },
-    #     unit='sec',
-    # )
-    # peb_temperature = Quantity(
-    #     type=np.float64,
-    #     description='The temperature of the peb',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'celsius',
-    #     },
-    #     unit='celsius',
-    # )
-    # dewetting_duration = Quantity(
-    #     type=np.float64,
-    #     description='The duration of the dewetting',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'minute',
-    #     },
-    #     unit='minute',
-    # )
-    # dewetting_temperature = Quantity(
-    #     type=np.float64,
-    #     description='The temperaure of the dewetting',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'celsius',
-    #     },
-    #     unit='celsius',
-    # )
-    spin_dispensed_volume = Quantity(
+    dispensed_volume = Quantity(
         type=np.float64,
         description='Solution dispensed',
         a_eln={
@@ -650,75 +540,19 @@ class Spin_Coating(FabricationProcessStep):
         },
         unit='milliliter',
     )
-    spin_frequency = Quantity(
-        type=np.float64,
-        description='Velocity of the spinner',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'revolutions_per_minute',
-        },
-        unit='revolutions_per_minute',
-    )
-    spin_angular_acceleration = Quantity(
-        type=np.float64,
-        description='Acceleration of the spinner',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'revolutions_per_minute/sec',
-        },
-        unit='revolutions_per_minute/sec',
-    )
-    spin_duration = Quantity(
-        type=np.float64,
-        description='Acceleration of the spinner',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
-        },
-        unit='sec',
-    )
-    # baking_required = Quantity(
-    #     type=bool,
-    #     description='The recipe use baking?',
-    #     a_eln={
-    #         'component': 'BoolEditQuantity',
-    #     },
-    # )
-    # baking_duration = Quantity(
-    #     type=np.float64,
-    #     description='The duration of the baking',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'minute',
-    #     },
-    #     unit='minute',
-    # )
-    # baking_temperature = Quantity(
-    #     type=np.float64,
-    #     description='The temperaure of the baking',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'celsius',
-    #     },
-    #     unit='celsius',
-    # )
-    # thickness_measured = Quantity(
-    #     type=np.float64,
-    #     description='Actual amount of resist deposited',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'nm',
-    #     },
-    #     unit='nm',
-    # )
 
     resist_elemental_composition = SubSection(
         section_def=ElementalComposition, repeats=True
     )
 
-    rotation_ramp=SubSection(
-        section_def=TimeRampRotation,
-        repeats=False,
+    priming=SubSection(
+        section_def=Priming,
+        repeats=False
+    )
+
+    spin_phase=SubSection(
+        section_def=SpinningComponent,
+        repeats=False
     )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
@@ -728,6 +562,62 @@ class Spin_Coating(FabricationProcessStep):
                 self.chemical_formula
             )
 
+class Spin_Coating(FabricationProcessStep):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'duration',
+                'tag',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'wafer_side',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'thickness_target',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    wafer_side = Quantity(
+        type=MEnum(
+            'front',
+            'back',
+        ),
+        description='Side exposed in the process',
+        a_eln={'component': 'EnumEditQuantity'},
+    )
+
+    thickness_target = Quantity(
+        type=np.float64,
+        description='Amount of resist to be deposited',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
+        unit='nm',
+    )
+
+    spin_coating_steps=SubSection(
+        section_def=Spin_Coatingbase,
+        repeats=True
+    )
 
 
 class Bonding(FabricationProcessStep, ArchiveSection):

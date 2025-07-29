@@ -715,7 +715,68 @@ class ICP_CVD_System(PECVD_System):
     icp_parameters = SubSection(section_def=ICP_ColumnCapabilities, repeats=False)
 
 
-class ElectronBeamLithographer(Equipment, ArchiveSection):
+class Spinner(Equipment):
+    m_def=Section(
+        description="""
+        Class for instruments devoted to spinning procedures like resist depositions.
+        """,
+        a_eln={
+            'hide': [
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'lab_id',
+                    'description',
+                    'affiliation',
+                    'institution',
+                    'product_model',
+                    'manufacturer_name',
+                    'inventary_code',
+                    'is_bookable',
+                    'automatic_loading',
+                    'contamination_class',
+                    'min_spin_frequency',
+                    'max_spin_frequency',
+                    'max_spin_angular_acceleration',
+                    'notes'
+                ]
+            }
+        }
+    )
+
+    min_spin_frequency = Quantity(
+        type=np.float64,
+        description='Mnimum velocity of the spinner',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'revolutions_per_minute',
+        },
+        unit='revolutions_per_minute',
+    )
+
+    max_spin_frequency = Quantity(
+        type=np.float64,
+        description='Maximal velocity of the spinner',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'revolutions_per_minute',
+        },
+        unit='revolutions_per_minute',
+    )
+    max_spin_angular_acceleration = Quantity(
+        type=np.float64,
+        description='Maximal acceleration of the spinner',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'revolutions_per_minute/sec',
+        },
+        unit='revolutions_per_minute/sec',
+    )
+
+
+class ElectronBeamLithographer(Equipment):
     m_def = Section(
         a_eln={
             'hide': [
@@ -733,8 +794,8 @@ class ElectronBeamLithographer(Equipment, ArchiveSection):
                     'is_bookable',
                     'automatic_loading',
                     'description',
-                    'min_chuck_temperature',
-                    'max_chuck_temperature',
+                    # 'min_chuck_temperature',
+                    # 'max_chuck_temperature',
                     'min_dose',
                     'max_dose',
                     'min_writing_field_dimension',
@@ -754,25 +815,25 @@ class ElectronBeamLithographer(Equipment, ArchiveSection):
         }
     )
 
-    min_chuck_temperature = Quantity(
-        type=np.float64,
-        description='Minimal temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
+    # min_chuck_temperature = Quantity(
+    #     type=np.float64,
+    #     description='Minimal temperature of the chuck',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'celsius',
+    #     },
+    #     unit='celsius',
+    # )
 
-    max_chuck_temperature = Quantity(
-        type=np.float64,
-        description='Maximal temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
+    # max_chuck_temperature = Quantity(
+    #     type=np.float64,
+    #     description='Maximal temperature of the chuck',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'celsius',
+    #     },
+    #     unit='celsius',
+    # )
 
     min_tension = Quantity(
         type=np.float64,

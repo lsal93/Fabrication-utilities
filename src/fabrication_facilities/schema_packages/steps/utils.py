@@ -87,6 +87,7 @@ class Clamping_System(ArchiveSection):
 
 
 class Chuck(ArchiveSection):
+
     m_def = Section(
         description="""
         Section containing all parameters relative to the chuck.
@@ -107,9 +108,16 @@ class Chuck(ArchiveSection):
         unit='W',
     )
 
-    chuck_frequency = Quantity(
+    chuck_high_frequency = Quantity(
         type=np.float64,
-        description='Frequency impulse imposed on the chuck',
+        description='High frequency impulse imposed on the chuck',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'MHz'},
+        unit='MHz',
+    )
+
+    chuck_low_frequency = Quantity(
+        type=np.float64,
+        description='Low frequency impulse imposed on the chuck',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'MHz'},
         unit='MHz',
     )
@@ -190,9 +198,16 @@ class DRIE_Chuck(ArchiveSection):
         unit='sec',
     )
 
-    chuck_frequency = Quantity(
+    chuck_high_frequency = Quantity(
         type=np.float64,
-        description='Frequency impulse imposed on the chuck',
+        description='High frequency impulse imposed on the chuck',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'MHz'},
+        unit='MHz',
+    )
+
+    chuck_low_frequency = Quantity(
+        type=np.float64,
+        description='Low frequency impulse imposed on the chuck',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'MHz'},
         unit='MHz',
     )
@@ -320,4 +335,206 @@ class ResistivityControl(ArchiveSection):
         description='Time used in the process to reach the target value',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
+    )
+
+class SpinningComponent(ArchiveSection):
+    m_def=Section()
+
+    spin_frequency = Quantity(
+        type=np.float64,
+        description='Velocity of the spinner',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'revolutions_per_minute',
+        },
+        unit='revolutions_per_minute',
+    )
+    spin_angular_acceleration = Quantity(
+        type=np.float64,
+        description='Acceleration of the spinner',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'revolutions_per_minute/sec',
+        },
+        unit='revolutions_per_minute/sec',
+    )
+    spin_duration = Quantity(
+        type=np.float64,
+        description='Acceleration of the spinner',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
+    )
+
+    rotation_ramp=SubSection(
+        section_def=TimeRampRotation,
+        repeats=False,
+    )
+
+class Priming(ArchiveSection):
+    m_def=Section()
+
+    primer_type= Quantity(
+        type=str,
+        a_eln={'component':'StringEditQuantity'}
+    )
+    primer_temperature = Quantity(
+        type=np.float64,
+        description='Temperature of the primer',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
+        unit='celsius'
+    )
+    priming_duration=Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'sec'},
+        unit='sec'
+    )
+
+class DeIonizedWaterRinsing(ArchiveSection):
+    m_def=Section()
+
+    rinsing_cycles=Quantity(
+        type=int,
+        a_eln={'component':'NumberEditQuantity'},
+    )
+
+    rinsing_duration = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
+    )
+
+class DeIonizedWaterDumping(ArchiveSection):
+    m_def=Section()
+
+    dumping_cycles = Quantity(
+        type=int,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+    dumping_drain_duration = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute',
+    )
+
+class BeamSource(ArchiveSection):
+    m_def=Section()
+
+    emitter_material=Quantity(
+        type=str,
+        a_eln={'component':'StringEditQuantity'}
+    )
+
+    probe=Quantity(
+        type=str,
+        a_eln={'component':'StringEditQuantity'}
+    )
+
+class BeamColumn(ArchiveSection):
+    m_def=Section()
+
+    tension = Quantity(
+        type=np.float64,
+        description='Voltage accelerating the electrons',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'kV',
+        },
+        unit='kV',
+    )
+
+    current_target = Quantity(
+        type=np.float64,
+        description='Current provided',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'pampere',
+        },
+        unit='pampere',
+    )
+
+    beam_source= SubSection(
+        section_def=BeamSource,
+        repeats=False
+    )
+
+
+class Alignment(ArchiveSection):
+    m_def=Section()
+
+    alignment_mode=Quantity(
+        type=MEnum(
+            'No alignment',
+            'Manual',
+            'Auto',
+        )
+    )
+    alignment_max_error = Quantity(
+        type=np.float64,
+        description='Maximum error allowed in the alignment',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
+        unit='nm',
+    )
+
+class WritingParameters(ArchiveSection):
+    m_def=Section()
+
+    area_dose = Quantity(
+        type=np.float64,
+        description='Dose per area used in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'uC/centimeter^2',
+        },
+        unit='uC/centimeter^2',
+    )
+    line_dose = Quantity(
+        type=np.float64,
+        description='Dose per length used in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'uC/centimeter',
+        },
+        unit='pC/centimeter',
+    )
+    dot_dose = Quantity(
+        type=np.float64,
+        description='Dose used in the process for single points',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'pC',
+        },
+        unit='pC',
+    )
+    writing_field_dimension = Quantity(
+        type=np.float64,
+        description='Area covered globally in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'um^2',
+        },
+        unit='um^2',
+    )
+    address_size = Quantity(
+        type=np.float64,
+        description='The minimum distance covered per step in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
+        unit='nm',
+    )
+    clock = Quantity(
+        type=np.float64,
+        description='Frequency used',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
     )

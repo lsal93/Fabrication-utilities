@@ -33,6 +33,8 @@ from fabrication_facilities.schema_packages.steps.utils import (
     ICP_Column,
     Massflow_controller,
     ResistivityControl,
+    SpinningComponent,
+    DeIonizedWaterRinsing,
 )
 from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
@@ -668,7 +670,8 @@ class WetCleaningbase(FabricationProcessStepBase):  # WetEtchingbase):
                     # 'etching_reactives_formulas',
                     # 'etching_temperature',
                     # 'etching_duration',
-                    'pumpdumping_cycles',
+                    'pump',
+                    'dumping_cycles',
                     'dumping_drain_duration',
                     # 'wetting',
                     # 'wetting_duration',
@@ -835,6 +838,303 @@ class WetCleaning(FabricationProcessStep):
     outputs = SubSection(
         section_def=WetEtchingOutputs,
         repeats=False,
+    )
+
+
+class SpinResistDevelopmentbase(FabricationProcessStepBase):
+    m_def=Section(
+        a_eln={
+            'properties':{
+                'order':[
+                    'job_number',
+                    'name',
+                    'tag',
+                    'id_item_processed',
+                    'operator',
+                    'starting_date',
+                    'ending_date',
+                    'duration',
+                    'developing_mode',
+                    'developing_solution',
+                    'developing_solution_proportions',
+                    'developing_duration',
+                    'developing_temperature',
+                    'number of loops',
+                    'notes',
+                ]
+            }
+        }
+    )
+
+    developing_mode = Quantity(
+        type=MEnum(
+            'auto',
+            'manual',
+        ),
+        a_eln={'component':'EnumEditQuantity'}
+    )
+    developing_solution = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    developing_solution_proportions = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    developing_duration = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'minute',
+        },
+        unit='minute',
+    )
+    developing_temperature = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+    number_of_loops=Quantity(
+        type=int,
+        a_eln={'component':'NumberEditQuantity'},
+    )
+
+    spin_parameters=SubSection(
+        section_def=SpinningComponent,
+        repeats=False
+    )
+
+    rinsing=SubSection(
+        section_def=DeIonizedWaterRinsing,
+        repeats=False
+    )
+
+
+class SpinResistDevelopment(FabricationProcessStep):
+    m_def=Section(
+        a_eln={
+            'hide':[
+                'tag',
+                'duration',
+            ]
+            'properties':{
+                'order':[
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'notes',
+                ]
+            }
+        }
+    )
+
+    development_steps=SubSection(
+        section_def=SpinResistDevelopmentbase,
+        repeats=True,
+    )
+
+class ResistDevelopmentbase(FabricationProcessStepBase):
+    m_def = Section(
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'tag',
+                    'id_item_processed',
+                    'operator',
+                    'starting_date',
+                    'ending_date',
+                    'developing_mode',
+                    'developing_solution',
+                    'developing_solution_proportions',
+                    'developing_duration',
+                    'developing_temperature',
+                    'stopping_solution',
+                    'stopping_solution_proportions',
+                    'stopping_duration',
+                    'cleaning_solution',
+                    'cleaning_solution_proportions',
+                    'cleaning_duration',
+                    'notes',
+                ]
+            },
+        },
+    )
+    developing_mode = Quantity(
+        type=MEnum(
+            'auto',
+            'manual',
+        ),
+        a_eln={'component':'EnumEditQuantity'}
+    )
+    developing_solution = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    developing_solution_proportions = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    developing_duration = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'minute',
+        },
+        unit='minute',
+    )
+    developing_temperature = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+    stopping_solution = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    stopping_solution_proportions = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    stopping_duration = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
+    )
+    cleaning_solution = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    cleaning_solution_proportions = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    cleaning_duration = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
+    )
+
+class ResistDevelopment(FabricationProcessStep):
+    m_def = Section(
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'duration',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'developing_solution',
+                    'developing_solution_proportions',
+                    'developing_duration',
+                    'developing_temperature',
+                    'stopping_solution',
+                    'stopping_solution_proportions',
+                    'stopping_duration',
+                    'cleaning_solution',
+                    'cleaning_solution_proportions',
+                    'cleaning_duration',
+                    'notes',
+                ]
+            },
+        },
+    )
+    developing_solution = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    developing_solution_proportions = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    developing_duration = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'minute',
+        },
+        unit='minute',
+    )
+    developing_temperature = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+    stopping_solution = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+
+    stopping_solution_proportions = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+
+    stopping_duration = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
+    )
+    cleaning_solution = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    cleaning_solution_proportions = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    cleaning_duration = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'sec',
+        },
+        unit='sec',
     )
 
 
