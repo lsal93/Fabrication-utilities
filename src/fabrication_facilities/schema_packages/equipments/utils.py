@@ -306,9 +306,10 @@ class BeamColumnCapabilites(ArchiveSection):
         unit='pampere',
     )
 
+    beam_source_available = SubSection(section_def=BeamSource, repeats=False)
 
-class WritngCapabilities(ArchiveSection):
-    m_def = Section()
+class WritingCapabilities(ArchiveSection):
+    m_def=Section()
 
     min_area_dose = Quantity(
         type=np.float64,
