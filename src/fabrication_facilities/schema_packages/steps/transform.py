@@ -139,11 +139,11 @@ class DirectLitoOutputs(ArchiveSection):
         unit='minute',
     )
 
-    angular_intensity = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mampere/sr'},
-        unit='mampere/sr',
-    )
+    # angular_intensity = Quantity(
+    #     type=np.float64,
+    #     a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mampere/sr'},
+    #     unit='mampere/sr',
+    # )
 
 
 class EBLbase(FabricationProcessStepBase):

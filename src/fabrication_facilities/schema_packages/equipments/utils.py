@@ -8,6 +8,7 @@ from nomad.metainfo import Quantity, Section, SubSection
 
 from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
+    BeamSource
 )
 
 if TYPE_CHECKING:
@@ -231,4 +232,195 @@ class CarrierDescription(ArchiveSection):
         type=int,
         description='Total number of possible positioning for wafers',
         a_eln={'component': 'NumberEditQuantity'},
+    )
+
+class SpinnerSpinParameters(ArchiveSection):
+    m_def=Section()
+
+    min_spin_frequency = Quantity(
+        type=np.float64,
+        description='Mnimum velocity of the spinner',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'revolutions_per_minute',
+        },
+        unit='revolutions_per_minute',
+    )
+
+    max_spin_frequency = Quantity(
+        type=np.float64,
+        description='Maximal velocity of the spinner',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'revolutions_per_minute',
+        },
+        unit='revolutions_per_minute',
+    )
+    max_spin_angular_acceleration = Quantity(
+        type=np.float64,
+        description='Maximal acceleration of the spinner',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'revolutions_per_minute/sec',
+        },
+        unit='revolutions_per_minute/sec',
+    )
+
+class BeamColumnCapabilites(ArchiveSection):
+    m_def=Section()
+
+    min_tension = Quantity(
+        type=np.float64,
+        description='Minimal voltage in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'volt',
+        },
+        unit='volt',
+    )
+
+    max_tension = Quantity(
+        type=np.float64,
+        description='Maximal voltage in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'volt',
+        },
+        unit='volt',
+    )
+    min_current = Quantity(
+        type=np.float64,
+        description='Minimal current provided',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'pampere',
+        },
+        unit='pampere',
+    )
+    max_current = Quantity(
+        type=np.float64,
+        description='Maximal current provided',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'pampere',
+        },
+        unit='pampere',
+    )
+
+
+class WritngCapabilities(ArchiveSection):
+    m_def=Section()
+
+    min_area_dose = Quantity(
+        type=np.float64,
+        description='Minimal dose to use in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'uC/centimeter^2',
+        },
+        unit='uC/centimeter^2',
+    )
+
+    max_area_dose = Quantity(
+        type=np.float64,
+        description='Maximal dose to use in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'uC/centimeter^2',
+        },
+        unit='uC/centimeter^2',
+    )
+    min_line_dose = Quantity(
+        type=np.float64,
+        description='Minimal dose to use in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'uC/centimeter^2',
+        },
+        unit='uC/centimeter^2',
+    )
+
+    max_line_dose = Quantity(
+        type=np.float64,
+        description='Maximal dose to use in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'uC/centimeter',
+        },
+        unit='uC/centimeter',
+    )
+    min_dot_dose = Quantity(
+        type=np.float64,
+        description='Minimal dose to use in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'uC',
+        },
+        unit='uC',
+    )
+
+    max_dot_dose = Quantity(
+        type=np.float64,
+        description='Maximal dose to use in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'uC',
+        },
+        unit='uC',
+    )
+    min_writing_field_dimension = Quantity(
+        type=np.float64,
+        description='Lower area covered globally in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'um^2',
+        },
+        unit='um^2',
+    )
+
+    max_writing_field_dimension = Quantity(
+        type=np.float64,
+        description='Maximum area covered globally in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'um^2',
+        },
+        unit='um^2',
+    )
+    min_address_size = Quantity(
+        type=np.float64,
+        description='The minimum distance covered per step in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
+        unit='nm',
+    )
+
+    max_address_size = Quantity(
+        type=np.float64,
+        description='The minimum distance covered per step in the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
+        unit='nm',
+    )
+    min_clock = Quantity(
+        type=np.float64,
+        description='Minimum frequency at disposal',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+    max_clock = Quantity(
+        type=np.float64,
+        description='Maximum frequency at disposal',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
     )

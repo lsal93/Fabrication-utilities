@@ -512,3 +512,11 @@ class ReactiveComponents(FabricationChemical):
         description='Final volume percentage of the reactive in the solution',
         a_eln={'component': 'NumberEditQuantity'},
     )
+
+
+class BeamSource(ArchiveSection):
+    m_def = Section()
+
+    emitter_material = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+
+    probe = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})

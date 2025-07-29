@@ -20,6 +20,7 @@ from fabrication_facilities.schema_packages.utils import (
     TimeRampPressure,
     TimeRampRotation,
     TimeRampTemperature,
+    BeamSource,
 )
 
 if TYPE_CHECKING:
@@ -421,12 +422,12 @@ class DeIonizedWaterDumping(ArchiveSection):
     )
 
 
-class BeamSource(ArchiveSection):
-    m_def = Section()
+# class BeamSource(ArchiveSection):
+#     m_def = Section()
 
-    emitter_material = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+#     emitter_material = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
 
-    probe = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+#     probe = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
 
 
 class BeamColumn(ArchiveSection):
