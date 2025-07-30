@@ -178,7 +178,7 @@ class EquipmentTechnique(ArchiveSection):
             'Remove',
             'Transform',
         ),
-        a_eln={'component':'EnumEditQuantity'},
+        a_eln={'component': 'EnumEditQuantity'},
     )
     techniqueMainCategory = Quantity(
         type=MEnum(
