@@ -40,8 +40,8 @@ from fabrication_facilities.schema_packages.equipments.utils import (
     WritingCapabilities,
 )
 from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
-from fabrication_facilities.schema_packages.utils import (
-    ReactiveComponents,
+from fabrication_facilities.schema_packages.equipments.utils import (
+    WetBenchSolutionComponents,
 )
 
 if TYPE_CHECKING:
@@ -389,7 +389,7 @@ class Wet_Bench_Unit(Equipment):
         },
     )
 
-    reactives = SubSection(section_def=ReactiveComponents, repeats=True)
+    reactives = SubSection(section_def=WetBenchSolutionComponents, repeats=True)
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         if self.volume_of_solution is not None:

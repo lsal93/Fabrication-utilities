@@ -35,6 +35,8 @@ from fabrication_facilities.schema_packages.steps.utils import (
     Massflow_controller,
     ResistivityControl,
     SpinningComponent,
+    WetReactiveComponents,
+    DevelopingSolution
 )
 from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
@@ -585,7 +587,7 @@ class WetEtchingbase(FabricationProcessStepBase):
     )
 
     reactives_used_to_etch = SubSection(
-        section_def=FabricationChemical,
+        section_def=WetReactiveComponents,
         repeats=True,
     )
 
@@ -610,7 +612,7 @@ class WetEtchingbase(FabricationProcessStepBase):
         else:
             reactives = []
             for v1, v2 in zip(self.etching_reactives, self.etching_reactives_formulas):
-                chemical = FabricationChemical()
+                chemical = WetReactiveComponents()
                 val1 = v1  # if v1 != '-' else val1=v2
                 val2 = v2 if v2 != '-' else None
                 chemical.name = val1
@@ -830,8 +832,6 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
                     'ending_date',
                     'duration',
                     'developing_mode',
-                    'developing_solution',
-                    'developing_solution_proportions',
                     'developing_duration',
                     'developing_temperature',
                     'number of loops',
@@ -848,17 +848,9 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
         ),
         a_eln={'component': 'EnumEditQuantity'},
     )
-    developing_reactives = Quantity(
+    developer_used = Quantity(
         type=str,
-        description='Names of compounds used to etch',
-        shape=['*'],
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    developing_reactives_formulas = Quantity(
-        type=str,
-        description='Formulas of compounds used to etch',
-        shape=['*'],
-        a_eln={'component': 'StringEditQuantity'},
+        a_eln={'components':'StringEditQuantity'}
     )
     developing_duration = Quantity(
         type=np.float64,
@@ -883,37 +875,21 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
 
     spin_parameters = SubSection(section_def=SpinningComponent, repeats=False)
 
-    reactives_used_to_develop = SubSection(
-        section_def=FabricationChemical,
-        repeats=True,
+    developing_solution=SubSection(
+        section_def=DevelopingSolution,
+        repeats=False
     )
 
     rinsing = SubSection(section_def=DeIonizedWaterRinsing, repeats=False)
 
-    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        super().normalize(archive, logger)
-        self.reactives_used_to_develop = double_list_reading(
-            self.developing_reactives,
-            self.developing_reactives_formulas,
-            archive,
-            logger,
-        )
-        # if self.etching_reactives_formulas is None:
-        #     pass
-        # else:
-        #     reactives = []
-        #     for v1, v2 in zip(self.etching_reactives,
-
-
-# self.etching_reactives_formulas):
-#         chemical = FabricationChemical()
-#         val1 = v1  # if v1 != '-' else val1=v2
-#         val2 = v2 if v2 != '-' else None
-#         chemical.name = val1
-#         chemical.chemical_formula = val2
-#         chemical.normalize(archive, logger)
-#         reactives.append(chemical)
-#     self.reactives_used_to_etch = reactives
+    # def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+    #     super().normalize(archive, logger)
+    #     self.reactives_used_to_develop = double_list_reading(
+    #         self.developing_reactives,
+    #         self.developing_reactives_formulas,
+    #         archive,
+    #         logger,
+    #     )
 
 
 class SpinResistDevelopment(FabricationProcessStep):

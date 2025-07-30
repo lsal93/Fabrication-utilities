@@ -260,7 +260,7 @@ class Carrier(ArchiveSection):
     )
 
 
-class Massflow_controller(FabricationChemical, ArchiveSection):
+class Massflow_controller(FabricationChemical):
     m_def = Section(
         a_eln={'overview': True, 'hide': ['lab_id', 'datetime']},
     )
@@ -278,7 +278,6 @@ class Massflow_controller(FabricationChemical, ArchiveSection):
         section_def=TimeRampMassflow,
         repeats=True,
     )
-
 
 class DRIE_Massflow_controller(Massflow_controller):
     m_def = Section(
@@ -318,6 +317,53 @@ class DRIE_Massflow_controller(Massflow_controller):
         unit='sec',
     )
 
+
+class WetReactiveComponents(FabricationChemical):
+    m_def = Section(
+        definition='Chemicals for wet fabrication steps',
+        a_eln={
+            'properties': {
+                'order': [
+                    'name',
+                    'chemical_formula',
+                    'description',
+                    'solution_concentration',
+                ],
+            },
+        },
+    )
+
+    solution_concentration = Quantity(
+        type=np.float64,
+        description='Volume percentage of the reactive in the solution',
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
+
+class DevelopingSolution(ArchiveSection):
+    m_def=Section()
+
+    dispensed_volume=Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'milliliter'},
+        unit='milliliter'
+    )
+
+    developing_solution_components=SubSection(
+        section_def = WetReactiveComponents,
+        repeats=True,
+    )
+
+    surfactants = SubSection(
+        section_def = WetReactiveComponents,
+        repeats=True
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
 
 class ResistivityControl(ArchiveSection):
     m_def = Section(

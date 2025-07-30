@@ -425,3 +425,51 @@ class WritingCapabilities(ArchiveSection):
         },
         unit='MHz',
     )
+
+
+class WetBenchSolutionComponents(FabricationChemical):
+    m_def = Section(
+        definition='Chemicals for describe solutions used in wet fabrication unity',
+        a_eln={
+            'properties': {
+                'order': [
+                    'name',
+                    'chemical_formula',
+                    'description',
+                    'purity_level',
+                    'initial_concentration',
+                    'dispensed_volume',
+                    'final_solution_concentration',
+                ],
+            },
+        },
+    )
+
+    purity_level = Quantity(
+        description='Purity level of the starting reactives by manufacturer',
+        type=MEnum(
+            'VLSI',
+            'ULSI',
+            'SLSI',
+        ),
+        a_eln={'component': 'EnumEditQuantity'},
+    )
+
+    initial_concentration = Quantity(
+        type=np.float64,
+        description='Initial volume percentage of the reactives by manufacturer',
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+
+    dispensed_volume = Quantity(
+        type=np.float64,
+        description='Volume of reactive used to generate the final solution',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'liter'},
+        unit='liter',
+    )
+
+    final_solution_concentration = Quantity(
+        type=np.float64,
+        description='Final volume percentage of the reactive in the solution',
+        a_eln={'component': 'NumberEditQuantity'},
+    )
