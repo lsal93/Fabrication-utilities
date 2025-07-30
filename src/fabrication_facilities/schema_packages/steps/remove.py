@@ -32,12 +32,12 @@ from fabrication_facilities.schema_packages.steps.utils import (
     DevelopingSolution,
     DRIE_Chuck,
     DRIE_Massflow_controller,
+    DryerGas,
     ICP_Column,
     Massflow_controller,
     ResistivityControl,
     SpinningComponent,
     WetReactiveComponents,
-    DryerGas,
 )
 from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
@@ -837,18 +837,10 @@ class Rinsing_Dryingbase(FabricationProcessStepBase):
         }
     )
 
-    rinsing_parameters = SubSection(
-        section_def=DeIonizedWaterRinsing,
-        repeats=False
-    )
-    spinning_parameters = SubSection(
-        section_def = SpinningComponent,
-        repeats=False
-    )
-    drying_gas=SubSection(
-        section_def=DryerGas,
-        repeats=False
-    )
+    rinsing_parameters = SubSection(section_def=DeIonizedWaterRinsing, repeats=False)
+    spinning_parameters = SubSection(section_def=SpinningComponent, repeats=False)
+    drying_gas = SubSection(section_def=DryerGas, repeats=False)
+
 
 class Rinsing_Drying(FabricationProcessStep):
     m_def = Section(
@@ -881,10 +873,8 @@ class Rinsing_Drying(FabricationProcessStep):
         }
     )
 
-    drying_steps = SubSection(
-        section_def=Rinsing_Dryingbase
-        repeats=True
-    )
+    drying_steps = SubSection(section_def=Rinsing_Dryingbase, repeats=True)
+
 
 class SpinResistDevelopmentbase(FabricationProcessStepBase):
     m_def = Section(

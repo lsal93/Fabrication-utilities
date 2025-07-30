@@ -482,12 +482,12 @@ class DryerGasParameter(Massflow_parameter):
 
     min_gas_temperature = Quantity(
         type=np.float64,
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
-        unit='celsius'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
     )
 
     max_gas_temperature = Quantity(
         type=np.float64,
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
-        unit='celsius'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
     )

@@ -34,12 +34,12 @@ from fabrication_facilities.schema_packages.equipments.utils import (
     BeamColumnCapabilites,
     CarrierDescription,
     ChuckCapabilities,
+    DryerGasParameter,
     ICP_ColumnCapabilities,
     Massflow_parameter,
     SpinnerSpinParameters,
     WetBenchSolutionComponents,
     WritingCapabilities,
-    DryerGasParameter,
 )
 from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
 
@@ -910,7 +910,7 @@ class ResistDeveloper(Equipment):
         unit='celsius',
     )
 
-    #Completare coater developer...poi mancano solo le apps
+    # Completare coater developer...poi mancano solo le apps
 
 
 class Rinser_Dryer(Equipment):
@@ -941,14 +941,8 @@ class Rinser_Dryer(Equipment):
     # initial_rinsing=SubSection(
     #     repeats=
     # )
-    #Finire  la parte di rinsing e poi ci siamo
+    # Finire  la parte di rinsing e poi ci siamo
 
-    drying_gas=SubSection(
-        section_def=DryerGasParameter,
-        repeats=False
-    )
+    drying_gas = SubSection(section_def=DryerGasParameter, repeats=False)
 
-    spin_capabilities=SubSection(
-        section_def=SpinnerSpinParameters,
-        repeats=False
-    )
+    spin_capabilities = SubSection(section_def=SpinnerSpinParameters, repeats=False)
