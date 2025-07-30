@@ -581,7 +581,7 @@ class Spin_Coatingbase(FabricationProcessStepBase):
         unit='milliliter',
     )
 
-    ahesion_type = Quantity(
+    adhesion_type = Quantity(
         type=MEnum(
             'None',
             'Direct',

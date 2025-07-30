@@ -170,6 +170,15 @@ class EquipmentTechnique(ArchiveSection):
         description='Generic equipment that does the activity, f.e. etcher for etching',
         a_eln={'component': 'StringEditQuantity'},
     )
+    techniqueGeneralCategory = Quantity(
+        type=MEnum(
+            'Add',
+            'characterize',
+            'Remove',
+            'Transform',
+        ),
+        a_eln={'component':'EnumEditQuantity'},
+    )
     techniqueMainCategory = Quantity(
         type=MEnum(
             [
