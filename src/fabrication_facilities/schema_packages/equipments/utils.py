@@ -336,9 +336,9 @@ class WritingCapabilities(ArchiveSection):
         description='Minimal dose to use in the process',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'uC/centimeter^2',
+            'defaultDisplayUnit': 'uC/centimeter',
         },
-        unit='uC/centimeter^2',
+        unit='uC/centimeter',
     )
 
     max_line_dose = Quantity(
