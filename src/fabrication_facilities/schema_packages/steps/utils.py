@@ -599,3 +599,14 @@ class WritingParameters(ArchiveSection):
         },
         unit='MHz',
     )
+
+class DryerGas(Massflow_controller):
+    m_def = Section(
+        a_eln={'hide': ['lab_id', 'datetime']},
+    )
+
+    gas_temperature = Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
+        unit='celsius'
+    )

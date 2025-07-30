@@ -39,6 +39,7 @@ from fabrication_facilities.schema_packages.equipments.utils import (
     SpinnerSpinParameters,
     WetBenchSolutionComponents,
     WritingCapabilities,
+    DryerGasParameter,
 )
 from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
 
@@ -829,7 +830,6 @@ class ElectronBeamLithographer(Equipment):
         unit='mbar',
     )
 
-    # beam_source_available = SubSection(section_def=BeamSource, repeats=False)
     beam_column_capabilities = SubSection(
         section_def=BeamColumnCapabilites, repeats=False
     )
@@ -865,7 +865,7 @@ class FocusedIonBeamLithographer(ElectronBeamLithographer):
     )
 
 
-class ResistDeveloper(Equipment, ArchiveSection):
+class ResistDeveloper(Equipment):
     m_def = Section(
         a_eln={
             'hide': [
@@ -910,8 +910,10 @@ class ResistDeveloper(Equipment, ArchiveSection):
         unit='celsius',
     )
 
+    #Completare coater developer...poi mancano solo le apps
 
-class Rinser(Equipment, ArchiveSection):
+
+class Rinser_Dryer(Equipment):
     m_def = Section(
         a_eln={
             'hide': [
@@ -930,28 +932,23 @@ class Rinser(Equipment, ArchiveSection):
                     'automatic_loading',
                     'description',
                     'min_chuck_temperature',
-                    'max_chuck_temperature',
+                    'max__temperature',
                 ],
             },
         }
     )
 
-    min_chuck_temperature = Quantity(
-        type=np.float64,
-        description='Minimal temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
+    # initial_rinsing=SubSection(
+    #     repeats=
+    # )
+    #Finire  la parte di rinsing e poi ci siamo
+
+    drying_gas=SubSection(
+        section_def=DryerGasParameter,
+        repeats=False
     )
 
-    max_chuck_temperature = Quantity(
-        type=np.float64,
-        description='Maximal temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
+    spin_capabilities=SubSection(
+        section_def=SpinnerSpinParameters,
+        repeats=False
     )

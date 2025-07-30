@@ -145,6 +145,7 @@ class EquipmentTechnique(ArchiveSection):
                     'name',
                     'id',
                     'description',
+                    'techiniqueGeneralCategory',
                     'techniqueMainCategory',
                     'techniqueSubCategory',
                     'genericEquipmentName',
@@ -173,7 +174,7 @@ class EquipmentTechnique(ArchiveSection):
     techniqueGeneralCategory = Quantity(
         type=MEnum(
             'Add',
-            'characterize',
+            'Characterize',
             'Remove',
             'Transform',
         ),

@@ -37,6 +37,7 @@ from fabrication_facilities.schema_packages.steps.utils import (
     ResistivityControl,
     SpinningComponent,
     WetReactiveComponents,
+    DryerGas,
 )
 from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
@@ -816,6 +817,74 @@ class WetCleaning(FabricationProcessStep):
         repeats=False,
     )
 
+
+class Rinsing_Dryingbase(FabricationProcessStepBase):
+    m_def = Section(
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'tag',
+                    'id_item_processed',
+                    'operator',
+                    'starting_date',
+                    'ending_date',
+                    'duration',
+                    'notes',
+                ]
+            }
+        }
+    )
+
+    rinsing_parameters = SubSection(
+        section_def=DeIonizedWaterRinsing,
+        repeats=False
+    )
+    spinning_parameters = SubSection(
+        section_def = SpinningComponent,
+        repeats=False
+    )
+    drying_gas=SubSection(
+        section_def=DryerGas,
+        repeats=False
+    )
+
+class Rinsing_Drying(FabricationProcessStep):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'tag',
+                'duration',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'notes',
+                ]
+            },
+        }
+    )
+
+    drying_steps = SubSection(
+        section_def=Rinsing_Dryingbase
+        repeats=True
+    )
 
 class SpinResistDevelopmentbase(FabricationProcessStepBase):
     m_def = Section(

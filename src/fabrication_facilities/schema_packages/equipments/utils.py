@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     pass
 
 
-class Massflow_parameter(FabricationChemical, ArchiveSection):
+class Massflow_parameter(FabricationChemical):
     m_def = Section(
         description='Class to describe flux of gases in fluximeters',
         a_eln={'hide': ['lab_id', 'datetime']},
@@ -472,4 +472,22 @@ class WetBenchSolutionComponents(FabricationChemical):
         type=np.float64,
         description='Final volume percentage of the reactive in the solution',
         a_eln={'component': 'NumberEditQuantity'},
+    )
+
+
+class DryerGasParameter(Massflow_parameter):
+    m_def = Section(
+        a_eln={'hide': ['lab_id', 'datetime']},
+    )
+
+    min_gas_temperature = Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
+        unit='celsius'
+    )
+
+    max_gas_temperature = Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
+        unit='celsius'
     )
