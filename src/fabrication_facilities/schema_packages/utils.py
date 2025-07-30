@@ -520,3 +520,16 @@ class BeamSource(ArchiveSection):
     emitter_material = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
 
     probe = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+
+def double_list_reading(list1,list2):
+    if list1 and list2:
+        reactives = []
+        for v1, v2 in zip(list1, list2):
+            chemical = FabricationChemical()
+            val1 = v1  # if v1 != '-' else val1=v2
+            val2 = v2 if v2 != '-' else None
+            chemical.name = val1
+            chemical.chemical_formula = val2
+            chemical.normalize(archive, logger)
+            reactives.append(chemical)
+    return finalist

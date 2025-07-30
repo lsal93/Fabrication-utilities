@@ -391,10 +391,24 @@ class Priming(ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
     )
+    final_cooling_tempereature=Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity','defaultDisplayUnit':'celsius'},
+        unit='celsius',
+    )
+    final_cooling_duration=Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
+    )
 
 
 class DeIonizedWaterRinsing(ArchiveSection):
-    m_def = Section()
+    m_def = Section(
+        description="""
+        Section describing passages in a step where de ionized water is
+        """
+    )
 
     rinsing_cycles = Quantity(
         type=int,
@@ -408,18 +422,18 @@ class DeIonizedWaterRinsing(ArchiveSection):
     )
 
 
-class DeIonizedWaterDumping(ArchiveSection):
-    m_def = Section()
+# class DeIonizedWaterDumping(ArchiveSection):
+#     m_def = Section()
 
-    dumping_cycles = Quantity(
-        type=int,
-        a_eln={'component': 'NumberEditQuantity'},
-    )
-    dumping_drain_duration = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
-        unit='minute',
-    )
+#     dumping_cycles = Quantity(
+#         type=int,
+#         a_eln={'component': 'NumberEditQuantity'},
+#     )
+#     dumping_drain_duration = Quantity(
+#         type=np.float64,
+#         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+#         unit='minute',
+#     )
 
 
 # class BeamSource(ArchiveSection):
