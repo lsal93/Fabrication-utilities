@@ -40,8 +40,8 @@ from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
     TimeRampPressure,
     TimeRampTemperature,
+    double_list_reading,
     parse_chemical_formula,
-    double_list_reading
 )
 
 if TYPE_CHECKING:
@@ -681,7 +681,7 @@ class WetCleaningbase(FabricationProcessStepBase):
     )
     dumping_drain_duration = Quantity(
         type=np.float64,
-        description='Time used to drain the tank of cleaning'
+        description='Time used to drain the tank of cleaning',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
     )
@@ -892,23 +892,29 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        self.reactives_used_to_develop=double_list_reading(
+        self.reactives_used_to_develop = double_list_reading(
             self.developing_reactives,
-            self.developing_reactives_formulas
+            self.developing_reactives_formulas,
+            archive,
+            logger,
         )
         # if self.etching_reactives_formulas is None:
         #     pass
         # else:
         #     reactives = []
-        #     for v1, v2 in zip(self.etching_reactives, self.etching_reactives_formulas):
-        #         chemical = FabricationChemical()
-        #         val1 = v1  # if v1 != '-' else val1=v2
-        #         val2 = v2 if v2 != '-' else None
-        #         chemical.name = val1
-        #         chemical.chemical_formula = val2
-        #         chemical.normalize(archive, logger)
-        #         reactives.append(chemical)
-        #     self.reactives_used_to_etch = reactives
+        #     for v1, v2 in zip(self.etching_reactives,
+
+
+# self.etching_reactives_formulas):
+#         chemical = FabricationChemical()
+#         val1 = v1  # if v1 != '-' else val1=v2
+#         val2 = v2 if v2 != '-' else None
+#         chemical.name = val1
+#         chemical.chemical_formula = val2
+#         chemical.normalize(archive, logger)
+#         reactives.append(chemical)
+#     self.reactives_used_to_etch = reactives
+
 
 class SpinResistDevelopment(FabricationProcessStep):
     m_def = Section(

@@ -521,7 +521,8 @@ class BeamSource(ArchiveSection):
 
     probe = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
 
-def double_list_reading(list1,list2):
+
+def double_list_reading(list1, list2, archive, logger):
     if list1 and list2:
         reactives = []
         for v1, v2 in zip(list1, list2):
@@ -532,4 +533,4 @@ def double_list_reading(list1,list2):
             chemical.chemical_formula = val2
             chemical.normalize(archive, logger)
             reactives.append(chemical)
-    return finalist
+    return reactives

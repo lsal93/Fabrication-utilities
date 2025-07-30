@@ -391,12 +391,12 @@ class Priming(ArchiveSection):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
     )
-    final_cooling_tempereature=Quantity(
+    final_cooling_tempereature = Quantity(
         type=np.float64,
-        a_eln={'component':'NumberEditQuantity','defaultDisplayUnit':'celsius'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
         unit='celsius',
     )
-    final_cooling_duration=Quantity(
+    final_cooling_duration = Quantity(
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
