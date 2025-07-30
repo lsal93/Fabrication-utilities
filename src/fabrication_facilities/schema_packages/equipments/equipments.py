@@ -37,12 +37,10 @@ from fabrication_facilities.schema_packages.equipments.utils import (
     ICP_ColumnCapabilities,
     Massflow_parameter,
     SpinnerSpinParameters,
+    WetBenchSolutionComponents,
     WritingCapabilities,
 )
 from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
-from fabrication_facilities.schema_packages.equipments.utils import (
-    WetBenchSolutionComponents,
-)
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (

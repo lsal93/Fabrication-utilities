@@ -586,21 +586,21 @@ class Spin_Coatingbase(FabricationProcessStepBase):
             'None',
             'Direct',
         ),
-        a_eln={'component':'EnumEditQuantity'}
+        a_eln={'component': 'EnumEditQuantity'},
     )
     back_rinsing = Quantity(
         type=bool,
         description="""
         At the end of the resist deposition is there a phase of polishing on the back?
         """,
-        a_eln={'component':'BoolEditQuantity'}
+        a_eln={'component': 'BoolEditQuantity'},
     )
     side_rinsing = Quantity(
         type=bool,
         description="""
         At the end of the resist deposition is there a phase of polishing on the sides?
         """,
-        a_eln={'component':'BoolEditQuantity'}
+        a_eln={'component': 'BoolEditQuantity'},
     )
     resist_elemental_composition = SubSection(
         section_def=ElementalComposition, repeats=True

@@ -29,6 +29,7 @@ from fabrication_facilities.schema_packages.steps.utils import (
     Carrier,
     Chuck,
     DeIonizedWaterRinsing,
+    DevelopingSolution,
     DRIE_Chuck,
     DRIE_Massflow_controller,
     ICP_Column,
@@ -36,13 +37,11 @@ from fabrication_facilities.schema_packages.steps.utils import (
     ResistivityControl,
     SpinningComponent,
     WetReactiveComponents,
-    DevelopingSolution
 )
 from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
     TimeRampPressure,
     TimeRampTemperature,
-    double_list_reading,
     parse_chemical_formula,
 )
 
@@ -848,10 +847,7 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
         ),
         a_eln={'component': 'EnumEditQuantity'},
     )
-    developer_used = Quantity(
-        type=str,
-        a_eln={'components':'StringEditQuantity'}
-    )
+    developer_used = Quantity(type=str, a_eln={'components': 'StringEditQuantity'})
     developing_duration = Quantity(
         type=np.float64,
         a_eln={
@@ -875,10 +871,7 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
 
     spin_parameters = SubSection(section_def=SpinningComponent, repeats=False)
 
-    developing_solution=SubSection(
-        section_def=DevelopingSolution,
-        repeats=False
-    )
+    developing_solution = SubSection(section_def=DevelopingSolution, repeats=False)
 
     rinsing = SubSection(section_def=DeIonizedWaterRinsing, repeats=False)
 

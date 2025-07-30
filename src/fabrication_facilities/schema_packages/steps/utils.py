@@ -24,7 +24,12 @@ from fabrication_facilities.schema_packages.utils import (
 )
 
 if TYPE_CHECKING:
-    pass
+    from nomad.datamodel.datamodel import (
+        EntryArchive,
+    )
+    from structlog.stdlib import (
+        BoundLogger,
+    )
 
 
 class ICP_Column(ArchiveSection):
@@ -279,6 +284,7 @@ class Massflow_controller(FabricationChemical):
         repeats=True,
     )
 
+
 class DRIE_Massflow_controller(Massflow_controller):
     m_def = Section(
         a_eln={'overview': True, 'hide': ['lab_id', 'datetime', 'massflow']},
@@ -344,26 +350,24 @@ class WetReactiveComponents(FabricationChemical):
 
 
 class DevelopingSolution(ArchiveSection):
-    m_def=Section()
+    m_def = Section()
 
-    dispensed_volume=Quantity(
+    dispensed_volume = Quantity(
         type=np.float64,
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'milliliter'},
-        unit='milliliter'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'milliliter'},
+        unit='milliliter',
     )
 
-    developing_solution_components=SubSection(
-        section_def = WetReactiveComponents,
+    developing_solution_components = SubSection(
+        section_def=WetReactiveComponents,
         repeats=True,
     )
 
-    surfactants = SubSection(
-        section_def = WetReactiveComponents,
-        repeats=True
-    )
+    surfactants = SubSection(section_def=WetReactiveComponents, repeats=True)
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
+
 
 class ResistivityControl(ArchiveSection):
     m_def = Section(
