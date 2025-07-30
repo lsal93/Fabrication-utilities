@@ -318,16 +318,50 @@ class LPCVD(FabricationProcessStep):
                     'step_type',
                     'definition_of_process_step',
                     'keywords',
+                    'short_name',
+                    'reference_name',
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
                     'thickness_target',
+                    'thickness_measured',
+                    'sample_temperature',
                     'duration_target',
+                    'duration_measured',
                     'deposition_rate_target',
                     'notes',
                 ]
             },
         },
+    )
+
+    short_name = Quantity(
+        type=str,
+        description='Deposition name',
+        a_eln={
+            'component': 'StringEditQuantity',
+            'label': 'Deposition name',
+        },
+    )
+    reference_name = Quantity(
+        type=str,
+        description='Reference Deposition name',
+        a_eln={
+            'component': 'StringEditQuantity',
+            'label': 'Reference deposition name',
+        },
+    )
+    duration_measured = Quantity(
+        type=np.float64,
+        description='Real time employed',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
+    )
+    sample_temperature = Quantity(
+        type=np.float64,
+        description='Temperature of the sample',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
     )
 
     thickness_target = Quantity(
@@ -337,6 +371,12 @@ class LPCVD(FabricationProcessStep):
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'nm',
         },
+        unit='nm',
+    )
+
+    thickness_measured = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
         unit='nm',
     )
 
