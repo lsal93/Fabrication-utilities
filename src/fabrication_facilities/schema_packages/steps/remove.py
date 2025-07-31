@@ -28,7 +28,7 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
 from fabrication_facilities.schema_packages.steps.utils import (
     Carrier,
     Chuck,
-    DeIonizedWaterRinsing,
+    SpinRinsingbase,
     DevelopingSolution,
     DRIE_Chuck,
     DRIE_Massflow_controller,
@@ -38,6 +38,7 @@ from fabrication_facilities.schema_packages.steps.utils import (
     ResistivityControl,
     SpinningComponent,
     WetReactiveComponents,
+    SpinDryingbase
 )
 from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
@@ -820,6 +821,7 @@ class WetCleaning(FabricationProcessStep):
 
 class Rinsing_Dryingbase(FabricationProcessStepBase):
     m_def = Section(
+        description='Atomistic components of a rinsing drying process step',
         a_eln={
             'properties': {
                 'order': [
@@ -837,13 +839,23 @@ class Rinsing_Dryingbase(FabricationProcessStepBase):
         }
     )
 
-    rinsing_parameters = SubSection(section_def=DeIonizedWaterRinsing, repeats=False)
-    spinning_parameters = SubSection(section_def=SpinningComponent, repeats=False)
-    drying_gas = SubSection(section_def=DryerGas, repeats=False)
+    initial_rinsing_parameters = SubSection(
+        section_def=SpinRinsingbase,
+        repeats=False
+    )
+
+    drying_parameters = SubSection(section_def = SpinDryingbase, repeats=True)
+
 
 
 class Rinsing_Drying(FabricationProcessStep):
     m_def = Section(
+        description="""
+        Fabrication process step consisting in a two phase procedure.(1) Initial
+        rinsing to rid of eventual wet residuals; (2) a drying phase operable by heat
+        on the wafers or by inactieve gas like N2 heated and pushed in the chamber (
+        also both heating is possible in principle).
+        """,
         a_eln={
             'hide': [
                 'tag',
@@ -873,7 +885,7 @@ class Rinsing_Drying(FabricationProcessStep):
         }
     )
 
-    drying_steps = SubSection(section_def=Rinsing_Dryingbase, repeats=True)
+    rinsing/drying_steps = SubSection(section_def=Rinsing_Dryingbase, repeats=True)
 
 
 class SpinResistDevelopmentbase(FabricationProcessStepBase):
@@ -885,6 +897,7 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
                     'name',
                     'tag',
                     'id_item_processed',
+                    'adhesion_type',
                     'operator',
                     'starting_date',
                     'ending_date',
@@ -899,6 +912,14 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
         }
     )
 
+    adhesion_type = Quantity(
+        type=MEnum(
+            'None',
+            'Direct',
+        ),
+        a_eln={'component': 'EnumEditQuantity'},
+    )
+
     developing_mode = Quantity(
         type=MEnum(
             'auto',
@@ -906,7 +927,6 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
         ),
         a_eln={'component': 'EnumEditQuantity'},
     )
-    developer_used = Quantity(type=str, a_eln={'components': 'StringEditQuantity'})
     developing_duration = Quantity(
         type=np.float64,
         a_eln={
@@ -932,16 +952,7 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
 
     developing_solution = SubSection(section_def=DevelopingSolution, repeats=False)
 
-    rinsing = SubSection(section_def=DeIonizedWaterRinsing, repeats=False)
-
-    # def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-    #     super().normalize(archive, logger)
-    #     self.reactives_used_to_develop = double_list_reading(
-    #         self.developing_reactives,
-    #         self.developing_reactives_formulas,
-    #         archive,
-    #         logger,
-    #     )
+    final_rinsing = SubSection(section_def=SpinRinsingbase, repeats=True)
 
 
 class SpinResistDevelopment(FabricationProcessStep):

@@ -40,6 +40,7 @@ from fabrication_facilities.schema_packages.equipments.utils import (
     SpinnerSpinParameters,
     WetBenchSolutionComponents,
     WritingCapabilities,
+    ResistivityControlSystem
 )
 from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
 
@@ -52,6 +53,193 @@ if TYPE_CHECKING:
     )
 
 m_package = Package(name='Equipments specific definitions ')
+
+#######################################################################################
+########################### ANCILLARY TECHNIQUES EQUIPMENTS ###########################
+#######################################################################################
+
+class Spinner(Equipment):
+    m_def = Section(
+        description='Class for instruments devoted to spinning procedures.',
+        a_eln={
+            'hide': [
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'lab_id',
+                    'description',
+                    'affiliation',
+                    'institution',
+                    'product_model',
+                    'manufacturer_name',
+                    'inventary_code',
+                    'is_bookable',
+                    'automatic_loading',
+                    'contamination_class',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    spin_capabilities = SubSection(
+        section_def=SpinnerSpinParameters,
+        repeats=False,
+    )
+
+
+class SpinCoater(Spinner):
+    m_def=Section(
+        a_eln={
+            'hide': [
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'lab_id',
+                    'description',
+                    'affiliation',
+                    'institution',
+                    'product_model',
+                    'manufacturer_name',
+                    'inventary_code',
+                    'is_bookable',
+                    'automatic_loading',
+                    'contamination_class',
+                    'back_rinsing',
+                    'side_rinsing',
+                    'notes',
+                ]
+            }
+        }
+    )
+
+    back_rinsing = Quantity(
+        type=bool,
+        description="""
+        At the end of the resist deposition is there a phase of polishing on the back?
+        """,
+        a_eln={'component': 'BoolEditQuantity'},
+    )
+    side_rinsing = Quantity(
+        type=bool,
+        description="""
+        At the end of the resist deposition is there a phase of polishing on the sides?
+        """,
+        a_eln={'component': 'BoolEditQuantity'},
+    )
+
+    primers_available = SubSection(
+        section_def = FabricationChemical,
+        repeats=True
+    )
+
+    resist_available = SubSection(
+        section_def=FabricationChemical,
+        repeats=True
+    )
+
+
+class ResistDeveloper(Equipment):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'lab_id',
+                    'description',
+                    'affiliation',
+                    'institution',
+                    'product_model',
+                    'manufacturer_name',
+                    'inventary_code',
+                    'is_bookable',
+                    'automatic_loading',
+                    'contamination_class',
+                    'notes'
+                ],
+            },
+        }
+    )
+
+    developers_available = SubSection(
+        section_def=FabricationChemical,
+        repeats=True
+    )
+
+
+class ResistSpinDeveloper(ResistDeveloper, Spinner):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'lab_id',
+                    'description',
+                    'affiliation',
+                    'institution',
+                    'product_model',
+                    'manufacturer_name',
+                    'inventary_code',
+                    'is_bookable',
+                    'automatic_loading',
+                    'contamination_class',
+                    'notes'
+                ],
+            },
+        }
+    )
+
+
+class Rinser_Dryer(Spinner):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'lab_id',
+                    'description',
+                    'affiliation',
+                    'institution',
+                    'product_model',
+                    'manufacturer_name',
+                    'inventary_code',
+                    'is_bookable',
+                    'automatic_loading',
+                    'contamination_class',
+                    'max_temperature',
+                    'notes'
+                ],
+            },
+        }
+    )
+
+
+    max_temperature = Quantity(
+        type=np.float64,
+        description='Maximal temperature to dry directly on the carrier',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
+        unit='celsius'
+    )
+
+    available_resistivity_settings = SubSection(
+        section_def=ResistivityControlSystem,
+        repeats=False
+    )
+
+    drying_gas = SubSection(section_def=DryerGasParameter, repeats=False)
 
 
 class BakingFurnace(Equipment):
@@ -123,6 +311,9 @@ class BakingFurnace(Equipment):
         unit='mbar',
     )
 
+#######################################################################################
+################################ DRY ETCHING EQUIPMENTS ###############################
+#######################################################################################
 
 class RIE_Etcher(Equipment):
     m_def = Section(
@@ -282,6 +473,9 @@ class DRIE_BOSCH_Etcher(ICP_RIE_Etcher):
         },
     )
 
+#######################################################################################
+################################ WET STEPS EQUIPMENTS #################################
+#######################################################################################
 
 class Wet_Bench_Unit(Equipment):
     m_def = Section(
@@ -431,18 +625,30 @@ class Dump_Rinser(Equipment):
         }
     )
 
-    resistivity_cut_off = Quantity(
-        type=np.float64,
-        description='Value used as target to stop the process',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'ohm*cm'},
-        unit='ohm*cm',
-    )
+    # min_resistivity_cut_off = Quantity(
+    #     type=np.float64,
+    #     description='Minimum Value available as target to stop the process',
+    #     a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'ohm*cm'},
+    #     unit='ohm*cm',
+    # )
+
+    # max_resistivity_cut_off = Quantity(
+    #     type=np.float64,
+    #     description='Maximum value available as target to stop the process',
+    #     a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'ohm*cm'},
+    #     unit='ohm*cm',
+    # )
 
     max_overflow_time = Quantity(
         type=np.float64,
         description='Maximum amount of flow at disposal',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
+    )
+
+    available_resistivity_setting = SubSection(
+        section_def=ResistivityControlSystem,
+        repeats=False
     )
 
 
@@ -499,6 +705,9 @@ class Wet_Bench(Instrument, EntryData, ArchiveSection):
     tanks = SubSection(section_def=Wet_Bench_Unit, repeats=True)
     dumping_rinser = SubSection(section_def=Dump_Rinser, repeats=True)
 
+#######################################################################################
+################################ DEPOSITION EQUIPMENTS ################################
+#######################################################################################
 
 class LPCVD_System(Equipment):
     m_def = Section(
@@ -713,76 +922,9 @@ class ICP_CVD_System(PECVD_System):
 
     icp_parameters = SubSection(section_def=ICP_ColumnCapabilities, repeats=False)
 
-
-class Spinner(Equipment):
-    m_def = Section(
-        description="""
-        Class for instruments devoted to spinning procedures like resist depositions.
-        """,
-        a_eln={
-            'hide': [
-                'datetime',
-            ],
-            'properties': {
-                'order': [
-                    'name',
-                    'lab_id',
-                    'description',
-                    'affiliation',
-                    'institution',
-                    'product_model',
-                    'manufacturer_name',
-                    'inventary_code',
-                    'is_bookable',
-                    'automatic_loading',
-                    'contamination_class',
-                    # 'min_spin_frequency',
-                    # 'max_spin_frequency',
-                    # 'max_spin_angular_acceleration',
-                    'item_contact_type',
-                    'notes',
-                ]
-            },
-        },
-    )
-
-    item_contact_type = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
-
-    spin_capabilities = SubSection(
-        section_def=SpinnerSpinParameters,
-        repeats=False,
-    )
-
-    # min_spin_frequency = Quantity(
-    #     type=np.float64,
-    #     description='Mnimum velocity of the spinner',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'revolutions_per_minute',
-    #     },
-    #     unit='revolutions_per_minute',
-    # )
-
-    # max_spin_frequency = Quantity(
-    #     type=np.float64,
-    #     description='Maximal velocity of the spinner',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'revolutions_per_minute',
-    #     },
-    #     unit='revolutions_per_minute',
-    # )
-
-    # max_spin_angular_acceleration = Quantity(
-    #     type=np.float64,
-    #     description='Maximal acceleration of the spinner',
-    #     a_eln={
-    #         'component': 'NumberEditQuantity',
-    #         'defaultDisplayUnit': 'revolutions_per_minute/sec',
-    #     },
-    #     unit='revolutions_per_minute/sec',
-    # )
-
+#######################################################################################
+################################ LITHOGRAPHY EQUIPMENTS ###############################
+#######################################################################################
 
 class ElectronBeamLithographer(Equipment):
     m_def = Section(
@@ -805,6 +947,7 @@ class ElectronBeamLithographer(Equipment):
                     'contamination_class',
                     'min_chamber_pressure',
                     'max_chamber_pressure',
+                    'notes'
                 ],
             },
         }
@@ -863,86 +1006,3 @@ class FocusedIonBeamLithographer(ElectronBeamLithographer):
             },
         }
     )
-
-
-class ResistDeveloper(Equipment):
-    m_def = Section(
-        a_eln={
-            'hide': [
-                'lab_id',
-                'datetime',
-            ],
-            'properties': {
-                'order': [
-                    'name',
-                    'inventary_code',
-                    'affiliation',
-                    'product_model',
-                    'institution',
-                    'manufacturer_name',
-                    'is_bookable',
-                    'automatic_loading',
-                    'description',
-                    'min_chuck_temperature',
-                    'max_chuck_temperature',
-                ],
-            },
-        }
-    )
-
-    min_chuck_temperature = Quantity(
-        type=np.float64,
-        description='Minimal temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-
-    max_chuck_temperature = Quantity(
-        type=np.float64,
-        description='Maximal temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-
-    # Completare coater developer...poi mancano solo le apps
-
-
-class Rinser_Dryer(Equipment):
-    m_def = Section(
-        a_eln={
-            'hide': [
-                'lab_id',
-                'datetime',
-            ],
-            'properties': {
-                'order': [
-                    'name',
-                    'inventary_code',
-                    'affiliation',
-                    'product_model',
-                    'institution',
-                    'manufacturer_name',
-                    'is_bookable',
-                    'automatic_loading',
-                    'description',
-                    'min_chuck_temperature',
-                    'max__temperature',
-                ],
-            },
-        }
-    )
-
-    # initial_rinsing=SubSection(
-    #     repeats=
-    # )
-    # Finire  la parte di rinsing e poi ci siamo
-
-    drying_gas = SubSection(section_def=DryerGasParameter, repeats=False)
-
-    spin_capabilities = SubSection(section_def=SpinnerSpinParameters, repeats=False)

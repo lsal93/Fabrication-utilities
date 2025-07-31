@@ -31,6 +31,46 @@ if TYPE_CHECKING:
         BoundLogger,
     )
 
+#######################################################################################
+### Currently only one class is included to describe carriers for multiwafers steps ###
+#######################################################################################
+
+class Carrier(ArchiveSection):
+    m_def = Section(
+        description="""
+        Section describing a component used to carry vertically one or more wafers
+        """
+    )
+
+    slots = Quantity(
+        type=int,
+        description='Total number of possible positioning for wafers',
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+
+    position_of_item = Quantity(
+        type=int,
+        a_eln={'component': 'NumberEditQuantity'},
+        description="""
+        Number of the slot where the item is located. 1 is the the first
+        slot which enter in the process chamber.
+        """,
+    )
+
+    position_of_dummy_wafers = Quantity(
+        type=int,
+        shape=['*'],
+        a_eln={'component': 'NumberEditQuantity'},
+        description="""
+        Dummy wafers are used to reach uniformity in the chamber. If the
+        step do not require dummy wafers or they are not important this field could be
+        void.
+        """,
+    )
+
+#######################################################################################
+## Classes used to describe components, mostrly electrical related in add and remove ##
+#######################################################################################
 
 class ICP_Column(ArchiveSection):
     m_def = Section(
@@ -230,40 +270,9 @@ class DRIE_Chuck(ArchiveSection):
         repeats=True,
     )
 
-
-class Carrier(ArchiveSection):
-    m_def = Section(
-        description="""
-        Section describing a component used to carry vertically one or more wafers
-        """
-    )
-
-    slots = Quantity(
-        type=int,
-        description='Total number of possible positioning for wafers',
-        a_eln={'component': 'NumberEditQuantity'},
-    )
-
-    position_of_item = Quantity(
-        type=int,
-        a_eln={'component': 'NumberEditQuantity'},
-        description="""
-        Number of the slot where the item is located. 1 is the the first
-        slot which enter in the process chamber.
-        """,
-    )
-
-    position_of_dummy_wafers = Quantity(
-        type=int,
-        shape=['*'],
-        a_eln={'component': 'NumberEditQuantity'},
-        description="""
-        Dummy wafers are used to reach uniformity in the chamber. If the
-        step do not require dummy wafers or they are not important this field could be
-        void.
-        """,
-    )
-
+#######################################################################################
+############ Classes used to describe gases flux components and parameters ############
+#######################################################################################
 
 class Massflow_controller(FabricationChemical):
     m_def = Section(
@@ -323,6 +332,9 @@ class DRIE_Massflow_controller(Massflow_controller):
         unit='sec',
     )
 
+#######################################################################################
+####################### Uilts for wet fabrication steps ###############################
+#######################################################################################
 
 class WetReactiveComponents(FabricationChemical):
     m_def = Section(
@@ -388,6 +400,9 @@ class ResistivityControl(ArchiveSection):
         unit='minute',
     )
 
+#######################################################################################
+# Resist coating utils and SpinningComponent the most widely used also in other utils #
+#######################################################################################
 
 class SpinningComponent(ArchiveSection):
     m_def = Section()
@@ -452,47 +467,9 @@ class Priming(ArchiveSection):
         unit='sec',
     )
 
-
-class DeIonizedWaterRinsing(ArchiveSection):
-    m_def = Section(
-        description="""
-        Section describing passages in a step where de ionized water is
-        """
-    )
-
-    rinsing_cycles = Quantity(
-        type=int,
-        a_eln={'component': 'NumberEditQuantity'},
-    )
-
-    rinsing_duration = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
-        unit='sec',
-    )
-
-
-# class DeIonizedWaterDumping(ArchiveSection):
-#     m_def = Section()
-
-#     dumping_cycles = Quantity(
-#         type=int,
-#         a_eln={'component': 'NumberEditQuantity'},
-#     )
-#     dumping_drain_duration = Quantity(
-#         type=np.float64,
-#         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
-#         unit='minute',
-#     )
-
-
-# class BeamSource(ArchiveSection):
-#     m_def = Section()
-
-#     emitter_material = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
-
-#     probe = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
-
+#######################################################################################
+################################ Direct writing utilities #############################
+#######################################################################################
 
 class BeamColumn(ArchiveSection):
     m_def = Section()
@@ -600,6 +577,85 @@ class WritingParameters(ArchiveSection):
         unit='MHz',
     )
 
+#######################################################################################
+############################# Rinsing and dryer utilities #############################
+#######################################################################################
+
+class Rinsingbase(ArchiveSection):
+    m_def=Section()
+
+    rinsing_cycles = Quantity(
+        type=int,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+    rinsing_mode = Quantity(
+        type=MEnum(
+            'Auto',
+            'Manual'
+        ),
+        a_eln={'component':'EnumEditQuantity'},
+    )
+    rinser_name = Quantity(
+        type=str,
+        description='Name of the substance used to rinse the item',
+        a_eln={'component':'StringEditQuantity'}
+    )
+    rinsing_duration = Quantity(
+        type=np.float64,
+        description='Duration of the apllied rinsing substance',
+        a_eln={'component':'NumberEditQuantity', 'defaultDispalyUnit':'sec'},
+        unit='sec'
+    )
+    draining_duration = Quantity(
+        type=np.float64,
+        description = 'Time of draining of residual rinser in the process',
+        a_eln={'component':'NumberEditQuantity', 'defaultDispalyUnit':'sec'},
+        unit='sec'
+    )
+
+    resistivity_control = SubSection(
+        section_def = ResistivityControl,
+        repeats=False,
+    )
+
+
+class SpinRinsingbase(Rinsingbase):
+
+    spinning_parameters = SubSection(
+        section_def=SpinningComponent,
+        repeats=False
+    )
+
+ class DeIonizedWaterDumping(Rinsingbase):
+     m_def = Section()
+
+    rinsing_cycles = Quantity(
+        type=int,
+        a_eln={'component': 'NumberEditQuantity', 'label':'dumping cycles'},
+    )
+    rinser_name = Quantity(
+        type=str,
+        a_eln={'component':'StringEditQuantity', 'label':'Dumper name'}
+    )
+    rinsing_duration = Quantity(
+        type=np.float64,
+        description='Duration for each cycle',
+        a_eln={
+            'component':'NumberEditQuantity',
+            'defaultDispalyUnit':'sec',
+            'label':'dumping duration',
+        },
+        unit='sec'
+    )
+    draining_duration = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute',
+    )
+
+    def normalize(self.archive:'EntryArchive', logger:'BoundLogger')-> None:
+        super().normalize(archive,logger)
+        self.rinser_name='De ionized water'
 
 class DryerGas(Massflow_controller):
     m_def = Section(
@@ -610,4 +666,44 @@ class DryerGas(Massflow_controller):
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
         unit='celsius',
+    )
+
+class Dryingbase(ArchiveSection):
+    m_def = Section(
+        description="""
+        Section useful to describe repeatable entries where both or single direct wafer
+        drying or gas assisted drying could be used
+        """
+    )
+
+    drying_mode = Quantity(
+        type=MEnum(
+            'Auto',
+            'Manual'
+        ),
+        a_eln={'component':'EnumEditQuantity'},
+    )
+
+    temperature = Quantity(
+        type=np.float64,
+        description='Temperature to dry directly on the carrier or chuck',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
+        unit='celsius'
+    )
+
+    drying_duration = Quantity(
+        type=np.float64,
+        description='Time used in the drying phase',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'sec'},
+        unit='sec'
+    )
+
+    drying_gas = SubSection(section_def=DryerGas, repeats=False)
+
+
+class SpinDryingbase(Dryingbase):
+
+    spinning_parameters = SubSection(
+        section_def=SpinningComponent,
+        repeats=False
     )

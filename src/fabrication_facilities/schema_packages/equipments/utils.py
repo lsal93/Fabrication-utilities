@@ -11,6 +11,9 @@ from fabrication_facilities.schema_packages.utils import BeamSource, Fabrication
 if TYPE_CHECKING:
     pass
 
+#######################################################################################
+############ Classes of gaseous chemicals reporting maximal values allowed ############
+#######################################################################################
 
 class Massflow_parameter(FabricationChemical):
     m_def = Section(
@@ -37,6 +40,27 @@ class Massflow_parameter(FabricationChemical):
         unit='centimeter^3/minute',
     )
 
+
+class DryerGasParameter(Massflow_parameter):
+    m_def = Section(
+        a_eln={'hide': ['lab_id', 'datetime']},
+    )
+
+    min_gas_temperature = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+
+    max_gas_temperature = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+
+#######################################################################################
+############### Classes used to describe capabilities of some chambers ################
+#######################################################################################
 
 class Clamping_Capabilities(ArchiveSection):
     m_def = Section(
@@ -264,6 +288,9 @@ class SpinnerSpinParameters(ArchiveSection):
         unit='revolutions_per_minute/sec',
     )
 
+#######################################################################################
+########################## Classes for lithography equipment ##########################
+#######################################################################################
 
 class BeamColumnCapabilites(ArchiveSection):
     m_def = Section()
@@ -426,8 +453,11 @@ class WritingCapabilities(ArchiveSection):
         unit='MHz',
     )
 
+#######################################################################################
+########### Sections to describe wet modular components in fabrication labs ###########
+#######################################################################################
 
-class WetBenchSolutionComponents(FabricationChemical):
+class WetSolutionComponents(FabricationChemical):
     m_def = Section(
         definition='Chemicals for describe solutions used in wet fabrication unity',
         a_eln={
@@ -475,19 +505,24 @@ class WetBenchSolutionComponents(FabricationChemical):
     )
 
 
-class DryerGasParameter(Massflow_parameter):
-    m_def = Section(
-        a_eln={'hide': ['lab_id', 'datetime']},
+class ResistivityControlSystem(ArchiveSection):
+    m_def=Section(
+        description="""
+        Section used to describe the available option in setting a cut-off resistivity
+        system control.
+        """
     )
 
-    min_gas_temperature = Quantity(
+    min_resistivity_cut_off = Quantity(
         type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
-        unit='celsius',
+        description='Minimum Value available as target to stop the process',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'ohm*cm'},
+        unit='ohm*cm',
     )
 
-    max_gas_temperature = Quantity(
+    max_resistivity_cut_off = Quantity(
         type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
-        unit='celsius',
+        description='Maximum value available as target to stop the process',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'ohm*cm'},
+        unit='ohm*cm',
     )
