@@ -56,6 +56,14 @@ if TYPE_CHECKING:
 
 m_package = Package(name='Etching workflow schema')
 
+#######################################################################################
+####################################### ETCHING #######################################
+#######################################################################################
+#   A process used in micro and nanofabrication to chemically or mechanically remove  #
+#   layers from the surface of an item undergoing fabrication (wafer, but not only)   #
+#    Etching is a critically important process in nanofabrication, and every wafer    #
+#                 undergoes many etching steps before it is complete.                 #                                          #
+#######################################################################################
 
 class EtchingOutputs(ArchiveSection):
     m_def = Section(
@@ -87,6 +95,9 @@ class EtchingOutputs(ArchiveSection):
         repeats=True,
     )
 
+#######################################################################################
+##################################### DRY ETCHING #####################################
+#######################################################################################
 
 class RIEbase(FabricationProcessStepBase):
     m_def = Section(
@@ -444,6 +455,9 @@ class DRIE_BOSCH(ICP_RIE):
         repeats=True,
     )
 
+#######################################################################################
+##################################### WET ETCHING #####################################
+#######################################################################################
 
 class WetEtchingbase(FabricationProcessStepBase):
     m_def = Section(
@@ -495,11 +509,6 @@ class WetEtchingbase(FabricationProcessStepBase):
         description='During the process is the pump in action?',
         a_eln={'component': 'BoolEditQuantity'},
     )
-    # recycle_system = Quantity(
-    #     type=bool,
-    #     description='During the process is a recycle of the solution provided?',
-    #     a_eln={'component': 'BoolEditQuantity'},
-    # )
     short_names = Quantity(
         type=str,
         description='Materials to be etched',
@@ -816,71 +825,6 @@ class WetCleaning(FabricationProcessStep):
         section_def=WetEtchingOutputs,
         repeats=False,
     )
-
-
-class Rinsing_Dryingbase(FabricationProcessStepBase):
-    m_def = Section(
-        description='Atomistic components of a rinsing drying process step',
-        a_eln={
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'tag',
-                    'id_item_processed',
-                    'operator',
-                    'starting_date',
-                    'ending_date',
-                    'duration',
-                    'notes',
-                ]
-            }
-        },
-    )
-
-    initial_rinsing_parameters = SubSection(section_def=SpinRinsingbase, repeats=False)
-
-    drying_parameters = SubSection(section_def=SpinDryingbase, repeats=True)
-
-
-class Rinsing_Drying(FabricationProcessStep):
-    m_def = Section(
-        description="""
-        Fabrication process step consisting in a two phase procedure.(1) Initial
-        rinsing to rid of eventual wet residuals; (2) a drying phase operable by heat
-        on the wafers or by inactieve gas like N2 heated and pushed in the chamber (
-        also both heating is possible in principle).
-        """,
-        a_eln={
-            'hide': [
-                'tag',
-                'duration',
-            ],
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'description',
-                    'affiliation',
-                    'location',
-                    'operator',
-                    'room',
-                    'id_item_processed',
-                    'starting_date',
-                    'ending_date',
-                    'step_type',
-                    'definition_of_process_step',
-                    'keywords',
-                    'recipe_name',
-                    'recipe_file',
-                    'recipe_preview',
-                    'notes',
-                ]
-            },
-        },
-    )
-
-    rinsing_drying_steps = SubSection(section_def=Rinsing_Dryingbase, repeats=True)
 
 
 class SpinResistDevelopmentbase(FabricationProcessStepBase):
@@ -1278,5 +1222,76 @@ class Stripping(Chemical, FabricationProcessStep, ArchiveSection):
                 print('No elements provided')
             self.material_elemental_composition = elementality
 
+#######################################################################################
+####################################### DRYING ########################################
+#######################################################################################
+#                                                                                     #
+#                                       Description                                   #
+#                                                                                     #
+#######################################################################################
+
+class Rinsing_Dryingbase(FabricationProcessStepBase):
+    m_def = Section(
+        description='Atomistic components of a rinsing drying process step',
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'tag',
+                    'id_item_processed',
+                    'operator',
+                    'starting_date',
+                    'ending_date',
+                    'duration',
+                    'notes',
+                ]
+            }
+        },
+    )
+
+    initial_rinsing_parameters = SubSection(section_def=SpinRinsingbase, repeats=False)
+
+    drying_parameters = SubSection(section_def=SpinDryingbase, repeats=True)
+
+
+class Rinsing_Drying(FabricationProcessStep):
+    m_def = Section(
+        description="""
+        Fabrication process step consisting in a two phase procedure.(1) Initial
+        rinsing to rid of eventual wet residuals; (2) a drying phase operable by heat
+        on the wafers or by inactieve gas like N2 heated and pushed in the chamber (
+        also both heating is possible in principle).
+        """,
+        a_eln={
+            'hide': [
+                'tag',
+                'duration',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    rinsing_drying_steps = SubSection(section_def=Rinsing_Dryingbase, repeats=True)
 
 m_package.__init_metainfo__()

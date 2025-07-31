@@ -15,7 +15,6 @@ if TYPE_CHECKING:
 ############ Classes of gaseous chemicals reporting maximal values allowed ############
 #######################################################################################
 
-
 class Massflow_parameter(FabricationChemical):
     m_def = Section(
         description='Class to describe flux of gases in fluximeters',
@@ -59,11 +58,9 @@ class DryerGasParameter(Massflow_parameter):
         unit='celsius',
     )
 
-
 #######################################################################################
 ############### Classes used to describe capabilities of some chambers ################
 #######################################################################################
-
 
 class Clamping_Capabilities(ArchiveSection):
     m_def = Section(
@@ -291,11 +288,9 @@ class SpinnerSpinParameters(ArchiveSection):
         unit='revolutions_per_minute/sec',
     )
 
-
 #######################################################################################
 ########################## Classes for lithography equipment ##########################
 #######################################################################################
-
 
 class BeamColumnCapabilites(ArchiveSection):
     m_def = Section()
@@ -458,11 +453,9 @@ class WritingCapabilities(ArchiveSection):
         unit='MHz',
     )
 
-
 #######################################################################################
 ########### Sections to describe wet modular components in fabrication labs ###########
 #######################################################################################
-
 
 class WetSolutionComponents(FabricationChemical):
     m_def = Section(

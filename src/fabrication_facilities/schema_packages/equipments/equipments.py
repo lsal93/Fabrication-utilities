@@ -59,7 +59,6 @@ m_package = Package(name='Equipments specific definitions ')
 ########################### ANCILLARY TECHNIQUES EQUIPMENTS ###########################
 #######################################################################################
 
-
 class Spinner(Equipment):
     m_def = Section(
         description='Class for instruments devoted to spinning procedures.',
@@ -302,11 +301,9 @@ class BakingFurnace(Equipment):
         unit='mbar',
     )
 
-
 #######################################################################################
 ################################ DRY ETCHING EQUIPMENTS ###############################
 #######################################################################################
-
 
 class RIE_Etcher(Equipment):
     m_def = Section(
@@ -466,11 +463,9 @@ class DRIE_BOSCH_Etcher(ICP_RIE_Etcher):
         },
     )
 
-
 #######################################################################################
 ################################ WET STEPS EQUIPMENTS #################################
 #######################################################################################
-
 
 class Wet_Bench_Unit(Equipment):
     m_def = Section(
@@ -699,11 +694,9 @@ class Wet_Bench(Instrument, EntryData, ArchiveSection):
     tanks = SubSection(section_def=Wet_Bench_Unit, repeats=True)
     dumping_rinser = SubSection(section_def=Dump_Rinser, repeats=True)
 
-
 #######################################################################################
 ################################ DEPOSITION EQUIPMENTS ################################
 #######################################################################################
-
 
 class LPCVD_System(Equipment):
     m_def = Section(
@@ -918,11 +911,9 @@ class ICP_CVD_System(PECVD_System):
 
     icp_parameters = SubSection(section_def=ICP_ColumnCapabilities, repeats=False)
 
-
 #######################################################################################
 ################################ LITHOGRAPHY EQUIPMENTS ###############################
 #######################################################################################
-
 
 class ElectronBeamLithographer(Equipment):
     m_def = Section(
@@ -1004,3 +995,5 @@ class FocusedIonBeamLithographer(ElectronBeamLithographer):
             },
         }
     )
+
+# Devo migliorare il fib per cui capire la differenza vera con ebl non solo e o atomi
