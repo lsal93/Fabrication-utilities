@@ -37,12 +37,13 @@ from fabrication_facilities.schema_packages.equipments.utils import (
     DryerGasParameter,
     ICP_ColumnCapabilities,
     Massflow_parameter,
+    ResistivityControlSystem,
     SpinnerSpinParameters,
     WetBenchSolutionComponents,
     WritingCapabilities,
-    ResistivityControlSystem
 )
 from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
+from fabrication_facilities.schema_packages.utils import FabricationChemical
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (
@@ -57,6 +58,7 @@ m_package = Package(name='Equipments specific definitions ')
 #######################################################################################
 ########################### ANCILLARY TECHNIQUES EQUIPMENTS ###########################
 #######################################################################################
+
 
 class Spinner(Equipment):
     m_def = Section(
@@ -91,7 +93,7 @@ class Spinner(Equipment):
 
 
 class SpinCoater(Spinner):
-    m_def=Section(
+    m_def = Section(
         a_eln={
             'hide': [
                 'datetime',
@@ -113,7 +115,7 @@ class SpinCoater(Spinner):
                     'side_rinsing',
                     'notes',
                 ]
-            }
+            },
         }
     )
 
@@ -132,15 +134,9 @@ class SpinCoater(Spinner):
         a_eln={'component': 'BoolEditQuantity'},
     )
 
-    primers_available = SubSection(
-        section_def = FabricationChemical,
-        repeats=True
-    )
+    primers_available = SubSection(section_def=FabricationChemical, repeats=True)
 
-    resist_available = SubSection(
-        section_def=FabricationChemical,
-        repeats=True
-    )
+    resist_available = SubSection(section_def=FabricationChemical, repeats=True)
 
 
 class ResistDeveloper(Equipment):
@@ -162,16 +158,13 @@ class ResistDeveloper(Equipment):
                     'is_bookable',
                     'automatic_loading',
                     'contamination_class',
-                    'notes'
+                    'notes',
                 ],
             },
         }
     )
 
-    developers_available = SubSection(
-        section_def=FabricationChemical,
-        repeats=True
-    )
+    developers_available = SubSection(section_def=FabricationChemical, repeats=True)
 
 
 class ResistSpinDeveloper(ResistDeveloper, Spinner):
@@ -193,7 +186,7 @@ class ResistSpinDeveloper(ResistDeveloper, Spinner):
                     'is_bookable',
                     'automatic_loading',
                     'contamination_class',
-                    'notes'
+                    'notes',
                 ],
             },
         }
@@ -220,23 +213,21 @@ class Rinser_Dryer(Spinner):
                     'automatic_loading',
                     'contamination_class',
                     'max_temperature',
-                    'notes'
+                    'notes',
                 ],
             },
         }
     )
 
-
     max_temperature = Quantity(
         type=np.float64,
         description='Maximal temperature to dry directly on the carrier',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
-        unit='celsius'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
     )
 
     available_resistivity_settings = SubSection(
-        section_def=ResistivityControlSystem,
-        repeats=False
+        section_def=ResistivityControlSystem, repeats=False
     )
 
     drying_gas = SubSection(section_def=DryerGasParameter, repeats=False)
@@ -311,9 +302,11 @@ class BakingFurnace(Equipment):
         unit='mbar',
     )
 
+
 #######################################################################################
 ################################ DRY ETCHING EQUIPMENTS ###############################
 #######################################################################################
+
 
 class RIE_Etcher(Equipment):
     m_def = Section(
@@ -473,9 +466,11 @@ class DRIE_BOSCH_Etcher(ICP_RIE_Etcher):
         },
     )
 
+
 #######################################################################################
 ################################ WET STEPS EQUIPMENTS #################################
 #######################################################################################
+
 
 class Wet_Bench_Unit(Equipment):
     m_def = Section(
@@ -647,8 +642,7 @@ class Dump_Rinser(Equipment):
     )
 
     available_resistivity_setting = SubSection(
-        section_def=ResistivityControlSystem,
-        repeats=False
+        section_def=ResistivityControlSystem, repeats=False
     )
 
 
@@ -705,9 +699,11 @@ class Wet_Bench(Instrument, EntryData, ArchiveSection):
     tanks = SubSection(section_def=Wet_Bench_Unit, repeats=True)
     dumping_rinser = SubSection(section_def=Dump_Rinser, repeats=True)
 
+
 #######################################################################################
 ################################ DEPOSITION EQUIPMENTS ################################
 #######################################################################################
+
 
 class LPCVD_System(Equipment):
     m_def = Section(
@@ -922,9 +918,11 @@ class ICP_CVD_System(PECVD_System):
 
     icp_parameters = SubSection(section_def=ICP_ColumnCapabilities, repeats=False)
 
+
 #######################################################################################
 ################################ LITHOGRAPHY EQUIPMENTS ###############################
 #######################################################################################
+
 
 class ElectronBeamLithographer(Equipment):
     m_def = Section(
@@ -947,7 +945,7 @@ class ElectronBeamLithographer(Equipment):
                     'contamination_class',
                     'min_chamber_pressure',
                     'max_chamber_pressure',
-                    'notes'
+                    'notes',
                 ],
             },
         }

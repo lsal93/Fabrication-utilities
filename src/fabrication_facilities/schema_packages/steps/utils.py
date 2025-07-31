@@ -35,6 +35,7 @@ if TYPE_CHECKING:
 ### Currently only one class is included to describe carriers for multiwafers steps ###
 #######################################################################################
 
+
 class Carrier(ArchiveSection):
     m_def = Section(
         description="""
@@ -68,9 +69,11 @@ class Carrier(ArchiveSection):
         """,
     )
 
+
 #######################################################################################
 ## Classes used to describe components, mostrly electrical related in add and remove ##
 #######################################################################################
+
 
 class ICP_Column(ArchiveSection):
     m_def = Section(
@@ -270,9 +273,11 @@ class DRIE_Chuck(ArchiveSection):
         repeats=True,
     )
 
+
 #######################################################################################
 ############ Classes used to describe gases flux components and parameters ############
 #######################################################################################
+
 
 class Massflow_controller(FabricationChemical):
     m_def = Section(
@@ -332,9 +337,11 @@ class DRIE_Massflow_controller(Massflow_controller):
         unit='sec',
     )
 
+
 #######################################################################################
 ####################### Uilts for wet fabrication steps ###############################
 #######################################################################################
+
 
 class WetReactiveComponents(FabricationChemical):
     m_def = Section(
@@ -400,9 +407,11 @@ class ResistivityControl(ArchiveSection):
         unit='minute',
     )
 
+
 #######################################################################################
 # Resist coating utils and SpinningComponent the most widely used also in other utils #
 #######################################################################################
+
 
 class SpinningComponent(ArchiveSection):
     m_def = Section()
@@ -467,9 +476,11 @@ class Priming(ArchiveSection):
         unit='sec',
     )
 
+
 #######################################################################################
 ################################ Direct writing utilities #############################
 #######################################################################################
+
 
 class BeamColumn(ArchiveSection):
     m_def = Section()
@@ -577,75 +588,70 @@ class WritingParameters(ArchiveSection):
         unit='MHz',
     )
 
+
 #######################################################################################
 ############################# Rinsing and dryer utilities #############################
 #######################################################################################
 
+
 class Rinsingbase(ArchiveSection):
-    m_def=Section()
+    m_def = Section()
 
     rinsing_cycles = Quantity(
         type=int,
         a_eln={'component': 'NumberEditQuantity'},
     )
     rinsing_mode = Quantity(
-        type=MEnum(
-            'Auto',
-            'Manual'
-        ),
-        a_eln={'component':'EnumEditQuantity'},
+        type=MEnum('Auto', 'Manual'),
+        a_eln={'component': 'EnumEditQuantity'},
     )
     rinser_name = Quantity(
         type=str,
         description='Name of the substance used to rinse the item',
-        a_eln={'component':'StringEditQuantity'}
+        a_eln={'component': 'StringEditQuantity'},
     )
     rinsing_duration = Quantity(
         type=np.float64,
         description='Duration of the apllied rinsing substance',
-        a_eln={'component':'NumberEditQuantity', 'defaultDispalyUnit':'sec'},
-        unit='sec'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDispalyUnit': 'sec'},
+        unit='sec',
     )
     draining_duration = Quantity(
         type=np.float64,
-        description = 'Time of draining of residual rinser in the process',
-        a_eln={'component':'NumberEditQuantity', 'defaultDispalyUnit':'sec'},
-        unit='sec'
+        description='Time of draining of residual rinser in the process',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDispalyUnit': 'sec'},
+        unit='sec',
     )
 
     resistivity_control = SubSection(
-        section_def = ResistivityControl,
+        section_def=ResistivityControl,
         repeats=False,
     )
 
 
 class SpinRinsingbase(Rinsingbase):
+    spinning_parameters = SubSection(section_def=SpinningComponent, repeats=False)
 
-    spinning_parameters = SubSection(
-        section_def=SpinningComponent,
-        repeats=False
-    )
 
- class DeIonizedWaterDumping(Rinsingbase):
-     m_def = Section()
+class DeIonizedWaterDumping(Rinsingbase):
+    m_def = Section()
 
     rinsing_cycles = Quantity(
         type=int,
-        a_eln={'component': 'NumberEditQuantity', 'label':'dumping cycles'},
+        a_eln={'component': 'NumberEditQuantity', 'label': 'dumping cycles'},
     )
     rinser_name = Quantity(
-        type=str,
-        a_eln={'component':'StringEditQuantity', 'label':'Dumper name'}
+        type=str, a_eln={'component': 'StringEditQuantity', 'label': 'Dumper name'}
     )
     rinsing_duration = Quantity(
         type=np.float64,
         description='Duration for each cycle',
         a_eln={
-            'component':'NumberEditQuantity',
-            'defaultDispalyUnit':'sec',
-            'label':'dumping duration',
+            'component': 'NumberEditQuantity',
+            'defaultDispalyUnit': 'sec',
+            'label': 'dumping duration',
         },
-        unit='sec'
+        unit='sec',
     )
     draining_duration = Quantity(
         type=np.float64,
@@ -653,9 +659,10 @@ class SpinRinsingbase(Rinsingbase):
         unit='minute',
     )
 
-    def normalize(self.archive:'EntryArchive', logger:'BoundLogger')-> None:
-        super().normalize(archive,logger)
-        self.rinser_name='De ionized water'
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+        self.rinser_name = 'De ionized water'
+
 
 class DryerGas(Massflow_controller):
     m_def = Section(
@@ -668,6 +675,7 @@ class DryerGas(Massflow_controller):
         unit='celsius',
     )
 
+
 class Dryingbase(ArchiveSection):
     m_def = Section(
         description="""
@@ -677,33 +685,26 @@ class Dryingbase(ArchiveSection):
     )
 
     drying_mode = Quantity(
-        type=MEnum(
-            'Auto',
-            'Manual'
-        ),
-        a_eln={'component':'EnumEditQuantity'},
+        type=MEnum('Auto', 'Manual'),
+        a_eln={'component': 'EnumEditQuantity'},
     )
 
     temperature = Quantity(
         type=np.float64,
         description='Temperature to dry directly on the carrier or chuck',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'celsius'},
-        unit='celsius'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
     )
 
     drying_duration = Quantity(
         type=np.float64,
         description='Time used in the drying phase',
-        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit':'sec'},
-        unit='sec'
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
     )
 
     drying_gas = SubSection(section_def=DryerGas, repeats=False)
 
 
 class SpinDryingbase(Dryingbase):
-
-    spinning_parameters = SubSection(
-        section_def=SpinningComponent,
-        repeats=False
-    )
+    spinning_parameters = SubSection(section_def=SpinningComponent, repeats=False)

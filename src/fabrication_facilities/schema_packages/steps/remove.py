@@ -28,17 +28,16 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
 from fabrication_facilities.schema_packages.steps.utils import (
     Carrier,
     Chuck,
-    SpinRinsingbase,
     DevelopingSolution,
     DRIE_Chuck,
     DRIE_Massflow_controller,
-    DryerGas,
     ICP_Column,
     Massflow_controller,
     ResistivityControl,
+    SpinDryingbase,
     SpinningComponent,
+    SpinRinsingbase,
     WetReactiveComponents,
-    SpinDryingbase
 )
 from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
@@ -836,16 +835,12 @@ class Rinsing_Dryingbase(FabricationProcessStepBase):
                     'notes',
                 ]
             }
-        }
+        },
     )
 
-    initial_rinsing_parameters = SubSection(
-        section_def=SpinRinsingbase,
-        repeats=False
-    )
+    initial_rinsing_parameters = SubSection(section_def=SpinRinsingbase, repeats=False)
 
-    drying_parameters = SubSection(section_def = SpinDryingbase, repeats=True)
-
+    drying_parameters = SubSection(section_def=SpinDryingbase, repeats=True)
 
 
 class Rinsing_Drying(FabricationProcessStep):
@@ -882,10 +877,10 @@ class Rinsing_Drying(FabricationProcessStep):
                     'notes',
                 ]
             },
-        }
+        },
     )
 
-    rinsing/drying_steps = SubSection(section_def=Rinsing_Dryingbase, repeats=True)
+    rinsing_drying_steps = SubSection(section_def=Rinsing_Dryingbase, repeats=True)
 
 
 class SpinResistDevelopmentbase(FabricationProcessStepBase):
