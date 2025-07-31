@@ -468,6 +468,10 @@ class WetSolutionComponents(FabricationChemical):
     m_def = Section(
         definition='Chemicals for describe solutions used in wet fabrication unity',
         a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+            ],
             'properties': {
                 'order': [
                     'name',

@@ -105,10 +105,6 @@ class FabricationChemical(Chemical, ArchiveSection):
             'hide': [
                 'lab_id',
                 'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
             ],
         },
     )
@@ -122,30 +118,6 @@ class FabricationChemical(Chemical, ArchiveSection):
         super().normalize(archive, logger)
         if self.chemical_formula:
             self.elemental_composition = generate_elementality(self.chemical_formula)
-
-    # def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-    #     super().normalize(archive, logger)
-    #     if self.chemical_formula:
-    #         elements, counts = parse_chemical_formula(self.chemical_formula)
-    #         total = 0
-    #         for token in counts:
-    #             total += int(token)
-    #         mass = sum(am[an[el]] * cou for el, cou in zip(elements, counts))
-    #         if total != 0:
-    #             elemental_fraction = np.array(counts) / total
-    #             elementality = []
-    #             i = 0
-    #             for entry in elements:
-    #                 elemental_try = ElementalComposition()
-    #                 elemental_try.element = entry
-    #                 elemental_try.atomic_fraction = elemental_fraction[i]
-    #                 mass_frac = (am[an[entry]] * counts[i]) / mass
-    #                 elemental_try.mass_fraction = mass_frac
-    #                 i += 1
-    #                 elementality.append(elemental_try)
-    #         else:
-    #             print('No elements provided')
-    #         self.elemental_composition = elementality
 
 
 def make_line_express(list1, list2, labelx, labely, finalist, labelfigure):
@@ -167,7 +139,7 @@ def make_line_express(list1, list2, labelx, labely, finalist, labelfigure):
     )
 
 
-# Capire se se può ingegnerizzare meglio la funzinoe per ridurre variabili
+# Capire se se può ingegnerizzare meglio la funzione per ridurre variabili
 
 
 class TimeRampTemperature(PlotSection, EntryData):

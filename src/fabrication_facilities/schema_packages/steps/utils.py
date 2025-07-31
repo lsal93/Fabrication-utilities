@@ -339,7 +339,7 @@ class DRIE_Massflow_controller(Massflow_controller):
 
 
 #######################################################################################
-####################### Uilts for wet fabrication steps ###############################
+####################### Utils for wet fabrication steps ###############################
 #######################################################################################
 
 
@@ -347,6 +347,10 @@ class WetReactiveComponents(FabricationChemical):
     m_def = Section(
         definition='Chemicals for wet fabrication steps',
         a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+            ],
             'properties': {
                 'order': [
                     'name',
@@ -613,13 +617,13 @@ class Rinsingbase(ArchiveSection):
     rinsing_duration = Quantity(
         type=np.float64,
         description='Duration of the apllied rinsing substance',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDispalyUnit': 'sec'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
     )
     draining_duration = Quantity(
         type=np.float64,
         description='Time of draining of residual rinser in the process',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDispalyUnit': 'sec'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
     )
 

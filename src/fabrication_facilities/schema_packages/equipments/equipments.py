@@ -39,7 +39,7 @@ from fabrication_facilities.schema_packages.equipments.utils import (
     Massflow_parameter,
     ResistivityControlSystem,
     SpinnerSpinParameters,
-    WetBenchSolutionComponents,
+    WetSolutionComponents,
     WritingCapabilities,
 )
 from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
@@ -577,7 +577,7 @@ class Wet_Bench_Unit(Equipment):
         },
     )
 
-    reactives = SubSection(section_def=WetBenchSolutionComponents, repeats=True)
+    reactives = SubSection(section_def=WetSolutionComponents, repeats=True)
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         if self.volume_of_solution is not None:

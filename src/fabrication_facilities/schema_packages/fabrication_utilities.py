@@ -145,7 +145,7 @@ class EquipmentTechnique(ArchiveSection):
                     'name',
                     'id',
                     'description',
-                    'techiniqueGeneralCategory',
+                    'techniqueGeneralCategory',
                     'techniqueMainCategory',
                     'techniqueSubCategory',
                     'genericEquipmentName',
