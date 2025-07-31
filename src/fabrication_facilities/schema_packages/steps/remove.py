@@ -62,7 +62,7 @@ m_package = Package(name='Etching workflow schema')
 #   A process used in micro and nanofabrication to chemically or mechanically remove  #
 #   layers from the surface of an item undergoing fabrication (wafer, but not only)   #
 #    Etching is a critically important process in nanofabrication, and every wafer    #
-#                 undergoes many etching steps before it is complete.                 #                                          #
+#                 undergoes many etching steps before it is complete.                 #
 #######################################################################################
 
 class EtchingOutputs(ArchiveSection):
