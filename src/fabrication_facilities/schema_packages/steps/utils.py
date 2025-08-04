@@ -458,6 +458,12 @@ class Priming(ArchiveSection):
     m_def = Section()
 
     primer_type = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+    primer_physical_phase = Quantity(
+        type=MEnum(
+            'gas',
+            'liquid',
+        )
+    )
     primer_temperature = Quantity(
         type=np.float64,
         description='Temperature of the primer',
@@ -582,15 +588,24 @@ class WritingParameters(ArchiveSection):
         },
         unit='nm',
     )
-    clock = Quantity(
+    settling_time = Quantity(
         type=np.float64,
-        description='Frequency used',
+        description='Time occurred to align the beam at the end of the writing field',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
+            'defaultDisplayUnit': 'um',
         },
-        unit='MHz',
+        unit='um',
     )
+    # clock = Quantity(
+    #     type=np.float64,
+    #     description='Frequency used',
+    #     a_eln={
+    #         'component': 'NumberEditQuantity',
+    #         'defaultDisplayUnit': 'MHz',
+    #     },
+    #     unit='MHz',
+    # )
 
 
 #######################################################################################

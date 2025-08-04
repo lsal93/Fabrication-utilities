@@ -532,9 +532,9 @@ class Spin_Coatingbase(FabricationProcessStepBase):
                     'dispensing_mode',
                     'dispensing_locus',
                     'dispensed_volume',
-                    'adhesion_type',
+                    'clamping_type',
                     'back_rinsing',
-                    'side_rinsing',
+                    'edge_rinsing',
                     'notes',
                 ]
             },
@@ -580,11 +580,12 @@ class Spin_Coatingbase(FabricationProcessStepBase):
         },
         unit='milliliter',
     )
-
-    adhesion_type = Quantity(
+    clamping_type = Quantity(
         type=MEnum(
             'None',
-            'Direct',
+            'Entire wafer',
+            'Edge clamping',
+            'Other (see notes)'
         ),
         a_eln={'component': 'EnumEditQuantity'},
     )
@@ -595,7 +596,7 @@ class Spin_Coatingbase(FabricationProcessStepBase):
         """,
         a_eln={'component': 'BoolEditQuantity'},
     )
-    side_rinsing = Quantity(
+    edge_rinsing = Quantity(
         type=bool,
         description="""
         At the end of the resist deposition is there a phase of polishing on the sides?

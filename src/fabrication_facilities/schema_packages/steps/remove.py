@@ -38,6 +38,7 @@ from fabrication_facilities.schema_packages.steps.utils import (
     SpinningComponent,
     SpinRinsingbase,
     WetReactiveComponents,
+    DeIonizedWaterDumping
 )
 from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
@@ -463,6 +464,31 @@ class DRIE_BOSCH(ICP_RIE):
 ##################################### WET ETCHING #####################################
 #######################################################################################
 
+class WetEtchingOutputs(ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'duration_measured',
+                ],
+            }
+        },
+        description='Set of parameters obtained in a wet process',
+    )
+
+    job_number = Quantity(
+        type=int,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+
+    duration_measured = Quantity(
+        type=np.float64,
+        description='Real time of the process ad output',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
+    )
+
 
 class WetEtchingbase(FabricationProcessStepBase):
     m_def = Section(
@@ -493,8 +519,8 @@ class WetEtchingbase(FabricationProcessStepBase):
                     'duration',
                     'short_names',
                     'target_materials_formulas',
-                    'etching_reactives',
-                    'etching_reactives_formulas',
+                    # 'etching_reactives',
+                    # 'etching_reactives_formulas',
                     'etching_temperature',
                     'pump',
                     'wetting',
@@ -526,18 +552,18 @@ class WetEtchingbase(FabricationProcessStepBase):
         shape=['*'],
         a_eln={'component': 'StringEditQuantity'},
     )
-    etching_reactives = Quantity(
-        type=str,
-        description='Names of compounds used to etch',
-        shape=['*'],
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    etching_reactives_formulas = Quantity(
-        type=str,
-        description='Formulas of compounds used to etch',
-        shape=['*'],
-        a_eln={'component': 'StringEditQuantity'},
-    )
+    # etching_reactives = Quantity(
+    #     type=str,
+    #     description='Names of compounds used to etch',
+    #     shape=['*'],
+    #     a_eln={'component': 'StringEditQuantity'},
+    # )
+    # etching_reactives_formulas = Quantity(
+    #     type=str,
+    #     description='Formulas of compounds used to etch',
+    #     shape=['*'],
+    #     a_eln={'component': 'StringEditQuantity'},
+    # )
     etching_temperature = Quantity(
         type=np.float64,
         description='Temperature set for the bath',
@@ -605,6 +631,11 @@ class WetEtchingbase(FabricationProcessStepBase):
         repeats=True,
     )
 
+    cleaning_dumping = SubSection(
+        section_def=DeIonizedWaterDumping,
+        repeats=True,
+    )
+
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
         if self.target_materials_formulas is None:
@@ -621,91 +652,65 @@ class WetEtchingbase(FabricationProcessStepBase):
                 chems.append(chemical)
             self.materials_etched = chems
 
-        if self.etching_reactives_formulas is None:
-            pass
-        else:
-            reactives = []
-            for v1, v2 in zip(self.etching_reactives, self.etching_reactives_formulas):
-                chemical = WetReactiveComponents()
-                val1 = v1  # if v1 != '-' else val1=v2
-                val2 = v2 if v2 != '-' else None
-                chemical.name = val1
-                chemical.chemical_formula = val2
-                chemical.normalize(archive, logger)
-                reactives.append(chemical)
-            self.reactives_used_to_etch = reactives
+        #if self.etching_reactives_formulas is None:
+        #    pass
+        #else:
+        #    reactives = []
+        #    for v1, v2 in zip(self.etching_reactives, self.etching_reactives_formulas):
+        #        chemical = WetReactiveComponents()
+        #        val1 = v1  # if v1 != '-' else val1=v2
+        #        val2 = v2 if v2 != '-' else None
+        #        chemical.name = val1
+        #        chemical.chemical_formula = val2
+        #        chemical.normalize(archive, logger)
+        #        reactives.append(chemical)
+        #    self.reactives_used_to_etch = reactives
 
 
-class WetEtchingOutputs(ArchiveSection):
-    m_def = Section(
-        a_eln={
-            'properties': {
-                'order': [
-                    'job_number',
-                    'duration_measured',
-                ],
-            }
-        },
-        description='Set of parameters obtained in a wet process',
-    )
+# class WetCleaningbase(FabricationProcessStepBase):
+#     m_def = Section(
+#         description="""
+#         Atomistic components of a fabrication process step where de ionized water is
+#         used to remove remaining chemicals on an item. It is used for example as an
+#         intermadiate step of some wet etching procedures like the RCA cleaning.
+#         """,
+#         a_eln={
+#             'properties': {
+#                 'order': [
+#                     'job_number',
+#                     'name',
+#                     'tag',
+#                     'description',
+#                     'operator',
+#                     'id_item_processed',
+#                     'starting_date',
+#                     'ending_date',
+#                     'duration',
+#                     'pump',
+#                     'dumping_cycles',
+#                     'dumping_drain_duration',
+#                     'notes',
+#                 ]
+#             },
+#         },
+#     )
 
-    job_number = Quantity(
-        type=int,
-        a_eln={'component': 'NumberEditQuantity'},
-    )
+#     dumping_cycles = Quantity(
+#         type=int,
+#         description='Number of cycles where water cleans the surfaces',
+#         a_eln={'component': 'NumberEditQuantity'},
+#     )
+#     dumping_drain_duration = Quantity(
+#         type=np.float64,
+#         description='Time used to drain the tank of cleaning',
+#         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+#         unit='minute',
+#     )
 
-    duration_measured = Quantity(
-        type=np.float64,
-        description='Real time of the process ad output',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
-        unit='sec',
-    )
-
-
-class WetCleaningbase(FabricationProcessStepBase):
-    m_def = Section(
-        description="""
-        Atomistic components of a fabrication process step where de ionized water is
-        used to remove remaining chemicals on an item. It is used for example as an
-        intermadiate step of some wet etching procedures like the RCA cleaning.
-        """,
-        a_eln={
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'tag',
-                    'description',
-                    'operator',
-                    'id_item_processed',
-                    'starting_date',
-                    'ending_date',
-                    'duration',
-                    'pump',
-                    'dumping_cycles',
-                    'dumping_drain_duration',
-                    'notes',
-                ]
-            },
-        },
-    )
-
-    dumping_cycles = Quantity(
-        type=int,
-        description='Number of cycles where water cleans the surfaces',
-        a_eln={'component': 'NumberEditQuantity'},
-    )
-    dumping_drain_duration = Quantity(
-        type=np.float64,
-        description='Time used to drain the tank of cleaning',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
-        unit='minute',
-    )
-
-    resistivity_control = SubSection(
-        section_def=ResistivityControl,
-        repeats=False,
-    )
+#     resistivity_control = SubSection(
+#         section_def=ResistivityControl,
+#         repeats=False,
+#     )
 
 
 class WetEtching(FabricationProcessStep):
@@ -761,7 +766,6 @@ class WetEtching(FabricationProcessStep):
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm/minute'},
         unit='nm/minute',
     )
-
     endpoint = Quantity(
         type=bool,
         description="""
@@ -822,7 +826,7 @@ class WetCleaning(FabricationProcessStep):
     )
 
     cleaning_steps = SubSection(
-        section_def=WetCleaningbase,
+        section_def=WetEtchingbase,
         repeats=True,
     )
 
@@ -860,6 +864,7 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
         type=MEnum(
             'None',
             'Direct',
+            'Suspended',
         ),
         a_eln={'component': 'EnumEditQuantity'},
     )

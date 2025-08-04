@@ -501,6 +501,8 @@ class Wet_Bench_Unit(Equipment):
                     'pumping_mechanism',
                     'solution_renewal',
                     'max_number_of_repetitions',
+                    'max_time_of_usage',
+                    'notes',
                 ]
             },
         },
@@ -533,12 +535,12 @@ class Wet_Bench_Unit(Equipment):
         unit='celsius',
     )
 
-    # max_overflow_time = Quantity(
-    #     type=np.float64,
-    #     description='Maximum amount of flow at disposal',
-    #     a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
-    #     unit='sec',
-    # )
+    max_overflow_time = Quantity(
+        type=np.float64,
+        description='Maximum amount of time flow imposed',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
+    )
 
     pumping_mechanism = Quantity(
         type=bool,
@@ -568,13 +570,6 @@ class Wet_Bench_Unit(Equipment):
         type=np.float64,
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
-    )
-
-    ultrasounds_required = Quantity(
-        type=bool,
-        a_eln={
-            'component': 'BoolEditQuantity',
-        },
     )
 
     reactives = SubSection(section_def=WetSolutionComponents, repeats=True)
@@ -610,9 +605,6 @@ class Dump_Rinser(Equipment):
                     'automatic_loading',
                     'contamination_class',
                     'max_overflow_time',
-                    'pumping_mechanism',
-                    'cycles_drain_time',
-                    'final_drain_time',
                     'resistivity_cut_off',
                     'notes',
                 ]
@@ -697,7 +689,7 @@ class Wet_Bench(Instrument, EntryData, ArchiveSection):
     )
 
     tanks = SubSection(section_def=Wet_Bench_Unit, repeats=True)
-    dumping_rinser = SubSection(section_def=Dump_Rinser, repeats=True)
+    dumping_rinsers = SubSection(section_def=Dump_Rinser, repeats=True)
 
 
 #######################################################################################
