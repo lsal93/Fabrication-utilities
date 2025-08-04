@@ -14,11 +14,11 @@ from nomad.metainfo import (
     SubSection,
 )
 
-from fabrication_facilities.schema_packages.fabrication_utilities import (
-    EquipmentReference,
-    FabricationProcess,
-    FabricationProcessStep,
-)
+#from fabrication_facilities.schema_packages.fabrication_utilities import (
+    # EquipmentReference,
+#    FabricationProcess,
+#    FabricationProcessStep,
+#)
 from fabrication_facilities.schema_packages.utils import FabricationChemical
 
 if TYPE_CHECKING:
@@ -36,7 +36,7 @@ class EtchingMeasures(ArchiveSection):
             'properties': {
                 'order': [
                     'recipe_name',
-                    'link_to_step',
+                    # 'link_to_step',
                     'etching_rate_measured',
                 ],
             },
@@ -51,11 +51,11 @@ class EtchingMeasures(ArchiveSection):
         },
     )
 
-    link_to_step = Quantity(
-        type=FabricationProcessStep,
-        description='Link to reach the step with the parameters used',
-        a_eln={'component': 'ReferenceEditQuantity'},
-    )
+    # link_to_step = Quantity(
+    #     type=FabricationProcessStep,
+    #     description='Link to reach the step with the parameters used',
+    #     a_eln={'component': 'ReferenceEditQuantity'},
+    # )
 
     etching_rate_measured = Quantity(
         type=np.float64,
@@ -67,11 +67,11 @@ class EtchingMeasures(ArchiveSection):
         unit='nm/minute',
     )
 
-    instrument = SubSection(
-        section_def=EquipmentReference,
-        description='Instrument through which the etching trial was performed',
-        repeats=False,
-    )
+    # instrument = SubSection(
+    #     section_def=EquipmentReference,
+    #     description='Instrument through which the etching trial was performed',
+    #     repeats=False,
+    # )
 
 
 class EtchingProperties(ArchiveSection):
@@ -81,31 +81,77 @@ class EtchingProperties(ArchiveSection):
     )
 
 
+class StressMeasures(ArchiveSection):
+    m_def = Section(
+        description='Class describing stress properties characterized for materials',
+        a_eln={
+            'properties': {
+                'order': [
+                    'stress_measured',
+                ],
+            },
+        },
+    )
+
+    # recipe_name = Quantity(
+    #     type=str,
+    #     description='Recipe used to measure etching rate in the process',
+    #     a_eln={
+    #         'component': 'StringEditQuantity',
+    #     },
+    # )
+
+    # link_to_step = Quantity(
+    #     type=FabricationProcessStep,
+    #     description='Link to reach the step with the parameters used',
+    #     a_eln={'component': 'ReferenceEditQuantity'},
+    # )
+
+    stress_measured = Quantity(
+        type=np.float64,
+        description='Value obtained for the etching rate',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'GPa',
+        },
+        unit='GPa',
+    )
+
+    # instrument = SubSection(
+    #     section_def=EquipmentReference,
+    #     description='Instrument through which the etching trial was performed',
+    #     repeats=False,
+    # )
+
 class StressProperties(ArchiveSection):
-    instrument = SubSection(
-        section_def=EquipmentReference,
-        description='Instrument through which the characterization was performed',
-        repeats=False,
+    # instrument = SubSection(
+    #     section_def=EquipmentReference,
+    #     description='Instrument through which the characterization was performed',
+    #     repeats=False,
+    # )
+    stress_results = SubSection(
+        section_def=StressMeasures,
+        repeats=True,
     )
 
 
-class ProfileProperties(ArchiveSection):
-    instrument = SubSection(
-        section_def=EquipmentReference,
-        description='Instrument through which the characterization was performed',
-        repeats=False,
+# class ElectricProperties(ArchiveSection):
+#     instrument = SubSection(
+#         section_def=EquipmentReference,
+#         description='Instrument through which the characterization was performed',
+#         repeats=False,
+#     )
+
+
+class FabricationOutput(ArchiveSection):
+    m_def = Section(
+        description="""
+        Ideal class to inherit to define any kind of outputs from a FabricationProcess.
+        """
     )
 
 
-class ElectricProperties(ArchiveSection):
-    instrument = SubSection(
-        section_def=EquipmentReference,
-        description='Instrument through which the characterization was performed',
-        repeats=False,
-    )
-
-
-class FabricationMaterial(EntryData, ArchiveSection):
+class FabricationMaterial(FabricationOutput):
     m_def = Section(
         description='Class containeg all information measured for a raw material',
         a_eln={
@@ -115,9 +161,9 @@ class FabricationMaterial(EntryData, ArchiveSection):
                     'ID',
                     'description',
                     'location',
-                    'operator',
-                    'production_process_name',
-                    'production_process_reference',
+                    # 'operator',
+                    # 'production_process_name',
+                    # 'production_process_reference',
                 ]
             }
         },
@@ -152,27 +198,27 @@ class FabricationMaterial(EntryData, ArchiveSection):
         },
     )
 
-    operator = Quantity(
-        type=str,
-        description='Physical person which produced the material',
-        a_eln={
-            'component': 'StringEditQuantity',
-        },
-    )
+    # operator = Quantity(
+    #     type=str,
+    #     description='Physical person which produced the material',
+    #     a_eln={
+    #         'component': 'StringEditQuantity',
+    #     },
+    # )
 
-    production_process_name = Quantity(
-        type=str,
-        description='Name of the referenced process used in the production',
-        a_eln={
-            'component': 'StringEditQuantity',
-        },
-    )
+    # production_process_name = Quantity(
+    #     type=str,
+    #     description='Name of the referenced process used in the production',
+    #     a_eln={
+    #         'component': 'StringEditQuantity',
+    #     },
+    # )
 
-    production_process_reference = Quantity(
-        type=FabricationProcess,
-        description='Link to fabrication process employed',
-        a_eln={'component': 'ReferenceEditQuantity'},
-    )
+    # production_process_reference = Quantity(
+    #     type=FabricationProcess,
+    #     description='Link to fabrication process employed',
+    #     a_eln={'component': 'ReferenceEditQuantity'},
+    # )
 
     chemical_components = SubSection(
         section_def=FabricationChemical,
@@ -189,12 +235,12 @@ class FabricationMaterial(EntryData, ArchiveSection):
         repeats=False,
     )
 
-    geometric_properties = SubSection(
-        section_def=ProfileProperties,
-        repeats=False,
-    )
+    # geometric_properties = SubSection(
+    #     section_def=ProfileProperties,
+    #     repeats=False,
+    # )
 
-    electric_properties = SubSection(
-        section_def=ElectricProperties,
-        repeats=False,
-    )
+    # electric_properties = SubSection(
+    #     section_def=ElectricProperties,
+    #     repeats=False,
+    # )

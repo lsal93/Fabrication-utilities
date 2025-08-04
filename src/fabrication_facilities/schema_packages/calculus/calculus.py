@@ -19,6 +19,10 @@ from nomad.metainfo import (
     SubSection,
 )
 
+from fabrication_facilities.schema_packages.fabrication_utilities import(
+    FabricationProcessStep
+)
+
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (
         EntryArchive,
@@ -69,7 +73,7 @@ class EtchingRateInputs(ArchiveSection):
         unit='minute',
     )
     etching_time_reference = Quantity(
-        type=Section,
+        type=FabricationProcessStep,
         a_eln={'component': 'ReferenceEditQuantity'},
     )
     depth = Quantity(
@@ -78,7 +82,7 @@ class EtchingRateInputs(ArchiveSection):
         unit='nm',
     )
     depth_reference = Quantity(
-        type=Section,
+        type=FabricationProcessStep,
         a_eln={'component': 'ReferenceEditQuantity'},
     )
 
@@ -118,7 +122,7 @@ class DepositionRateInputs(ArchiveSection):
         unit='minute',
     )
     deposition_time_reference = Quantity(
-        type=Section,
+        type=FabricationProcessStep,
         a_eln={'component': 'ReferenceEditQuantity'},
     )
     thickness = Quantity(
@@ -127,7 +131,7 @@ class DepositionRateInputs(ArchiveSection):
         unit='nm',
     )
     thickness_reference = Quantity(
-        type=Section,
+        type=FabricationProcessStep,
         a_eln={'component': 'ReferenceEditQuantity'},
     )
 
@@ -167,10 +171,20 @@ class StressPropertiesInputs(ArchiveSection):
         unit='nm'
     )
 
+    substrate_thickness_reference = Quantity(
+        type=FabricationProcessStep,
+        a_eln={'component':'ReferenceEditQuantity'}
+    )
+
     layer_thickness = Quantity(
         type=np.float64,
         a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
         unit='nm'
+    )
+
+    layer_thickness_reference = Quantity(
+        type=FabricationProcessStep,
+        a_eln={'component':'ReferenceEditQuantity'}
     )
 
     curvature_radius = Quantity(
@@ -179,13 +193,14 @@ class StressPropertiesInputs(ArchiveSection):
         unit='nm'
     )
 
-
-class StressProperties(BaseCalculusSheet):
-    m_def=Section(
-        description="""
-        Calculus sheet to evaluate some stress properties thanks to the Stoney formula
-        """
+    curvature_radius_reference = Quantity(
+        type=FabricationProcessStep,
+        a_eln={'component':'ReferenceEditQuantity'}
     )
+
+
+class StressParametersAdopted(ArchiveSection):
+    m_def=Section()
 
     assumed_Young_module_of_the_substrate = Quantity(
         type=np.float64,
@@ -198,8 +213,22 @@ class StressProperties(BaseCalculusSheet):
         a_eln={'component':'NumberEditQuantity'}
     )
 
+
+
+class StressProperties(BaseCalculusSheet):
+    m_def=Section(
+        description="""
+        Calculus sheet to evaluate some stress properties thanks to the Stoney formula
+        """
+    )
+
     inputs = SubSection(
         section_def=StressPropertiesInputs,
+        repeats=False
+    )
+
+    parameters = SubSection(
+        section_def=StressParametersAdopted,
         repeats=False
     )
 
@@ -209,10 +238,10 @@ class StressProperties(BaseCalculusSheet):
     )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        if self.assumed_Poisson_coefficient is not None:
-            pois = self.assumed_Poisson_coefficient
-        if self.assumed_Young_module_of_the_substrate is not None:
-            young=self.assumed_Young_module_of_the_substrate
+        if self.parameters.assumed_Poisson_coefficient is not None:
+            pois = self.parameters.assumed_Poisson_coefficient
+        if self.parameters.assumed_Young_module_of_the_substrate is not None:
+            young=self.parameters.assumed_Young_module_of_the_substrate
         if self.inputs is not None and pois and young:
             if self.inputs.curvature_radius != 0 and self.inputs.layer_thickness != 0:
                 R = self.inputs.curvature_radius
