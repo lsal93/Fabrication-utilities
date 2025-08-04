@@ -44,8 +44,8 @@ from fabrication_facilities.schema_packages.Items import (
     Item,
     ItemsPermitted,
 )
-from fabrication_facilities.schema_packages.utils import parse_chemical_formula
 from fabrication_facilities.schema_packages.materials import FabricationOutput
+from fabrication_facilities.schema_packages.utils import parse_chemical_formula
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (
@@ -661,10 +661,7 @@ class FabricationProcess(EntryData, ArchiveSection):
         section_def=EquipmentReference,
         repeats=True,
     )
-    output = SubSection(
-        section_def=FabricationOutput,
-        repeat=False
-    )
+    output = SubSection(section_def=FabricationOutput, repeat=False)
 
 
 class StartingMaterial(Chemical, FabricationProcessStep, ArchiveSection):

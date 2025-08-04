@@ -5,7 +5,6 @@ from typing import (
 import numpy as np
 from nomad.datamodel.data import (
     ArchiveSection,
-    EntryData,
 )
 from nomad.metainfo import (
     Package,
@@ -14,11 +13,11 @@ from nomad.metainfo import (
     SubSection,
 )
 
-#from fabrication_facilities.schema_packages.fabrication_utilities import (
-    # EquipmentReference,
+# from fabrication_facilities.schema_packages.fabrication_utilities import (
+# EquipmentReference,
 #    FabricationProcess,
 #    FabricationProcessStep,
-#)
+# )
 from fabrication_facilities.schema_packages.utils import FabricationChemical
 
 if TYPE_CHECKING:
@@ -122,6 +121,7 @@ class StressMeasures(ArchiveSection):
     #     description='Instrument through which the etching trial was performed',
     #     repeats=False,
     # )
+
 
 class StressProperties(ArchiveSection):
     # instrument = SubSection(
