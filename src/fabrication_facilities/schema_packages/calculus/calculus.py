@@ -243,10 +243,10 @@ class StressProperties(BaseCalculusSheet):
         if self.parameters.assumed_Young_module_of_the_substrate is not None:
             young=self.parameters.assumed_Young_module_of_the_substrate
         if self.inputs is not None and pois and young:
-            if self.inputs.curvature_radius != 0 and self.inputs.layer_thickness != 0:
+            if self.inputs.curvature_radius and self.inputs.layer_thickness:
                 R = self.inputs.curvature_radius
                 t = self.inputs.layer_thickness
-                if self.inputs.substrate_thickness is not None:
+                if self.inputs.substrate_thickness is not None and R != 0 and t !=0:
                     D = self.inputs.substrate_thickness
                     self.output = StressPropertiesOutput()
                     self.output.stress_value = young*D*D/(6*(1-pois)*R*t)
