@@ -28,6 +28,7 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
 from fabrication_facilities.schema_packages.steps.utils import (
     Carrier,
     Chuck,
+    DeIonizedWaterDumping,
     DevelopingSolution,
     DRIE_Chuck,
     DRIE_Massflow_controller,
@@ -38,7 +39,6 @@ from fabrication_facilities.schema_packages.steps.utils import (
     SpinningComponent,
     SpinRinsingbase,
     WetReactiveComponents,
-    DeIonizedWaterDumping
 )
 from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
@@ -464,6 +464,7 @@ class DRIE_BOSCH(ICP_RIE):
 ##################################### WET ETCHING #####################################
 #######################################################################################
 
+
 class WetEtchingOutputs(ArchiveSection):
     m_def = Section(
         a_eln={
@@ -652,9 +653,9 @@ class WetEtchingbase(FabricationProcessStepBase):
                 chems.append(chemical)
             self.materials_etched = chems
 
-        #if self.etching_reactives_formulas is None:
+        # if self.etching_reactives_formulas is None:
         #    pass
-        #else:
+        # else:
         #    reactives = []
         #    for v1, v2 in zip(self.etching_reactives, self.etching_reactives_formulas):
         #        chemical = WetReactiveComponents()

@@ -581,12 +581,7 @@ class Spin_Coatingbase(FabricationProcessStepBase):
         unit='milliliter',
     )
     clamping_type = Quantity(
-        type=MEnum(
-            'None',
-            'Entire wafer',
-            'Edge clamping',
-            'Other (see notes)'
-        ),
+        type=MEnum('None', 'Entire wafer', 'Edge clamping', 'Other (see notes)'),
         a_eln={'component': 'EnumEditQuantity'},
     )
     back_rinsing = Quantity(
