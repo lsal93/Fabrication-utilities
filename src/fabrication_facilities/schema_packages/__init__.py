@@ -96,3 +96,18 @@ materials_entry_point = MaterialEntryPoint(
     name='Fabrication Materials',
     description='Schema package for describing various raw materials properties.',
 )
+
+
+class AnalysisEntryPoint(SchemaPackageEntryPoint):
+    def load(self):
+        from fabrication_facilities.schema_packages.calculus.calculus import (
+            m_package,
+        )
+
+        return m_package
+
+
+calculus_entry_point = AnalysisEntryPoint(
+    name='Analysis sheets',
+    description='Schema package for describing various analysis needed in CR.',
+)
