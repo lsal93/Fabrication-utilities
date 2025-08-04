@@ -30,6 +30,26 @@ if TYPE_CHECKING:
 m_package = Package(name='Definitions for usual operation of analysis')
 
 
+class BaseCalculusSheet(EntryData, ArchiveSection):
+    m_def = Section()
+
+    name = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+
+    ID = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+
+    datetime = Quantity(
+        type=Datetime,
+        a_eln={'component': 'DateTimeEditQuantity'},
+    )
+
+    notes = Quantity(
+        type=str,
+        a_eln={'component': 'RichTextEditQuantity'}
+    )
+
+    location = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
+
+
 class EtchingRateOutput(ArchiveSection):
     m_def = Section()
 
@@ -63,19 +83,8 @@ class EtchingRateInputs(ArchiveSection):
     )
 
 
-class EtchingRate(EntryData, ArchiveSection):
+class EtchingRate(BaseCalculusSheet):
     m_def = Section()
-
-    name = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
-
-    ID = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
-
-    datetime = Quantity(
-        type=Datetime,
-        a_eln={'component': 'DateTimeEditQuantity'},
-    )
-
-    location = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
 
     inputs = SubSection(section_def=EtchingRateInputs, repeats=False)
 
@@ -123,19 +132,8 @@ class DepositionRateInputs(ArchiveSection):
     )
 
 
-class DepositionRate(EntryData, ArchiveSection):
+class DepositionRate(BaseCalculusSheet):
     m_def = Section()
-
-    name = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
-
-    ID = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
-
-    datetime = Quantity(
-        type=Datetime,
-        a_eln={'component': 'DateTimeEditQuantity'},
-    )
-
-    location = Quantity(type=str, a_eln={'component': 'StringEditQuantity'})
 
     inputs = SubSection(section_def=DepositionRateInputs, repeats=False)
 
@@ -148,3 +146,78 @@ class DepositionRate(EntryData, ArchiveSection):
                 self.output.deposition_rate_value = (
                     self.inputs.thickness / self.inputs.deposition_time
                 )
+
+
+class StressPropertiesOutput(ArchiveSection):
+    m_def=Section()
+
+    stress_value = Quantity(
+        type=np.float64,
+        unit='GPa',
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'GPa'}
+    )
+
+
+class StressPropertiesInputs(ArchiveSection):
+    m_def=Section()
+
+    substrate_thickness = Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm'
+    )
+
+    layer_thickness = Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm'
+    )
+
+    curvature_radius = Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm'
+    )
+
+
+class StressProperties(BaseCalculusSheet):
+    m_def=Section(
+        description="""
+        Calculus sheet to evaluate some stress properties thanks to the Stoney formula
+        """
+    )
+
+    assumed_Young_module_of_the_substrate = Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity', 'defaultDisplayUnit': 'GPa'},
+        unit='GPa'
+    )
+
+    assumed_Poisson_coefficient = Quantity(
+        type=np.float64,
+        a_eln={'component':'NumberEditQuantity'}
+    )
+
+    inputs = SubSection(
+        section_def=StressPropertiesInputs,
+        repeats=False
+    )
+
+    output = SubSection(
+        section_def=StressPropertiesOutput,
+        repeats=False
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        if self.assumed_Poisson_coefficient is not None:
+            pois = self.assumed_Poisson_coefficient
+        if self.assumed_Young_module_of_the_substrate is not None:
+            young=self.assumed_Young_module_of_the_substrate
+        if self.inputs is not None and pois and young:
+            if self.inputs.curvature_radius != 0 and self.inputs.layer_thickness != 0:
+                R = self.inputs.curvature_radius
+                t = self.inputs.layer_thickness
+                if self.inputs.substrate_thickness is not None:
+                    D = self.inputs.substrate_thickness
+                    self.output = StressPropertiesOutput()
+                    self.output.stress_value = young*D*D/(6*(1-pois)*R*t)
