@@ -65,6 +65,7 @@ m_package = Package(name='Etching workflow schema')
 #                 undergoes many etching steps before it is complete.                 #
 #######################################################################################
 
+
 class EtchingOutputs(ArchiveSection):
     m_def = Section(
         a_eln={
@@ -95,9 +96,11 @@ class EtchingOutputs(ArchiveSection):
         repeats=True,
     )
 
+
 #######################################################################################
 ##################################### DRY ETCHING #####################################
 #######################################################################################
+
 
 class RIEbase(FabricationProcessStepBase):
     m_def = Section(
@@ -455,9 +458,11 @@ class DRIE_BOSCH(ICP_RIE):
         repeats=True,
     )
 
+
 #######################################################################################
 ##################################### WET ETCHING #####################################
 #######################################################################################
+
 
 class WetEtchingbase(FabricationProcessStepBase):
     m_def = Section(
@@ -1222,6 +1227,7 @@ class Stripping(Chemical, FabricationProcessStep, ArchiveSection):
                 print('No elements provided')
             self.material_elemental_composition = elementality
 
+
 #######################################################################################
 ####################################### DRYING ########################################
 #######################################################################################
@@ -1229,6 +1235,7 @@ class Stripping(Chemical, FabricationProcessStep, ArchiveSection):
 #                                       Description                                   #
 #                                                                                     #
 #######################################################################################
+
 
 class Rinsing_Dryingbase(FabricationProcessStepBase):
     m_def = Section(
@@ -1293,5 +1300,6 @@ class Rinsing_Drying(FabricationProcessStep):
     )
 
     rinsing_drying_steps = SubSection(section_def=Rinsing_Dryingbase, repeats=True)
+
 
 m_package.__init_metainfo__()
