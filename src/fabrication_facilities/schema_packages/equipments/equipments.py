@@ -596,9 +596,19 @@ class Wet_Bench_Unit(Equipment):
                         * token.dispensed_volume
                         / (self.volume_of_solution)
                     )
-            for token in self.reactives:
-                if token.chemical_formula == 'H20':
-                    token.final_solution_concentration = water_from_token
+            element = next(
+                (x for x in self.reactives if x.chemical_formula == 'H2O'),
+                None
+            )
+            if element is not None:
+                element.final_solution_concentration=water_from_token
+            else:
+                raise ValueError(
+                    "No water field already provided. Add also water specification."
+                )
+            # for token in self.reactives:
+            #     if token.chemical_formula == 'H20':
+            #         token.final_solution_concentration = water_from_token
 
 
 class Dump_Rinser(Equipment):
