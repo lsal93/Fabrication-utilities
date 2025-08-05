@@ -999,3 +999,100 @@ class FocusedIonBeamLithographer(ElectronBeamLithographer):
 
 
 # Devo migliorare il fib per cui capire la differenza vera con ebl non solo e o atomi
+
+#preliminary test about inserting a new equipment, July 30 2025 - recipe parameters taken from FabLIMS
+class AFM(Equipment, ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'lab_id',
+                'datetime',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'inventary_code',
+                    'affiliation',
+                    'product_model',
+                    'institution',
+                    'manufacturer_name',
+                    'is_bookable',
+                    'automatic_loading',
+                    'description',
+                    'afm_tip',
+                    'afm_mode',
+                    'afm_setpoint',
+                    'afm_fb_gain',
+                    'afm_tip_resonance',
+                    'afm_tip_phase',
+                    'afm_laser_intensity',
+                    'afm_fb_gain_o',
+                ],
+            },
+        }
+    )
+    
+    afm_tip = Quantity(
+        type=str,
+        description='the model of the probing tip',
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
+    )
+    
+    afm_mode = Quantity(
+        type=str,
+        description='if proxy or in contact, if linear or scanning',
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
+    )
+    
+    afm_setpoint = Quantity(
+        type=np.float64,
+        description='ask to Erica Iacob',
+        a_eln={
+            'component': 'NumberEditQuantity',
+        },
+        unit='nm',
+    )
+    afm_fb_gain = Quantity(
+        type=np.float64,
+        description='ask to Erica Iacob',
+        a_eln={
+            'component': 'NumberEditQuantity',
+        },
+        unit='nm',
+    )
+    afm_tip_resonance = Quantity(
+        type=np.float64,
+        description='ask to Erica Iacob',
+        a_eln={
+            'component': 'NumberEditQuantity',
+        },
+        unit='MHz',
+    )
+    afm_tip_phase = Quantity(
+        type=np.float64,
+        description='ask to Erica Iacob',
+        a_eln={
+            'component': 'NumberEditQuantity',
+        },
+        unit='nm',
+    )
+    afm_laser_intensity = Quantity(
+        type=np.float64,
+        description='ask to Erica Iacob',
+        a_eln={
+            'component': 'NumberEditQuantity',
+        },
+        unit='mA',
+    )
+    afm_fb_gain_o = Quantity(
+        type=np.float64,
+        description='ask to Erica Iacob',
+        a_eln={
+            'component': 'NumberEditQuantity',
+        },
+        unit='nm',
+    )
