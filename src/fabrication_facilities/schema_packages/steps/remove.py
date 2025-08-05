@@ -116,8 +116,8 @@ class RIEbase(FabricationProcessStepBase):
                     'starting_date',
                     'ending_date',
                     'duration',
-                    'short_names',
-                    'target_materials_formulas',
+                    # 'short_names',
+                    # 'target_materials_formulas',
                     'chamber_temperature',
                     'chamber_pressure',
                     'number_of_loops',
@@ -126,18 +126,18 @@ class RIEbase(FabricationProcessStepBase):
             },
         },
     )
-    short_names = Quantity(
-        type=str,
-        description='Name of reactive species',
-        shape=['*'],
-        a_eln={'component': 'StringEditQuantity', 'label': 'target materials names'},
-    )
-    target_materials_formulas = Quantity(
-        type=str,
-        description='Inserted only if known',
-        shape=['*'],
-        a_eln={'component': 'StringEditQuantity'},
-    )
+    # short_names = Quantity(
+    #     type=str,
+    #     description='Name of reactive species',
+    #     shape=['*'],
+    #     a_eln={'component': 'StringEditQuantity', 'label': 'target materials names'},
+    # )
+    # target_materials_formulas = Quantity(
+    #     type=str,
+    #     description='Inserted only if known',
+    #     shape=['*'],
+    #     a_eln={'component': 'StringEditQuantity'},
+    # )
     chamber_pressure = Quantity(
         type=np.float64,
         description='Pressure in the chamber',
@@ -187,16 +187,16 @@ class RIEbase(FabricationProcessStepBase):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        if self.target_materials_formulas is None:
-            pass
-        else:
-            chems = []
-            for formula in self.target_materials_formulas:
-                chemical = FabricationChemical()
-                chemical.chemical_formula = formula
-                chemical.normalize(archive, logger)
-                chems.append(chemical)
-            self.materials_etched = chems
+    #     if self.target_materials_formulas is None:
+    #         pass
+    #     else:
+    #         chems = []
+    #         for formula in self.target_materials_formulas:
+    #             chemical = FabricationChemical()
+    #             chemical.chemical_formula = formula
+    #             chemical.normalize(archive, logger)
+    #             chems.append(chemical)
+    #         self.materials_etched = chems
 
 
 class ICP_RIEbase(RIEbase):
@@ -213,8 +213,8 @@ class ICP_RIEbase(RIEbase):
                     'starting_date',
                     'ending_date',
                     'duration',
-                    'short_names',
-                    'target_materials_formulas',
+                    # 'short_names',
+                    # 'target_materials_formulas',
                     'chamber_temperature',
                     'chamber_pressure',
                     'number_of_loops',
@@ -246,8 +246,8 @@ class DRIE_BOSCHbase(ICP_RIEbase):
                     'starting_date',
                     'ending_date',
                     'duration',
-                    'short_names',
-                    'target_materials_formulas',
+                    # 'short_names',
+                    # 'target_materials_formulas',
                     'chamber_temperature',
                     'chamber_pressure',
                     'number_of_loops',
@@ -517,8 +517,8 @@ class WetEtchingbase(FabricationProcessStepBase):
                     'starting_date',
                     'ending_date',
                     'duration',
-                    'short_names',
-                    'target_materials_formulas',
+                    # 'short_names',
+                    # 'target_materials_formulas',
                     # 'etching_reactives',
                     # 'etching_reactives_formulas',
                     'etching_temperature',
@@ -540,18 +540,18 @@ class WetEtchingbase(FabricationProcessStepBase):
         description='During the process is the pump in action?',
         a_eln={'component': 'BoolEditQuantity'},
     )
-    short_names = Quantity(
-        type=str,
-        description='Materials to be etched',
-        shape=['*'],
-        a_eln={'component': 'StringEditQuantity', 'label': 'target materials'},
-    )
-    target_materials_formulas = Quantity(
-        type=str,
-        description='Formulas of materials etched',
-        shape=['*'],
-        a_eln={'component': 'StringEditQuantity'},
-    )
+    # short_names = Quantity(
+    #     type=str,
+    #     description='Materials to be etched',
+    #     shape=['*'],
+    #     a_eln={'component': 'StringEditQuantity', 'label': 'target materials'},
+    # )
+    # target_materials_formulas = Quantity(
+    #     type=str,
+    #     description='Formulas of materials etched',
+    #     shape=['*'],
+    #     a_eln={'component': 'StringEditQuantity'},
+    # )
     # etching_reactives = Quantity(
     #     type=str,
     #     description='Names of compounds used to etch',
@@ -638,19 +638,19 @@ class WetEtchingbase(FabricationProcessStepBase):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        if self.target_materials_formulas is None:
-            pass
-        else:
-            chems = []
-            for v1, v2 in zip(self.short_names, self.target_materials_formulas):
-                chemical = FabricationChemical()
-                val1 = v1  # if v1 != '-' else None
-                val2 = v2 if v2 != '-' else None
-                chemical.name = val1
-                chemical.chemical_formula = val2
-                chemical.normalize(archive, logger)
-                chems.append(chemical)
-            self.materials_etched = chems
+        # if self.target_materials_formulas is None:
+        #     pass
+        # else:
+        #     chems = []
+        #     for v1, v2 in zip(self.short_names, self.target_materials_formulas):
+        #         chemical = FabricationChemical()
+        #         val1 = v1  # if v1 != '-' else None
+        #         val2 = v2 if v2 != '-' else None
+        #         chemical.name = val1
+        #         chemical.chemical_formula = val2
+        #         chemical.normalize(archive, logger)
+        #         chems.append(chemical)
+        #     self.materials_etched = chems
 
         # if self.etching_reactives_formulas is None:
         #    pass
@@ -896,6 +896,8 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
         type=int,
         a_eln={'component': 'NumberEditQuantity'},
     )
+
+    materials_developed = SubSection(section_def= FabricationChemical, repeats=True)
 
     spin_parameters = SubSection(section_def=SpinningComponent, repeats=False)
 
