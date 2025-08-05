@@ -187,6 +187,7 @@ class RIEbase(FabricationProcessStepBase):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
+
     #     if self.target_materials_formulas is None:
     #         pass
     #     else:
@@ -897,7 +898,7 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
         a_eln={'component': 'NumberEditQuantity'},
     )
 
-    materials_developed = SubSection(section_def= FabricationChemical, repeats=True)
+    materials_developed = SubSection(section_def=FabricationChemical, repeats=True)
 
     spin_parameters = SubSection(section_def=SpinningComponent, repeats=False)
 
@@ -1132,6 +1133,7 @@ class ResistDevelopment(FabricationProcessStep):
         unit='sec',
     )
 
+
 class Strippingbase(FabricationProcessStepBase):
     m_def = Section(
         a_eln={
@@ -1184,10 +1186,7 @@ class Strippingbase(FabricationProcessStepBase):
         a_eln={'component': 'StringEditQuantity'},
     )
 
-    number_of_loops=Quantity(
-        type=int,
-        a_eln = {'component':'NumberEditQuantity'}
-    )
+    number_of_loops = Quantity(type=int, a_eln={'component': 'NumberEditQuantity'})
 
     resist_elemental_composition = SubSection(
         section_def=ElementalComposition, repeats=True
@@ -1199,6 +1198,7 @@ class Strippingbase(FabricationProcessStepBase):
             self.resist_elemental_composition = generate_elementality(
                 self.resist_chemical_formula
             )
+
 
 class Stripping(FabricationProcessStep):
     m_def = Section(
@@ -1231,10 +1231,8 @@ class Stripping(FabricationProcessStep):
         },
     )
 
-    stripping_steps = SubSection(
-        section_def = Strippingbase,
-        repeats=True
-    )
+    stripping_steps = SubSection(section_def=Strippingbase, repeats=True)
+
 
 #######################################################################################
 ####################################### DRYING ########################################

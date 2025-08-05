@@ -29,11 +29,11 @@ from fabrication_facilities.schema_packages.steps.utils import (
     SpinningComponent,
 )
 from fabrication_facilities.schema_packages.utils import (
+    FabricationChemical,
     TimeRampPressure,
     TimeRampTemperature,
     generate_elementality,
     parse_chemical_formula,
-    FabricationChemical
 )
 
 if TYPE_CHECKING:
@@ -53,6 +53,7 @@ m_package = Package(name='Add processes schema')
 #    on a substrate. This might be individual atoms or the forming of a layer of a    #
 #                                      substance                                      #
 #######################################################################################
+
 
 class SynthesisOutputs(ArchiveSection):
     m_def = Section(
@@ -97,6 +98,7 @@ class SynthesisOutputs(ArchiveSection):
 # material onto a substrate by chemical reaction of a gaseous precursor or mixture of #
 #                       precursors, commonly initiated by heat                        #
 #######################################################################################
+
 
 class LPCVDbase(FabricationProcessStepBase):
     m_def = Section(
@@ -158,10 +160,7 @@ class LPCVDbase(FabricationProcessStepBase):
         a_eln={'component': 'NumberEditQuantity'},
     )
 
-    material_deposited = SubSection(
-        section_def=FabricationChemical,
-        repeats=True
-    )
+    material_deposited = SubSection(section_def=FabricationChemical, repeats=True)
 
     pressure_ramps = SubSection(
         section_def=TimeRampPressure,
@@ -252,10 +251,7 @@ class PECVDbase(FabricationProcessStepBase):
         a_eln={'component': 'NumberEditQuantity'},
     )
 
-    material_deposited=SubSection(
-        section_def=FabricationChemical,
-        repeats=True
-    )
+    material_deposited = SubSection(section_def=FabricationChemical, repeats=True)
 
     pressure_ramps = SubSection(
         section_def=TimeRampPressure,
@@ -537,11 +533,13 @@ class ICP_CVD(PECVD):
         repeats=True,
     )
 
+
 ######################################### PVD #########################################
 #######################################################################################
 #    Fabrication process step consisting in depositing a coating by vaporizing and    #
 #      subsequently condensing an element or compound, usually in a high vacuum       #
 #######################################################################################
+
 
 class ElectronGun(FabricationProcessStep, ArchiveSection):
     m_def = Section(
@@ -788,11 +786,13 @@ class Sputtering(Chemical, FabricationProcessStep, ArchiveSection):
                 print('No elements provided')
             self.material_elemental_composition = elementality
 
+
 ####################################### COATING #######################################
 #######################################################################################
 #     Synthesis sub category where a layer of material is deposited from a liquid     #
 #                              solution onto a substrate                              #
 #######################################################################################
+
 
 class Spin_Coatingbase(FabricationProcessStepBase):
     m_def = Section(
@@ -824,9 +824,7 @@ class Spin_Coatingbase(FabricationProcessStepBase):
     resist_name = Quantity(
         type=str,
         description='Type of resist to be deposited',
-        a_eln={
-            'component': 'StringEditQuantity'
-        },
+        a_eln={'component': 'StringEditQuantity'},
     )
     resist_chemical_formula = Quantity(
         type=str,
@@ -948,9 +946,11 @@ class Spin_Coating(FabricationProcessStep):
 
     spin_coating_steps = SubSection(section_def=Spin_Coatingbase, repeats=True)
 
+
 #######################################################################################
 ##################################### INTEGRATION #####################################
 #######################################################################################
+
 
 class Bonding(FabricationProcessStep, ArchiveSection):
     m_def = Section(

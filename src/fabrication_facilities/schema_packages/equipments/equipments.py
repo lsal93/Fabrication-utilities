@@ -1000,7 +1000,10 @@ class FocusedIonBeamLithographer(ElectronBeamLithographer):
 
 # Devo migliorare il fib per cui capire la differenza vera con ebl non solo e o atomi
 
-#preliminary test about inserting a new equipment, July 30 2025 - recipe parameters taken from FabLIMS
+# preliminary test about inserting a new equipment
+# July 30 2025 - recipe parameters taken from FabLIMS
+
+
 class AFM(Equipment, ArchiveSection):
     m_def = Section(
         a_eln={
@@ -1031,7 +1034,7 @@ class AFM(Equipment, ArchiveSection):
             },
         }
     )
-    
+
     afm_tip = Quantity(
         type=str,
         description='the model of the probing tip',
@@ -1039,7 +1042,7 @@ class AFM(Equipment, ArchiveSection):
             'component': 'StringEditQuantity',
         },
     )
-    
+
     afm_mode = Quantity(
         type=str,
         description='if proxy or in contact, if linear or scanning',
@@ -1047,7 +1050,7 @@ class AFM(Equipment, ArchiveSection):
             'component': 'StringEditQuantity',
         },
     )
-    
+
     afm_setpoint = Quantity(
         type=np.float64,
         description='ask to Erica Iacob',
