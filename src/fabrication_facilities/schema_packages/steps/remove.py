@@ -12,7 +12,6 @@ from nomad.datamodel.data import (
     ArchiveSection,
 )
 from nomad.datamodel.metainfo.basesections import ElementalComposition
-from nomad.datamodel.metainfo.eln import Chemical
 from nomad.metainfo import (
     MEnum,
     Package,
@@ -44,7 +43,7 @@ from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
     TimeRampPressure,
     TimeRampTemperature,
-    parse_chemical_formula,
+    generate_elementality,
 )
 
 if TYPE_CHECKING:
@@ -1131,18 +1130,80 @@ class ResistDevelopment(FabricationProcessStep):
         unit='sec',
     )
 
+class Strippingbase(FabricationProcessStepBase):
+    m_def = Section(
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'tag',
+                    'id_item_processed',
+                    'adhesion_type',
+                    'operator',
+                    'starting_date',
+                    'ending_date',
+                    'duration',
+                    'stripping_type',
+                    'removing_temperature',
+                    'ultrasound_required',
+                    'number of loops',
+                    'notes',
+                ]
+            }
+        }
+    )
+    stripping_type = Quantity(
+        type=str,
+        a_eln={
+            'component': 'StringEditQuantity',
+        },
+    )
+    resist_name = Quantity(
+        type=str,
+        description='Material to remove',
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    resist_chemical_formula = Quantity(
+        type=str,
+        description='Inserted only if known',
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    removing_temperature = Quantity(
+        type=np.float64,
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+    ultrasound_required = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
 
-class Stripping(Chemical, FabricationProcessStep, ArchiveSection):
+    number_of_loops=Quantity(
+        type=int,
+        a_eln = {'component':'NumberEditQuantity'}
+    )
+
+    resist_elemental_composition = SubSection(
+        section_def=ElementalComposition, repeats=True
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+        if self.resist_chemical_formula:
+            self.resist_elemental_composition = generate_elementality(
+                self.resist_chemical_formula
+            )
+
+class Stripping(FabricationProcessStep):
     m_def = Section(
         a_eln={
             'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
+                'tag',
                 'duration',
-                'end_time',
-                'start_time',
             ],
             'properties': {
                 'order': [
@@ -1162,77 +1223,16 @@ class Stripping(Chemical, FabricationProcessStep, ArchiveSection):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
-                    'stripping_type',
-                    'short_name',
-                    'chemical_formula',
-                    'duration_target',
-                    'removing_temperature',
-                    'ultrasound_required',
                     'notes',
                 ]
             },
         },
     )
-    stripping_type = Quantity(
-        type=str,
-        a_eln={
-            'component': 'StringEditQuantity',
-        },
-    )
-    short_name = Quantity(
-        type=str,
-        description='Material to remove',
-        a_eln={'component': 'StringEditQuantity', 'label': 'Target material'},
-    )
-    chemical_formula = Quantity(
-        type=str,
-        description='Inserted only if known',
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    removing_temperature = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-    duration_target = Quantity(
-        type=np.float64,
-        description='Time prescribed by the recipe',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
-        unit='sec',
-    )
-    ultrasound_required = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
 
-    material_elemental_composition = SubSection(
-        section_def=ElementalComposition, repeats=True
+    stripping_steps = SubSection(
+        section_def = Strippingbase,
+        repeats=True
     )
-
-    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        super().normalize(archive, logger)
-        if self.chemical_formula:
-            elements, counts = parse_chemical_formula(self.chemical_formula)
-            total = 0
-            for token in counts:
-                total += int(token)
-            if total != 0:
-                elemental_fraction = np.array(counts) / total
-                elementality = []
-                i = 0
-                for entry in elements:
-                    elemental_try = ElementalComposition()
-                    elemental_try.element = entry
-                    elemental_try.atomic_fraction = elemental_fraction[i]
-                    i += 1
-                    elementality.append(elemental_try)
-            else:
-                print('No elements provided')
-            self.material_elemental_composition = elementality
-
 
 #######################################################################################
 ####################################### DRYING ########################################

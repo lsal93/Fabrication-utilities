@@ -526,7 +526,7 @@ class Spin_Coatingbase(FabricationProcessStepBase):
                     'starting_date',
                     'ending_date',
                     'duration',
-                    'short_name',
+                    'resist_name',
                     'chemical_formula',
                     'resist_type',
                     'dispensing_mode',
@@ -540,15 +540,14 @@ class Spin_Coatingbase(FabricationProcessStepBase):
             },
         },
     )
-    short_name = Quantity(
+    resist_name = Quantity(
         type=str,
         description='Type of resist to be deposited',
         a_eln={
-            'component': 'StringEditQuantity',
-            'label': 'resist name',
+            'component': 'StringEditQuantity'
         },
     )
-    chemical_formula = Quantity(
+    resist_chemical_formula = Quantity(
         type=str,
         description='Resist formula. Insert only if known',
         a_eln={'component': 'StringEditQuantity'},
@@ -608,9 +607,9 @@ class Spin_Coatingbase(FabricationProcessStepBase):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        if self.chemical_formula is not None:
+        if self.resist_chemical_formula is not None:
             self.resist_elemental_composition = generate_elementality(
-                self.chemical_formula
+                self.resist_chemical_formula
             )
 
 
