@@ -577,12 +577,23 @@ class Wet_Bench_Unit(Equipment):
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         if self.volume_of_solution is not None:
             super().normalize(archive, logger)
+            water_from_token=0
             for token in self.reactives:
                 token.final_solution_concentration = (
                     token.initial_concentration
                     * token.dispensed_volume
-                    / (100 * self.volume_of_solution)
+                    / (self.volume_of_solution)
                 )
+                if "water" in token.name or token.chemical_formula is "H20":
+                    water_from_token += token.initial_concentration
+                    *token.dispensed_volume/(self.volume_of_solution)
+                else:
+                    water_from_token += (1-token.initial_concentration)
+                    *token.dispensed_volume/(self.volume_of_solution)
+            for token in self.reactives:
+                if token.chemical_formula is "H20":
+                    token.final_solution_concentration=water_from_token
+
 
 
 class Dump_Rinser(Equipment):

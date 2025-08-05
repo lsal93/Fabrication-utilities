@@ -393,8 +393,8 @@ class Equipment(Instrument, EntryData, ArchiveSection):
         a_eln={'component': 'StringEditQuantity', 'label': 'id'},
     )
     inventary_code = Quantity(
-        type=int,
-        a_eln={'component': 'NumberEditQuantity'},
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
     )
     affiliation = Quantity(
         type=str,
