@@ -45,6 +45,13 @@ if TYPE_CHECKING:
 
 m_package = Package(name='Add processes schema')
 
+#######################################################################################
+###################################### SYNTHESIS ######################################
+#######################################################################################
+#   Fabrication process step main category consisting in the placing of a substance   #
+#    on a substrate. This might be individual atoms or the forming of a layer of a    #
+#                                      substance                                      #
+#######################################################################################
 
 class SynthesisOutputs(ArchiveSection):
     m_def = Section(
@@ -83,6 +90,13 @@ class SynthesisOutputs(ArchiveSection):
         super().normalize(archive, logger)
 
 
+######################################### CVD #########################################
+#######################################################################################
+#    Fabrication process step sub category consisting in the deposition of a solid    #
+# material onto a substrate by chemical reaction of a gaseous precursor or mixture of #
+#                       precursors, commonly initiated by heat                        #
+#######################################################################################
+
 class LPCVDbase(FabricationProcessStepBase):
     m_def = Section(
         description='Atomistic component of a general LPCVD step',
@@ -97,8 +111,8 @@ class LPCVDbase(FabricationProcessStepBase):
                     'starting_date',
                     'ending_date',
                     'duration',
-                    'short_name',
-                    'target_material_formula',
+                    # 'short_name',
+                    # 'target_material_formula',
                     'chamber_temperature',
                     'chamber_pressure',
                     'number_of_loops',
@@ -108,20 +122,20 @@ class LPCVDbase(FabricationProcessStepBase):
         },
     )
 
-    short_name = Quantity(
-        type=str,
-        description='Material to be deposited',
-        a_eln={
-            'component': 'StringEditQuantity',
-            'label': 'target material',
-        },
-    )
+    # short_name = Quantity(
+    #     type=str,
+    #     description='Material to be deposited',
+    #     a_eln={
+    #         'component': 'StringEditQuantity',
+    #         'label': 'target material',
+    #     },
+    # )
 
-    target_material_formula = Quantity(
-        type=str,
-        description='Formula of the material target. Insert only if known',
-        a_eln={'component': 'StringEditQuantity'},
-    )
+    # target_material_formula = Quantity(
+    #     type=str,
+    #     description='Formula of the material target. Insert only if known',
+    #     a_eln={'component': 'StringEditQuantity'},
+    # )
 
     chamber_pressure = Quantity(
         type=np.float64,
@@ -143,6 +157,11 @@ class LPCVDbase(FabricationProcessStepBase):
         a_eln={'component': 'NumberEditQuantity'},
     )
 
+    material_deposited = SubSection(
+        section_def=FabricationChemical,
+        repeats=True
+    )
+
     pressure_ramps = SubSection(
         section_def=TimeRampPressure,
         repeats=True,
@@ -153,9 +172,9 @@ class LPCVDbase(FabricationProcessStepBase):
         repeats=True,
     )
 
-    material_elemental_composition = SubSection(
-        section_def=ElementalComposition, repeats=True
-    )
+    # material_elemental_composition = SubSection(
+    #     section_def=ElementalComposition, repeats=True
+    # )
 
     fluximeters = SubSection(
         section_def=Massflow_controller,
@@ -166,13 +185,13 @@ class LPCVDbase(FabricationProcessStepBase):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        if self.target_material_formula:
-            self.material_elemental_composition = generate_elementality(
-                self.target_material_formula
-            )
+        # if self.target_material_formula:
+        #     self.material_elemental_composition = generate_elementality(
+        #         self.target_material_formula
+        #     )
 
 
-class PECVDbase(FabricationProcessStepBase):  # LPCVDbase):
+class PECVDbase(FabricationProcessStepBase):
     m_def = Section(
         description='Atomistic component of a PECVD step',
         a_eln={
@@ -186,8 +205,8 @@ class PECVDbase(FabricationProcessStepBase):  # LPCVDbase):
                     'starting_date',
                     'ending_date',
                     'duration',
-                    'short_name',
-                    'target_material_formula',
+                    # 'short_name',
+                    # 'target_material_formula',
                     'chamber_temperature',
                     'chamber_pressure',
                     'number_of_loops',
@@ -197,20 +216,20 @@ class PECVDbase(FabricationProcessStepBase):  # LPCVDbase):
         },
     )
 
-    short_name = Quantity(
-        type=str,
-        description='Material to be deposited',
-        a_eln={
-            'component': 'StringEditQuantity',
-            'label': 'target material',
-        },
-    )
+    # short_name = Quantity(
+    #     type=str,
+    #     description='Material to be deposited',
+    #     a_eln={
+    #         'component': 'StringEditQuantity',
+    #         'label': 'target material',
+    #     },
+    # )
 
-    target_material_formula = Quantity(
-        type=str,
-        description='Formula of the material target. Insert only if known',
-        a_eln={'component': 'StringEditQuantity'},
-    )
+    # target_material_formula = Quantity(
+    #     type=str,
+    #     description='Formula of the material target. Insert only if known',
+    #     a_eln={'component': 'StringEditQuantity'},
+    # )
 
     chamber_pressure = Quantity(
         type=np.float64,
@@ -232,6 +251,11 @@ class PECVDbase(FabricationProcessStepBase):  # LPCVDbase):
         a_eln={'component': 'NumberEditQuantity'},
     )
 
+    material_deposited=SubSection(
+        section_def=FabricationChemical,
+        repeats=True
+    )
+
     pressure_ramps = SubSection(
         section_def=TimeRampPressure,
         repeats=True,
@@ -242,9 +266,9 @@ class PECVDbase(FabricationProcessStepBase):  # LPCVDbase):
         repeats=True,
     )
 
-    material_elemental_composition = SubSection(
-        section_def=ElementalComposition, repeats=True
-    )
+    # material_elemental_composition = SubSection(
+    #     section_def=ElementalComposition, repeats=True
+    # )
 
     fluximeters = SubSection(
         section_def=Massflow_controller,
@@ -255,13 +279,13 @@ class PECVDbase(FabricationProcessStepBase):  # LPCVDbase):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        if self.target_material_formula:
-            self.material_elemental_composition = generate_elementality(
-                self.target_material_formula
-            )
+        # if self.target_material_formula:
+        #     self.material_elemental_composition = generate_elementality(
+        #         self.target_material_formula
+        #     )
 
 
-class ICP_CVDbase(PECVDbase, ArchiveSection):
+class ICP_CVDbase(PECVDbase):
     m_def = Section(
         description='Atomistic component of an ICP CVD step',
         a_eln={
@@ -275,8 +299,8 @@ class ICP_CVDbase(PECVDbase, ArchiveSection):
                     'starting_date',
                     'ending_date',
                     'duration',
-                    'short_name',
-                    'target_material_formula',
+                    # 'short_name',
+                    # 'target_material_formula',
                     'chamber_temperature',
                     'chamber_pressure',
                     'number_of_loops',
@@ -513,6 +537,12 @@ class ICP_CVD(PECVD):
     )
 
 
+####################################### COATING #######################################
+#######################################################################################
+#     Synthesis sub category where a layer of material is deposited from a liquid     #
+#                              solution onto a substrate                              #
+#######################################################################################
+
 class Spin_Coatingbase(FabricationProcessStepBase):
     m_def = Section(
         a_eln={
@@ -667,6 +697,9 @@ class Spin_Coating(FabricationProcessStep):
 
     spin_coating_steps = SubSection(section_def=Spin_Coatingbase, repeats=True)
 
+#######################################################################################
+##################################### INTEGRATION #####################################
+#######################################################################################
 
 class Bonding(FabricationProcessStep, ArchiveSection):
     m_def = Section(
