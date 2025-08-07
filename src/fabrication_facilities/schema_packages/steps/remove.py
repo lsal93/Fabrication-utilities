@@ -585,52 +585,6 @@ class WetEtchingbase(FabricationProcessStepBase):
         super().normalize(archive, logger)
 
 
-# class WetCleaningbase(FabricationProcessStepBase):
-#     m_def = Section(
-#         description="""
-#         Atomistic components of a fabrication process step where de ionized water is
-#         used to remove remaining chemicals on an item. It is used for example as an
-#         intermadiate step of some wet etching procedures like the RCA cleaning.
-#         """,
-#         a_eln={
-#             'properties': {
-#                 'order': [
-#                     'job_number',
-#                     'name',
-#                     'tag',
-#                     'description',
-#                     'operator',
-#                     'id_item_processed',
-#                     'starting_date',
-#                     'ending_date',
-#                     'duration',
-#                     'pump',
-#                     'dumping_cycles',
-#                     'dumping_drain_duration',
-#                     'notes',
-#                 ]
-#             },
-#         },
-#     )
-
-#     dumping_cycles = Quantity(
-#         type=int,
-#         description='Number of cycles where water cleans the surfaces',
-#         a_eln={'component': 'NumberEditQuantity'},
-#     )
-#     dumping_drain_duration = Quantity(
-#         type=np.float64,
-#         description='Time used to drain the tank of cleaning',
-#         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
-#         unit='minute',
-#     )
-
-#     resistivity_control = SubSection(
-#         section_def=ResistivityControl,
-#         repeats=False,
-#     )
-
-
 class WetEtching(FabricationProcessStep):
     m_def = Section(
         a_eln={
@@ -705,6 +659,13 @@ class WetEtching(FabricationProcessStep):
 
 class WetCleaning(FabricationProcessStep):
     m_def = Section(
+        description="""
+        Fabrication process step where an item is washed with a solution of wet
+        reactives. It is ideally similar to the wet etching, so the atomistic step
+        is a wet etching base but differently to that the objective of the
+        procedure is not remove a material from a layer but eliminating the
+        impurities of previous steps.
+        """,
         a_eln={
             'hide': [
                 'duration',
@@ -732,7 +693,7 @@ class WetCleaning(FabricationProcessStep):
                     'notes',
                 ]
             },
-        }
+        },
     )
 
     endpoint = Quantity(

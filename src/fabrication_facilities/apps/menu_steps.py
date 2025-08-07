@@ -17,9 +17,9 @@ dmec = 'data.doping_material_elemental_composition.element'
 sec = 'data.substrate_elemental_composition.element'
 wc = 'wafer_cleaning'
 dev = 'developing'
-meec = 'data.etching_steps.materials_etched.elemental_composition.element'
-rute = 'data.reactives_used_to_etch.elemental_composition.element'
-ru = 'reactives_used_to_etch'
+meec = 'materials_etched.elemental_composition.element'
+rute = 'data.etching_steps.reactives_used_to_etch.elemental_composition.element'
+ru = 'data.etching_steps.reactives_used_to_etch'
 alias = 'data.synthesis_steps.target_material_formula'
 
 menuadd_icpcvd = Menu(
@@ -1307,7 +1307,7 @@ menuremove_icprie = Menu(
         MenuItemPeriodicTable(
             title='Elements etched',
             type='periodic_table',
-            search_quantity=f'{meec}#{dir_path["dir5"]}',
+            search_quantity=f'data.etching_steps.{meec}#{dir_path["dir5"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements of gases employed',
@@ -1406,9 +1406,7 @@ menuremove_icprie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=(
-                    f'data.etching_steps.chuck.bias#{dir_path["dir5"]}'
-                ),
+                search_quantity=(f'data.etching_steps.chuck.bias#{dir_path["dir5"]}'),
                 title='bias voltage',
                 unit='V',
             ),
@@ -1498,53 +1496,74 @@ menuremove_wetclean = Menu(
             search_quantity=f'data.recipe_name#{dir_path["dir6"]}',
         ),
         MenuItemTerms(
-            title='Removing solution',
+            title='Cleaning tag',
             type='terms',
-            search_quantity=f'data.removing_solution#{dir_path["dir6"]}',
+            search_quantity=f'data.cleaning_steps.tag#{dir_path["dir6"]}',
         ),
         MenuItemTerms(
-            title='Removing solution proportions',
+            title='Material to be cleaned',
             type='terms',
-            search_quantity=f'data.removing_solution_proportions#{dir_path["dir6"]}',
+            search_quantity=f'data.cleaning_steps.materials_etched.name#{dir_path["dir6"]}',
         ),
-        MenuItemHistogram(
-            title='Removing duration',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.removing_duration#{dir_path["dir6"]}',
-                title='removing duration',
-                unit='minute',
+        MenuItemTerms(
+            title='Formulas of the cleaned material',
+            type='terms',
+            search_quantity=(
+                f'data.cleaning_steps.materials_etched.chemical_formula#{dir_path["dir6"]}'
             ),
         ),
+        MenuItemPeriodicTable(
+            title='Elements of the material',
+            type='periodic_table',
+            search_quantity=f'data.cleaning_steps.{meec}#{dir_path["dir6"]}',
+        ),
+        MenuItemTerms(
+            title='Cleaning reactives',
+            type='terms',
+            search_quantity=f'data.cleaning_steps.reactives_used_to_etch.name#{dir_path["dir6"]}',
+        ),
+        MenuItemTerms(
+            title='Formula of the reactives used to clean',
+            type='terms',
+            search_quantity=f'data.cleaning_steps.reactives_used_to_etch.chemical_formula#{dir_path["dir6"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements of the cleaning compounds',
+            type='periodic_table',
+            search_quantity=f'data.cleaning_steps.reactives_used_to_etch.elemental_composition.element#{dir_path["dir6"]}',
+        ),
         MenuItemHistogram(
-            title='Removing temperature',
+            title='Cleaning reactives final concentration',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.removing_temperature#{dir_path["dir6"]}',
-                title='removing temperature',
+                search_quantity=f'data.cleaning_steps.reactives_used_to_etch.solution_concentration#{dir_path["dir6"]}',
+                title='cleaning reactives concentration(%)',
+            ),
+        ),
+        MenuItemTerms(
+            title='Wetting required',
+            type='terms',
+            search_quantity=f'data.cleaning_steps.wetting#{dir_path["dir6"]}',
+        ),
+        MenuItemHistogram(
+            title='Cleaning temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.cleaning_steps.tank_temperature#{dir_path["dir6"]}',
+                title='cleaning temperature',
                 unit='celsius',
             ),
         ),
-        MenuItemTerms(
-            title='Rising solution',
-            type='terms',
-            search_quantity=f'data.rising_solution#{dir_path["dir6"]}',
-        ),
-        MenuItemTerms(
-            title='Rising solution proportions',
-            type='terms',
-            search_quantity=f'data.rising_solution_proportions#{dir_path["dir6"]}',
-        ),
         MenuItemHistogram(
-            title='Rising duration',
+            title='Resistivity cut off',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.rising_duration#{dir_path["dir6"]}',
-                title='rising duration',
-                unit='minute',
+                search_quantity=f'data.cleaning_steps.resistivity_control.resistivity_target#{dir_path["dir6"]}',
+                title='resistivity cut off',
+                unit='ohm*cm',
             ),
         ),
         MenuItemTerms(
@@ -2846,7 +2865,7 @@ menuremove_rie = Menu(
         MenuItemPeriodicTable(
             title='Elements etched',
             type='periodic_table',
-            search_quantity=f'{meec}#{dir_path["dir20"]}',
+            search_quantity=f'data.etching_steps.{meec}#{dir_path["dir20"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements of gases employed',
@@ -2945,9 +2964,7 @@ menuremove_rie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=(
-                    f'data.etching_steps.chuck.bias#{dir_path["dir20"]}'
-                ),
+                search_quantity=(f'data.etching_steps.chuck.bias#{dir_path["dir20"]}'),
                 title='bias voltage',
                 unit='V',
             ),
@@ -3044,13 +3061,13 @@ menuremove_wetetching = Menu(
             x=Axis(
                 search_quantity=f'data.etching_rate_target#{dir_path["dir21"]}',
                 title='etching rate target',
-                unit='nm/minute'
+                unit='nm/minute',
             ),
         ),
         MenuItemTerms(
             title='Material to be etched',
             type='terms',
-            search_quantity=f'data.materials_etched.name#{dir_path["dir21"]}',
+            search_quantity=f'data.etching_steps.materials_etched.name#{dir_path["dir21"]}',
         ),
         MenuItemTerms(
             title='Formulas of the etched material',
@@ -3062,41 +3079,53 @@ menuremove_wetetching = Menu(
         MenuItemPeriodicTable(
             title='Elements of the material',
             type='periodic_table',
-            search_quantity=f'{meec}#{dir_path["dir21"]}',
+            search_quantity=f'data.etching_steps.{meec}#{dir_path["dir21"]}',
         ),
         MenuItemTerms(
             title='Etching reactives',
             type='terms',
-            search_quantity=f'data.{ru}.name#{dir_path["dir21"]}',
+            search_quantity=f'{ru}.name#{dir_path["dir21"]}',
         ),
         MenuItemTerms(
             title='Formula of the reactives used to etch',
             type='terms',
-            search_quantity=f'data.{ru}.chemical_formula#{dir_path["dir21"]}',
+            search_quantity=f'{ru}.chemical_formula#{dir_path["dir21"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements of the etching compounds',
             type='periodic_table',
             search_quantity=f'{rute}#{dir_path["dir21"]}',
         ),
-        MenuItemTerms(
+        MenuItemHistogram(
             title='Etching reactives final concentration',
-            type='terms',
-            search_quantity=(
-                f'data.{ru}.solution_concentration#{dir_path["dir21"]}'
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'{ru}.solution_concentration#{dir_path["dir21"]}',
+                title='etching reactives concentration(%)',
             ),
         ),
         MenuItemTerms(
             title='Wetting required',
             type='terms',
-            search_quantity=f'data.etching_steps.wetting#{dir_path["dir21"]}'
+            search_quantity=f'data.etching_steps.wetting#{dir_path["dir21"]}',
+        ),
+        MenuItemHistogram(
+            title='Etching temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.etching_steps.tank_temperature#{dir_path["dir21"]}',
+                title='etching temperature',
+                unit='celsius',
+            ),
         ),
         MenuItemHistogram(
             title='Resistivity cut off',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.resistivity_control.resistivity_target#{dir_path["dir21"]}',
+                search_quantity=f'data.etching_steps.resistivity_control.resistivity_target#{dir_path["dir21"]}',
                 title='resistivity cut off',
                 unit='ohm*cm',
             ),
@@ -3469,7 +3498,7 @@ menuremove_driebosch = Menu(
         MenuItemPeriodicTable(
             title='Elements etched',
             type='periodic_table',
-            search_quantity=f'{meec}#{dir_path["dir26"]}',
+            search_quantity=f'data.etching_steps.{meec}#{dir_path["dir26"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements of gases employed',
@@ -3604,9 +3633,7 @@ menuremove_driebosch = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=(
-                    f'data.etching_steps.chuck.bias#{dir_path["dir26"]}'
-                ),
+                search_quantity=(f'data.etching_steps.chuck.bias#{dir_path["dir26"]}'),
                 title='bias voltage',
                 unit='V',
             ),
