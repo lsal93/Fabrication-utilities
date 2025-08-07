@@ -273,6 +273,13 @@ class DRIE_Chuck(ArchiveSection):
         repeats=True,
     )
 
+    clamping = SubSection(section_def=Clamping_System, repeats=False)
+
+    item_placement = SubSection(
+        section_def=ItemPlacement,
+        repeats=False,
+    )
+
 
 #######################################################################################
 ############ Classes used to describe gases flux components and parameters ############
