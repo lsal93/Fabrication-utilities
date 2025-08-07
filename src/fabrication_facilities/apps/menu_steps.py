@@ -3519,15 +3519,51 @@ menuremove_driebosch = Menu(
             ),
         ),
         MenuItemHistogram(
-            title='Chuck Power',
+            title='Chuck high phase power',
             type='histogram',
             n_bins=10,
             x=Axis(
                 search_quantity=(
-                    f'data.etching_steps.chuck.chuck_power#{dir_path["dir26"]}'
+                    f'data.etching_steps.chuck.chuck_high_power#{dir_path["dir26"]}'
                 ),
-                title='chuck power',
+                title='chuck high phase power',
                 unit='watt',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chuck low phase power',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=(
+                    f'data.etching_steps.chuck.chuck_low_power#{dir_path["dir26"]}'
+                ),
+                title='chuck low phase power',
+                unit='watt',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chuck high phase duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=(
+                    f'data.etching_steps.chuck.chuck_high_power_duration#{dir_path["dir26"]}'
+                ),
+                title='chuck high phase duration',
+                unit='sec',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chuck low phase duration',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=(
+                    f'data.etching_steps.chuck.chuck_low_power_duration#{dir_path["dir26"]}'
+                ),
+                title='chuck low phase duration',
+                unit='sec',
             ),
         ),
         MenuItemHistogram(
