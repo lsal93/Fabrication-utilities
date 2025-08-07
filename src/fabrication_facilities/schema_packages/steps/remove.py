@@ -116,8 +116,6 @@ class RIEbase(FabricationProcessStepBase):
                     'starting_date',
                     'ending_date',
                     'duration',
-                    # 'short_names',
-                    # 'target_materials_formulas',
                     'chamber_temperature',
                     'chamber_pressure',
                     'number_of_loops',
@@ -126,18 +124,6 @@ class RIEbase(FabricationProcessStepBase):
             },
         },
     )
-    # short_names = Quantity(
-    #     type=str,
-    #     description='Name of reactive species',
-    #     shape=['*'],
-    #     a_eln={'component': 'StringEditQuantity', 'label': 'target materials names'},
-    # )
-    # target_materials_formulas = Quantity(
-    #     type=str,
-    #     description='Inserted only if known',
-    #     shape=['*'],
-    #     a_eln={'component': 'StringEditQuantity'},
-    # )
     chamber_pressure = Quantity(
         type=np.float64,
         description='Pressure in the chamber',
@@ -183,21 +169,8 @@ class RIEbase(FabricationProcessStepBase):
         repeats=True,
     )
 
-    item_carrier = SubSection(section_def=Carrier, repeats=False)
-
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-
-    #     if self.target_materials_formulas is None:
-    #         pass
-    #     else:
-    #         chems = []
-    #         for formula in self.target_materials_formulas:
-    #             chemical = FabricationChemical()
-    #             chemical.chemical_formula = formula
-    #             chemical.normalize(archive, logger)
-    #             chems.append(chemical)
-    #         self.materials_etched = chems
 
 
 class ICP_RIEbase(RIEbase):
@@ -214,8 +187,6 @@ class ICP_RIEbase(RIEbase):
                     'starting_date',
                     'ending_date',
                     'duration',
-                    # 'short_names',
-                    # 'target_materials_formulas',
                     'chamber_temperature',
                     'chamber_pressure',
                     'number_of_loops',

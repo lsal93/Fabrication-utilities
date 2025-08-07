@@ -2808,7 +2808,7 @@ menuremove_rie = Menu(
         MenuItemTerms(
             title='Kind of step',
             type='terms',
-            search_quantity=f'data.etching_steps.recipe_name#{dir_path["dir20"]}',
+            search_quantity=f'data.etching_steps.tag#{dir_path["dir20"]}',
         ),
         MenuItemTerms(
             title='Material to be etched',
@@ -2850,22 +2850,12 @@ menuremove_rie = Menu(
             ),
         ),
         MenuItemHistogram(
-            title='Chuck temperature',
+            title='Chamber temperature',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.chuck_temperature#{dir_path["dir20"]}',
-                title='chuck temperature',
-                unit='celsius',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Wall temperature',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.etching_steps.wall_temperature#{dir_path["dir20"]}',
-                title='wall temperature',
+                search_quantity=f'data.etching_steps.chamber_temperature#{dir_path["dir20"]}',
+                title='chamber temperature',
                 unit='celsius',
             ),
         ),
@@ -2880,13 +2870,39 @@ menuremove_rie = Menu(
             ),
         ),
         MenuItemHistogram(
+            title='Chuck temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=(
+                    f'data.etching_steps.chuck.chuck_temperature#{dir_path["dir20"]}'
+                ),
+                title='chuck temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemHistogram(
             title='Chuck Power',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.chuck_power#{dir_path["dir20"]}',
+                search_quantity=(
+                    f'data.etching_steps.chuck.chuck_power#{dir_path["dir20"]}'
+                ),
                 title='chuck power',
                 unit='watt',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chuck high frequency',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=(
+                    f'data.etching_steps.chuck.chuck_high_frequency#{dir_path["dir20"]}'
+                ),
+                title='chuck high frequency',
+                unit='MHz',
             ),
         ),
         MenuItemHistogram(
@@ -2894,27 +2910,40 @@ menuremove_rie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.chuck_frequency#{dir_path["dir20"]}',
-                title='chuck frequency',
+                search_quantity=(
+                    f'data.etching_steps.chuck.chuck_low_frequency#{dir_path["dir20"]}'
+                ),
+                title='chuck low frequency',
                 unit='MHz',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Bias voltage',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=(
+                    f'data.etching_steps.chuck.bias#{dir_path["dir20"]}'
+                ),
+                title='bias voltage',
+                unit='V',
             ),
         ),
         MenuItemTerms(
             title='Clamping',
             type='terms',
-            search_quantity=f'data.etching_steps.clamping#{dir_path["dir20"]}',
-        ),
-        MenuItemTerms(
-            title='Clamping type',
-            type='terms',
-            search_quantity=f'data.etching_steps.clamping_type#{dir_path["dir20"]}',
+            search_quantity=(
+                f'data.etching_steps.chuck.clamping.clamping_type#{dir_path["dir20"]}'
+            ),
         ),
         MenuItemHistogram(
             title='Clamping pressure',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.clamping_pressure#{dir_path["dir20"]}',
+                search_quantity=(
+                    f'data.etching_steps.chuck.clamping.clamping_pressure#{dir_path["dir20"]}'
+                ),
                 title='clamping pressure',
                 unit='mbar',
             ),
