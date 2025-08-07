@@ -217,8 +217,6 @@ class DRIE_BOSCHbase(ICP_RIEbase):
                     'starting_date',
                     'ending_date',
                     'duration',
-                    # 'short_names',
-                    # 'target_materials_formulas',
                     'chamber_temperature',
                     'chamber_pressure',
                     'number_of_loops',
@@ -442,6 +440,7 @@ class WetEtchingOutputs(ArchiveSection):
                 'order': [
                     'job_number',
                     'duration_measured',
+                    'bath_number',
                 ],
             }
         },
@@ -458,6 +457,12 @@ class WetEtchingOutputs(ArchiveSection):
         description='Real time of the process ad output',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
         unit='sec',
+    )
+
+    bath_number = Quantity(
+        type=int,
+        description='Chronological number from the last solution renewal',
+        a_eln={'component': 'NumberEditQuantity'},
     )
 
 
@@ -488,18 +493,17 @@ class WetEtchingbase(FabricationProcessStepBase):
                     'starting_date',
                     'ending_date',
                     'duration',
+                    'pump',
+                    'wetting',
+                    'wetting_duration',
                     # 'short_names',
                     # 'target_materials_formulas',
                     # 'etching_reactives',
                     # 'etching_reactives_formulas',
-                    'etching_temperature',
-                    'pump',
-                    'wetting',
-                    'wetting_duration',
+                    'tank_temperature',
                     'ultrasounds_required',
                     'ultrasounds_frequency',
                     'ultrasounds_duration',
-                    'bath_number',
                     'notes',
                 ]
             },
@@ -511,31 +515,7 @@ class WetEtchingbase(FabricationProcessStepBase):
         description='During the process is the pump in action?',
         a_eln={'component': 'BoolEditQuantity'},
     )
-    # short_names = Quantity(
-    #     type=str,
-    #     description='Materials to be etched',
-    #     shape=['*'],
-    #     a_eln={'component': 'StringEditQuantity', 'label': 'target materials'},
-    # )
-    # target_materials_formulas = Quantity(
-    #     type=str,
-    #     description='Formulas of materials etched',
-    #     shape=['*'],
-    #     a_eln={'component': 'StringEditQuantity'},
-    # )
-    # etching_reactives = Quantity(
-    #     type=str,
-    #     description='Names of compounds used to etch',
-    #     shape=['*'],
-    #     a_eln={'component': 'StringEditQuantity'},
-    # )
-    # etching_reactives_formulas = Quantity(
-    #     type=str,
-    #     description='Formulas of compounds used to etch',
-    #     shape=['*'],
-    #     a_eln={'component': 'StringEditQuantity'},
-    # )
-    etching_temperature = Quantity(
+    tank_temperature = Quantity(
         type=np.float64,
         description='Temperature set for the bath',
         a_eln={
@@ -581,12 +561,6 @@ class WetEtchingbase(FabricationProcessStepBase):
         unit='minute',
     )
 
-    bath_number = Quantity(
-        type=int,
-        description='Chronological number from the last solution renewal',
-        a_eln={'component': 'NumberEditQuantity'},
-    )
-
     resistivity_control = SubSection(
         section_def=ResistivityControl,
         repeats=False,
@@ -609,33 +583,6 @@ class WetEtchingbase(FabricationProcessStepBase):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        # if self.target_materials_formulas is None:
-        #     pass
-        # else:
-        #     chems = []
-        #     for v1, v2 in zip(self.short_names, self.target_materials_formulas):
-        #         chemical = FabricationChemical()
-        #         val1 = v1  # if v1 != '-' else None
-        #         val2 = v2 if v2 != '-' else None
-        #         chemical.name = val1
-        #         chemical.chemical_formula = val2
-        #         chemical.normalize(archive, logger)
-        #         chems.append(chemical)
-        #     self.materials_etched = chems
-
-        # if self.etching_reactives_formulas is None:
-        #    pass
-        # else:
-        #    reactives = []
-        #    for v1, v2 in zip(self.etching_reactives, self.etching_reactives_formulas):
-        #        chemical = WetReactiveComponents()
-        #        val1 = v1  # if v1 != '-' else val1=v2
-        #        val2 = v2 if v2 != '-' else None
-        #        chemical.name = val1
-        #        chemical.chemical_formula = val2
-        #        chemical.normalize(archive, logger)
-        #        reactives.append(chemical)
-        #    self.reactives_used_to_etch = reactives
 
 
 # class WetCleaningbase(FabricationProcessStepBase):

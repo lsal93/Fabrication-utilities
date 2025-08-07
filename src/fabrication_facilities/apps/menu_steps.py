@@ -19,7 +19,7 @@ wc = 'wafer_cleaning'
 dev = 'developing'
 meec = 'data.etching_steps.materials_etched.elemental_composition.element'
 rute = 'data.reactives_used_to_etch.elemental_composition.element'
-ru = 'reactive_used_to_etch'
+ru = 'reactives_used_to_etch'
 alias = 'data.synthesis_steps.target_material_formula'
 
 menuadd_icpcvd = Menu(
@@ -3013,39 +3013,9 @@ menuremove_wetetching = Menu(
             search_quantity=f'data.recipe_name#{dir_path["dir21"]}',
         ),
         MenuItemTerms(
-            title='Material to be etched',
+            title='Etching type',
             type='terms',
-            search_quantity=f'data.materials_etched.name#{dir_path["dir21"]}',
-        ),
-        MenuItemPeriodicTable(
-            title='Elements of the material',
-            type='periodic_table',
-            search_quantity=f'{meec}#{dir_path["dir21"]}',
-        ),
-        MenuItemTerms(
-            title='Etching solution',
-            type='terms',
-            search_quantity=f'data.etching_solution#{dir_path["dir21"]}',
-        ),
-        MenuItemTerms(
-            title='Etching solution proportions',
-            type='terms',
-            search_quantity=f'data.etching_solution_proportions#{dir_path["dir21"]}',
-        ),
-        MenuItemTerms(
-            title='Name of compounds used to etch',
-            type='terms',
-            search_quantity=f'data.reactives_used_to_etch.name#{dir_path["dir21"]}',
-        ),
-        MenuItemTerms(
-            title='Formula of the compounds used to etch',
-            type='terms',
-            search_quantity=f'data.{ru}.chemical_formula#{dir_path["dir21"]}',
-        ),
-        MenuItemPeriodicTable(
-            title='Elements of the etching compounds',
-            type='periodic_table',
-            search_quantity=f'{rute}#{dir_path["dir21"]}',
+            search_quantity=f'data.etching_steps.tag#{dir_path["dir21"]}',
         ),
         MenuItemHistogram(
             title='Desired depth',
@@ -3068,13 +3038,67 @@ menuremove_wetetching = Menu(
             ),
         ),
         MenuItemHistogram(
-            title='Depth obtained',
+            title='Etching rate target',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.depth_measured#{dir_path["dir21"]}',
-                title='depth measured',
-                unit='nm',
+                search_quantity=f'data.etching_rate_target#{dir_path["dir21"]}',
+                title='etching rate target',
+                unit='nm/minute'
+            ),
+        ),
+        MenuItemTerms(
+            title='Material to be etched',
+            type='terms',
+            search_quantity=f'data.materials_etched.name#{dir_path["dir21"]}',
+        ),
+        MenuItemTerms(
+            title='Formulas of the etched material',
+            type='terms',
+            search_quantity=(
+                f'data.etching_steps.materials_etched.chemical_formula#{dir_path["dir21"]}'
+            ),
+        ),
+        MenuItemPeriodicTable(
+            title='Elements of the material',
+            type='periodic_table',
+            search_quantity=f'{meec}#{dir_path["dir21"]}',
+        ),
+        MenuItemTerms(
+            title='Etching reactives',
+            type='terms',
+            search_quantity=f'data.{ru}.name#{dir_path["dir21"]}',
+        ),
+        MenuItemTerms(
+            title='Formula of the reactives used to etch',
+            type='terms',
+            search_quantity=f'data.{ru}.chemical_formula#{dir_path["dir21"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements of the etching compounds',
+            type='periodic_table',
+            search_quantity=f'{rute}#{dir_path["dir21"]}',
+        ),
+        MenuItemTerms(
+            title='Etching reactives final concentration',
+            type='terms',
+            search_quantity=(
+                f'data.{ru}.solution_concentration#{dir_path["dir21"]}'
+            ),
+        ),
+        MenuItemTerms(
+            title='Wetting required',
+            type='terms',
+            search_quantity=f'data.etching_steps.wetting#{dir_path["dir21"]}'
+        ),
+        MenuItemHistogram(
+            title='Resistivity cut off',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.resistivity_control.resistivity_target#{dir_path["dir21"]}',
+                title='resistivity cut off',
+                unit='ohm*cm',
             ),
         ),
         MenuItemHistogram(
@@ -3082,25 +3106,10 @@ menuremove_wetetching = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.duration_measured#{dir_path["dir21"]}',
+                search_quantity=f'data.outputs.duration_measured#{dir_path["dir21"]}',
                 title='duration measured',
                 unit='minute',
             ),
-        ),
-        MenuItemHistogram(
-            title='Etching rate obtained',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.etching_rate_obtained#{dir_path["dir21"]}',
-                title='etching rate obtained',
-                unit='nm/minute',
-            ),
-        ),
-        MenuItemTerms(
-            title='Etching type',
-            type='terms',
-            search_quantity=f'data.etching_type#{dir_path["dir21"]}',
         ),
         MenuItemTerms(
             title='Name equipment used',
