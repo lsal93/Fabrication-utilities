@@ -25,7 +25,6 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
     FabricationProcessStepBase,
 )
 from fabrication_facilities.schema_packages.steps.utils import (
-    Carrier,
     Chuck,
     DeIonizedWaterDumping,
     DevelopingSolution,

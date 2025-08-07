@@ -3524,7 +3524,7 @@ menuremove_driebosch = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=(
-                    f'data.etching_steps.chuck.chuck_high_power#{dir_path["dir26"]}'
+                    f'data.etching_steps.chuck.high_chuck_power#{dir_path["dir26"]}'
                 ),
                 title='chuck high phase power',
                 unit='watt',
@@ -3536,7 +3536,7 @@ menuremove_driebosch = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=(
-                    f'data.etching_steps.chuck.chuck_low_power#{dir_path["dir26"]}'
+                    f'data.etching_steps.chuck.low_chuck_power#{dir_path["dir26"]}'
                 ),
                 title='chuck low phase power',
                 unit='watt',
@@ -3548,7 +3548,7 @@ menuremove_driebosch = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=(
-                    f'data.etching_steps.chuck.chuck_high_power_duration#{dir_path["dir26"]}'
+                    f'data.etching_steps.chuck.high_chuck_power_duration#{dir_path["dir26"]}'
                 ),
                 title='chuck high phase duration',
                 unit='sec',
@@ -3560,7 +3560,7 @@ menuremove_driebosch = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=(
-                    f'data.etching_steps.chuck.chuck_low_power_duration#{dir_path["dir26"]}'
+                    f'data.etching_steps.chuck.low_chuck_power_duration#{dir_path["dir26"]}'
                 ),
                 title='chuck low phase duration',
                 unit='sec',
