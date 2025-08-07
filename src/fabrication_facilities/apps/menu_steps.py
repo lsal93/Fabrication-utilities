@@ -1334,33 +1334,13 @@ menuremove_icprie = Menu(
             ),
         ),
         MenuItemHistogram(
-            title='Chuck temperature',
+            title='Chamber temperature',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.chuck_temperature#{dir_path["dir5"]}',
-                title='chuck temperature',
+                search_quantity=f'data.etching_steps.chamber_temperature#{dir_path["dir5"]}',
+                title='chamber temperature',
                 unit='celsius',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Wall temperature',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.etching_steps.wall_temperature#{dir_path["dir5"]}',
-                title='wall temperature',
-                unit='celsius',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Bias',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.etching_steps.bias#{dir_path["dir5"]}',
-                title='bias',
-                unit='V',
             ),
         ),
         MenuItemHistogram(
@@ -1369,8 +1349,20 @@ menuremove_icprie = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.etching_steps.chamber_pressure#{dir_path["dir5"]}',
-                title='chamber_pressure',
+                title='chamber pressure',
                 unit='mbar',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chuck temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=(
+                    f'data.etching_steps.chuck.chuck_temperature#{dir_path["dir5"]}'
+                ),
+                title='chuck temperature',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -1378,19 +1370,47 @@ menuremove_icprie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.chuck_power#{dir_path["dir5"]}',
+                search_quantity=(
+                    f'data.etching_steps.chuck.chuck_power#{dir_path["dir5"]}'
+                ),
                 title='chuck power',
                 unit='watt',
             ),
         ),
         MenuItemHistogram(
-            title='Chuck Frequency',
+            title='Chuck high frequency',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.chuck_frequency#{dir_path["dir5"]}',
-                title='chuck frequency',
+                search_quantity=(
+                    f'data.etching_steps.chuck.chuck_high_frequency#{dir_path["dir5"]}'
+                ),
+                title='chuck high frequency',
                 unit='MHz',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chuck low frequency',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=(
+                    f'data.etching_steps.chuck.chuck_low_frequency#{dir_path["dir5"]}'
+                ),
+                title='chuck low frequency',
+                unit='MHz',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Bias voltage',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=(
+                    f'data.etching_steps.chuck.bias#{dir_path["dir5"]}'
+                ),
+                title='bias voltage',
+                unit='V',
             ),
         ),
         MenuItemHistogram(
@@ -1398,7 +1418,9 @@ menuremove_icprie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.icp_power#{dir_path["dir5"]}',
+                search_quantity=(
+                    f'data.etching_steps.icp_column.icp_power#{dir_path["dir5"]}'
+                ),
                 title='icp power',
                 unit='watt',
             ),
@@ -1408,7 +1430,9 @@ menuremove_icprie = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.icp_frequency#{dir_path["dir5"]}',
+                search_quantity=(
+                    f'data.etching_steps.icp_column.icp_frequency#{dir_path["dir5"]}'
+                ),
                 title='icp frequency',
                 unit='MHz',
             ),
@@ -1416,19 +1440,18 @@ menuremove_icprie = Menu(
         MenuItemTerms(
             title='Clamping',
             type='terms',
-            search_quantity=f'data.etching_steps.clamping#{dir_path["dir5"]}',
-        ),
-        MenuItemTerms(
-            title='Clamping type',
-            type='terms',
-            search_quantity=f'data.etching_steps.clamping_type#{dir_path["dir5"]}',
+            search_quantity=(
+                f'data.etching_steps.chuck.clamping.clamping_type#{dir_path["dir5"]}'
+            ),
         ),
         MenuItemHistogram(
             title='Clamping pressure',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.clamping_pressure#{dir_path["dir5"]}',
+                search_quantity=(
+                    f'data.etching_steps.chuck.clamping.clamping_pressure#{dir_path["dir5"]}'
+                ),
                 title='clamping pressure',
                 unit='mbar',
             ),
@@ -2906,7 +2929,7 @@ menuremove_rie = Menu(
             ),
         ),
         MenuItemHistogram(
-            title='Chuck Frequency',
+            title='Chuck low frequency',
             type='histogram',
             n_bins=10,
             x=Axis(
@@ -3464,33 +3487,13 @@ menuremove_driebosch = Menu(
             ),
         ),
         MenuItemHistogram(
-            title='Chuck temperature',
+            title='Chamber temperature',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.chuck_temperature#{dir_path["dir26"]}',
-                title='chuck temperature',
+                search_quantity=f'data.etching_steps.chamber_temperature#{dir_path["dir26"]}',
+                title='chamber temperature',
                 unit='celsius',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Wall temperature',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.etching_steps.wall_temperature#{dir_path["dir26"]}',
-                title='wall temperature',
-                unit='celsius',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Bias',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.etching_steps.bias#{dir_path["dir26"]}',
-                title='bias',
-                unit='V',
             ),
         ),
         MenuItemHistogram(
@@ -3499,8 +3502,20 @@ menuremove_driebosch = Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.etching_steps.chamber_pressure#{dir_path["dir26"]}',
-                title='chamber_pressure',
+                title='chamber pressure',
                 unit='mbar',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chuck temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=(
+                    f'data.etching_steps.chuck.chuck_temperature#{dir_path["dir26"]}'
+                ),
+                title='chuck temperature',
+                unit='celsius',
             ),
         ),
         MenuItemHistogram(
@@ -3508,19 +3523,47 @@ menuremove_driebosch = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.chuck_power#{dir_path["dir26"]}',
+                search_quantity=(
+                    f'data.etching_steps.chuck.chuck_power#{dir_path["dir26"]}'
+                ),
                 title='chuck power',
                 unit='watt',
             ),
         ),
         MenuItemHistogram(
-            title='Chuck Frequency',
+            title='Chuck high frequency',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.chuck_frequency#{dir_path["dir26"]}',
-                title='chuck frequency',
+                search_quantity=(
+                    f'data.etching_steps.chuck.chuck_high_frequency#{dir_path["dir26"]}'
+                ),
+                title='chuck high frequency',
                 unit='MHz',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chuck low frequency',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=(
+                    f'data.etching_steps.chuck.chuck_low_frequency#{dir_path["dir26"]}'
+                ),
+                title='chuck low frequency',
+                unit='MHz',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Bias voltage',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=(
+                    f'data.etching_steps.chuck.bias#{dir_path["dir26"]}'
+                ),
+                title='bias voltage',
+                unit='V',
             ),
         ),
         MenuItemHistogram(
@@ -3528,7 +3571,9 @@ menuremove_driebosch = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.icp_power#{dir_path["dir26"]}',
+                search_quantity=(
+                    f'data.etching_steps.icp_column.icp_power#{dir_path["dir26"]}'
+                ),
                 title='icp power',
                 unit='watt',
             ),
@@ -3538,7 +3583,9 @@ menuremove_driebosch = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.icp_frequency#{dir_path["dir26"]}',
+                search_quantity=(
+                    f'data.etching_steps.icp_column.icp_frequency#{dir_path["dir26"]}'
+                ),
                 title='icp frequency',
                 unit='MHz',
             ),
@@ -3546,19 +3593,18 @@ menuremove_driebosch = Menu(
         MenuItemTerms(
             title='Clamping',
             type='terms',
-            search_quantity=f'data.etching_steps.clamping#{dir_path["dir26"]}',
-        ),
-        MenuItemTerms(
-            title='Clamping type',
-            type='terms',
-            search_quantity=f'data.etching_steps.clamping_type#{dir_path["dir26"]}',
+            search_quantity=(
+                f'data.etching_steps.chuck.clamping.clamping_type#{dir_path["dir26"]}'
+            ),
         ),
         MenuItemHistogram(
             title='Clamping pressure',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.etching_steps.clamping_pressure#{dir_path["dir26"]}',
+                search_quantity=(
+                    f'data.etching_steps.chuck.clamping.clamping_pressure#{dir_path["dir26"]}'
+                ),
                 title='clamping pressure',
                 unit='mbar',
             ),
