@@ -610,6 +610,21 @@ class Wet_Bench_Unit(Equipment):
                 raise ValueError(
                     'No water field already provided. Add also water specification.'
                 )
+                water_field=WetSolutionComponents()
+                water_field.name="Deio water"
+                water_field.chemical_formula="H2O"
+                water_field.initial_concentration=100
+                for token in self.reactives:
+                    volume_to_remove += token.dispensed_volume
+                    concentration_to_remove += token.final_solution_concentration
+                water_field.dispensed_volume = self.volume_of_solution-volume_to_remove
+                water_field.final_solution_concentration = 100-concentration_to_remove
+                raise Exception("""
+                    Assumed remaining volume to be water. New field in reactives now.
+                    Control the water field and in case confirm renormalizing the enry.
+                    """
+                )
+                self.reactives.append(water_field)
 
 
 class Dump_Rinser(Equipment):
