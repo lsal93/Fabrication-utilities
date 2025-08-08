@@ -18,13 +18,15 @@ from fabrication_facilities.apps.menu_steps import (
     menuadd_sputtering,
     menuremove_driebosch,
     menuremove_icprie,
+    menuremove_resistdev,
     menuremove_rie,
+    menuremove_rinsingdrying,
+    menuremove_spinresist,
     menuremove_stripping,
     menuremove_wetclean,
     menuremove_wetetching,
     menutrans_annealing,
     menutrans_baking,
-    menutrans_develop,
     menutrans_dicing,
     menutrans_doping,
     menutrans_ebl,
@@ -36,8 +38,6 @@ from fabrication_facilities.apps.menu_steps import (
     menutrans_track,
     menuutils_obsmeasurements,
     menuutils_startingmaterial,
-    menuremove_spinresist,
-    menuremove_rinsingdrying,
 )
 
 schemas = [f'*#{path_value}' for path_value in dir_path.values()]
@@ -157,15 +157,13 @@ stepapp = App(
                             menuremove_wetetching,
                             menuremove_wetclean,
                             menuremove_stripping,
-                            menutrans_develop,
+                            menuremove_resistdev,
                             menuremove_spinresist,
                         ],
                     ),
                     Menu(
                         title='Drying',
-                        items=[
-                            menuremove_rinsingdrying
-                        ],
+                        items=[menuremove_rinsingdrying],
                     ),
                 ],
             ),

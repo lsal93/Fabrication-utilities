@@ -30,6 +30,6 @@ dir_path = {
     'dir26': 'fabrication_facilities.schema_packages.steps.remove.DRIE_BOSCH',
     'dir27': 'fabrication_facilities.schema_packages.steps.add.PECVD',
     'dir28': 'fabrication_facilities.schema_packages.steps.add.LPCVD',
-    'dir29': 'fabrication_facilities.schema_packages.steps.remove.SpinResistDevelopment'
-    'dir30': 'fabrication_facilities.schema_packages.steps.remove.Rinsing_Drying'
+    'dir29': 'fabrication_facilities.schema_packages.steps.remove.SpinResistDevelopment',
+    'dir30': 'fabrication_facilities.schema_packages.steps.remove.Rinsing_Drying',
 }

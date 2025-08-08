@@ -3179,13 +3179,13 @@ menuremove_stripping = Menu(
         MenuItemTerms(
             title='Resist to remove',
             type='terms',
-            search_quantity=f'data.stripping_Steps.resist_name#{dir_path["dir22"]}',
+            search_quantity=f'data.stripping_steps.resist_name#{dir_path["dir22"]}',
         ),
         MenuItemTerms(
             title='Resist chemical formula',
             type='terms',
-            search_quantity=f'data.stripping_steps.resist_chemical_formula#{dit_path["dir22"]}',
-        )
+            search_quantity=f'data.stripping_steps.resist_chemical_formula#{dir_path["dir22"]}',
+        ),
         MenuItemPeriodicTable(
             title='Elements of the resist',
             type='periodic_table',
@@ -3240,61 +3240,61 @@ menuremove_spinresist = Menu(
         MenuItemTerms(
             title='Mode',
             type='terms',
-            search_quantity=f'data.developing_steps.developing_mode#{dir_path["dir29"]}',
+            search_quantity=f'data.development_steps.developing_mode#{dir_path["dir29"]}',
         ),
         MenuItemHistogram(
             title='Developing temperature',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.developing_steps.developing_temperature#{dir_path["dir29"]}',
+                search_quantity=f'data.development_steps.developing_temperature#{dir_path["dir29"]}',
                 title='developing temperature',
-                unit='celsius'
+                unit='celsius',
             ),
         ),
         MenuItemTerms(
             title='Name of the material developed',
-            tupe='terms',
-            search_quantity=f'data.developing_steps.materials_developed.name#{dir_path["dir29"]}'
+            type='terms',
+            search_quantity=f'data.development_steps.materials_developed.name#{dir_path["dir29"]}',
         ),
         MenuItemTerms(
             title='Formula of the material developed',
-            tupe='terms',
-            search_quantity=f'data.developing_steps.materials_developed.chemical_formula#{dir_path["dir29"]}'
+            type='terms',
+            search_quantity=f'data.development_steps.materials_developed.chemical_formula#{dir_path["dir29"]}',
         ),
-        MenuItemTerms(
+        MenuItemPeriodicTable(
             title='Elements of the material developed',
-            tupe='terms',
-            search_quantity=f'data.developing_steps.materials_developed.elemental_composition.element#{dir_path["dir29"]}'
+            type='periodic_table',
+            search_quantity=f'data.development_steps.materials_developed.elemental_composition.element#{dir_path["dir29"]}',
         ),
         MenuItemTerms(
             title='Name of the developing solution components',
-            tupe='terms',
-            search_quantity=f'data.developing_steps.developing_solution.developing_solution_components.name#{dir_path["dir29"]}'
+            type='terms',
+            search_quantity=f'data.development_steps.developing_solution.developing_solution_components.name#{dir_path["dir29"]}',
         ),
         MenuItemHistogram(
             title='Developer dispensed volume',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.developing_steps.developing_solution.dispensed_volume#{dir_path["dir29"]}',
+                search_quantity=f'data.development_steps.developing_solution.dispensed_volume#{dir_path["dir29"]}',
                 title='dispensed volume',
-                unit='milliliter'
+                unit='milliliter',
             ),
         ),
         MenuItemTerms(
             title='Name of the surfactant in the solution',
-            tupe='terms',
-            search_quantity=f'data.developing_steps.developing_solution.surfactants.name#{dir_path["dir29"]}'
+            type='terms',
+            search_quantity=f'data.development_steps.developing_solution.surfactants.name#{dir_path["dir29"]}',
         ),
         MenuItemHistogram(
             title='Spin frequency',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.developing_steps.spin_parameters.spin_frequency#{dir_path["dir29"]}',
+                search_quantity=f'data.development_steps.spin_parameters.spin_frequency#{dir_path["dir29"]}',
                 title='spin frequency',
-                unit='revolutions_per_minute'
+                unit='revolutions_per_minute',
             ),
         ),
         MenuItemHistogram(
@@ -3302,20 +3302,20 @@ menuremove_spinresist = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.developing_steps.spin_parameters.spin_angular_acceleration#{dir_path["dir29"]}',
+                search_quantity=f'data.development_steps.spin_parameters.spin_angular_acceleration#{dir_path["dir29"]}',
                 title='spin angular acceleration',
-                unit='revolutions_per_minute/sec'
+                unit='revolutions_per_minute/sec',
             ),
         ),
         MenuItemTerms(
-            title='Risning mode',
+            title='Rinsing mode',
             type='terms',
-            search_quantity=f'data.developing_steps.final_rinsing.rinsing_mode#{dir_path["dir29"]}',
+            search_quantity=f'data.development_steps.final_rinsing.rinsing_mode#{dir_path["dir29"]}',
         ),
         MenuItemTerms(
             title='Rinser name',
-            tupe='terms',
-            search_quantity=f'data.developing_steps.final_rinsing.rinser_name#{dir_path["dir29"]}'
+            type='terms',
+            search_quantity=f'data.development_steps.final_rinsing.rinser_name#{dir_path["dir29"]}',
         ),
         MenuItemTerms(
             title='Name equipment used',
@@ -3327,10 +3327,10 @@ menuremove_spinresist = Menu(
             type='terms',
             search_quantity=f'data.instruments.id#{dir_path["dir29"]}',
         ),
-    ]
+    ],
 )
-menuremove_rinsingdrying= Menu(
-    title='Risning drying',
+menuremove_rinsingdrying = Menu(
+    title='Rinsing drying',
     size='xl',
     items=[
         MenuItemTerms(
@@ -3349,12 +3349,12 @@ menuremove_rinsingdrying= Menu(
             search_quantity=f'data.recipe_name#{dir_path["dir30"]}',
         ),
         MenuItemTerms(
-            title='Risning mode',
+            title='Rinsing mode',
             type='terms',
             search_quantity=f'data.rinsing_drying_steps.initial_rinsing_parameters.rinsing_mode#{dir_path["dir30"]}',
         ),
         MenuItemHistogram(
-            title = 'Resistivity cut-off',
+            title='Resistivity cut-off',
             type='histogram',
             n_bins=10,
             x=Axis(
@@ -3370,7 +3370,7 @@ menuremove_rinsingdrying= Menu(
             x=Axis(
                 search_quantity=f'data.rinsing_drying_steps.initial_rinsing_parameters.spinning_parameters.spin_frequency#{dir_path["dir30"]}',
                 title='spin frequency',
-                unit='revolutions_per_minute'
+                unit='revolutions_per_minute',
             ),
         ),
         MenuItemHistogram(
@@ -3380,13 +3380,13 @@ menuremove_rinsingdrying= Menu(
             x=Axis(
                 search_quantity=f'data.rinsing_drying_steps.initial_rinsing_parameters.spinning_parameters.spin_angular_acceleration#{dir_path["dir30"]}',
                 title='spin angular acceleration',
-                unit='revolutions_per_minute/sec'
+                unit='revolutions_per_minute/sec',
             ),
         ),
         MenuItemTerms(
             title='Drying mode',
             type='terms',
-            search_quantity=f'data.rinsing_drying_steps.drying_parameters.rinsing_mode#{dir_path["dir30"]}',
+            search_quantity=f'data.rinsing_drying_steps.drying_parameters.drying_mode#{dir_path["dir30"]}',
         ),
         MenuItemHistogram(
             title='Drying temperature',
@@ -3394,7 +3394,7 @@ menuremove_rinsingdrying= Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.rinsing_drying_steps.drying_parameters.drying_temperature#{dir_path["dir30"]}',
-                title = 'temperature',
+                title='temperature',
                 unit='celsius',
             ),
         ),
@@ -3414,7 +3414,7 @@ menuremove_rinsingdrying= Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.rinsing_drying_steps.drying_parameters.drying_gas.massflow#{dir_path["dir30"]}',
-                title = 'massflow',
+                title='massflow',
                 unit='centimeter^3/minute',
             ),
         ),
@@ -3424,7 +3424,7 @@ menuremove_rinsingdrying= Menu(
             n_bins=10,
             x=Axis(
                 search_quantity=f'data.rinsing_drying_steps.drying_parameters.drying_gas.gas_temperature#{dir_path["dir30"]}',
-                title = 'temperature',
+                title='temperature',
                 unit='celsius',
             ),
         ),
@@ -3435,7 +3435,7 @@ menuremove_rinsingdrying= Menu(
             x=Axis(
                 search_quantity=f'data.rinsing_drying_steps.drying_parameters.spinning_parameters.spin_frequency#{dir_path["dir30"]}',
                 title='spin frequency',
-                unit='revolutions_per_minute'
+                unit='revolutions_per_minute',
             ),
         ),
         MenuItemHistogram(
@@ -3445,7 +3445,7 @@ menuremove_rinsingdrying= Menu(
             x=Axis(
                 search_quantity=f'data.rinsing_drying_steps.drying_parameters.spinning_parameters.spin_angular_acceleration#{dir_path["dir30"]}',
                 title='spin angular acceleration',
-                unit='revolutions_per_minute/sec'
+                unit='revolutions_per_minute/sec',
             ),
         ),
         MenuItemTerms(
@@ -3458,7 +3458,7 @@ menuremove_rinsingdrying= Menu(
             type='terms',
             search_quantity=f'data.instruments.id#{dir_path["dir30"]}',
         ),
-    ]
+    ],
 )
 menuutils_obsmeasurements = Menu(
     title='Observation Measurements',
