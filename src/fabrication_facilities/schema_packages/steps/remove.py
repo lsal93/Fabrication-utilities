@@ -711,7 +711,7 @@ class WetCleaning(FabricationProcessStep):
     )
 
 
-class SpinResistDevelopmentbase(FabricationProcessStepBase):
+class ResistDevelopmentbase(FabricationProcessStepBase):
     m_def = Section(
         a_eln={
             'properties': {
@@ -774,14 +774,55 @@ class SpinResistDevelopmentbase(FabricationProcessStepBase):
 
     materials_developed = SubSection(section_def=FabricationChemical, repeats=True)
 
-    spin_parameters = SubSection(section_def=SpinningComponent, repeats=False)
-
     developing_solution = SubSection(section_def=DevelopingSolution, repeats=False)
 
     final_rinsing = SubSection(section_def=SpinRinsingbase, repeats=True)
 
 
-class SpinResistDevelopment(FabricationProcessStep):
+class SpinResistDevelopmentbase(ResistDevelopmentbase):
+    m_def = Section()
+
+    spin_parameters = SubSection(section_def=SpinningComponent, repeats=False)
+
+
+class ResistDevelopment(FabricationProcessStep):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'tag',
+                'duration',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'notes',
+                ]
+            },
+        }
+    )
+
+    development_steps = SubSection(
+        section_def=ResistDevelopmentbase,
+        repeats=True,
+    )
+
+
+class SpinResistDevelopment(ResistDevelopment):
     m_def = Section(
         a_eln={
             'hide': [
@@ -815,196 +856,6 @@ class SpinResistDevelopment(FabricationProcessStep):
     development_steps = SubSection(
         section_def=SpinResistDevelopmentbase,
         repeats=True,
-    )
-
-
-class ResistDevelopmentbase(FabricationProcessStepBase):
-    m_def = Section(
-        a_eln={
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'tag',
-                    'id_item_processed',
-                    'operator',
-                    'starting_date',
-                    'ending_date',
-                    'developing_mode',
-                    'developing_solution',
-                    'developing_solution_proportions',
-                    'developing_duration',
-                    'developing_temperature',
-                    'stopping_solution',
-                    'stopping_solution_proportions',
-                    'stopping_duration',
-                    'cleaning_solution',
-                    'cleaning_solution_proportions',
-                    'cleaning_duration',
-                    'notes',
-                ]
-            },
-        },
-    )
-    developing_mode = Quantity(
-        type=MEnum(
-            'auto',
-            'manual',
-        ),
-        a_eln={'component': 'EnumEditQuantity'},
-    )
-    developing_solution = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    developing_solution_proportions = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    developing_duration = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'minute',
-        },
-        unit='minute',
-    )
-    developing_temperature = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-    stopping_solution = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    stopping_solution_proportions = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    stopping_duration = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
-        },
-        unit='sec',
-    )
-    cleaning_solution = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    cleaning_solution_proportions = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    cleaning_duration = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
-        },
-        unit='sec',
-    )
-
-
-class ResistDevelopment(FabricationProcessStep):
-    m_def = Section(
-        a_eln={
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'description',
-                    'affiliation',
-                    'location',
-                    'operator',
-                    'room',
-                    'id_item_processed',
-                    'starting_date',
-                    'ending_date',
-                    'duration',
-                    'step_type',
-                    'definition_of_process_step',
-                    'keywords',
-                    'recipe_name',
-                    'recipe_file',
-                    'recipe_preview',
-                    'developing_solution',
-                    'developing_solution_proportions',
-                    'developing_duration',
-                    'developing_temperature',
-                    'stopping_solution',
-                    'stopping_solution_proportions',
-                    'stopping_duration',
-                    'cleaning_solution',
-                    'cleaning_solution_proportions',
-                    'cleaning_duration',
-                    'notes',
-                ]
-            },
-        },
-    )
-    developing_solution = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    developing_solution_proportions = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    developing_duration = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'minute',
-        },
-        unit='minute',
-    )
-    developing_temperature = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-    stopping_solution = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-
-    stopping_solution_proportions = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-
-    stopping_duration = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
-        },
-        unit='sec',
-    )
-    cleaning_solution = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    cleaning_solution_proportions = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    cleaning_duration = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'sec',
-        },
-        unit='sec',
     )
 
 

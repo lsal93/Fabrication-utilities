@@ -1139,7 +1139,7 @@ menutrans_fib = Menu(
     ],
 )
 menuremove_resistdev = Menu(
-    title='Resist development',
+    title='Spin resist development',
     size='xl',
     items=[
         MenuItemTerms(
@@ -1158,74 +1158,64 @@ menuremove_resistdev = Menu(
             search_quantity=f'data.recipe_name#{dir_path["dir7"]}',
         ),
         MenuItemTerms(
-            title='Developing solution',
+            title='Mode',
             type='terms',
-            search_quantity=f'data.developing_solution#{dir_path["dir7"]}',
-        ),
-        MenuItemTerms(
-            title='Developing solution proportions',
-            type='terms',
-            search_quantity=f'data.developing_solution_proportions#{dir_path["dir7"]}',
-        ),
-        MenuItemHistogram(
-            title='Developing duration',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.developing_duration#{dir_path["dir7"]}',
-                title='developing duration',
-                unit='minute',
-            ),
+            search_quantity=f'data.development_steps.developing_mode#{dir_path["dir7"]}',
         ),
         MenuItemHistogram(
             title='Developing temperature',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.developing_temperature#{dir_path["dir7"]}',
+                search_quantity=f'data.development_steps.developing_temperature#{dir_path["dir7"]}',
                 title='developing temperature',
                 unit='celsius',
             ),
         ),
         MenuItemTerms(
-            title='Stopping solution',
+            title='Name of the material developed',
             type='terms',
-            search_quantity=f'data.stopping_solution#{dir_path["dir7"]}',
+            search_quantity=f'data.development_steps.materials_developed.name#{dir_path["dir7"]}',
         ),
         MenuItemTerms(
-            title='Stopping solution proportions',
+            title='Formula of the material developed',
             type='terms',
-            search_quantity=f'data.stopping_solution_proportions#{dir_path["dir7"]}',
+            search_quantity=f'data.development_steps.materials_developed.chemical_formula#{dir_path["dir7"]}',
+        ),
+        MenuItemPeriodicTable(
+            title='Elements of the material developed',
+            type='periodic_table',
+            search_quantity=f'data.development_steps.materials_developed.elemental_composition.element#{dir_path["dir7"]}',
+        ),
+        MenuItemTerms(
+            title='Name of the developing solution components',
+            type='terms',
+            search_quantity=f'data.development_steps.developing_solution.developing_solution_components.name#{dir_path["dir7"]}',
         ),
         MenuItemHistogram(
-            title='Stopping duration',
+            title='Developer dispensed volume',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.stopping_duration#{dir_path["dir7"]}',
-                title='stopping duration',
-                unit='sec',
+                search_quantity=f'data.development_steps.developing_solution.dispensed_volume#{dir_path["dir7"]}',
+                title='dispensed volume',
+                unit='milliliter',
             ),
         ),
         MenuItemTerms(
-            title='Cleaning solution',
+            title='Name of the surfactant in the solution',
             type='terms',
-            search_quantity=f'data.cleaning_solution#{dir_path["dir7"]}',
+            search_quantity=f'data.development_steps.developing_solution.surfactants.name#{dir_path["dir7"]}',
         ),
         MenuItemTerms(
-            title='Cleaning solution proportions',
+            title='Rinsing mode',
             type='terms',
-            search_quantity=f'data.cleaning_solution_proportions#{dir_path["dir7"]}',
+            search_quantity=f'data.development_steps.final_rinsing.rinsing_mode#{dir_path["dir7"]}',
         ),
-        MenuItemHistogram(
-            title='Cleaning duration',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.cleaning_duration#{dir_path["dir7"]}',
-                title='cleaning duration',
-                unit='minute',
-            ),
+        MenuItemTerms(
+            title='Rinser name',
+            type='terms',
+            search_quantity=f'data.development_steps.final_rinsing.rinser_name#{dir_path["dir7"]}',
         ),
         MenuItemTerms(
             title='Name equipment used',
