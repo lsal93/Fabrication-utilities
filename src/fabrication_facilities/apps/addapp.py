@@ -19,11 +19,7 @@ from fabrication_facilities.apps.menu_steps import (
 )
 
 schemas = [
-    (
-        f'*#{path_value}'
-        for path_value in dir_path.values()
-        if 'steps.remove' in path_value
-    )
+    f'*#{path_value}' for path_value in dir_path.values() if 'steps.add' in path_value
 ]
 fps = 'FabricationProcessStep'
 dir0 = f'fabrication_facilities.schema_packages.fabrication_utilities.{fps}'
@@ -43,19 +39,19 @@ addapp = App(
     """,
     search_quantities=SearchQuantities(include=schemas),
     columns=[
-         Column(quantity='entry_name', selected=True),
-         Column(quantity='entry_type', selected=True),
-         Column(
-             quantity=f'data.affiliation#{dir0}',
-             selected=True,
-         ),
-         Column(
-             quantity=f'data.location#{dir0}',
-             selected=True,
-         ),
-         Column(quantity='upload_create_time', selected=True),
-         Column(quantity=f'data.recipe_name#{dir0}'),
-     ],
+        Column(quantity='entry_name', selected=True),
+        Column(quantity='entry_type', selected=True),
+        Column(
+            quantity=f'data.affiliation#{dir0}',
+            selected=True,
+        ),
+        Column(
+            quantity=f'data.location#{dir0}',
+            selected=True,
+        ),
+        Column(quantity='upload_create_time', selected=True),
+        Column(quantity=f'data.recipe_name#{dir0}'),
+    ],
     filters_locked={'section_defs.definition_qualified_name': dir0},
     menu=Menu(
         items=[
