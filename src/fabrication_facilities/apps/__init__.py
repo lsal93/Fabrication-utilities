@@ -50,4 +50,4 @@ app_character_entry_point = AppEntryPoint(
     app=characterapp,
 )
 
-app_entry_point = step_app_entry_point
+app_entry_point = app_trans_entry_point
