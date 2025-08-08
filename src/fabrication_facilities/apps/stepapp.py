@@ -8,25 +8,6 @@ from nomad.config.models.ui import (
 
 from fabrication_facilities.apps.directories import dir_path
 from fabrication_facilities.apps.menu_steps import (
-    menuadd_bonding,
-    menuadd_electrongun,
-    menuadd_icpcvd,
-    menuadd_lpcvd,
-    menuadd_pecvd,
-    menuadd_sog,
-    menuadd_spincoat,
-    menuadd_sputtering,
-    menutrans_annealing,
-    menutrans_baking,
-    menutrans_dicing,
-    menutrans_doping,
-    menutrans_ebl,
-    menutrans_fib,
-    menutrans_labelingcleaning,
-    menutrans_ltodensification,
-    menutrans_sod,
-    menutrans_thermaloxidation,
-    menutrans_track,
     menuutils_obsmeasurements,
     menuutils_startingmaterial,
 )
@@ -66,76 +47,6 @@ stepapp = App(
     menu=Menu(
         items=[
             Menu(
-                title='Add steps',
-                indentation=0,
-                items=[
-                    Menu(
-                        title='Bonding',
-                        items=[
-                            menuadd_bonding,
-                        ],
-                    ),
-                    Menu(
-                        title='Integration',
-                        items=[],
-                    ),
-                    Menu(
-                        title='Sinthesys',
-                        items=[
-                            menuadd_lpcvd,
-                            menuadd_pecvd,
-                            menuadd_icpcvd,
-                            menuadd_spincoat,
-                            menuadd_electrongun,
-                            menuadd_sputtering,
-                            menuadd_sog,
-                        ],
-                    ),
-                ],
-            ),
-            Menu(
-                title='Transform steps',
-                indentation=0,
-                items=[
-                    Menu(
-                        title='Dicing',
-                        items=[
-                            menutrans_dicing,
-                        ],
-                    ),
-                    Menu(
-                        title='Doping',
-                        items=[
-                            menutrans_doping,
-                            menutrans_sod,
-                        ],
-                    ),
-                    Menu(
-                        title='Lithography',
-                        items=[
-                            menutrans_ebl,
-                            menutrans_fib,
-                            menutrans_track,
-                        ],
-                    ),
-                    Menu(
-                        title='Thermal processing',
-                        items=[
-                            menutrans_annealing,
-                            menutrans_ltodensification,
-                            menutrans_thermaloxidation,
-                            menutrans_baking,
-                        ],
-                    ),
-                    Menu(
-                        title='Labeling',
-                        items=[
-                            menutrans_labelingcleaning,
-                        ],
-                    ),
-                ],
-            ),
-            Menu(
                 title='Characterization steps',
                 indentation=0,
                 items=[
@@ -151,15 +62,6 @@ stepapp = App(
                 title='Starting material',
                 items=[
                     menuutils_startingmaterial,
-                ],
-            ),
-            Menu(
-                title='User defined quantities',
-                items=[
-                    MenuItemCustomQuantities(
-                        title='Costumer user quantities',
-                        type='custom_quantities',
-                    ),
                 ],
             ),
         ]
