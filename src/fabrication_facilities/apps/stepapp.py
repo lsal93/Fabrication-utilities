@@ -2,7 +2,6 @@ from nomad.config.models.ui import (
     App,
     Column,
     Menu,
-    MenuItemCustomQuantities,
     SearchQuantities,
 )
 

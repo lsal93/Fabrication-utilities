@@ -30,7 +30,7 @@ fps = 'FabricationProcessStep'
 dir0 = f'fabrication_facilities.schema_packages.fabrication_utilities.{fps}'
 schemas.append(f'*#{dir0}')
 
-removeapp = App(
+transapp = App(
     label='Transform steps',
     path='transapp',
     category='Fabrication facilities',

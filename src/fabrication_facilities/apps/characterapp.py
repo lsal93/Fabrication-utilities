@@ -17,7 +17,7 @@ fps = 'FabricationProcessStep'
 dir0 = f'fabrication_facilities.schema_packages.fabrication_utilities.{fps}'
 schemas.append(f'*#{dir0}')
 
-removeapp = App(
+characterapp = App(
     label='Characterization steps',
     path='carachterapp',
     category='Fabrication facilities',
@@ -51,7 +51,7 @@ removeapp = App(
         items=[
             Menu(
                 title='1st main category',
-            )
+            ),
             Menu(
                 title='User defined quantities',
                 items=[

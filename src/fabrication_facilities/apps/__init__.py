@@ -1,12 +1,12 @@
 from nomad.config.models.plugins import AppEntryPoint
 
 from fabrication_facilities.apps.addapp import addapp
-from fabrication_facilities.apps.removeapp import removeapp
-from fabrication_facilities.apps.transapp import transapp
 from fabrication_facilities.apps.characterapp import characterapp
 from fabrication_facilities.apps.equipmentapp import equipmentapp
 from fabrication_facilities.apps.processapp import processapp
+from fabrication_facilities.apps.removeapp import removeapp
 from fabrication_facilities.apps.stepapp import stepapp
+from fabrication_facilities.apps.transapp import transapp
 
 equipment_app_entry_point = AppEntryPoint(
     name='Fabrication_equipment_search',
