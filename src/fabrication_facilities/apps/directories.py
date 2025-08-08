@@ -8,7 +8,7 @@ dir_path = {
     'dir4': 'fabrication_facilities.schema_packages.steps.transform.FIB',
     'dir5': 'fabrication_facilities.schema_packages.steps.remove.ICP_RIE',
     'dir6': 'fabrication_facilities.schema_packages.steps.remove.WetCleaning',
-    'dir7': 'fabrication_facilities.schema_packages.steps.transform.ResistDevelopment',
+    'dir7': 'fabrication_facilities.schema_packages.steps.remove.ResistDevelopment',
     'dir8': 'fabrication_facilities.schema_packages.steps.add.Bonding',
     'dir9': 'fabrication_facilities.schema_packages.steps.transform.Annealing',
     'dir10': 'fabrication_facilities.schema_packages.steps.transform.LTODensification',
@@ -30,4 +30,6 @@ dir_path = {
     'dir26': 'fabrication_facilities.schema_packages.steps.remove.DRIE_BOSCH',
     'dir27': 'fabrication_facilities.schema_packages.steps.add.PECVD',
     'dir28': 'fabrication_facilities.schema_packages.steps.add.LPCVD',
+    'dir29': 'fabrication_facilities.schema_packages.steps.remove.SpinResistDevelopment'
+    'dir30': 'fabrication_facilities.schema_packages.steps.remove.Rinsing_Drying'
 }

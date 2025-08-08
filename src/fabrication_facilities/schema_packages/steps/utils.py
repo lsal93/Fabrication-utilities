@@ -715,7 +715,7 @@ class Dryingbase(ArchiveSection):
         a_eln={'component': 'EnumEditQuantity'},
     )
 
-    temperature = Quantity(
+    drying_temperature = Quantity(
         type=np.float64,
         description='Temperature to dry directly on the carrier or chuck',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},

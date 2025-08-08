@@ -36,6 +36,8 @@ from fabrication_facilities.apps.menu_steps import (
     menutrans_track,
     menuutils_obsmeasurements,
     menuutils_startingmaterial,
+    menuremove_spinresist,
+    menuremove_rinsingdrying,
 )
 
 schemas = [f'*#{path_value}' for path_value in dir_path.values()]
@@ -126,12 +128,6 @@ stepapp = App(
                         ],
                     ),
                     Menu(
-                        title='Solution modification',
-                        items=[
-                            menutrans_develop,
-                        ],
-                    ),
-                    Menu(
                         title='Thermal processing',
                         items=[
                             menutrans_annealing,
@@ -161,6 +157,14 @@ stepapp = App(
                             menuremove_wetetching,
                             menuremove_wetclean,
                             menuremove_stripping,
+                            menutrans_develop,
+                            menuremove_spinresist,
+                        ],
+                    ),
+                    Menu(
+                        title='Drying',
+                        items=[
+                            menuremove_rinsingdrying
                         ],
                     ),
                 ],
