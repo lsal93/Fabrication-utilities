@@ -16,15 +16,6 @@ from fabrication_facilities.apps.menu_steps import (
     menuadd_sog,
     menuadd_spincoat,
     menuadd_sputtering,
-    menuremove_driebosch,
-    menuremove_icprie,
-    menuremove_resistdev,
-    menuremove_rie,
-    menuremove_rinsingdrying,
-    menuremove_spinresist,
-    menuremove_stripping,
-    menuremove_wetclean,
-    menuremove_wetetching,
     menutrans_annealing,
     menutrans_baking,
     menutrans_dicing,
@@ -46,7 +37,7 @@ dir0 = f'fabrication_facilities.schema_packages.fabrication_utilities.{fps}'
 schemas.append(f'*#{dir0}')
 
 stepapp = App(
-    label='Fabrication steps',
+    label='Fabrication steps (next deprecated)',
     path='stepapp',
     category='Fabrication facilities',
     description='App to search fabrication steps.',
@@ -141,29 +132,6 @@ stepapp = App(
                         items=[
                             menutrans_labelingcleaning,
                         ],
-                    ),
-                ],
-            ),
-            Menu(
-                title='Remove steps',
-                indentation=0,
-                items=[
-                    Menu(
-                        title='Etching',
-                        items=[
-                            menuremove_rie,
-                            menuremove_icprie,
-                            menuremove_driebosch,
-                            menuremove_wetetching,
-                            menuremove_wetclean,
-                            menuremove_stripping,
-                            menuremove_resistdev,
-                            menuremove_spinresist,
-                        ],
-                    ),
-                    Menu(
-                        title='Drying',
-                        items=[menuremove_rinsingdrying],
                     ),
                 ],
             ),
