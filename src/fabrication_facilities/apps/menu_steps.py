@@ -1139,7 +1139,7 @@ menutrans_fib = Menu(
     ],
 )
 menuremove_resistdev = Menu(
-    title='Spin resist development',
+    title='Resist development',
     size='xl',
     items=[
         MenuItemTerms(
