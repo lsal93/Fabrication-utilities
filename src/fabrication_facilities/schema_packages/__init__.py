@@ -67,6 +67,17 @@ Remove_entry_point = RemoveEntryPoint(
     description='Schema package for describing add steps in fabrications.',
 )
 
+class CharacterizationEntryPoint(SchemaPackageEntryPoint):
+    def load(self):
+        from fabrication_facilities.schema_packages.steps.character import m_package
+
+        return m_package
+
+
+Characterization_entry_point = CharacterizationEntryPoint(
+    name='Characterization steps',
+    description='Schema package for describing characterization steps supporting fabrications.',
+)
 
 class EquipmentsEntryPoint(SchemaPackageEntryPoint):
     def load(self):
