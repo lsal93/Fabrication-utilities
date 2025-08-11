@@ -1,3 +1,9 @@
+#this .py component contains test classes and other entities needed to manage characterization, like
+#characterization stesp, equipment, and the technology hirarchy/taxonomy
+#characterization taxonomy referenced in this package is taken from CHADA
+
+from fabrication_facilities.schema_packages.fabrication_utilities import EquipmentTechnique
+
 from typing import (
     TYPE_CHECKING,
 )
@@ -37,6 +43,55 @@ if TYPE_CHECKING:
 
 m_package = Package(name='Characterization processes schema')
 
+class CharacterizationTechnique (EquipmentTechnique):
+    m_def = Section(
+        a_eln={
+            'hide':['techniqueGeneralCategory'],
+            'properties': {
+                'order': [
+                    'name',
+                    'id',
+                    'description',
+                    'techniqueMainCategory',
+                    'techniqueSubCategory',
+                    'genericEquipmentName',
+                    'techniqueSubCategory',
+                    'referencingcategorization',
+                ]
+            }
+        },
+    techniqueMainCategory = Quantity(
+        type=MEnum(
+            [
+                'Mechanical testing methods',
+                'Microscopy based methods',
+                'Spectroscopy based methods',
+                'Diffraction based methods',
+                'Light scattering techniques for nanoparticle analysis',
+                'Tribological characterisation',
+                'Thermal analysis methods',
+                'Electrical characterisation methods',
+                'Magnetic characterisation methods',
+            ]
+        ),
+        a_eln={'component': 'EnumEditQuantity'},
+    )
+    techniqueSubCategory = Quantity(
+        type=MEnum(
+            [
+                'Macroscopic scale mechanical testing',
+                'Micro and nano-indentation',
+                'In-situ micro/nano-mechanical testing',
+                'Optical microscopy',
+                'Electron microscopy',
+                'Scanning probe microscopy',
+                'Focused Ion Beam microscopy',
+                'Scanning probe microscopy',
+            ]
+        ),
+        a_eln={'component': 'EnumEditQuantity'},
+    )
+    
 
 class AFMbase(FabricationProcessStepBase):
     m_def = Section(
@@ -83,15 +138,15 @@ class AFMbase(FabricationProcessStepBase):
     
     afm_setpoint = Quantity(
         type=np.float64,
-        description='ask to Erica Iacob',
+        description='force applied to the tip',
         a_eln={
             'component': 'NumberEditQuantity',
         },
-        unit='nm',
+        unit='A',
     )
     afm_fb_gain = Quantity(
         type=np.float64,
-        description='ask to Erica Iacob',
+        description='piezoelectric parameter',
         a_eln={
             'component': 'NumberEditQuantity',
         },
@@ -99,7 +154,7 @@ class AFMbase(FabricationProcessStepBase):
     )
     afm_tip_resonance = Quantity(
         type=np.float64,
-        description='ask to Erica Iacob',
+        description='tip calibration parameter',
         a_eln={
             'component': 'NumberEditQuantity',
         },
@@ -107,7 +162,7 @@ class AFMbase(FabricationProcessStepBase):
     )
     afm_tip_phase = Quantity(
         type=np.float64,
-        description='ask to Erica Iacob',
+        description='tip calibration parameter',
         a_eln={
             'component': 'NumberEditQuantity',
         },
@@ -115,7 +170,7 @@ class AFMbase(FabricationProcessStepBase):
     )
     afm_laser_intensity = Quantity(
         type=np.float64,
-        description='ask to Erica Iacob',
+        description='the laser source hitting the photodiode',
         a_eln={
             'component': 'NumberEditQuantity',
         },
@@ -123,7 +178,7 @@ class AFMbase(FabricationProcessStepBase):
     )
     afm_fb_gain_o = Quantity(
         type=np.float64,
-        description='ask to Erica Iacob',
+        description='tip parameter',
         a_eln={
             'component': 'NumberEditQuantity',
         },
