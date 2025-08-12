@@ -2,44 +2,25 @@
 #characterization stesp, equipment, and the technology hirarchy/taxonomy
 #characterization taxonomy referenced in this package is taken from CHADA
 
-from fabrication_facilities.schema_packages.fabrication_utilities import EquipmentTechnique
-
 from typing import (
     TYPE_CHECKING,
 )
 
 import numpy as np
-from nomad.datamodel.data import (
-    ArchiveSection,
-)
-from nomad.datamodel.metainfo.basesections import ElementalComposition
-from nomad.datamodel.metainfo.eln import Chemical
 from nomad.metainfo import (
     MEnum,
     Package,
     Quantity,
     Section,
-    SubSection,
 )
 
 from fabrication_facilities.schema_packages.fabrication_utilities import (
-    FabricationProcessStep,
+    EquipmentTechnique,
     FabricationProcessStepBase,
-)
-from fabrication_facilities.schema_packages.steps.utils import (
-    BeamColumn,
-)
-from fabrication_facilities.schema_packages.utils import (
-    parse_chemical_formula,
 )
 
 if TYPE_CHECKING:
-    from nomad.datamodel.datamodel import (
-        EntryArchive,
-    )
-    from structlog.stdlib import (
-        BoundLogger,
-    )
+    pass
 
 m_package = Package(name='Characterization processes schema')
 
@@ -59,7 +40,8 @@ class CharacterizationTechnique (EquipmentTechnique):
                     'referencingcategorization',
                 ]
             }
-        },
+        }
+    )
     techniqueMainCategory = Quantity(
         type=MEnum(
             [
@@ -76,22 +58,6 @@ class CharacterizationTechnique (EquipmentTechnique):
         ),
         a_eln={'component': 'EnumEditQuantity'},
     )
-    techniqueSubCategory = Quantity(
-        type=MEnum(
-            [
-                'Macroscopic scale mechanical testing',
-                'Micro and nano-indentation',
-                'In-situ micro/nano-mechanical testing',
-                'Optical microscopy',
-                'Electron microscopy',
-                'Scanning probe microscopy',
-                'Focused Ion Beam microscopy',
-                'Scanning probe microscopy',
-            ]
-        ),
-        a_eln={'component': 'EnumEditQuantity'},
-    )
-    
 
 class AFMbase(FabricationProcessStepBase):
     m_def = Section(
