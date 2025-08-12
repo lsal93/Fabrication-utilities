@@ -1042,4 +1042,3 @@ class FocusedIonBeamLithographer(ElectronBeamLithographer):
 
 
 # Devo migliorare il fib per cui capire la differenza vera con ebl non solo e o atomi
-

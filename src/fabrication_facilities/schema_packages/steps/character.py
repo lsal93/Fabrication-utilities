@@ -1,6 +1,7 @@
-#this .py component contains test classes and other entities needed to manage characterization, like
-#characterization stesp, equipment, and the technology hirarchy/taxonomy
-#characterization taxonomy referenced in this package is taken from CHADA
+# this .py component contains test classes and other entities needed to manage
+# characterization, like characterization stesp, equipment, and the
+# technology hirarchy/taxonomy characterization taxonomy referenced
+# in this package is taken from CHADA
 
 from typing import (
     TYPE_CHECKING,
@@ -24,10 +25,11 @@ if TYPE_CHECKING:
 
 m_package = Package(name='Characterization processes schema')
 
-class CharacterizationTechnique (EquipmentTechnique):
+
+class CharacterizationTechnique(EquipmentTechnique):
     m_def = Section(
         a_eln={
-            'hide':['techniqueGeneralCategory'],
+            'hide': ['techniqueGeneralCategory'],
             'properties': {
                 'order': [
                     'name',
@@ -39,7 +41,7 @@ class CharacterizationTechnique (EquipmentTechnique):
                     'techniqueSubCategory',
                     'referencingcategorization',
                 ]
-            }
+            },
         }
     )
     techniqueMainCategory = Quantity(
@@ -58,6 +60,7 @@ class CharacterizationTechnique (EquipmentTechnique):
         ),
         a_eln={'component': 'EnumEditQuantity'},
     )
+
 
 class AFMbase(FabricationProcessStepBase):
     m_def = Section(
@@ -93,7 +96,7 @@ class AFMbase(FabricationProcessStepBase):
             'component': 'StringEditQuantity',
         },
     )
-    
+
     afm_mode = Quantity(
         type=str,
         description='if proxy or in contact, if linear or scanning',
@@ -101,7 +104,7 @@ class AFMbase(FabricationProcessStepBase):
             'component': 'StringEditQuantity',
         },
     )
-    
+
     afm_setpoint = Quantity(
         type=np.float64,
         description='force applied to the tip',
@@ -151,4 +154,5 @@ class AFMbase(FabricationProcessStepBase):
         unit='nm',
     )
 
-#prova di modifica
+
+# prova di modifica

@@ -40,11 +40,12 @@ if TYPE_CHECKING:
 
 m_package = Package(name='Characterization equipment specific definitions ')
 
+
 #######################################################################################
 ################################ AFM ##################################################
 #######################################################################################
 class CharctEquipmentBase(Equipment):
-    m_def = Section (
+    m_def = Section(
         a_eln={
             'hide': [
                 'datetime',
@@ -117,7 +118,8 @@ class CharctEquipmentBase(Equipment):
         repeats=True,
     )
 
-class AFM_System(CharctEquipmentBase,ArchiveSection):
+
+class AFM_System(CharctEquipmentBase, ArchiveSection):
     m_def = Section(
         a_eln={
             'hide': [

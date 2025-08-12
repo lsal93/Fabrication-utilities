@@ -7,7 +7,9 @@ from nomad.config.models.ui import (
     SearchQuantities,
 )
 
-dir0='fabrication_facilities.schema_packages.equipments.character_equipment.AFM_System'
+dir0 = (
+    'fabrication_facilities.schema_packages.equipments.character_equipment.AFM_System'
+)
 Mainstr = 'data.equipmentTechniques.techniqueMainCategory'
 Substr = 'data.equipmentTechniques.techniqueSubCategory'
 gen = 'data.equipmentTechniques.genericEquipmentName'
