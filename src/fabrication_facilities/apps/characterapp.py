@@ -9,10 +9,9 @@ from nomad.config.models.ui import (
 from fabrication_facilities.apps.directories import dir_path
 
 schemas = [
-    f'*#{path_value}'
-    for path_value in dir_path.values()
-    if 'steps.character' in path_value
+    f'*#{path_value}' for path_value in dir_path.values() if 'steps.character' in path_value
 ]
+
 fps = 'FabricationProcessStep'
 dir0 = f'fabrication_facilities.schema_packages.fabrication_utilities.{fps}'
 schemas.append(f'*#{dir0}')

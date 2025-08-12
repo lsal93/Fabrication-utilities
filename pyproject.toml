@@ -131,7 +131,9 @@ Remove_entry_point = "fabrication_facilities.schema_packages:Remove_entry_point"
 Equipments_entry_point = "fabrication_facilities.schema_packages:Equipments_entry_point"
 materials_entry_point = "fabrication_facilities.schema_packages:materials_entry_point"
 calculus_entry_point = "fabrication_facilities.schema_packages:calculus_entry_point"
-
+Characterization_entry_point="fabrication_facilities.schema_packages:Characterization_entry_point"
+Characterization__Equipment_entry_point="fabrication_facilities.schema_packages:Characterization_Equipment_entry_point"
+charact_equipmentapp = "fabrication_facilities.apps:charact_equipment_app_entry_point"
 
 [tool.cruft]
 # Avoid updating workflow files, this leads to permissions issues
