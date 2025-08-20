@@ -291,7 +291,7 @@ menuadd_pecvd = Menu(
         MenuItemTerms(
             title='Material to be deposited',
             type='terms',
-            search_quantity=f'data.synthesis_steps.short_name#{dir_path["dir27"]}',
+            search_quantity=f'data.synthesis_steps.material_deposited.name#{dir_path["dir27"]}',
         ),
         MenuItemTerms(
             title='Formula of the material to be deposited',
@@ -301,7 +301,7 @@ menuadd_pecvd = Menu(
         MenuItemPeriodicTable(
             title='Elements deposited',
             type='periodic_table',
-            search_quantity=f'{mec}#{dir_path["dir27"]}',
+            search_quantity=f'data.synthesis_steps.material_deposited.elemental_composition.element#{dir_path["dir27"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements of gases employed',
@@ -328,33 +328,13 @@ menuadd_pecvd = Menu(
             ),
         ),
         MenuItemHistogram(
-            title='Wall temperature',
+            title='Chamber temperature',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.synthesis_steps.wall_temperature#{dir_path["dir27"]}',
-                title='wall_temperature',
+                search_quantity=f'data.synthesis_steps.chamber_temperature#{dir_path["dir27"]}',
+                title='chamber temperature',
                 unit='celsius',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Chuck temperature',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.synthesis_steps.chuck_temperature#{dir_path["dir27"]}',
-                title='chuck_temperature',
-                unit='celsius',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Bias',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.synthesis_steps.bias#{dir_path["dir27"]}',
-                title='bias',
-                unit='volt',
             ),
         ),
         MenuItemHistogram(
@@ -368,22 +348,42 @@ menuadd_pecvd = Menu(
             ),
         ),
         MenuItemHistogram(
+            title='Chuck temperature',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.synthesis_steps.chuck.chuck_temperature#{dir_path["dir27"]}',
+                title='chuck_temperature',
+                unit='celsius',
+            ),
+        ),
+        MenuItemHistogram(
             title='Chuck Power',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.synthesis_steps.chuck_power#{dir_path["dir27"]}',
+                search_quantity=f'data.synthesis_steps.chuck.chuck_power#{dir_path["dir27"]}',
                 title='chuck power',
                 unit='watt',
             ),
         ),
         MenuItemHistogram(
-            title='Chuck Frequency',
+            title='Chuck low frequency',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.synthesis_steps.chuck_frequency#{dir_path["dir27"]}',
-                title='chuck frequency',
+                search_quantity=f'data.synthesis_steps.chuck.chuck_low_frequency#{dir_path["dir27"]}',
+                title='chuck low frequency',
+                unit='MHz',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Chuck high frequency',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                search_quantity=f'data.synthesis_steps.chuck.chuck_high_frequency#{dir_path["dir27"]}',
+                title='chuck high frequency',
                 unit='MHz',
             ),
         ),
@@ -395,14 +395,14 @@ menuadd_pecvd = Menu(
         MenuItemTerms(
             title='Clamping type',
             type='terms',
-            search_quantity=f'data.synthesis_steps.clamping_type#{dir_path["dir27"]}',
+            search_quantity=f'data.synthesis_steps.chuck.clamping.clamping_type#{dir_path["dir27"]}',
         ),
         MenuItemHistogram(
             title='Clamping pressure',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.synthesis_steps.clamping_pressure#{dir_path["dir27"]}',
+                search_quantity=f'data.synthesis_steps.chuck.clamping.clamping_pressure#{dir_path["dir27"]}',
                 title='clamping pressure',
                 unit='mbar',
             ),
@@ -482,7 +482,7 @@ menuadd_lpcvd = Menu(
         MenuItemTerms(
             title='Material to be deposited',
             type='terms',
-            search_quantity=f'data.synthesis_steps.material_deposited.short_name#{dir_path["dir28"]}',
+            search_quantity=f'data.synthesis_steps.material_deposited.name#{dir_path["dir28"]}',
         ),
         MenuItemTerms(
             title='Formula of the material to be deposited',
