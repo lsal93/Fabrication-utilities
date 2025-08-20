@@ -20,7 +20,8 @@ dev = 'developing'
 meec = 'materials_etched.elemental_composition.element'
 rute = 'data.etching_steps.reactives_used_to_etch.elemental_composition.element'
 ru = 'data.etching_steps.reactives_used_to_etch'
-alias = 'data.synthesis_steps.target_material_formula'
+alias = 'data.synthesis_steps.material_deposited.chemical_formula'
+
 
 menuadd_icpcvd = Menu(
     title='ICP-CVD',
@@ -481,7 +482,7 @@ menuadd_lpcvd = Menu(
         MenuItemTerms(
             title='Material to be deposited',
             type='terms',
-            search_quantity=f'data.synthesis_steps.short_name#{dir_path["dir28"]}',
+            search_quantity=f'data.synthesis_steps.material_deposited.short_name#{dir_path["dir28"]}',
         ),
         MenuItemTerms(
             title='Formula of the material to be deposited',
@@ -491,7 +492,7 @@ menuadd_lpcvd = Menu(
         MenuItemPeriodicTable(
             title='Elements deposited',
             type='periodic_table',
-            search_quantity=f'{mec}#{dir_path["dir28"]}',
+            search_quantity=f'data.synthesis_steps.material_deposited.elemental_composition.element#{dir_path["dir28"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements of gases employed',
@@ -518,22 +519,12 @@ menuadd_lpcvd = Menu(
             ),
         ),
         MenuItemHistogram(
-            title='Wall temperature',
+            title='Chamber temperature',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.synthesis_steps.wall_temperature#{dir_path["dir28"]}',
-                title='wall_temperature',
-                unit='celsius',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Chuck temperature',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.synthesis_steps.chuck_temperature#{dir_path["dir28"]}',
-                title='chuck_temperature',
+                search_quantity=f'data.synthesis_steps.chamber_temperature#{dir_path["dir28"]}',
+                title='chamber temperature',
                 unit='celsius',
             ),
         ),
@@ -544,26 +535,6 @@ menuadd_lpcvd = Menu(
             x=Axis(
                 search_quantity=f'data.synthesis_steps.chamber_pressure#{dir_path["dir28"]}',
                 title='chamber pressure',
-                unit='mbar',
-            ),
-        ),
-        MenuItemTerms(
-            title='Clamping',
-            type='terms',
-            search_quantity=f'data.synthesis_steps.clamping#{dir_path["dir28"]}',
-        ),
-        MenuItemTerms(
-            title='Clamping type',
-            type='terms',
-            search_quantity=f'data.synthesis_steps.clamping_type#{dir_path["dir28"]}',
-        ),
-        MenuItemHistogram(
-            title='Clamping pressure',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.synthesis_steps.clamping_pressure#{dir_path["dir28"]}',
-                title='clamping pressure',
                 unit='mbar',
             ),
         ),

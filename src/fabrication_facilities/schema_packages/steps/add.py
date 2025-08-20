@@ -114,8 +114,6 @@ class LPCVDbase(FabricationProcessStepBase):
                     'starting_date',
                     'ending_date',
                     'duration',
-                    # 'short_name',
-                    # 'target_material_formula',
                     'chamber_temperature',
                     'chamber_pressure',
                     'number_of_loops',
@@ -124,21 +122,6 @@ class LPCVDbase(FabricationProcessStepBase):
             },
         },
     )
-
-    # short_name = Quantity(
-    #     type=str,
-    #     description='Material to be deposited',
-    #     a_eln={
-    #         'component': 'StringEditQuantity',
-    #         'label': 'target material',
-    #     },
-    # )
-
-    # target_material_formula = Quantity(
-    #     type=str,
-    #     description='Formula of the material target. Insert only if known',
-    #     a_eln={'component': 'StringEditQuantity'},
-    # )
 
     chamber_pressure = Quantity(
         type=np.float64,
@@ -172,10 +155,6 @@ class LPCVDbase(FabricationProcessStepBase):
         repeats=True,
     )
 
-    # material_elemental_composition = SubSection(
-    #     section_def=ElementalComposition, repeats=True
-    # )
-
     fluximeters = SubSection(
         section_def=Massflow_controller,
         repeats=True,
@@ -185,10 +164,6 @@ class LPCVDbase(FabricationProcessStepBase):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        # if self.target_material_formula:
-        #     self.material_elemental_composition = generate_elementality(
-        #         self.target_material_formula
-        #     )
 
 
 class PECVDbase(FabricationProcessStepBase):
@@ -205,8 +180,6 @@ class PECVDbase(FabricationProcessStepBase):
                     'starting_date',
                     'ending_date',
                     'duration',
-                    # 'short_name',
-                    # 'target_material_formula',
                     'chamber_temperature',
                     'chamber_pressure',
                     'number_of_loops',
@@ -215,21 +188,6 @@ class PECVDbase(FabricationProcessStepBase):
             },
         },
     )
-
-    # short_name = Quantity(
-    #     type=str,
-    #     description='Material to be deposited',
-    #     a_eln={
-    #         'component': 'StringEditQuantity',
-    #         'label': 'target material',
-    #     },
-    # )
-
-    # target_material_formula = Quantity(
-    #     type=str,
-    #     description='Formula of the material target. Insert only if known',
-    #     a_eln={'component': 'StringEditQuantity'},
-    # )
 
     chamber_pressure = Quantity(
         type=np.float64,
@@ -263,10 +221,6 @@ class PECVDbase(FabricationProcessStepBase):
         repeats=True,
     )
 
-    # material_elemental_composition = SubSection(
-    #     section_def=ElementalComposition, repeats=True
-    # )
-
     fluximeters = SubSection(
         section_def=Massflow_controller,
         repeats=True,
@@ -276,10 +230,6 @@ class PECVDbase(FabricationProcessStepBase):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
-        # if self.target_material_formula:
-        #     self.material_elemental_composition = generate_elementality(
-        #         self.target_material_formula
-        #     )
 
 
 class ICP_CVDbase(PECVDbase):
@@ -296,8 +246,6 @@ class ICP_CVDbase(PECVDbase):
                     'starting_date',
                     'ending_date',
                     'duration',
-                    # 'short_name',
-                    # 'target_material_formula',
                     'chamber_temperature',
                     'chamber_pressure',
                     'number_of_loops',
@@ -339,50 +287,16 @@ class LPCVD(FabricationProcessStep):
                     'step_type',
                     'definition_of_process_step',
                     'keywords',
-                    'short_name',
-                    'reference_name',
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
                     'thickness_target',
-                    'thickness_measured',
-                    'sample_temperature',
                     'duration_target',
-                    'duration_measured',
                     'deposition_rate_target',
                     'notes',
                 ]
             },
         },
-    )
-
-    short_name = Quantity(
-        type=str,
-        description='Deposition name',
-        a_eln={
-            'component': 'StringEditQuantity',
-            'label': 'Deposition name',
-        },
-    )
-    reference_name = Quantity(
-        type=str,
-        description='Reference Deposition name',
-        a_eln={
-            'component': 'StringEditQuantity',
-            'label': 'Reference deposition name',
-        },
-    )
-    duration_measured = Quantity(
-        type=np.float64,
-        description='Real time employed',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
-        unit='sec',
-    )
-    sample_temperature = Quantity(
-        type=np.float64,
-        description='Temperature of the sample',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
-        unit='celsius',
     )
 
     thickness_target = Quantity(
@@ -392,12 +306,6 @@ class LPCVD(FabricationProcessStep):
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'nm',
         },
-        unit='nm',
-    )
-
-    thickness_measured = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
         unit='nm',
     )
 
