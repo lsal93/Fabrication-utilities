@@ -27,6 +27,7 @@ from fabrication_facilities.schema_packages.steps.utils import (
 )
 from fabrication_facilities.schema_packages.utils import (
     TimeRampTemperature,
+    TimeRampPressure,
     parse_chemical_formula,
 )
 
@@ -40,6 +41,152 @@ if TYPE_CHECKING:
 
 m_package = Package(name='Add processes schema')
 
+#######################################################################################
+################################## THERMAL PROCESSING #################################
+#######################################################################################
+# The use of heating associated or not to gas or vapours mixtures, to modify the item #
+#  (wafer, piece of wafer). Semiconductor thermal processes can reach 1400 °C. They   #
+# are performed in tools called furnaces, or tubes. Main gas or vapours are: oxygen,  #
+#              hydrogen, nitrogen, argon, vaporized water, chlorine acid              #
+#######################################################################################
+
+
+class OxidationOutputs(ArchiveSection):
+    m_def=Section()
+
+    job_number= Quantity(
+        type=int,
+        a_eln={"component": "NumberEditQuantity"}
+    )
+
+    duration_measured = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 's'},
+        unit='s',
+    )
+
+class ThermalOxidationbase(FabricationProcessStepBase):
+    m_def=Section(
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'tag',
+                    'id_item_processed',
+                    'operator',
+                    'starting_date',
+                    'ending_date',
+                    'duration',
+                    'oxidation_type',
+                    'temperature_final_target',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    temperature_final_target = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+
+    number_of_loops = Quantity(
+        type=int,
+        description='Times for which this step is repeated with equal parameters',
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+
+    target_material=SubSection(
+        section_def = FabricationChemical,
+        repeats= False
+    )
+
+    fluximeters=SubSection(
+        section_def = Massflow_controller,
+        repeats=True
+    )
+
+    temperature_ramps = SubSection(
+        section_def = TimeRampTemperature,
+        repeats= True
+    )
+
+    pressure_ramps = SubSection(
+        section_def = TimeRampPressure,
+        repeats= True
+    )
+
+    item_carrier = SubSection(section_def=Carrier, repeats=False)
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
+class ThermalOxidation(FabricationProcessStep):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'tag',
+                'duration'
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'thickness_target',
+                    'duration_target',
+                    'oxidation_rate_target',
+                    'notes',
+                ]
+            },
+        },
+    )
+    thickness_target = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
+        unit='nm',
+    )
+
+    duration_target = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
+        unit='minute',
+    )
+
+    oxidation_rate_target = Quantity(
+        type=np.float64,
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm/minute'},
+        unit='nm/minute',
+    )
+
+    oxidation_steps = SubSection(
+        section_def = ThermalOxidationbase,
+        repeats=True
+    )
+
+    outputs = SubSection(
+        section_def = OxidationOutputs,
+        repeats=False
+    )
+
+
+#######################################################################################
+######################################## BAKING #######################################
+#######################################################################################
 
 class Bakingbase(FabricationProcessStepBase):
     m_def = Section(
@@ -123,6 +270,13 @@ class Baking(FabricationProcessStep):
         repeats=True,
     )
 
+#######################################################################################
+##################################### LITHOGRAPHY #####################################
+#######################################################################################
+#  Process in which a pattern is transferred from a CAD based set of information and  #
+#  data into a resist or directly into a substrate. These or the complementary parts  #
+#                               are then later removed.                               #
+#######################################################################################
 
 class DirectLitoOutputs(ArchiveSection):
     m_def = Section()
@@ -253,6 +407,51 @@ class EBL(FabricationProcessStep):
     )
 
 
+class FIBbase(FabricationProcessStepBase):
+    m_def = Section(
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'tag',
+                    'id_item_processed',
+                    'operator',
+                    'starting_date',
+                    'ending_date',
+                    'duration',
+                    'chamber_pressure',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    chamber_pressure = Quantity(
+        type=np.float64,
+        description='Pressure in the chamber',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
+
+    writing_settings = SubSection(
+        section_def=WritingParameters,
+        repeats=False,
+    )
+
+    beam_column = SubSection(section_def=BeamColumn, repeats=False)
+
+    alignment = SubSection(section_def=Alignment, repeats=False)
+
+    fluximeters = SubSection(
+        section_def= Massflow_controller,
+        repeats=True
+    )
+
+
 class FIB(FabricationProcessStep):
     m_def = Section(
         a_eln={
@@ -275,17 +474,7 @@ class FIB(FabricationProcessStep):
                     'recipe_name',
                     'recipe_file',
                     'recipe_preview',
-                    'dose',
-                    'writing_field_dimension',
-                    'address_size',
-                    'clock',
-                    'chamber_pressure',
-                    'chuck_temperature',
-                    'tension',
-                    'current',
-                    'alignment_required',
-                    'alignment_max_error',
-                    'number_of_loops',
+                    'duration_target',
                     'notes',
                 ]
             },
@@ -299,97 +488,38 @@ class FIB(FabricationProcessStep):
             'component': 'StringEditQuantity',
         },
     )
-    dose = Quantity(
+    recipe_file = Quantity(
+        type=str,
+        description='Name of the file that contains the geometry to impress',
+        a_eln={
+            'label': 'file CAD',
+            'component': 'FileEditQuantity',
+        },
+    )
+    duration_target = Quantity(
         type=np.float64,
-        description='Dose used in the process',
+        description='Duration of the process',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'uC/centimeter^2',
+            'defaultDisplayUnit': 'minute',
         },
-        unit='uC/centimeter^2',
+        unit='minute',
     )
-    writing_field_dimension = Quantity(
-        type=np.float64,
-        description='Area covered globally in the process',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'um^2',
-        },
-        unit='um^2',
+
+    writing_steps = SubSection(
+        section_def=FIBbase,
+        repeats=True,
     )
-    address_size = Quantity(
-        type=np.float64,
-        description='The minimum distance covered per step in the process',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm',
-        },
-        unit='nm',
+    outputs = SubSection(
+        section_def=DirectLitoOutputs,
+        repeats=False,
     )
-    clock = Quantity(
-        type=np.float64,
-        description='Frequency used',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'MHz',
-        },
-        unit='MHz',
-    )
-    current = Quantity(
-        type=np.float64,
-        description='Current provided',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'pampere',
-        },
-        unit='pampere',
-    )
-    chamber_pressure = Quantity(
-        type=np.float64,
-        description='Pressure in the chamber',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'mbar',
-        },
-        unit='mbar',
-    )
-    chuck_temperature = Quantity(
-        type=np.float64,
-        description='Temperature of the chuck',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'celsius',
-        },
-        unit='celsius',
-    )
-    tension = Quantity(
-        type=np.float64,
-        description='Voltage accelerating the ions',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'volt',
-        },
-        unit='volt',
-    )
-    alignment_required = Quantity(
-        type=bool,
-        description='Alignment is required in the patterning?',
-        a_eln={'component': 'BoolEditQuantity'},
-    )
-    alignment_max_error = Quantity(
-        type=np.float64,
-        description='Maximum error allowed in the alignment',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm',
-        },
-        unit='nm',
-    )
-    number_of_loops = Quantity(
-        type=int,
-        description='Iteration of the process',
-        a_eln={'component': 'NumberEditQuantity'},
-    )
+
+#######################################################################################
+# Da questo punto in poi le classi non sono ancora state riviste con lo schema adottato
+# di unit steps come sottosezioni degli effettivi steps che contengono informazioni
+# generali sul tipo di step steguito.
+#######################################################################################
 
 
 class Annealing(Chemical, FabricationProcessStep, ArchiveSection):
@@ -645,112 +775,6 @@ class LTODensification(Chemical, FabricationProcessStep, ArchiveSection):
                 print('No elements provided')
             self.gas_elemental_composition = elementality
 
-
-class ThermalOxidation(Chemical, FabricationProcessStep, ArchiveSection):
-    m_def = Section(
-        a_eln={
-            'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
-                'duration',
-                'end_time',
-                'start_time',
-            ],
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'description',
-                    'location',
-                    'operator',
-                    'room',
-                    'id_item_processed',
-                    'starting_date',
-                    'ending_date',
-                    'step_type',
-                    'definition_of_process_step',
-                    'keywords',
-                    'recipe_name',
-                    'recipe_file',
-                    'recipe_preview',
-                    'oxidation_type',
-                    'short_name',
-                    'chemical_formula',
-                    'temperature_final_target',
-                    'thickness_target',
-                    'duration_measured',
-                    'thickness_measured',
-                    'gas_flow',
-                    'notes',
-                ]
-            },
-        },
-    )
-    gas_flow = Quantity(
-        type=np.float64,
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'centimeter^3/minute',
-        },
-        unit='centimeter^3/minute',
-    )
-    oxidation_type = Quantity(
-        type=str,
-        a_eln={
-            'component': 'StringEditQuantity',
-        },
-    )
-    short_name = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity', 'label': 'thermal oxidation gas'},
-    )
-    temperature_final_target = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
-        unit='celsius',
-    )
-    thickness_target = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
-        unit='nm',
-    )
-    thickness_measured = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'nm'},
-        unit='nm',
-    )
-    duration_measured = Quantity(
-        type=np.float64,
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 's'},
-        unit='s',
-    )
-
-    gas_elemental_composition = SubSection(
-        section_def=ElementalComposition, repeats=True
-    )
-
-    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        super().normalize(archive, logger)
-        if self.chemical_formula:
-            elements, counts = parse_chemical_formula(self.chemical_formula)
-            total = 0
-            for token in counts:
-                total += int(token)
-            if total != 0:
-                elemental_fraction = np.array(counts) / total
-                elementality = []
-                i = 0
-                for entry in elements:
-                    elemental_try = ElementalComposition()
-                    elemental_try.element = entry
-                    elemental_try.atomic_fraction = elemental_fraction[i]
-                    i += 1
-                    elementality.append(elemental_try)
-            else:
-                print('No elements provided')
-            self.gas_elemental_composition = elementality
 
 
 class Dicing(FabricationProcessStep, ArchiveSection):
