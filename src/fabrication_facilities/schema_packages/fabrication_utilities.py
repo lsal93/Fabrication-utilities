@@ -44,7 +44,7 @@ from fabrication_facilities.schema_packages.Items import (
     Item,
     ItemsPermitted,
 )
-from fabrication_facilities.schema_packages.materials import FabricationOutput
+
 from fabrication_facilities.schema_packages.utils import parse_chemical_formula
 
 if TYPE_CHECKING:
@@ -555,6 +555,14 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         if self.instruments.section is not None:
             super().normalize(archive, logger)
+
+
+class FabricationOutput(ArchiveSection):
+    m_def = Section(
+        description="""
+        Ideal class to inherit to define any kind of outputs from a FabricationProcess.
+        """
+    )
 
 
 class FabricationProcess(EntryData, ArchiveSection):

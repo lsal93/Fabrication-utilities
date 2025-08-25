@@ -8,6 +8,8 @@ from nomad.config.models.ui import (
 )
 
 dir0 = 'fabrication_facilities.schema_packages.fabrication_utilities.FabricationProcess'
+dir1 = 'fabrication_facilities.schema_packages.materials.MaterialProductionProcess'
+
 processapp = App(
     label='Processes',
     path='processesapp',
@@ -17,7 +19,7 @@ processapp = App(
     This research app allows to search general information about fabrication processes.
     You can search products, affiliation of the project and the item processed
     """,
-    search_quantities=SearchQuantities(include=[f'*#{dir0}']),
+    search_quantities=SearchQuantities(include=[f'*#{dir0}', f'*#{dir1}']),
     columns=[
         Column(quantity='entry_name', selected=True),
         Column(quantity='entry_type'),
@@ -61,6 +63,9 @@ processapp = App(
                 title='Author',
                 type='terms',
                 search_quantity=f'data.author#{dir0}',
+            ),
+            Menu(
+                title = "Materials produced"
             ),
             Menu(
                 title='User defined quantities',
