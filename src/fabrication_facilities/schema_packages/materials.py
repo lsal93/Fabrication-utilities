@@ -13,15 +13,12 @@ from nomad.metainfo import (
     SubSection,
 )
 
-# from fabrication_facilities.schema_packages.fabrication_utilities import (
-# EquipmentReference,
-#    FabricationProcess,
-#    FabricationProcessStep,
-# )
-from fabrication_facilities.schema_packages.utils import FabricationChemical
 from fabrication_facilities.schema_packages.fabrication_utilities import (
-    FabricationOutput
+    FabricationOutput,
+    FabricationProcess,
+    FabricationProcessStep,
 )
+from fabrication_facilities.schema_packages.utils import FabricationChemical
 
 if TYPE_CHECKING:
     pass

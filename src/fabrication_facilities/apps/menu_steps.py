@@ -11,7 +11,7 @@ from fabrication_facilities.apps.directories import dir_path
 mec = 'data.synthesis_steps.material_elemental_composition.element'
 flux = 'data.synthesis_steps.fluximeters.elemental_composition.element'
 fluxetch = 'data.etching_steps.fluximeters.elemental_composition.element'
-rec = 'data.resist_material.elemental_composition.element'
+rec = 'data.spin_coating_steps.resist_material.elemental_composition.element'
 gec = 'data.gas_elemental_composition.element'
 dmec = 'data.doping_material_elemental_composition.element'
 sec = 'data.substrate_elemental_composition.element'
@@ -593,12 +593,12 @@ menuadd_spincoat = Menu(
         MenuItemTerms(
             title='Resist to be deposited',
             type='terms',
-            search_quantity=f'data.resist_material.name#{dir_path["dir2"]}',
+            search_quantity=f'data.spin_coating_steps.resist_material.name#{dir_path["dir2"]}',
         ),
         MenuItemTerms(
             title='Formulas of the resist',
             type='terms',
-            search_quantity=f'data.resist_material.chemical_formula#{dir_path["dir2"]}',
+            search_quantity=f'data.spin_coating_steps.resist_material.chemical_formula#{dir_path["dir2"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements of the resist deposited',
