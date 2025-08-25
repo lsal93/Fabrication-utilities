@@ -1032,24 +1032,24 @@ menutrans_fib = Menu(
         MenuItemPeriodicTable(
             title='Elements of gases employed',
             type='periodic_table',
-            search_quantity=f'data.writing_steps.fluximeters.elemental_composition.element#{dir_path["dir1"]}',
+            search_quantity=f'data.writing_steps.fluximeters.elemental_composition.element#{dir_path["dir4"]}',
         ),
         MenuItemTerms(
             title='Gases formulas',
             type='terms',
-            search_quantity=f'data.writing_steps.fluximeters.chemical_formula#{dir_path["dir1"]}',
+            search_quantity=f'data.writing_steps.fluximeters.chemical_formula#{dir_path["dir4"]}',
         ),
         MenuItemTerms(
             title='Gases name',
             type='terms',
-            search_quantity=f'data.writing_steps.fluximeters.name#{dir_path["dir1"]}',
+            search_quantity=f'data.writing_steps.fluximeters.name#{dir_path["dir4"]}',
         ),
         MenuItemHistogram(
             title='Gases fluxes',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.writing_steps.fluximeters.massflow#{dir_path["dir1"]}',
+                search_quantity=f'data.writing_steps.fluximeters.massflow#{dir_path["dir4"]}',
                 unit='centimeter^3/minute',
             ),
         ),

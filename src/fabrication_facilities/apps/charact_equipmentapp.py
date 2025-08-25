@@ -2,8 +2,9 @@
 # It shows both common fields/parameters and custom fields/parameters -
 # only some for each tools has been defined
 # All tool parameters are searchable in the "User defined" section
-# To be fixed: units for most of the custom parameters, like Ohm/sq, for sheet resistance
-# and many others
+# To be fixed: units for most of the custom parameters, like Ohm/sq, for sheet
+# resistance and many others
+
 from nomad.config.models.ui import (
     App,
     Column,
