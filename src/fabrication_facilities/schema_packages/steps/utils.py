@@ -612,9 +612,9 @@ class WritingParameters(ArchiveSection):
         description='Time occurred to align the beam at the end of the writing field',
         a_eln={
             'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'um',
+            'defaultDisplayUnit': 'us',
         },
-        unit='um',
+        unit='us',
     )
     # clock = Quantity(
     #     type=np.float64,

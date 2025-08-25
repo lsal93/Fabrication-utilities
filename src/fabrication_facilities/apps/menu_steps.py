@@ -793,13 +793,33 @@ menutrans_ebl = Menu(
             search_quantity=f'data.recipe_name#{dir_path["dir3"]}',
         ),
         MenuItemHistogram(
-            title='Dose',
+            title='Area dose',
             type='histogram',
             n_bins=10,
             x=Axis(
-                title='dose',
+                title='area dose',
                 unit='uC/cm^2',
-                search_quantity=f'data.dose#{dir_path["dir3"]}',
+                search_quantity=f'data.writing_steps.writing_settings.area_dose#{dir_path["dir3"]}',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Line dose',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                title='line dose',
+                unit='pC/cm',
+                search_quantity=f'data.writing_steps.writing_settings.line_dose#{dir_path["dir3"]}',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Dot dose',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                title='dot dose',
+                unit='pC',
+                search_quantity=f'data.writing_steps.writing_settings.dot_dose#{dir_path["dir3"]}',
             ),
         ),
         MenuItemHistogram(
@@ -809,7 +829,7 @@ menutrans_ebl = Menu(
             x=Axis(
                 title='writing field dimension',
                 unit='um^2',
-                search_quantity=f'data.writing_field_dimension#{dir_path["dir3"]}',
+                search_quantity=f'data.writing_steps.writing_settings.writing_field_dimension#{dir_path["dir3"]}',
             ),
         ),
         MenuItemHistogram(
@@ -819,47 +839,37 @@ menutrans_ebl = Menu(
             x=Axis(
                 title='address size',
                 unit='nm',
-                search_quantity=f'data.address_size#{dir_path["dir3"]}',
+                search_quantity=f'data.writing_steps.writing_settings.address_size#{dir_path["dir3"]}',
             ),
         ),
         MenuItemHistogram(
-            title='Clock',
+            title='Settling time',
             type='histogram',
             n_bins=10,
             x=Axis(
-                title='clock',
-                unit='MHz',
-                search_quantity=f'data.clock#{dir_path["dir3"]}',
+                title='settling time',
+                unit='us',
+                search_quantity=f'data.writing_steps.writing_settings.settling_time#{dir_path["dir3"]}',
             ),
         ),
+        # MenuItemHistogram(
+        #     title='Clock',
+        #     type='histogram',
+        #     n_bins=10,
+        #     x=Axis(
+        #         title='clock',
+        #         unit='MHz',
+        #         search_quantity=f'data.clock#{dir_path["dir3"]}',
+        #     ),
+        # ),
         MenuItemHistogram(
-            title='Current',
+            title='Current desired',
             type='histogram',
             n_bins=10,
             x=Axis(
-                title='current',
+                title='current desired',
                 unit='pA',
-                search_quantity=f'data.current#{dir_path["dir3"]}',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Chamber pressure',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                title='chamber pressure',
-                unit='mbar',
-                search_quantity=f'data.chamber_pressure#{dir_path["dir3"]}',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Chuck temperature',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                title='chuck temperature',
-                unit='celsius',
-                search_quantity=f'data.chuck_temperature#{dir_path["dir3"]}',
+                search_quantity=f'data.writing_steps.beam_column.current_target#{dir_path["dir3"]}',
             ),
         ),
         MenuItemHistogram(
@@ -868,14 +878,9 @@ menutrans_ebl = Menu(
             n_bins=10,
             x=Axis(
                 title='tension',
-                unit='V',
-                search_quantity=f'data.tension#{dir_path["dir3"]}',
+                unit='kV',
+                search_quantity=f'data.writing_steps.beam_column.tension#{dir_path["dir3"]}',
             ),
-        ),
-        MenuItemTerms(
-            title='Alignment required',
-            type='terms',
-            search_quantity=f'data.alignment_required#{dir_path["dir3"]}',
         ),
         MenuItemHistogram(
             title='Max alignment error',
@@ -884,7 +889,7 @@ menutrans_ebl = Menu(
             x=Axis(
                 title='max alignment error',
                 unit='nm',
-                search_quantity=f'data.alignment_max_error#{dir_path["dir3"]}',
+                search_quantity=f'data.writing_steps.alignment.alignment_max_error#{dir_path["dir3"]}',
             ),
         ),
         MenuItemTerms(
@@ -899,6 +904,7 @@ menutrans_ebl = Menu(
         ),
     ],
 )
+
 menutrans_fib = Menu(
     title='Focused I-Beam Lithography',
     size='xl',
@@ -918,14 +924,39 @@ menutrans_fib = Menu(
             type='terms',
             search_quantity=f'data.recipe_name#{dir_path["dir4"]}',
         ),
+        MenuItemTerms(
+            title='Probe',
+            type='terms',
+            search_quantity=f'data.writing_steps.beam_column.beam_source.probe#{dir_path["dir4"]}',
+        ),
         MenuItemHistogram(
-            title='Dose',
+            title='Area dose',
             type='histogram',
             n_bins=10,
             x=Axis(
-                title='dose',
+                title='area dose',
                 unit='uC/cm^2',
-                search_quantity=f'data.dose#{dir_path["dir4"]}',
+                search_quantity=f'data.writing_steps.writing_settings.area_dose#{dir_path["dir4"]}',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Line dose',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                title='line dose',
+                unit='pC/cm',
+                search_quantity=f'data.writing_steps.writing_settings.line_dose#{dir_path["dir4"]}',
+            ),
+        ),
+        MenuItemHistogram(
+            title='Dot dose',
+            type='histogram',
+            n_bins=10,
+            x=Axis(
+                title='dot dose',
+                unit='pC',
+                search_quantity=f'data.writing_steps.writing_settings.dot_dose#{dir_path["dir4"]}',
             ),
         ),
         MenuItemHistogram(
@@ -935,7 +966,7 @@ menutrans_fib = Menu(
             x=Axis(
                 title='writing field dimension',
                 unit='um^2',
-                search_quantity=f'data.writing_field_dimension#{dir_path["dir4"]}',
+                search_quantity=f'data.writing_steps.writing_settings.writing_field_dimension#{dir_path["dir4"]}',
             ),
         ),
         MenuItemHistogram(
@@ -945,47 +976,37 @@ menutrans_fib = Menu(
             x=Axis(
                 title='address size',
                 unit='nm',
-                search_quantity=f'data.address_size#{dir_path["dir4"]}',
+                search_quantity=f'data.writing_steps.writing_settings.address_size#{dir_path["dir4"]}',
             ),
         ),
         MenuItemHistogram(
-            title='Clock',
+            title='Settling time',
             type='histogram',
             n_bins=10,
             x=Axis(
-                title='clock',
-                unit='MHz',
-                search_quantity=f'data.clock#{dir_path["dir4"]}',
+                title='settling time',
+                unit='us',
+                search_quantity=f'data.writing_steps.writing_settings.settling_time#{dir_path["dir4"]}',
             ),
         ),
+        # MenuItemHistogram(
+        #     title='Clock',
+        #     type='histogram',
+        #     n_bins=10,
+        #     x=Axis(
+        #         title='clock',
+        #         unit='MHz',
+        #         search_quantity=f'data.clock#{dir_path["dir4"]}',
+        #     ),
+        # ),
         MenuItemHistogram(
-            title='Current',
+            title='Current desired',
             type='histogram',
             n_bins=10,
             x=Axis(
-                title='current',
+                title='current desired',
                 unit='pA',
-                search_quantity=f'data.current#{dir_path["dir4"]}',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Chamber pressure',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                title='chamber pressure',
-                unit='mbar',
-                search_quantity=f'data.chamber_pressure#{dir_path["dir4"]}',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Chuck temperature',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                title='chuck temperature',
-                unit='celsius',
-                search_quantity=f'data.chuck_temperature#{dir_path["dir4"]}',
+                search_quantity=f'data.writing_steps.beam_column.current_target#{dir_path["dir4"]}',
             ),
         ),
         MenuItemHistogram(
@@ -994,14 +1015,9 @@ menutrans_fib = Menu(
             n_bins=10,
             x=Axis(
                 title='tension',
-                unit='V',
-                search_quantity=f'data.tension#{dir_path["dir4"]}',
+                unit='kV',
+                search_quantity=f'data.writing_steps.beam_column.tension#{dir_path["dir4"]}',
             ),
-        ),
-        MenuItemTerms(
-            title='Alignment required',
-            type='terms',
-            search_quantity=f'data.alignment_required#{dir_path["dir4"]}',
         ),
         MenuItemHistogram(
             title='Max alignment error',
@@ -1010,16 +1026,31 @@ menutrans_fib = Menu(
             x=Axis(
                 title='max alignment error',
                 unit='nm',
-                search_quantity=f'data.alignment_max_error#{dir_path["dir3"]}',
+                search_quantity=f'data.writing_steps.alignment.alignment_max_error#{dir_path["dir4"]}',
             ),
         ),
+        MenuItemPeriodicTable(
+            title='Elements of gases employed',
+            type='periodic_table',
+            search_quantity=f'data.writing_steps.fluximeters.elemental_composition.element#{dir_path["dir1"]}',
+        ),
+        MenuItemTerms(
+            title='Gases formulas',
+            type='terms',
+            search_quantity=f'data.writing_steps.fluximeters.chemical_formula#{dir_path["dir1"]}',
+        ),
+        MenuItemTerms(
+            title='Gases name',
+            type='terms',
+            search_quantity=f'data.writing_steps.fluximeters.name#{dir_path["dir1"]}',
+        ),
         MenuItemHistogram(
-            title='N° of loops',
+            title='Gases fluxes',
             type='histogram',
             n_bins=10,
             x=Axis(
-                title='n° of loops',
-                search_quantity=f'data.number_of_loops#{dir_path["dir4"]}',
+                search_quantity=f'data.writing_steps.fluximeters.massflow#{dir_path["dir1"]}',
+                unit='centimeter^3/minute',
             ),
         ),
         MenuItemTerms(
