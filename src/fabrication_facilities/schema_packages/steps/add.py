@@ -729,23 +729,6 @@ class Spin_Coatingbase(FabricationProcessStepBase):
             },
         },
     )
-    resist_name = Quantity(
-        type=str,
-        description='Type of resist to be deposited',
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    resist_chemical_formula = Quantity(
-        type=str,
-        description='Resist formula. Insert only if known',
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    resist_type = Quantity(
-        type=MEnum(
-            'positive',
-            'negative',
-        ),
-        a_eln={'component': 'EnumEditQuantity'},
-    )
     dispensing_mode = Quantity(
         type=MEnum(
             'auto',
@@ -784,8 +767,8 @@ class Spin_Coatingbase(FabricationProcessStepBase):
         """,
         a_eln={'component': 'BoolEditQuantity'},
     )
-    resist_elemental_composition = SubSection(
-        section_def=ElementalComposition, repeats=True
+    resist_material = SubSection(
+        section_def=FabricationChemical, repeats=True
     )
 
     priming = SubSection(section_def=Priming, repeats=False)

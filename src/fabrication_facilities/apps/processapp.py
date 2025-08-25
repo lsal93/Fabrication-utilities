@@ -58,11 +58,6 @@ processapp = App(
                 search_quantity=f'data.generic_product_name#{dir0}',
             ),
             MenuItemTerms(
-                title='ID item processed',
-                type='terms',
-                search_quantity=f'data.id_item_processed#{dir0}',
-            ),
-            MenuItemTerms(
                 title='Author',
                 type='terms',
                 search_quantity=f'data.author#{dir0}',

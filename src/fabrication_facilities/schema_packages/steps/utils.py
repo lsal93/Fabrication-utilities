@@ -423,6 +423,16 @@ class ResistivityControl(ArchiveSection):
 # Resist coating utils and SpinningComponent the most widely used also in other utils #
 #######################################################################################
 
+class ResistDescription(FabricationChemical):
+    m_def=Section()
+
+    resist_type = Quantity(
+        type=MEnum(
+            'positive',
+            'negative',
+        ),
+        a_eln={'component': 'EnumEditQuantity'},
+    )
 
 class SpinningComponent(ArchiveSection):
     m_def = Section()

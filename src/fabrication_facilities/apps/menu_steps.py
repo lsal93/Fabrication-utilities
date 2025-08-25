@@ -11,7 +11,7 @@ from fabrication_facilities.apps.directories import dir_path
 mec = 'data.synthesis_steps.material_elemental_composition.element'
 flux = 'data.synthesis_steps.fluximeters.elemental_composition.element'
 fluxetch = 'data.etching_steps.fluximeters.elemental_composition.element'
-rec = 'data.resist_elemental_composition.element'
+rec = 'data.resist_material.elemental_composition.element'
 gec = 'data.gas_elemental_composition.element'
 dmec = 'data.doping_material_elemental_composition.element'
 sec = 'data.substrate_elemental_composition.element'
@@ -593,12 +593,12 @@ menuadd_spincoat = Menu(
         MenuItemTerms(
             title='Resist to be deposited',
             type='terms',
-            search_quantity=f'data.short_name#{dir_path["dir2"]}',
+            search_quantity=f'data.resist_material.name#{dir_path["dir2"]}',
         ),
         MenuItemTerms(
             title='Formulas of the resist',
             type='terms',
-            search_quantity=f'data.chemical_formula#{dir_path["dir2"]}',
+            search_quantity=f'data.resist_material.chemical_formula#{dir_path["dir2"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements of the resist deposited',
@@ -616,87 +616,37 @@ menuadd_spincoat = Menu(
             ),
         ),
         MenuItemTerms(
-            title='HDMS',
+            title='Primer type',
             type='terms',
-            search_quantity=f'data.hdms_required#{dir_path["dir2"]}',
+            search_quantity=f'data.spin_coating_steps.priming.primer_type#{dir_path["dir2"]}',
         ),
         MenuItemTerms(
-            title='PEB',
+            title='Primer physical phase',
             type='terms',
-            search_quantity=f'data.peb_required#{dir_path["dir2"]}',
+            search_quantity=f'data.spin_coating_steps.priming.primer_physical_phase#{dir_path["dir2"]}',
         ),
         MenuItemHistogram(
-            title='PEB duration',
+            title='Primer temperature',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.peb_duration#{dir_path["dir2"]}',
-                title='peb duration',
-                unit='minute',
-            ),
-        ),
-        MenuItemHistogram(
-            title='PEB temperature',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.peb_temperature#{dir_path["dir2"]}',
-                title='peb temperature',
+                search_quantity=f'data.spin_coating_steps.priming.primer_temperature#{dir_path["dir2"]}',
+                title='primer temperature',
                 unit='celsius',
             ),
         ),
         MenuItemTerms(
-            title='Exposure',
-            type='terms',
-            search_quantity=f'data.exposure_required#{dir_path["dir2"]}',
+            title='Dispening mode',
+            type='histogram',
+            search_quantity=f'data.spin_coating_steps.dispensing_mode#{dir_path["dir2"]}'
         ),
         MenuItemHistogram(
-            title='Exposure power density',
+            title='Dispensed volume',
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.exposure_intensity#{dir_path["dir2"]}',
-                title='exposure power density',
-                unit='mwatt/cm^2',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Exposure duration',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.exposure_duration#{dir_path["dir2"]}',
-                title='exposure duration',
-                unit='sec',
-            ),
-        ),
-        MenuItemHistogram(
-            title='De-wetting duration',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.dewetting_duration#{dir_path["dir2"]}',
-                title='de-wetting duration',
-                unit='minute',
-            ),
-        ),
-        MenuItemHistogram(
-            title='De-wetting temperature',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.dewetting_temperature#{dir_path["dir2"]}',
-                title='De-wetting temperature',
-                unit='celsius',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Spinned volume',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.spin_dispensed_volume#{dir_path["dir2"]}',
-                title='volume dispensed',
+                search_quantity=f'data.spin_coating_steps.dispensed_volume#{dir_path["dir2"]}',
+                title='dispensed volume',
                 unit='milliliter',
             ),
         ),
@@ -705,7 +655,7 @@ menuadd_spincoat = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.spin_duration#{dir_path["dir2"]}',
+                search_quantity=f'data.spin_coating_steps.spin_phase.spin_duration#{dir_path["dir2"]}',
                 title='spin duration',
                 unit='sec',
             ),
@@ -715,7 +665,7 @@ menuadd_spincoat = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.spin_frequency#{dir_path["dir2"]}',
+                search_quantity=f'data.spin_coating_steps.spin_phase.spin_frequency#{dir_path["dir2"]}',
                 title='frequency',
                 unit='rpm',
             ),
@@ -725,44 +675,9 @@ menuadd_spincoat = Menu(
             type='histogram',
             n_bins=10,
             x=Axis(
-                search_quantity=f'data.spin_angular_acceleration#{dir_path["dir2"]}',
+                search_quantity=f'data.spin_coating_steps.spin_phase.spin_angular_acceleration#{dir_path["dir2"]}',
                 title='angular acceleration',
                 unit='rpm/sec',
-            ),
-        ),
-        MenuItemTerms(
-            title='Bake',
-            type='terms',
-            search_quantity=f'data.baking_required#{dir_path["dir2"]}',
-        ),
-        MenuItemHistogram(
-            title='Baking duration',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.baking_duration#{dir_path["dir2"]}',
-                title='baking duration',
-                unit='minute',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Baking temperature',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.baking_temperature#{dir_path["dir2"]}',
-                title='baking temperature',
-                unit='celsius',
-            ),
-        ),
-        MenuItemHistogram(
-            title='Thickness obtained',
-            type='histogram',
-            n_bins=10,
-            x=Axis(
-                search_quantity=f'data.thickness_measured#{dir_path["dir2"]}',
-                title='thickness obtained',
-                unit='nm',
             ),
         ),
         MenuItemTerms(

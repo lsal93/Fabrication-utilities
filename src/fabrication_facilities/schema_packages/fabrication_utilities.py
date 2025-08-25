@@ -595,10 +595,6 @@ class FabricationProcess(EntryData, ArchiveSection):
         type=str,
         a_eln={'component': 'StringEditQuantity'},
     )
-    id_item_processed = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
     affiliation = Quantity(
         type=MEnum(
             [
