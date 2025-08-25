@@ -23,11 +23,14 @@ from fabrication_facilities.schema_packages.fabrication_utilities import (
 from fabrication_facilities.schema_packages.steps.utils import (
     Alignment,
     BeamColumn,
+    Carrier,
+    Massflow_controller,
     WritingParameters,
 )
 from fabrication_facilities.schema_packages.utils import (
-    TimeRampTemperature,
+    FabricationChemical,
     TimeRampPressure,
+    TimeRampTemperature,
     parse_chemical_formula,
 )
 
@@ -52,12 +55,9 @@ m_package = Package(name='Add processes schema')
 
 
 class OxidationOutputs(ArchiveSection):
-    m_def=Section()
+    m_def = Section()
 
-    job_number= Quantity(
-        type=int,
-        a_eln={"component": "NumberEditQuantity"}
-    )
+    job_number = Quantity(type=int, a_eln={'component': 'NumberEditQuantity'})
 
     duration_measured = Quantity(
         type=np.float64,
@@ -65,8 +65,9 @@ class OxidationOutputs(ArchiveSection):
         unit='s',
     )
 
+
 class ThermalOxidationbase(FabricationProcessStepBase):
-    m_def=Section(
+    m_def = Section(
         a_eln={
             'properties': {
                 'order': [
@@ -98,38 +99,24 @@ class ThermalOxidationbase(FabricationProcessStepBase):
         a_eln={'component': 'NumberEditQuantity'},
     )
 
-    target_material=SubSection(
-        section_def = FabricationChemical,
-        repeats= False
-    )
+    target_material = SubSection(section_def=FabricationChemical, repeats=False)
 
-    fluximeters=SubSection(
-        section_def = Massflow_controller,
-        repeats=True
-    )
+    fluximeters = SubSection(section_def=Massflow_controller, repeats=True)
 
-    temperature_ramps = SubSection(
-        section_def = TimeRampTemperature,
-        repeats= True
-    )
+    temperature_ramps = SubSection(section_def=TimeRampTemperature, repeats=True)
 
-    pressure_ramps = SubSection(
-        section_def = TimeRampPressure,
-        repeats= True
-    )
+    pressure_ramps = SubSection(section_def=TimeRampPressure, repeats=True)
 
     item_carrier = SubSection(section_def=Carrier, repeats=False)
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
 
+
 class ThermalOxidation(FabricationProcessStep):
     m_def = Section(
         a_eln={
-            'hide': [
-                'tag',
-                'duration'
-            ],
+            'hide': ['tag', 'duration'],
             'properties': {
                 'order': [
                     'job_number',
@@ -173,20 +160,15 @@ class ThermalOxidation(FabricationProcessStep):
         unit='nm/minute',
     )
 
-    oxidation_steps = SubSection(
-        section_def = ThermalOxidationbase,
-        repeats=True
-    )
+    oxidation_steps = SubSection(section_def=ThermalOxidationbase, repeats=True)
 
-    outputs = SubSection(
-        section_def = OxidationOutputs,
-        repeats=False
-    )
+    outputs = SubSection(section_def=OxidationOutputs, repeats=False)
 
 
 #######################################################################################
 ######################################## BAKING #######################################
 #######################################################################################
+
 
 class Bakingbase(FabricationProcessStepBase):
     m_def = Section(
@@ -270,6 +252,7 @@ class Baking(FabricationProcessStep):
         repeats=True,
     )
 
+
 #######################################################################################
 ##################################### LITHOGRAPHY #####################################
 #######################################################################################
@@ -278,8 +261,14 @@ class Baking(FabricationProcessStep):
 #                               are then later removed.                               #
 #######################################################################################
 
+
 class DirectLitoOutputs(ArchiveSection):
     m_def = Section()
+
+    job_number= Quantity(
+        type=int,
+        a_eln={"component": "NumberEditQuantity"}
+    )
 
     current_measured = Quantity(
         type=np.float64,
@@ -446,10 +435,7 @@ class FIBbase(FabricationProcessStepBase):
 
     alignment = SubSection(section_def=Alignment, repeats=False)
 
-    fluximeters = SubSection(
-        section_def= Massflow_controller,
-        repeats=True
-    )
+    fluximeters = SubSection(section_def=Massflow_controller, repeats=True)
 
 
 class FIB(FabricationProcessStep):
@@ -514,6 +500,7 @@ class FIB(FabricationProcessStep):
         section_def=DirectLitoOutputs,
         repeats=False,
     )
+
 
 #######################################################################################
 # Da questo punto in poi le classi non sono ancora state riviste con lo schema adottato
@@ -774,7 +761,6 @@ class LTODensification(Chemical, FabricationProcessStep, ArchiveSection):
             else:
                 print('No elements provided')
             self.gas_elemental_composition = elementality
-
 
 
 class Dicing(FabricationProcessStep, ArchiveSection):

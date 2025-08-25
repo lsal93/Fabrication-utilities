@@ -83,10 +83,9 @@ Characterization_entry_point = CharacterizationEntryPoint(
 
 class CharacterizationEquipmentEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.equipments.\
-            character_equipment import (
-                m_package,
-            )
+        from fabrication_facilities.schema_packages.equipments.character_equipment import (
+            m_package,
+        )
 
         return m_package
 

@@ -423,8 +423,9 @@ class ResistivityControl(ArchiveSection):
 # Resist coating utils and SpinningComponent the most widely used also in other utils #
 #######################################################################################
 
+
 class ResistDescription(FabricationChemical):
-    m_def=Section()
+    m_def = Section()
 
     resist_type = Quantity(
         type=MEnum(
@@ -433,6 +434,7 @@ class ResistDescription(FabricationChemical):
         ),
         a_eln={'component': 'EnumEditQuantity'},
     )
+
 
 class SpinningComponent(ArchiveSection):
     m_def = Section()
@@ -743,4 +745,6 @@ class Dryingbase(ArchiveSection):
 
 
 class SpinDryingbase(Dryingbase):
+    m_def = Section()
+
     spinning_parameters = SubSection(section_def=SpinningComponent, repeats=False)

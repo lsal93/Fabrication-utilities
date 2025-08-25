@@ -638,7 +638,7 @@ menuadd_spincoat = Menu(
         MenuItemTerms(
             title='Dispening mode',
             type='histogram',
-            search_quantity=f'data.spin_coating_steps.dispensing_mode#{dir_path["dir2"]}'
+            search_quantity=f'data.spin_coating_steps.dispensing_mode#{dir_path["dir2"]}',
         ),
         MenuItemHistogram(
             title='Dispensed volume',

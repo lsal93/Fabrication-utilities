@@ -1,5 +1,5 @@
 # This app is managing NOMAD explore menus to search characterization tools
-# It shows both common fields/parameters and custom fields/parameters - 
+# It shows both common fields/parameters and custom fields/parameters -
 # only some for each tools has been defined
 # All tool parameters are searchable in the "User defined" section
 # To be fixed: units for most of the custom parameters, like Ohm/sq, for sheet resistance
@@ -14,7 +14,9 @@ from nomad.config.models.ui import (
 )
 
 dir0 = 'fabrication_facilities.schema_packages.equipments.character_equipment.CharactEquipmentBase'
-dir1 = 'fabrication_facilities.schema_packages.equipments.character_equipment.AFM_System'
+dir1 = (
+    'fabrication_facilities.schema_packages.equipments.character_equipment.AFM_System'
+)
 dir2 = 'fabrication_facilities.schema_packages.equipments.character_equipment.FourPointProbe_System'
 
 
@@ -34,7 +36,7 @@ charact_equipmentapp = App(
     instrument's location is findable.
     """,
     search_quantities=SearchQuantities(
-        include=[f'*#{dir0}',f'*#{dir1}',f'*#{dir2}'],
+        include=[f'*#{dir0}', f'*#{dir1}', f'*#{dir2}'],
     ),
     columns=[
         Column(quantity='entry_name', selected=True),
@@ -58,7 +60,7 @@ charact_equipmentapp = App(
         items=[
             Menu(
                 title='AFM',
-                items=[ 
+                items=[
                     MenuItemTerms(
                         title='Affiliation',
                         type='terms',
@@ -111,11 +113,11 @@ charact_equipmentapp = App(
                             ),
                         ],
                     ),
-               ],
+                ],
             ),
             Menu(
                 title='FourPointProbe',
-                items=[ 
+                items=[
                     MenuItemTerms(
                         title='Affiliation',
                         type='terms',
@@ -163,9 +165,9 @@ charact_equipmentapp = App(
                             ),
                         ],
                     ),
-               ],
+                ],
             ),
-           Menu(
+            Menu(
                 title='User defined quantities',
                 items=[
                     MenuItemCustomQuantities(

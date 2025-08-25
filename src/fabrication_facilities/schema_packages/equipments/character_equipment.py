@@ -169,6 +169,7 @@ class AFM_System(CharactEquipmentBase, ArchiveSection):
         unit='mA',
     )
 
+
 class FourPointProbe_System(CharactEquipmentBase, ArchiveSection):
     m_def = Section(
         a_eln={
@@ -211,7 +212,7 @@ class FourPointProbe_System(CharactEquipmentBase, ArchiveSection):
         a_eln={
             'component': 'NumberEditQuantity',
         },
-        #unit='Ohm/sq',
+        # unit='Ohm/sq',
     )
     measured_sheet_resistance_max = Quantity(
         type=np.float64,
@@ -219,7 +220,7 @@ class FourPointProbe_System(CharactEquipmentBase, ArchiveSection):
         a_eln={
             'component': 'NumberEditQuantity',
         },
-        #unit='Ohm/sq',
+        # unit='Ohm/sq',
     )
     measured_resistivity_min = Quantity(
         type=np.float64,
@@ -227,7 +228,7 @@ class FourPointProbe_System(CharactEquipmentBase, ArchiveSection):
         a_eln={
             'component': 'NumberEditQuantity',
         },
-        #unit='Ohm*cm',
+        # unit='Ohm*cm',
     )
     measured_resistivity_max = Quantity(
         type=np.float64,
@@ -235,7 +236,7 @@ class FourPointProbe_System(CharactEquipmentBase, ArchiveSection):
         a_eln={
             'component': 'NumberEditQuantity',
         },
-        #unit='Ohm*cm',
+        # unit='Ohm*cm',
     )
     current_source_min = Quantity(
         type=np.float64,
@@ -259,7 +260,7 @@ class FourPointProbe_System(CharactEquipmentBase, ArchiveSection):
         a_eln={
             'component': 'NumberEditQuantity',
         },
-        #unit='mils',
+        # unit='mils',
     )
     probe_head_pin_load_min = Quantity(
         type=np.float64,
@@ -267,7 +268,7 @@ class FourPointProbe_System(CharactEquipmentBase, ArchiveSection):
         a_eln={
             'component': 'NumberEditQuantity',
         },
-        #unit='g',
+        # unit='g',
     )
     probe_head_pin_load_max = Quantity(
         type=np.float64,
@@ -275,7 +276,7 @@ class FourPointProbe_System(CharactEquipmentBase, ArchiveSection):
         a_eln={
             'component': 'NumberEditQuantity',
         },
-        #unit='g',
+        # unit='g',
     )
     needles_composition = Quantity(
         type=str,
@@ -292,4 +293,3 @@ class FourPointProbe_System(CharactEquipmentBase, ArchiveSection):
         },
         unit='mm',
     )
-

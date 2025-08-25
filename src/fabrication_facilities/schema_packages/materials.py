@@ -137,7 +137,6 @@ class StressProperties(ArchiveSection):
 #     )
 
 
-
 class FabricationMaterial(FabricationOutput):
     m_def = Section(
         description='Class containing all information measured for a raw material',
@@ -202,6 +201,6 @@ class FabricationMaterial(FabricationOutput):
 
 
 class MaterialProductionProcess(FabricationProcess):
-    m_def=Section()
+    m_def = Section()
 
     output = SubSection(section_def=FabricationMaterial, repeat=False)

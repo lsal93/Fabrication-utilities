@@ -32,7 +32,6 @@ from fabrication_facilities.schema_packages.utils import (
     FabricationChemical,
     TimeRampPressure,
     TimeRampTemperature,
-    generate_elementality,
     parse_chemical_formula,
 )
 
@@ -514,9 +513,7 @@ class Spin_Coatingbase(FabricationProcessStepBase):
         """,
         a_eln={'component': 'BoolEditQuantity'},
     )
-    resist_material = SubSection(
-        section_def=FabricationChemical, repeats=True
-    )
+    resist_material = SubSection(section_def=FabricationChemical, repeats=True)
 
     priming = SubSection(section_def=Priming, repeats=False)
 
