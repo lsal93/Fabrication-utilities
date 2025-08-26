@@ -205,6 +205,9 @@ class ICP_CVDbase(PECVDbase):
         repeats=False,
     )
 
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
 
 class LPCVD(FabricationProcessStep):
     m_def = Section(
@@ -284,6 +287,9 @@ class LPCVD(FabricationProcessStep):
         repeats=False,
     )
 
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
 
 class PECVD(LPCVD):
     m_def = Section(
@@ -340,6 +346,9 @@ class PECVD(LPCVD):
         repeats=True,
     )
 
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
 
 class ICP_CVD(PECVD):
     m_def = Section(
@@ -385,3 +394,6 @@ class ICP_CVD(PECVD):
         section_def=ICP_CVDbase,
         repeats=True,
     )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)

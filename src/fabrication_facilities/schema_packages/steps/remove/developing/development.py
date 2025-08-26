@@ -94,11 +94,17 @@ class ResistDevelopmentbase(FabricationProcessStepBase):
 
     final_rinsing = SubSection(section_def=SpinRinsingbase, repeats=True)
 
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
 
 class SpinResistDevelopmentbase(ResistDevelopmentbase):
     m_def = Section()
 
     spin_parameters = SubSection(section_def=SpinningComponent, repeats=False)
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
 
 
 class ResistDevelopment(FabricationProcessStep):
@@ -137,6 +143,9 @@ class ResistDevelopment(FabricationProcessStep):
         repeats=True,
     )
 
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
 
 class SpinResistDevelopment(ResistDevelopment):
     m_def = Section(
@@ -173,3 +182,6 @@ class SpinResistDevelopment(ResistDevelopment):
         section_def=SpinResistDevelopmentbase,
         repeats=True,
     )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)

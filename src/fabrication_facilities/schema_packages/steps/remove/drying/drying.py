@@ -46,6 +46,9 @@ class Rinsing_Dryingbase(FabricationProcessStepBase):
 
     drying_parameters = SubSection(section_def=SpinDryingbase, repeats=True)
 
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
 
 class Rinsing_Drying(FabricationProcessStep):
     m_def = Section(
@@ -85,3 +88,6 @@ class Rinsing_Drying(FabricationProcessStep):
     )
 
     rinsing_drying_steps = SubSection(section_def=Rinsing_Dryingbase, repeats=True)
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)

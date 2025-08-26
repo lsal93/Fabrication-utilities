@@ -163,3 +163,6 @@ class Spin_Coating(FabricationProcessStep):
     )
 
     spin_coating_steps = SubSection(section_def=Spin_Coatingbase, repeats=True)
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)

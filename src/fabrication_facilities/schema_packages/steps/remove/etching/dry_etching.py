@@ -137,6 +137,9 @@ class ICP_RIEbase(RIEbase):
         repeats=False,
     )
 
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
 
 class DRIE_BOSCHbase(ICP_RIEbase):
     m_def = Section(
@@ -172,6 +175,9 @@ class DRIE_BOSCHbase(ICP_RIEbase):
         section_def=DRIE_Chuck,
         repeats=False,
     )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
 
 
 class RIE(FabricationProcessStep):
@@ -273,6 +279,9 @@ class RIE(FabricationProcessStep):
         repeats=True,
     )
 
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
 
 class ICP_RIE(RIE):
     m_def = Section(
@@ -320,6 +329,9 @@ class ICP_RIE(RIE):
         repeats=True,
     )
 
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
 
 class DRIE_BOSCH(ICP_RIE):
     m_def = Section(
@@ -363,3 +375,6 @@ class DRIE_BOSCH(ICP_RIE):
         section_def=EtchingOutputs,
         repeats=True,
     )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)

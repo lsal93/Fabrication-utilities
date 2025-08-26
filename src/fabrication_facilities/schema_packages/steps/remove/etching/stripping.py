@@ -104,3 +104,6 @@ class Stripping(FabricationProcessStep):
     )
 
     stripping_steps = SubSection(section_def=Strippingbase, repeats=True)
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)

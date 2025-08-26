@@ -217,6 +217,9 @@ class WetEtching(FabricationProcessStep):
         repeats=False,
     )
 
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
 
 class WetCleaning(FabricationProcessStep):
     m_def = Section(
@@ -274,3 +277,6 @@ class WetCleaning(FabricationProcessStep):
         section_def=WetEtchingOutputs,
         repeats=False,
     )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
