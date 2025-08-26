@@ -54,41 +54,41 @@ m_package = Package(name='Add processes schema')
 #######################################################################################
 
 
-class SynthesisOutputs(ArchiveSection):
-    m_def = Section(
-        a_eln={
-            'properties': {
-                'order': [
-                    'job_number',
-                    'duration_measured',
-                ],
-            }
-        },
-        description='Class describing all possible output data in synthesis steps',
-    )
+# class SynthesisOutputs(ArchiveSection):
+#     m_def = Section(
+#         a_eln={
+#             'properties': {
+#                 'order': [
+#                     'job_number',
+#                     'duration_measured',
+#                 ],
+#             }
+#         },
+#         description='Class describing all possible output data in synthesis steps',
+#     )
 
-    job_number = Quantity(
-        type=int,
-        a_eln={'component': 'NumberEditQuantity'},
-    )
+#     job_number = Quantity(
+#         type=int,
+#         a_eln={'component': 'NumberEditQuantity'},
+#     )
 
-    duration_measured = Quantity(
-        type=np.float64,
-        description='Real time employed',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'minute',
-        },
-        unit='minute',
-    )
+#     duration_measured = Quantity(
+#         type=np.float64,
+#         description='Real time employed',
+#         a_eln={
+#             'component': 'NumberEditQuantity',
+#             'defaultDisplayUnit': 'minute',
+#         },
+#         unit='minute',
+#     )
 
-    control_parameter_profile = SubSection(
-        section_def=TimeRampTemperature,
-        repeats=True,
-    )
+#     control_parameter_profile = SubSection(
+#         section_def=TimeRampTemperature,
+#         repeats=True,
+#     )
 
-    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        super().normalize(archive, logger)
+#     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+#         super().normalize(archive, logger)
 
 
 ######################################### CVD #########################################
@@ -99,346 +99,346 @@ class SynthesisOutputs(ArchiveSection):
 #######################################################################################
 
 
-class LPCVDbase(FabricationProcessStepBase):
-    m_def = Section(
-        description='Atomistic component of a general LPCVD step',
-        a_eln={
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'tag',
-                    'id_item_processed',
-                    'operator',
-                    'starting_date',
-                    'ending_date',
-                    'duration',
-                    'chamber_temperature',
-                    'chamber_pressure',
-                    'number_of_loops',
-                    'notes',
-                ],
-            },
-        },
-    )
+# class LPCVDbase(FabricationProcessStepBase):
+#     m_def = Section(
+#         description='Atomistic component of a general LPCVD step',
+#         a_eln={
+#             'properties': {
+#                 'order': [
+#                     'job_number',
+#                     'name',
+#                     'tag',
+#                     'id_item_processed',
+#                     'operator',
+#                     'starting_date',
+#                     'ending_date',
+#                     'duration',
+#                     'chamber_temperature',
+#                     'chamber_pressure',
+#                     'number_of_loops',
+#                     'notes',
+#                 ],
+#             },
+#         },
+#     )
 
-    chamber_pressure = Quantity(
-        type=np.float64,
-        description='Pressure in the chamber',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
-        unit='mbar',
-    )
+#     chamber_pressure = Quantity(
+#         type=np.float64,
+#         description='Pressure in the chamber',
+#         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
+#         unit='mbar',
+#     )
 
-    chamber_temperature = Quantity(
-        type=np.float64,
-        description='Temperature of the chamber',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
-        unit='celsius',
-    )
+#     chamber_temperature = Quantity(
+#         type=np.float64,
+#         description='Temperature of the chamber',
+#         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+#         unit='celsius',
+#     )
 
-    number_of_loops = Quantity(
-        type=int,
-        description='Times for which this step is repeated with equal parameters',
-        a_eln={'component': 'NumberEditQuantity'},
-    )
+#     number_of_loops = Quantity(
+#         type=int,
+#         description='Times for which this step is repeated with equal parameters',
+#         a_eln={'component': 'NumberEditQuantity'},
+#     )
 
-    material_deposited = SubSection(section_def=FabricationChemical, repeats=True)
+#     material_deposited = SubSection(section_def=FabricationChemical, repeats=True)
 
-    pressure_ramps = SubSection(
-        section_def=TimeRampPressure,
-        repeats=True,
-    )
+#     pressure_ramps = SubSection(
+#         section_def=TimeRampPressure,
+#         repeats=True,
+#     )
 
-    temperature_ramps = SubSection(
-        section_def=TimeRampTemperature,
-        repeats=True,
-    )
+#     temperature_ramps = SubSection(
+#         section_def=TimeRampTemperature,
+#         repeats=True,
+#     )
 
-    fluximeters = SubSection(
-        section_def=Massflow_controller,
-        repeats=True,
-    )
+#     fluximeters = SubSection(
+#         section_def=Massflow_controller,
+#         repeats=True,
+#     )
 
-    item_carrier = SubSection(section_def=Carrier, repeats=False)
+#     item_carrier = SubSection(section_def=Carrier, repeats=False)
 
-    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        super().normalize(archive, logger)
-
-
-class PECVDbase(FabricationProcessStepBase):
-    m_def = Section(
-        description='Atomistic component of a PECVD step',
-        a_eln={
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'tag',
-                    'id_item_processed',
-                    'operator',
-                    'starting_date',
-                    'ending_date',
-                    'duration',
-                    'chamber_temperature',
-                    'chamber_pressure',
-                    'number_of_loops',
-                    'notes',
-                ]
-            },
-        },
-    )
-
-    chamber_pressure = Quantity(
-        type=np.float64,
-        description='Pressure in the chamber',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
-        unit='mbar',
-    )
-
-    chamber_temperature = Quantity(
-        type=np.float64,
-        description='Temperature of the chamber',
-        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
-        unit='celsius',
-    )
-
-    number_of_loops = Quantity(
-        type=int,
-        description='Times for which this step is repeated with equal parameters',
-        a_eln={'component': 'NumberEditQuantity'},
-    )
-
-    material_deposited = SubSection(section_def=FabricationChemical, repeats=True)
-
-    pressure_ramps = SubSection(
-        section_def=TimeRampPressure,
-        repeats=True,
-    )
-
-    temperature_ramps = SubSection(
-        section_def=TimeRampTemperature,
-        repeats=True,
-    )
-
-    fluximeters = SubSection(
-        section_def=Massflow_controller,
-        repeats=True,
-    )
-
-    chuck = SubSection(section_def=Chuck, repeats=False)
-
-    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        super().normalize(archive, logger)
+#     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+#         super().normalize(archive, logger)
 
 
-class ICP_CVDbase(PECVDbase):
-    m_def = Section(
-        description='Atomistic component of an ICP CVD step',
-        a_eln={
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'tag',
-                    'id_item_processed',
-                    'operator',
-                    'starting_date',
-                    'ending_date',
-                    'duration',
-                    'chamber_temperature',
-                    'chamber_pressure',
-                    'number_of_loops',
-                    'notes',
-                ]
-            },
-        },
-    )
+# class PECVDbase(FabricationProcessStepBase):
+#     m_def = Section(
+#         description='Atomistic component of a PECVD step',
+#         a_eln={
+#             'properties': {
+#                 'order': [
+#                     'job_number',
+#                     'name',
+#                     'tag',
+#                     'id_item_processed',
+#                     'operator',
+#                     'starting_date',
+#                     'ending_date',
+#                     'duration',
+#                     'chamber_temperature',
+#                     'chamber_pressure',
+#                     'number_of_loops',
+#                     'notes',
+#                 ]
+#             },
+#         },
+#     )
 
-    icp_column = SubSection(
-        section_def=ICP_Column,
-        repeats=False,
-    )
+#     chamber_pressure = Quantity(
+#         type=np.float64,
+#         description='Pressure in the chamber',
+#         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
+#         unit='mbar',
+#     )
 
+#     chamber_temperature = Quantity(
+#         type=np.float64,
+#         description='Temperature of the chamber',
+#         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+#         unit='celsius',
+#     )
 
-class LPCVD(FabricationProcessStep):
-    m_def = Section(
-        description="""
-        Deposition of a solid material onto a substrate by chemical reaction of
-        a gaseous precursor or mixture of precursors, commonly initiated by heat.
-        """,
-        a_eln={
-            'hide': [
-                'tag',
-                'duration',
-            ],
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'description',
-                    'affiliation',
-                    'location',
-                    'operator',
-                    'room',
-                    'id_item_processed',
-                    'starting_date',
-                    'ending_date',
-                    'step_type',
-                    'definition_of_process_step',
-                    'keywords',
-                    'recipe_name',
-                    'recipe_file',
-                    'recipe_preview',
-                    'thickness_target',
-                    'duration_target',
-                    'deposition_rate_target',
-                    'notes',
-                ]
-            },
-        },
-    )
+#     number_of_loops = Quantity(
+#         type=int,
+#         description='Times for which this step is repeated with equal parameters',
+#         a_eln={'component': 'NumberEditQuantity'},
+#     )
 
-    thickness_target = Quantity(
-        type=np.float64,
-        description='Amount of material to be deposited',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm',
-        },
-        unit='nm',
-    )
+#     material_deposited = SubSection(section_def=FabricationChemical, repeats=True)
 
-    duration_target = Quantity(
-        type=np.float64,
-        description='Duration required of the process',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'minute',
-        },
-        unit='minute',
-    )
+#     pressure_ramps = SubSection(
+#         section_def=TimeRampPressure,
+#         repeats=True,
+#     )
 
-    deposition_rate_target = Quantity(
-        type=np.float64,
-        description='Deposition rate desired',
-        a_eln={
-            'component': 'NumberEditQuantity',
-            'defaultDisplayUnit': 'nm/minute',
-        },
-        unit='nm/minute',
-    )
+#     temperature_ramps = SubSection(
+#         section_def=TimeRampTemperature,
+#         repeats=True,
+#     )
 
-    synthesis_steps = SubSection(
-        section_def=LPCVDbase,
-        repeats=True,
-    )
+#     fluximeters = SubSection(
+#         section_def=Massflow_controller,
+#         repeats=True,
+#     )
 
-    outputs = SubSection(
-        section_def=SynthesisOutputs,
-        repeats=False,
-    )
+#     chuck = SubSection(section_def=Chuck, repeats=False)
+
+#     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+#         super().normalize(archive, logger)
 
 
-class PECVD(LPCVD):
-    m_def = Section(
-        description="""
-        Deposition of a solid material onto a substrate by chemical reaction of a
-        gaseous precursor or mixture of precursors, commonly initiated by heat to create
-        a plasma. PECVD uses temperature tipically lower of LPCVD but relyies on an
-        electrode system on the sample.
-        """,
-        a_eln={
-            'hide': [
-                'tag',
-                'duration',
-            ],
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'description',
-                    'affiliation',
-                    'location',
-                    'operator',
-                    'room',
-                    'id_item_processed',
-                    'wafer_side',
-                    'starting_date',
-                    'ending_date',
-                    'step_type',
-                    'definition_of_process_step',
-                    'keywords',
-                    'recipe_name',
-                    'recipe_file',
-                    'recipe_preview',
-                    'thickness_target',
-                    'duration_target',
-                    'deposition_rate_target',
-                    'notes',
-                ]
-            },
-        },
-    )
+# class ICP_CVDbase(PECVDbase):
+#     m_def = Section(
+#         description='Atomistic component of an ICP CVD step',
+#         a_eln={
+#             'properties': {
+#                 'order': [
+#                     'job_number',
+#                     'name',
+#                     'tag',
+#                     'id_item_processed',
+#                     'operator',
+#                     'starting_date',
+#                     'ending_date',
+#                     'duration',
+#                     'chamber_temperature',
+#                     'chamber_pressure',
+#                     'number_of_loops',
+#                     'notes',
+#                 ]
+#             },
+#         },
+#     )
 
-    wafer_side = Quantity(
-        type=MEnum(
-            'front',
-            'back',
-        ),
-        description='Side exposed in the process',
-        a_eln={'component': 'EnumEditQuantity'},
-    )
-
-    synthesis_steps = SubSection(
-        section_def=PECVDbase,
-        repeats=True,
-    )
+#     icp_column = SubSection(
+#         section_def=ICP_Column,
+#         repeats=False,
+#     )
 
 
-class ICP_CVD(PECVD):
-    m_def = Section(
-        description="""
-        Deposition of a solid material onto a substrate by chemical reaction of a
-        gaseous precursor or mixture of precursors, commonly initiated by heat to create
-        a plasma. To generate the plasma the ICP CVD procedure uses a current in
-        addition to the lower electrodes to enanche by magnetic field the generation.
-        """,
-        a_eln={
-            'hide': [
-                'tag',
-                'duration',
-            ],
-            'properties': {
-                'order': [
-                    'job_number',
-                    'name',
-                    'description',
-                    'affiliation',
-                    'location',
-                    'operator',
-                    'room',
-                    'id_item_processed',
-                    'starting_date',
-                    'ending_date',
-                    'step_type',
-                    'definition_of_process_step',
-                    'keywords',
-                    'recipe_name',
-                    'recipe_file',
-                    'recipe_preview',
-                    'thickness_target',
-                    'duration_target',
-                    'deposition_rate_target',
-                    'notes',
-                ]
-            },
-        },
-    )
+# class LPCVD(FabricationProcessStep):
+#     m_def = Section(
+#         description="""
+#         Deposition of a solid material onto a substrate by chemical reaction of
+#         a gaseous precursor or mixture of precursors, commonly initiated by heat.
+#         """,
+#         a_eln={
+#             'hide': [
+#                 'tag',
+#                 'duration',
+#             ],
+#             'properties': {
+#                 'order': [
+#                     'job_number',
+#                     'name',
+#                     'description',
+#                     'affiliation',
+#                     'location',
+#                     'operator',
+#                     'room',
+#                     'id_item_processed',
+#                     'starting_date',
+#                     'ending_date',
+#                     'step_type',
+#                     'definition_of_process_step',
+#                     'keywords',
+#                     'recipe_name',
+#                     'recipe_file',
+#                     'recipe_preview',
+#                     'thickness_target',
+#                     'duration_target',
+#                     'deposition_rate_target',
+#                     'notes',
+#                 ]
+#             },
+#         },
+#     )
 
-    synthesis_steps = SubSection(
-        section_def=ICP_CVDbase,
-        repeats=True,
-    )
+#     thickness_target = Quantity(
+#         type=np.float64,
+#         description='Amount of material to be deposited',
+#         a_eln={
+#             'component': 'NumberEditQuantity',
+#             'defaultDisplayUnit': 'nm',
+#         },
+#         unit='nm',
+#     )
+
+#     duration_target = Quantity(
+#         type=np.float64,
+#         description='Duration required of the process',
+#         a_eln={
+#             'component': 'NumberEditQuantity',
+#             'defaultDisplayUnit': 'minute',
+#         },
+#         unit='minute',
+#     )
+
+#     deposition_rate_target = Quantity(
+#         type=np.float64,
+#         description='Deposition rate desired',
+#         a_eln={
+#             'component': 'NumberEditQuantity',
+#             'defaultDisplayUnit': 'nm/minute',
+#         },
+#         unit='nm/minute',
+#     )
+
+#     synthesis_steps = SubSection(
+#         section_def=LPCVDbase,
+#         repeats=True,
+#     )
+
+#     outputs = SubSection(
+#         section_def=SynthesisOutputs,
+#         repeats=False,
+#     )
+
+
+# class PECVD(LPCVD):
+#     m_def = Section(
+#         description="""
+#         Deposition of a solid material onto a substrate by chemical reaction of a
+#         gaseous precursor or mixture of precursors, commonly initiated by heat to create
+#         a plasma. PECVD uses temperature tipically lower of LPCVD but relyies on an
+#         electrode system on the sample.
+#         """,
+#         a_eln={
+#             'hide': [
+#                 'tag',
+#                 'duration',
+#             ],
+#             'properties': {
+#                 'order': [
+#                     'job_number',
+#                     'name',
+#                     'description',
+#                     'affiliation',
+#                     'location',
+#                     'operator',
+#                     'room',
+#                     'id_item_processed',
+#                     'wafer_side',
+#                     'starting_date',
+#                     'ending_date',
+#                     'step_type',
+#                     'definition_of_process_step',
+#                     'keywords',
+#                     'recipe_name',
+#                     'recipe_file',
+#                     'recipe_preview',
+#                     'thickness_target',
+#                     'duration_target',
+#                     'deposition_rate_target',
+#                     'notes',
+#                 ]
+#             },
+#         },
+#     )
+
+#     wafer_side = Quantity(
+#         type=MEnum(
+#             'front',
+#             'back',
+#         ),
+#         description='Side exposed in the process',
+#         a_eln={'component': 'EnumEditQuantity'},
+#     )
+
+#     synthesis_steps = SubSection(
+#         section_def=PECVDbase,
+#         repeats=True,
+#     )
+
+
+# class ICP_CVD(PECVD):
+#     m_def = Section(
+#         description="""
+#         Deposition of a solid material onto a substrate by chemical reaction of a
+#         gaseous precursor or mixture of precursors, commonly initiated by heat to create
+#         a plasma. To generate the plasma the ICP CVD procedure uses a current in
+#         addition to the lower electrodes to enanche by magnetic field the generation.
+#         """,
+#         a_eln={
+#             'hide': [
+#                 'tag',
+#                 'duration',
+#             ],
+#             'properties': {
+#                 'order': [
+#                     'job_number',
+#                     'name',
+#                     'description',
+#                     'affiliation',
+#                     'location',
+#                     'operator',
+#                     'room',
+#                     'id_item_processed',
+#                     'starting_date',
+#                     'ending_date',
+#                     'step_type',
+#                     'definition_of_process_step',
+#                     'keywords',
+#                     'recipe_name',
+#                     'recipe_file',
+#                     'recipe_preview',
+#                     'thickness_target',
+#                     'duration_target',
+#                     'deposition_rate_target',
+#                     'notes',
+#                 ]
+#             },
+#         },
+#     )
+
+#     synthesis_steps = SubSection(
+#         section_def=ICP_CVDbase,
+#         repeats=True,
+#     )
 
 
 ####################################### COATING #######################################

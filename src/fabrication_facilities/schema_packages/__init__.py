@@ -142,3 +142,4 @@ calculus_entry_point = AnalysisEntryPoint(
     name='Analysis sheets',
     description='Schema package for describing various analysis needed in CR.',
 )
+

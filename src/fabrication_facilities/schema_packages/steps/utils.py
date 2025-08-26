@@ -748,3 +748,43 @@ class SpinDryingbase(Dryingbase):
     m_def = Section()
 
     spinning_parameters = SubSection(section_def=SpinningComponent, repeats=False)
+
+
+################################### OUTPUT SECTIONS ###################################
+
+
+class SynthesisOutputs(ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'duration_measured',
+                ],
+            }
+        },
+        description='Class describing all possible output data in synthesis steps',
+    )
+
+    job_number = Quantity(
+        type=int,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+
+    duration_measured = Quantity(
+        type=np.float64,
+        description='Real time employed',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'minute',
+        },
+        unit='minute',
+    )
+
+    control_parameter_profile = SubSection(
+        section_def=TimeRampTemperature,
+        repeats=True,
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
