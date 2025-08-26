@@ -27,7 +27,7 @@ schemas.append(f'*#{dir0}')
 addapp = App(
     label='Add steps',
     path='addapp',
-    category='Fabrication facilities',
+    category='Fabrication steps',
     description='App to search add fabrication steps.',
     readme="""
     This app is intended to navigate around the ecosystem of clean room fabrication

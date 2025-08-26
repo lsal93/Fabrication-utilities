@@ -1,59 +1,59 @@
-from apps.addapp import addapp
-from apps.charact_equipmentapp import charact_equipmentapp
-from apps.characterapp import characterapp
-from apps.equipmentapp import equipmentapp
-from apps.processapp import processapp
-from apps.removeapp import removeapp
-from apps.stepapp import stepapp
-from apps.transapp import transapp
-from nomad.config.models.plugins import AppEntryPoint
+# from apps.addapp import addapp
+# from apps.charact_equipmentapp import charact_equipmentapp
+# from apps.characterapp import characterapp
+# from apps.equipmentapp import equipmentapp
+# from apps.processapp import processapp
+# from apps.removeapp import removeapp
+# from apps.stepapp import stepapp
+# from apps.transapp import transapp
+# from nomad.config.models.plugins import AppEntryPoint
 
-equipment_app_entry_point = AppEntryPoint(
-    name='Fabrication_equipment_search',
-    description='New app for equipment of fabrication facilities.',
-    app=equipmentapp,
-)
+# equipment_app_entry_point = AppEntryPoint(
+#     name='Fabrication_equipment_search',
+#     description='New app for equipment of fabrication facilities.',
+#     app=equipmentapp,
+# )
 
-charact_equipment_app_entry_point = AppEntryPoint(
-    name='Characterization_equipment_search',
-    description='New app for equipment of characterization facilities.',
-    app=charact_equipmentapp,
-)
+# charact_equipment_app_entry_point = AppEntryPoint(
+#     name='Characterization_equipment_search',
+#     description='New app for equipment of characterization facilities.',
+#     app=charact_equipmentapp,
+# )
 
-process_app_entry_point = AppEntryPoint(
-    name='Fabrication_process_search',
-    description='New app for equipment of fabrication facilities.',
-    app=processapp,
-)
+# process_app_entry_point = AppEntryPoint(
+#     name='Fabrication_process_search',
+#     description='New app for equipment of fabrication facilities.',
+#     app=processapp,
+# )
 
-step_app_entry_point = AppEntryPoint(
-    name='Fabrication_process_search',
-    description='New app for equipment of fabrication facilities.',
-    app=stepapp,
-)
+# step_app_entry_point = AppEntryPoint(
+#     name='Fabrication_process_search',
+#     description='New app for equipment of fabrication facilities.',
+#     app=stepapp,
+# )
 
-app_remove_entry_point = AppEntryPoint(
-    name='Remove steps research app',
-    description='App for searching remove steps like etching, drying, etc.',
-    app=removeapp,
-)
+# app_remove_entry_point = AppEntryPoint(
+#     name='Remove steps research app',
+#     description='App for searching remove steps like etching, drying, etc.',
+#     app=removeapp,
+# )
 
-app_add_entry_point = AppEntryPoint(
-    name='Add steps research app',
-    description='App for researching add steps like synthesis, bonding, etc.',
-    app=addapp,
-)
+# app_add_entry_point = AppEntryPoint(
+#     name='Add steps research app',
+#     description='App for researching add steps like synthesis, bonding, etc.',
+#     app=addapp,
+# )
 
-app_trans_entry_point = AppEntryPoint(
-    name='Transform steps research app',
-    description='App for searching transform steps like lithography, oxydation, etc.',
-    app=transapp,
-)
+# app_trans_entry_point = AppEntryPoint(
+#     name='Transform steps research app',
+#     description='App for searching transform steps like lithography, oxydation, etc.',
+#     app=transapp,
+# )
 
-app_character_entry_point = AppEntryPoint(
-    name='Character steps research app',
-    description='App for researching characterization steps.',
-    app=characterapp,
-)
+# app_character_entry_point = AppEntryPoint(
+#     name='Character steps research app',
+#     description='App for researching characterization steps.',
+#     app=characterapp,
+# )
 
-app_entry_point = app_trans_entry_point
+# app_entry_point = app_trans_entry_point

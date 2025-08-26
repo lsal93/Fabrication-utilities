@@ -32,7 +32,7 @@ schemas.append(f'*#{dir0}')
 transapp = App(
     label='Transform steps',
     path='transapp',
-    category='Fabrication facilities',
+    category='Fabrication steps',
     description='App to search transform fabrication steps.',
     readme="""
     This app is intended to navigate around the ecosystem of clean room fabrication

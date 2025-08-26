@@ -1,15 +1,4 @@
 from apps.directories import dir_path
-from apps.menu_steps import (
-    menuremove_driebosch,
-    menuremove_icprie,
-    menuremove_resistdev,
-    menuremove_rie,
-    menuremove_rinsingdrying,
-    menuremove_spinresist,
-    menuremove_stripping,
-    menuremove_wetclean,
-    menuremove_wetetching,
-)
 from nomad.config.models.ui import (
     App,
     Column,
@@ -21,23 +10,26 @@ from nomad.config.models.ui import (
 schemas = [
     f'*#{path_value}'
     for path_value in dir_path.values()
-    if 'steps.remove' in path_value
+    if 'steps.character' in path_value
 ]
+
 fps = 'FabricationProcessStep'
 dir0 = f'schema_packages.fabrication_utilities.{fps}'
 schemas.append(f'*#{dir0}')
 
-removeapp = App(
-    label='Remove steps',
-    path='addapp',
-    category='Fabrication facilities',
-    description='App to search remove fabrication steps.',
+characterapp = App(
+    label='Characterization steps',
+    path='carachterapp',
+    category='Characterization utilities',
+    description='App to search characterization steps.',
     readme="""
     This app is intended to navigate around the ecosystem of clean room fabrication
-    possible remove steps. At the beginning you will see all the fabrication steps
-    available in nomad and than through the filters on the left you can specialize
+    possible characterization steps. At the beginning you will see all the fabrication
+    steps available in nomad and than through the filters on the left you can specialize
     the research per single technique. Navigation across multiple technique is not
-    allowed.
+    allowed. Moreover this app is intended as a temporary support for this kind of steps
+    because in the future we hope to built NeXus schemas for alla characterization.
+    For this reason the steps supported by the pynxtools can be reached via other apps.
     """,
     search_quantities=SearchQuantities(include=schemas),
     columns=[
@@ -58,23 +50,7 @@ removeapp = App(
     menu=Menu(
         items=[
             Menu(
-                title='Etching',
-                items=[
-                    menuremove_rie,
-                    menuremove_icprie,
-                    menuremove_driebosch,
-                    menuremove_wetetching,
-                    menuremove_wetclean,
-                    menuremove_stripping
-                ]
-            ),
-            Menu(
-                title='Drying',
-                items=[menuremove_rinsingdrying],
-            ),
-            Menu(
-                title='Resist development',
-                items=[menuremove_resistdev, menuremove_spinresist]
+                title='1st main category',
             ),
             Menu(
                 title='User defined quantities',

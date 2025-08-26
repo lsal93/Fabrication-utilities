@@ -23,10 +23,10 @@ Mainstr = 'data.equipmentTechniques.techniqueMainCategory'
 Substr = 'data.equipmentTechniques.techniqueSubCategory'
 gen = 'data.equipmentTechniques.genericEquipmentName'
 
-charact_equipmentapp = App(
+equipmentapp = App(
     label='Characterization equipments&Techniques',
     path='charact_equipmentapp',
-    category='Characterization facilities',
+    category='Characterization utilities',
     description='App to search characterization equipments and useful techniques',
     readme="""
     This app allows to navigate through the equipments and techniques available in a
