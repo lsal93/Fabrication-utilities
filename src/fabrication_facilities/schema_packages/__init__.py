@@ -3,7 +3,7 @@ from nomad.config.models.plugins import SchemaPackageEntryPoint
 
 class ItemsEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.Items import m_package
+        from schema_packages.Items import m_package
 
         return m_package
 
@@ -16,7 +16,7 @@ Items_entry_point = ItemsEntryPoint(
 
 class UtilitiesEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.fabrication_utilities import (
+        from schema_packages.fabrication_utilities import (
             m_package,
         )
 
@@ -31,7 +31,7 @@ Utilities_entry_point = UtilitiesEntryPoint(
 
 class AddEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.steps.add.add import m_package
+        from schema_packages.steps.add.add import m_package
 
         return m_package
 
@@ -44,7 +44,7 @@ Add_entry_point = AddEntryPoint(
 
 class TransformEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.steps.transform import m_package
+        from schema_packages.steps.transform import m_package
 
         return m_package
 
@@ -57,7 +57,7 @@ Transform_entry_point = TransformEntryPoint(
 
 class RemoveEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.steps.remove import m_package
+        from schema_packages.steps.remove import m_package
 
         return m_package
 
@@ -70,7 +70,7 @@ Remove_entry_point = RemoveEntryPoint(
 
 class CharacterizationEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.steps.character import m_package
+        from schema_packages.steps.character import m_package
 
         return m_package
 
@@ -83,7 +83,7 @@ Characterization_entry_point = CharacterizationEntryPoint(
 
 class CharacterizationEquipmentEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.equipments.character_equipment import (
+        from schema_packages.equipments.character_equipment import (
             m_package,
         )
 
@@ -101,7 +101,7 @@ Characterization_Equipment_entry_point = CharacterizationEquipmentEntryPoint(
 
 class EquipmentsEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.equipments.equipments import (
+        from schema_packages.equipments.equipments import (
             m_package,
         )
 
@@ -116,7 +116,7 @@ Equipments_entry_point = EquipmentsEntryPoint(
 
 class MaterialEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.materials import (
+        from schema_packages.materials import (
             m_package,
         )
 
@@ -131,7 +131,7 @@ materials_entry_point = MaterialEntryPoint(
 
 class AnalysisEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.calculus.calculus import (
+        from schema_packages.calculus.calculus import (
             m_package,
         )
 

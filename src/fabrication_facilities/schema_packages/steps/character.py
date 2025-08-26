@@ -15,7 +15,7 @@ from nomad.metainfo import (
     Section,
 )
 
-from fabrication_facilities.schema_packages.fabrication_utilities import (
+from schema_packages.fabrication_utilities import (
     EquipmentTechnique,
     FabricationProcessStepBase,
 )

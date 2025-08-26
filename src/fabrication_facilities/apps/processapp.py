@@ -7,8 +7,8 @@ from nomad.config.models.ui import (
     SearchQuantities,
 )
 
-dir0 = 'fabrication_facilities.schema_packages.fabrication_utilities.FabricationProcess'
-dir1 = 'fabrication_facilities.schema_packages.materials.MaterialProductionProcess'
+dir0 = 'schema_packages.fabrication_utilities.FabricationProcess'
+dir1 = 'schema_packages.materials.MaterialProductionProcess'
 
 processapp = App(
     label='Processes',

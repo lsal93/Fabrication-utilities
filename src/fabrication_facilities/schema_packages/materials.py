@@ -13,12 +13,12 @@ from nomad.metainfo import (
     SubSection,
 )
 
-from fabrication_facilities.schema_packages.fabrication_utilities import (
+from schema_packages.fabrication_utilities import (
     FabricationOutput,
     FabricationProcess,
     FabricationProcessStep,
 )
-from fabrication_facilities.schema_packages.utils import FabricationChemical
+from schema_packages.utils import FabricationChemical
 
 if TYPE_CHECKING:
     pass

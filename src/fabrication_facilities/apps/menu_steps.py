@@ -6,7 +6,7 @@ from nomad.config.models.ui import (
     MenuItemTerms,
 )
 
-from fabrication_facilities.apps.directories import dir_path
+from apps.directories import dir_path
 
 mec = 'data.synthesis_steps.material_elemental_composition.element'
 flux = 'data.synthesis_steps.fluximeters.elemental_composition.element'

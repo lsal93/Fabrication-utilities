@@ -16,11 +16,11 @@ from nomad.metainfo import (
     SubSection,
 )
 
-from fabrication_facilities.schema_packages.fabrication_utilities import (
+from schema_packages.fabrication_utilities import (
     FabricationProcessStep,
     FabricationProcessStepBase,
 )
-from fabrication_facilities.schema_packages.steps.utils import (
+from schema_packages.steps.utils import (
     Carrier,
     Chuck,
     ICP_Column,
@@ -28,7 +28,7 @@ from fabrication_facilities.schema_packages.steps.utils import (
     Priming,
     SpinningComponent,
 )
-from fabrication_facilities.schema_packages.utils import (
+from schema_packages.utils import (
     FabricationChemical,
     TimeRampPressure,
     TimeRampTemperature,

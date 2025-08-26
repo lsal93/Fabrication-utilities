@@ -30,7 +30,7 @@ from nomad.metainfo import (
     SubSection,
 )
 
-from fabrication_facilities.schema_packages.equipments.utils import (
+from schema_packages.equipments.utils import (
     BeamColumnCapabilites,
     CarrierDescription,
     ChuckCapabilities,
@@ -42,8 +42,8 @@ from fabrication_facilities.schema_packages.equipments.utils import (
     WetSolutionComponents,
     WritingCapabilities,
 )
-from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
-from fabrication_facilities.schema_packages.utils import FabricationChemical
+from schema_packages.fabrication_utilities import Equipment
+from schema_packages.utils import FabricationChemical
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (

@@ -30,8 +30,8 @@ from nomad.metainfo import (
     SubSection,
 )
 
-from fabrication_facilities.schema_packages.fabrication_utilities import Equipment
-from fabrication_facilities.schema_packages.steps.character import (
+from schema_packages.fabrication_utilities import Equipment
+from schema_packages.steps.character import (
     CharacterizationTechnique,
 )
 

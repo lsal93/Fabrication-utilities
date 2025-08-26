@@ -109,33 +109,35 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [tool.setuptools]
-package-dir = { "" = "src" }
+package-dir = { "" = "src/fabrication_facilities" }
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["src/fabrication_facilities"]
 
 [project.entry-points.'nomad.plugin']
-#normalizer_entry_point = "fabrication_facilities.normalizers:normalizer_entry_point"
-equipmentapp = "fabrication_facilities.apps:equipment_app_entry_point"
-processapp = "fabrication_facilities.apps:process_app_entry_point"
-stepapp = "fabrication_facilities.apps:step_app_entry_point"
-removeapp = "fabrication_facilities.apps:app_remove_entry_point"
-addapp = "fabrication_facilities.apps:app_add_entry_point"
-transapp = "fabrication_facilities.apps:app_trans_entry_point"
-characterapp = "fabrication_facilities.apps:app_character_entry_point"
-Items_entry_point = "fabrication_facilities.schema_packages:Items_entry_point"
-Utilities_entry_point = "fabrication_facilities.schema_packages:Utilities_entry_point"
-Add_entry_point = "fabrication_facilities.schema_packages:Add_entry_point"
-Transform_entry_point = "fabrication_facilities.schema_packages:Transform_entry_point"
-Remove_entry_point = "fabrication_facilities.schema_packages:Remove_entry_point"
-Equipments_entry_point = "fabrication_facilities.schema_packages:Equipments_entry_point"
-materials_entry_point = "fabrication_facilities.schema_packages:materials_entry_point"
-calculus_entry_point = "fabrication_facilities.schema_packages:calculus_entry_point"
-Characterization_entry_point="fabrication_facilities.schema_packages:Characterization_entry_point"
-Characterization__Equipment_entry_point="fabrication_facilities.schema_packages:Characterization_Equipment_entry_point"
-charact_equipmentapp = "fabrication_facilities.apps:charact_equipment_app_entry_point"
-cvds_entry_point = "fabrication_facilities.schema_packages.steps.add.synthesis: CVDs_entry_point"
-coating_entry_point = "fabrication_facilities.schema_packages.steps.add.synthesis: coating_entry_point"
+#normalizer_entry_point = "normalizers:normalizer_entry_point"
+
+equipmentapp = "apps:equipment_app_entry_point"
+processapp = "apps:process_app_entry_point"
+stepapp = "apps:step_app_entry_point"
+removeapp = "apps:app_remove_entry_point"
+addapp = "apps:app_add_entry_point"
+transapp = "apps:app_trans_entry_point"
+characterapp = "apps:app_character_entry_point"
+charact_equipmentapp = "apps:charact_equipment_app_entry_point"
+
+Items_entry_point = "schema_packages:Items_entry_point"
+Utilities_entry_point = "schema_packages:Utilities_entry_point"
+Transform_entry_point = "schema_packages:Transform_entry_point"
+Remove_entry_point = "schema_packages:Remove_entry_point"
+Equipments_entry_point = "schema_packages:Equipments_entry_point"
+materials_entry_point = "schema_packages:materials_entry_point"
+calculus_entry_point = "schema_packages:calculus_entry_point"
+Characterization_entry_point="schema_packages:Characterization_entry_point"
+Characterization__Equipment_entry_point="schema_packages:Characterization_Equipment_entry_point"
+Add_entry_point = "schema_packages:Add_entry_point"
+cvds_entry_point = "schema_packages.steps.add.synthesis: CVDs_entry_point"
+coating_entry_point = "schema_packages.steps.add.synthesis: coating_entry_point"
 
 [tool.cruft]
 # Avoid updating workflow files, this leads to permissions issues

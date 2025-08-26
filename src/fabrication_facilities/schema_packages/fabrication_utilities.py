@@ -40,11 +40,11 @@ from nomad.metainfo import (
     SubSection,
 )
 
-from fabrication_facilities.schema_packages.Items import (
+from schema_packages.Items import (
     Item,
     ItemsPermitted,
 )
-from fabrication_facilities.schema_packages.utils import parse_chemical_formula
+from schema_packages.utils import parse_chemical_formula
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (

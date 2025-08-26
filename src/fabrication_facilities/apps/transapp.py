@@ -6,8 +6,8 @@ from nomad.config.models.ui import (
     SearchQuantities,
 )
 
-from fabrication_facilities.apps.directories import dir_path
-from fabrication_facilities.apps.menu_steps import (
+from apps.directories import dir_path
+from apps.menu_steps import (
     menutrans_annealing,
     menutrans_baking,
     menutrans_dicing,
@@ -27,7 +27,7 @@ schemas = [
     if 'steps.transform' in path_value
 ]
 fps = 'FabricationProcessStep'
-dir0 = f'fabrication_facilities.schema_packages.fabrication_utilities.{fps}'
+dir0 = f'schema_packages.fabrication_utilities.{fps}'
 schemas.append(f'*#{dir0}')
 
 transapp = App(

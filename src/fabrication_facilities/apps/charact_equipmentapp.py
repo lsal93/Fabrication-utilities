@@ -14,11 +14,11 @@ from nomad.config.models.ui import (
     SearchQuantities,
 )
 
-dir0 = 'fabrication_facilities.schema_packages.equipments.character_equipment.CharactEquipmentBase'
+dir0 = 'schema_packages.equipments.character_equipment.CharactEquipmentBase'
 dir1 = (
-    'fabrication_facilities.schema_packages.equipments.character_equipment.AFM_System'
+    'schema_packages.equipments.character_equipment.AFM_System'
 )
-dir2 = 'fabrication_facilities.schema_packages.equipments.character_equipment.FourPointProbe_System'
+dir2 = 'schema_packages.equipments.character_equipment.FourPointProbe_System'
 
 
 Mainstr = 'data.equipmentTechniques.techniqueMainCategory'

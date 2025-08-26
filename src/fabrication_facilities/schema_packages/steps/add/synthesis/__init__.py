@@ -12,7 +12,7 @@ from nomad.config.models.plugins import SchemaPackageEntryPoint
 
 class CVDsEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.steps.add.synthesis.CVD import m_package
+        from schema_packages.steps.add.synthesis.CVD import m_package
 
         return m_package
 
@@ -24,7 +24,7 @@ CVDs_entry_point = CVDsEntryPoint(
 
 class CoatingEntryPoint(SchemaPackageEntryPoint):
     def load(self):
-        from fabrication_facilities.schema_packages.steps.add.synthesis.coating import m_package
+        from schema_packages.steps.add.synthesis.coating import m_package
 
         return m_package
 

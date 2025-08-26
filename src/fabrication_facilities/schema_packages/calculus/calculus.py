@@ -19,7 +19,7 @@ from nomad.metainfo import (
     SubSection,
 )
 
-from fabrication_facilities.schema_packages.fabrication_utilities import (
+from schema_packages.fabrication_utilities import (
     FabricationProcessStep,
 )
 
