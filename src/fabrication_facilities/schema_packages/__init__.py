@@ -55,19 +55,6 @@ Transform_entry_point = TransformEntryPoint(
 )
 
 
-class RemoveEntryPoint(SchemaPackageEntryPoint):
-    def load(self):
-        from schema_packages.steps.remove import m_package
-
-        return m_package
-
-
-Remove_entry_point = RemoveEntryPoint(
-    name='Remove processes',
-    description='Schema package for describing add steps in fabrications.',
-)
-
-
 class CharacterizationEntryPoint(SchemaPackageEntryPoint):
     def load(self):
         from schema_packages.steps.character import m_package

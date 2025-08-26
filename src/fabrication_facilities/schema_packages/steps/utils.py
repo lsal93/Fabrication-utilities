@@ -787,3 +787,66 @@ class SynthesisOutputs(ArchiveSection):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
+
+
+class EtchingOutputs(ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'duration_measured',
+                ],
+            }
+        },
+        description='Set of parameters obtained in a dry etching process',
+    )
+
+    job_number = Quantity(
+        type=int,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+
+    duration_measured = Quantity(
+        type=np.float64,
+        description='Real time of the process ad output',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
+    )
+
+    control_parameter_profile = SubSection(
+        section_def=TimeRampTemperature,
+        repeats=True,
+    )
+
+class WetEtchingOutputs(ArchiveSection):
+    m_def = Section(
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'duration_measured',
+                    'bath_number',
+                ],
+            }
+        },
+        description='Set of parameters obtained in a wet process',
+    )
+
+    job_number = Quantity(
+        type=int,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+
+    duration_measured = Quantity(
+        type=np.float64,
+        description='Real time of the process ad output',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'sec'},
+        unit='sec',
+    )
+
+    bath_number = Quantity(
+        type=int,
+        description='Chronological number from the last solution renewal',
+        a_eln={'component': 'NumberEditQuantity'},
+    )
