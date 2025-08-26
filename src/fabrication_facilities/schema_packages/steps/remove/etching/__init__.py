@@ -13,6 +13,7 @@ dryetch_entry_point = DryEtchEntryPoint(
     description='Schema package for describing dry etching steps in fabrication.',
 )
 
+
 class WetEtchEntryPoint(SchemaPackageEntryPoint):
     def load(self):
         from schema_packages.steps.remove.etching.wet_etching import m_package
@@ -24,6 +25,7 @@ wetetch_entry_point = WetEtchEntryPoint(
     name='Wet etching steps definitions',
     description='Schema package for describing wet etching steps in fabrication.',
 )
+
 
 class StripEntryPoint(SchemaPackageEntryPoint):
     def load(self):

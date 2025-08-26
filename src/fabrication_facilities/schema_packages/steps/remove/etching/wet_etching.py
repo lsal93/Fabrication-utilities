@@ -5,7 +5,6 @@
 from typing import TYPE_CHECKING
 
 import numpy as np
-
 from nomad.metainfo import (
     Package,
     Quantity,
@@ -19,8 +18,8 @@ from schema_packages.fabrication_utilities import (
 from schema_packages.steps.utils import (
     DeIonizedWaterDumping,
     ResistivityControl,
-    WetReactiveComponents,
     WetEtchingOutputs,
+    WetReactiveComponents,
 )
 from schema_packages.utils import FabricationChemical
 

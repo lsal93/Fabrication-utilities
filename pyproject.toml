@@ -16,7 +16,7 @@ classifiers = [
 name = "Fabrication-facilities"
 #suggested description, instead of "Plugin for fabrication processes"
 description = "Plugin for nanofabrication semiconductor cleanroom processes"
-version = "1.4.0"
+version = "1.8.0"
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
@@ -139,7 +139,7 @@ dryetch_entry_point = "schema_packages.steps.remove.etching:dryetch_entry_point"
 wetetch_entry_point = "schema_packages.steps.remove.etching:wetetch_entry_point"
 strip_entry_point = "schema_packages.steps.remove.etching:strip_entry_point"
 drying_entry_point ="schema_packages.steps.remove.drying:drying_entry_point"
-develop_entry_point = "schema_packages.steps.remove.development:develop_entry_point"
+develop_entry_point = "schema_packages.steps.remove.developing:develop_entry_point"
 
 Add_entry_point = "schema_packages:Add_entry_point"
 cvds_entry_point = "schema_packages.steps.add.synthesis: CVDs_entry_point"

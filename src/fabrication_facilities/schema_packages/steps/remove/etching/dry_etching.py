@@ -20,14 +20,14 @@ from schema_packages.steps.utils import (
     Chuck,
     DRIE_Chuck,
     DRIE_Massflow_controller,
+    EtchingOutputs,
     ICP_Column,
     Massflow_controller,
-    EtchingOutputs,
 )
 from schema_packages.utils import (
     FabricationChemical,
     TimeRampPressure,
-    TimeRampTemperature
+    TimeRampTemperature,
 )
 
 if TYPE_CHECKING:

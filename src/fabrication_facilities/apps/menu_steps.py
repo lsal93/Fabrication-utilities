@@ -3095,17 +3095,17 @@ menuremove_stripping = Menu(
         MenuItemTerms(
             title='Resist to remove',
             type='terms',
-            search_quantity=f'data.stripping_steps.resist_name#{dir_path["dir22"]}',
+            search_quantity=f'data.stripping_steps.resist_to_strip.name#{dir_path["dir22"]}',
         ),
         MenuItemTerms(
             title='Resist chemical formula',
             type='terms',
-            search_quantity=f'data.stripping_steps.resist_chemical_formula#{dir_path["dir22"]}',
+            search_quantity=f'data.stripping_steps.resist_to_strip.chemical_formula#{dir_path["dir22"]}',
         ),
         MenuItemPeriodicTable(
             title='Elements of the resist',
             type='periodic_table',
-            search_quantity=f'data.stripping_steps.resist_elemental_composition.element#{dir_path["dir22"]}',
+            search_quantity=f'data.stripping_steps.resist_to_strip.elemental_composition.element#{dir_path["dir22"]}',
         ),
         MenuItemHistogram(
             title='Removing temperature',

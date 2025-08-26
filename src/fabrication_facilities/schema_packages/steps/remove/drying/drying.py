@@ -1,10 +1,7 @@
 from typing import TYPE_CHECKING
 
-import numpy as np
-from nomad.datamodel.metainfo.basesections import ElementalComposition
 from nomad.metainfo import (
     Package,
-    Quantity,
     Section,
     SubSection,
 )

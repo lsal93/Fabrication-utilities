@@ -64,9 +64,7 @@ class Strippingbase(FabricationProcessStepBase):
 
     number_of_loops = Quantity(type=int, a_eln={'component': 'NumberEditQuantity'})
 
-    resist_to_strip = SubSection(
-        section_def=FabricationChemical, repeats=False
-    )
+    resist_to_strip = SubSection(section_def=FabricationChemical, repeats=False)
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)

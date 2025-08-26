@@ -5,7 +5,7 @@ dir_path = {
   'dir4': 'schema_packages.steps.transform.FIB',
   'dir5': 'schema_packages.steps.remove.etching.dry_etching.ICP_RIE',
   'dir6': 'schema_packages.steps.remove.etching.wet_etching.WetCleaning',
-  'dir7': 'schema_packages.steps.remove.ResistDevelopment',
+  'dir7': 'schema_packages.steps.remove.developing.development.ResistDevelopment',
   'dir8': 'schema_packages.steps.add.add.Bonding',
   'dir9': 'schema_packages.steps.transform.Annealing',
   'dir10': 'schema_packages.steps.transform.LTODensification',

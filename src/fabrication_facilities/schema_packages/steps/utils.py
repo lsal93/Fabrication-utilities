@@ -819,6 +819,7 @@ class EtchingOutputs(ArchiveSection):
         repeats=True,
     )
 
+
 class WetEtchingOutputs(ArchiveSection):
     m_def = Section(
         a_eln={
