@@ -1,4 +1,4 @@
-from apps.directories import dir_path
+from apps.characterization.directories import dir_path
 from nomad.config.models.ui import (
     App,
     Column,

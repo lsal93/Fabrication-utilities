@@ -1,5 +1,5 @@
-from apps.directories import dir_path
-from apps.menu_steps import (
+from apps.fabrication.directories import dir_path
+from apps.fabrication.menu_steps import (
     menuremove_driebosch,
     menuremove_icprie,
     menuremove_resistdev,
@@ -30,7 +30,7 @@ schemas.append(f'*#{dir0}')
 removeapp = App(
     label='Remove steps',
     path='removeapp',
-    category='Fabrication steps',
+    category='Fabrication utilities',
     description='App to search remove fabrication steps.',
     readme="""
     This app is intended to navigate around the ecosystem of clean room fabrication
@@ -65,8 +65,8 @@ removeapp = App(
                     menuremove_driebosch,
                     menuremove_wetetching,
                     menuremove_wetclean,
-                    menuremove_stripping
-                ]
+                    menuremove_stripping,
+                ],
             ),
             Menu(
                 title='Drying',
@@ -74,7 +74,7 @@ removeapp = App(
             ),
             Menu(
                 title='Resist development',
-                items=[menuremove_resistdev, menuremove_spinresist]
+                items=[menuremove_resistdev, menuremove_spinresist],
             ),
             Menu(
                 title='User defined quantities',

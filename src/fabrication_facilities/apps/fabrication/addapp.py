@@ -1,5 +1,5 @@
-from apps.directories import dir_path
-from apps.menu_steps import (
+from apps.fabrication.directories import dir_path
+from apps.fabrication.menu_steps import (
     menuadd_bonding,
     menuadd_electrongun,
     menuadd_icpcvd,
@@ -27,7 +27,7 @@ schemas.append(f'*#{dir0}')
 addapp = App(
     label='Add steps',
     path='addapp',
-    category='Fabrication steps',
+    category='Fabrication utilities',
     description='App to search add fabrication steps.',
     readme="""
     This app is intended to navigate around the ecosystem of clean room fabrication
@@ -65,7 +65,7 @@ addapp = App(
                 items=[],
             ),
             Menu(
-                title='Sinthesys',
+                title='Synthesis',
                 items=[
                     menuadd_lpcvd,
                     menuadd_pecvd,

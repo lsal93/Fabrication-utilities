@@ -2,7 +2,6 @@ from apps.fabrication.addapp import addapp
 from apps.fabrication.equipmentapp import equipmentapp
 from apps.fabrication.processapp import processapp
 from apps.fabrication.removeapp import removeapp
-# from apps.fabrication.stepapp import stepapp
 from apps.fabrication.transapp import transapp
 from nomad.config.models.plugins import AppEntryPoint
 
@@ -17,12 +16,6 @@ process_app_entry_point = AppEntryPoint(
     description='New app for equipment of fabrication facilities.',
     app=processapp,
 )
-
-# step_app_entry_point = AppEntryPoint(
-#     name='Fabrication_process_search',
-#     description='New app for equipment of fabrication facilities.',
-#     app=stepapp,
-# )
 
 app_remove_entry_point = AppEntryPoint(
     name='Remove steps research app',

@@ -1,4 +1,4 @@
-from apps.directories import dir_path
+from apps.fabrication.directories import dir_path
 from nomad.config.models.ui import (
     Axis,
     Menu,

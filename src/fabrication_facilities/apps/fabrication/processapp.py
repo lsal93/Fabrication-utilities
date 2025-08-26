@@ -13,7 +13,7 @@ dir1 = 'schema_packages.materials.MaterialProductionProcess'
 processapp = App(
     label='Processes',
     path='processesapp',
-    category='Fabrication facilities',
+    category='Fabrication utilities',
     description='App to search fabrication processes.',
     readme="""
     This research app allows to search general information about fabrication processes.

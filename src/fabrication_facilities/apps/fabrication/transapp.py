@@ -1,5 +1,5 @@
-from apps.directories import dir_path
-from apps.menu_steps import (
+from apps.fabrication.directories import dir_path
+from apps.fabrication.menu_steps import (
     menutrans_annealing,
     menutrans_baking,
     menutrans_dicing,
@@ -32,7 +32,7 @@ schemas.append(f'*#{dir0}')
 transapp = App(
     label='Transform steps',
     path='transapp',
-    category='Fabrication steps',
+    category='Fabrication utilities',
     description='App to search transform fabrication steps.',
     readme="""
     This app is intended to navigate around the ecosystem of clean room fabrication

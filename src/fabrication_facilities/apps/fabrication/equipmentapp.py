@@ -13,9 +13,9 @@ Substr = 'data.equipmentTechniques.techniqueSubCategory'
 gen = 'data.equipmentTechniques.genericEquipmentName'
 
 equipmentapp = App(
-    label='Equipments&Techniques',
+    label='Fabrication equipments&Techniques',
     path='equipmentapp',
-    category='Fabrication facilities',
+    category='Fabrication utilities',
     description='App to search fabrication equipments and useful techniques',
     readme="""
     This app allows to navigate through the equipments and techniques available in a
