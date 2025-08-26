@@ -29,7 +29,7 @@ schemas.append(f'*#{dir0}')
 
 removeapp = App(
     label='Remove steps',
-    path='removeapp',
+    path='addapp',
     category='Fabrication facilities',
     description='App to search remove fabrication steps.',
     readme="""
@@ -65,14 +65,16 @@ removeapp = App(
                     menuremove_driebosch,
                     menuremove_wetetching,
                     menuremove_wetclean,
-                    menuremove_stripping,
-                    menuremove_resistdev,
-                    menuremove_spinresist,
-                ],
+                    menuremove_stripping
+                ]
             ),
             Menu(
                 title='Drying',
                 items=[menuremove_rinsingdrying],
+            ),
+            Menu(
+                title='Resist development',
+                items=[menuremove_resistdev, menuremove_spinresist]
             ),
             Menu(
                 title='User defined quantities',
