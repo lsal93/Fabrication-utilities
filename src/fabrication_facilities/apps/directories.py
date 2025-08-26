@@ -1,6 +1,6 @@
 dir_path = {
-  'dir1': 'schema_packages.steps.add.ICP_CVD',
-  'dir2': 'schema_packages.steps.add.Spin_Coating',
+  'dir1': 'schema_packages.steps.add.synthesis.CVD.ICP_CVD',
+  'dir2': 'schema_packages.steps.add.synthesis.coating.Spin_Coating',
   'dir3': 'schema_packages.steps.transform.EBL',
   'dir4': 'schema_packages.steps.transform.FIB',
   'dir5': 'schema_packages.steps.remove.ICP_RIE',
@@ -25,8 +25,8 @@ dir_path = {
   'dir24': 'schema_packages.fabrication_utilities.StartingMaterial',
   'dir25': 'schema_packages.steps.transform.Baking',
   'dir26': 'schema_packages.steps.remove.DRIE_BOSCH',
-  'dir27': 'schema_packages.steps.add.PECVD',
-  'dir28': 'schema_packages.steps.add.LPCVD',
+  'dir27': 'schema_packages.steps.add.synthesis.CVD.PECVD',
+  'dir28': 'schema_packages.steps.add.synthesis.CVD.LPCVD',
   'dir29': 'schema_packages.steps.remove.SpinResistDevelopment',
   'dir30': 'schema_packages.steps.remove.Rinsing_Drying',
 }
