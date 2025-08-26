@@ -44,7 +44,7 @@ if TYPE_CHECKING:
         BoundLogger,
     )
 
-m_package = Package(name='Schemas for cvds stepsin fabrication')
+m_package = Package(name='Schemas for cvds steps in fabrication')
 
 
 class LPCVDbase(FabricationProcessStepBase):

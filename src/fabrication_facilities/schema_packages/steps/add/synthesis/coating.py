@@ -36,6 +36,10 @@ if TYPE_CHECKING:
         BoundLogger,
     )
 
+
+m_package = Package(name='Schemas for coating steps in fabrication')
+
+
 class Spin_Coatingbase(FabricationProcessStepBase):
     m_def = Section(
         a_eln={
@@ -109,3 +113,58 @@ class Spin_Coatingbase(FabricationProcessStepBase):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
+
+
+class Spin_Coating(FabricationProcessStep):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'duration',
+                'tag',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'operator',
+                    'room',
+                    'id_item_processed',
+                    'wafer_side',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'thickness_target',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    wafer_side = Quantity(
+        type=MEnum(
+            'front',
+            'back',
+        ),
+        description='Side exposed in the process',
+        a_eln={'component': 'EnumEditQuantity'},
+    )
+
+    thickness_target = Quantity(
+        type=np.float64,
+        description='Amount of resist to be deposited',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
+        unit='nm',
+    )
+
+    spin_coating_steps = SubSection(section_def=Spin_Coatingbase, repeats=True)
