@@ -2520,7 +2520,7 @@ menuadd_sputtering = Menu(
         MenuItemPeriodicTable(
             title='Elements deposited',
             type='periodic_table',
-            search_quantity=f'{mec}#{dir_path["dir18"]}',
+            search_quantity=f'data.material_elemental_composition.element#{dir_path["dir18"]}',
         ),
         MenuItemTerms(
             title='Sample Movement',

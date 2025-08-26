@@ -29,7 +29,7 @@ class CoatingEntryPoint(SchemaPackageEntryPoint):
         return m_package
 
 
-coating_entry_point = CVDsEntryPoint(
+coating_entry_point = CoatingEntryPoint(
     name='Coating steps definitions',
     description='Schema package for describing coating steps in fabrication.'
 )
