@@ -18,7 +18,6 @@ from nomad.metainfo import (
     Section,
     SubSection,
 )
-
 from schema_packages.fabrication_utilities import (
     FabricationProcessStep,
 )

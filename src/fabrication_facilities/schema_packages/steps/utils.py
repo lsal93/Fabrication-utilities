@@ -12,7 +12,6 @@ from typing import (
 import numpy as np
 from nomad.datamodel.data import ArchiveSection
 from nomad.metainfo import MEnum, Quantity, Section, SubSection
-
 from schema_packages.Items import ItemPlacement
 from schema_packages.utils import (
     BeamSource,

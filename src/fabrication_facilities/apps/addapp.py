@@ -1,11 +1,3 @@
-from nomad.config.models.ui import (
-    App,
-    Column,
-    Menu,
-    MenuItemCustomQuantities,
-    SearchQuantities,
-)
-
 from apps.directories import dir_path
 from apps.menu_steps import (
     menuadd_bonding,
@@ -16,6 +8,13 @@ from apps.menu_steps import (
     menuadd_sog,
     menuadd_spincoat,
     menuadd_sputtering,
+)
+from nomad.config.models.ui import (
+    App,
+    Column,
+    Menu,
+    MenuItemCustomQuantities,
+    SearchQuantities,
 )
 
 schemas = [

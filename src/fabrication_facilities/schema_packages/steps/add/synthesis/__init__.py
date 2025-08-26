@@ -19,8 +19,9 @@ class CVDsEntryPoint(SchemaPackageEntryPoint):
 
 CVDs_entry_point = CVDsEntryPoint(
     name='CVDs steps definitions',
-    description='Schema package for describing cvd steps in fabrication.'
+    description='Schema package for describing cvd steps in fabrication.',
 )
+
 
 class CoatingEntryPoint(SchemaPackageEntryPoint):
     def load(self):
@@ -31,5 +32,5 @@ class CoatingEntryPoint(SchemaPackageEntryPoint):
 
 coating_entry_point = CoatingEntryPoint(
     name='Coating steps definitions',
-    description='Schema package for describing coating steps in fabrication.'
+    description='Schema package for describing coating steps in fabrication.',
 )

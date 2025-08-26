@@ -3,19 +3,10 @@ from typing import (
 )
 
 import numpy as np
-
 from nomad.datamodel.metainfo.basesections import ElementalComposition
 from nomad.datamodel.metainfo.eln import Chemical
-from nomad.metainfo import (
-    MEnum,
-    Package,
-    Quantity,
-    Section,
-    SubSection
-)
-
+from nomad.metainfo import MEnum, Package, Quantity, Section, SubSection
 from schema_packages.fabrication_utilities import FabricationProcessStep
-
 from schema_packages.utils import parse_chemical_formula
 
 if TYPE_CHECKING:

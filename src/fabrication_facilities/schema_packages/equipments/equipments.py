@@ -29,7 +29,6 @@ from nomad.metainfo import (
     Section,
     SubSection,
 )
-
 from schema_packages.equipments.utils import (
     BeamColumnCapabilites,
     CarrierDescription,

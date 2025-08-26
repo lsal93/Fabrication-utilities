@@ -1,14 +1,13 @@
+from apps.directories import dir_path
+from apps.menu_steps import (
+    menuutils_obsmeasurements,
+    menuutils_startingmaterial,
+)
 from nomad.config.models.ui import (
     App,
     Column,
     Menu,
     SearchQuantities,
-)
-
-from apps.directories import dir_path
-from apps.menu_steps import (
-    menuutils_obsmeasurements,
-    menuutils_startingmaterial,
 )
 
 schemas = [f'*#{path_value}' for path_value in dir_path.values()]

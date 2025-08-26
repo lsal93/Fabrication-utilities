@@ -39,7 +39,6 @@ from nomad.metainfo import (
     Section,
     SubSection,
 )
-
 from schema_packages.Items import (
     Item,
     ItemsPermitted,

@@ -1,11 +1,3 @@
-from nomad.config.models.ui import (
-    App,
-    Column,
-    Menu,
-    MenuItemCustomQuantities,
-    SearchQuantities,
-)
-
 from apps.directories import dir_path
 from apps.menu_steps import (
     menutrans_annealing,
@@ -19,6 +11,13 @@ from apps.menu_steps import (
     menutrans_sod,
     menutrans_thermaloxidation,
     menutrans_track,
+)
+from nomad.config.models.ui import (
+    App,
+    Column,
+    Menu,
+    MenuItemCustomQuantities,
+    SearchQuantities,
 )
 
 schemas = [

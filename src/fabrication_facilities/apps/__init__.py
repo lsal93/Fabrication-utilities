@@ -1,5 +1,3 @@
-from nomad.config.models.plugins import AppEntryPoint
-
 from apps.addapp import addapp
 from apps.charact_equipmentapp import charact_equipmentapp
 from apps.characterapp import characterapp
@@ -8,6 +6,7 @@ from apps.processapp import processapp
 from apps.removeapp import removeapp
 from apps.stepapp import stepapp
 from apps.transapp import transapp
+from nomad.config.models.plugins import AppEntryPoint
 
 equipment_app_entry_point = AppEntryPoint(
     name='Fabrication_equipment_search',

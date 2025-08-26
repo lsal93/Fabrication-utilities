@@ -9,7 +9,6 @@ from typing import (
 )
 
 import numpy as np
-
 from nomad.metainfo import (
     MEnum,
     Package,
@@ -17,15 +16,11 @@ from nomad.metainfo import (
     Section,
     SubSection,
 )
-
 from schema_packages.fabrication_utilities import (
     FabricationProcessStep,
     FabricationProcessStepBase,
 )
-from schema_packages.steps.utils import(
-    Priming,
-    SpinningComponent
-)
+from schema_packages.steps.utils import Priming, SpinningComponent
 from schema_packages.utils import FabricationChemical
 
 if TYPE_CHECKING:

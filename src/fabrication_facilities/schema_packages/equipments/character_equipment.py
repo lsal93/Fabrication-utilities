@@ -29,7 +29,6 @@ from nomad.metainfo import (
     Section,
     SubSection,
 )
-
 from schema_packages.fabrication_utilities import Equipment
 from schema_packages.steps.character import (
     CharacterizationTechnique,

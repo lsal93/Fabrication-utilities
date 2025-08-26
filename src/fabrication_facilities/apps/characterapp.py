@@ -1,3 +1,4 @@
+from apps.directories import dir_path
 from nomad.config.models.ui import (
     App,
     Column,
@@ -5,8 +6,6 @@ from nomad.config.models.ui import (
     MenuItemCustomQuantities,
     SearchQuantities,
 )
-
-from apps.directories import dir_path
 
 schemas = [
     f'*#{path_value}'

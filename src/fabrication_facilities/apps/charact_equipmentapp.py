@@ -15,9 +15,7 @@ from nomad.config.models.ui import (
 )
 
 dir0 = 'schema_packages.equipments.character_equipment.CharactEquipmentBase'
-dir1 = (
-    'schema_packages.equipments.character_equipment.AFM_System'
-)
+dir1 = 'schema_packages.equipments.character_equipment.AFM_System'
 dir2 = 'schema_packages.equipments.character_equipment.FourPointProbe_System'
 
 

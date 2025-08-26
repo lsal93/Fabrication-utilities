@@ -15,7 +15,6 @@ from nomad.metainfo import (
     Section,
     SubSection,
 )
-
 from schema_packages.fabrication_utilities import (
     FabricationProcessStep,
     FabricationProcessStepBase,
@@ -265,10 +264,7 @@ class Baking(FabricationProcessStep):
 class DirectLitoOutputs(ArchiveSection):
     m_def = Section()
 
-    job_number= Quantity(
-        type=int,
-        a_eln={"component": "NumberEditQuantity"}
-    )
+    job_number = Quantity(type=int, a_eln={'component': 'NumberEditQuantity'})
 
     current_measured = Quantity(
         type=np.float64,
