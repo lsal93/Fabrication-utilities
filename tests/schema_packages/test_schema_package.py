@@ -7,6 +7,6 @@ def test_schema_package():
     test_file = os.path.join('tests', 'data', 'icp.archive.yaml')
     entry = parse(test_file)[0]
     normalize_all(entry)
-    el = entry.data.syntesis_steps[0].fluximeters[0].elemental_composition[0].element
+    el = entry.data.synthesis_steps[0].fluximeters[0].elemental_composition[0].element
 
     assert el is not None

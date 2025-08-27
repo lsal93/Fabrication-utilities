@@ -4,8 +4,7 @@ Plugin for fabrication processes
 
 ## Introduction
 
-!!! note "Attention"
-    TODO
+In the following the sections of the documentation to the plugin are shortly describeed and the links to the corresponding sections are provided.
 
 <div markdown="block" class="home-grid">
 <div markdown="block">
