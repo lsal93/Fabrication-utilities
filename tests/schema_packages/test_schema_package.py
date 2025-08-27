@@ -5,7 +5,8 @@ from nomad.client import normalize_all, parse
 
 def test_schema_package():
     test_file = os.path.join('tests', 'data', 'icp.archive.yaml')
-    entry_archive = parse(test_file)[0]
-    normalize_all(entry_archive)
+    entry = parse(test_file)[0]
+    normalize_all(entry)
+    el = entry.data.syntesis_steps[0].fluximeters[0].elemental_composition[0].element
 
-    assert entry_archive.data.recipe_name == 'Hello World!'
+    assert el is not None
