@@ -1,111 +1,8 @@
 # Fabrication-facilities
 
-Plugin for fabrication processes
+Plugin for fabrication processes.
 
 This `nomad` plugin was generated with `Cookiecutter` along with `@nomad`'s [`cookiecutter-nomad-plugin`](https://github.com/FAIRmat-NFDI/cookiecutter-nomad-plugin) template.
-
-
-## Development
-
-If you want to develop locally this plugin, clone the project and in the plugin folder, create a virtual environment (you can use Python 3.9, 3.10, or 3.11):
-```sh
-git clone https://github.com/foo/Fabrication-facilities.git
-cd Fabrication-facilities
-python3.11 -m venv .pyenv
-. .pyenv/bin/activate
-```
-
-Make sure to have `pip` upgraded:
-```sh
-pip install --upgrade pip
-```
-
-We recommend installing `uv` for fast pip installation of the packages:
-```sh
-pip install uv
-```
-
-Install the `nomad-lab` package:
-```sh
-uv pip install '.[dev]' --index-url https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple
-```
-
-**Note!**
-Until we have an official pypi NOMAD release with the plugins functionality make
-sure to include NOMAD's internal package registry (via `--index-url` in the above command).
-
-The plugin is still under development. If you would like to contribute, install the package in editable mode (with the added `-e` flag):
-```sh
-uv pip install -e '.[dev]' --index-url https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple
-```
-
-
-### Run the tests
-
-You can run locally the tests:
-```sh
-python -m pytest -sv tests
-```
-
-where the `-s` and `-v` options toggle the output verbosity.
-
-Our CI/CD pipeline produces a more comprehensive test report using the `pytest-cov` package. You can generate a local coverage report:
-```sh
-uv pip install pytest-cov
-python -m pytest --cov=src tests
-```
-
-### Run linting and auto-formatting
-
-We use [Ruff](https://docs.astral.sh/ruff/) for linting and formatting the code. Ruff auto-formatting is also a part of the GitHub workflow actions. You can run locally:
-```sh
-ruff check .
-ruff format . --check
-```
-
-
-### Debugging
-
-For interactive debugging of the tests, use `pytest` with the `--pdb` flag. We recommend using an IDE for debugging, e.g., _VSCode_. If that is the case, add the following snippet to your `.vscode/launch.json`:
-```json
-{
-  "configurations": [
-      {
-        "name": "<descriptive tag>",
-        "type": "debugpy",
-        "request": "launch",
-        "cwd": "${workspaceFolder}",
-        "program": "${workspaceFolder}/.pyenv/bin/pytest",
-        "justMyCode": true,
-        "env": {
-            "_PYTEST_RAISE": "1"
-        },
-        "args": [
-            "-sv",
-            "--pdb",
-            "<path-to-plugin-tests>",
-        ]
-    }
-  ]
-}
-```
-
-where `<path-to-plugin-tests>` must be changed to the local path to the test module to be debugged.
-
-The settings configuration file `.vscode/settings.json` automatically applies the linting and formatting upon saving the modified file.
-
-
-### Documentation on Github pages
-
-To view the documentation locally, install the related packages using:
-```sh
-uv pip install -r requirements_docs.txt
-```
-
-Run the documentation server:
-```sh
-mkdocs serve
-```
 
 
 ## Adding this plugin to NOMAD
@@ -151,7 +48,7 @@ python -m build --sdist
 You can install the package with pip:
 
 ```sh
-pip install dist/Fabrication-facilities-0.1.0
+pip install dist/Fabrication-facilities-1.10.0
 ```
 
 Read more about python packages, `pyproject.toml`, and how to upload packages to PyPI
@@ -160,12 +57,20 @@ on the [PyPI documentation](https://packaging.python.org/en/latest/tutorials/pac
 
 ### Template update
 
-We use cruft to update the project based on template changes. A `cruft-update.yml` is included in Github workflows to automatically check for updates and create pull requests to apply updates. Follow the [instructions](https://github.blog/changelog/2022-05-03-github-actions-prevent-github-actions-from-creating-and-approving-pull-requests/) on how to enable Github Actions to create pull requests. 
+We use cruft to update the project based on template changes. A `cruft-update.yml` is included in Github workflows to automatically check for updates and create pull requests to apply updates. Follow the [instructions](https://github.blog/changelog/2022-05-03-github-actions-prevent-github-actions-from-creating-and-approving-pull-requests/) on how to enable Github Actions to create pull requests.
 
 To run the check for updates locally, follow the instructions on [`cruft` website](https://cruft.github.io/cruft/#updating-a-project).
 
+## Description of the plugin
+
+The plugin is intended as an extension of an oasis or a local instance of NOMAD. It could be useful to describe some critcal fabrication and characterization steps employed in micro and nano fabrication.
+It is built with three main sections. The tests folder contains some scripts used to test some features
+of the package. As an example you can find for the app that the test is run onto the the so
+called "transapp" (for more details see the docs and the code in src/fabrication_facilities/apps/fabrication/transapp.py). For the schema packages an example yaml file is defined in the tests/data folder and it is called by the testing module in the tests/schema_packages. Following the already defined method you can test all the features present in the plugin defining your own tests. Finally for what concerns the main module src/fabrication_facilities the reader is remainded to the readme present into that folder and for more information to the docs repository of the plugin.
 
 ## Main contributors
 | Name | E-mail     |
 |------|------------|
 | Matteo Bontorno | [mbontorno@fbk.eu](mailto:mbontorno@fbk.eu)
+
+
