@@ -9,21 +9,11 @@ In the following the sections of the documentation to the plugin are shortly des
 <div markdown="block" class="home-grid">
 <div markdown="block">
 
-### Tutorial
-
-TODO
-
-- [Tutorial](tutorial/tutorial.md)
-
-</div>
-<div markdown="block">
-
 ### How-to guides
 
 How-to guides provide step-by-step instructions for a wide range of tasks, with the overarching topics:
 
 - [Install this plugin](how_to/install_this_plugin.md)
-- [Use this plugin](how_to/use_this_plugin.md)
 - [Contribute to this plugin](how_to/contribute_to_this_plugin.md)
 - [Contribute to the documentation](how_to/contribute_to_the_documentation.md)
 
