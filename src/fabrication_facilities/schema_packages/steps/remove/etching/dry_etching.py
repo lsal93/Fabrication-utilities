@@ -198,16 +198,19 @@ class RIE(FabricationProcessStep):
             'hide': [
                 'duration',
                 'tag',
+                'operator'
             ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
                     'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'wafer_side',
                     'starting_date',
@@ -294,16 +297,19 @@ class ICP_RIE(RIE):
             'hide': [
                 'duration',
                 'tag',
+                'operator'
             ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
                     'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'wafer_side',
                     'starting_date',
@@ -339,16 +345,19 @@ class DRIE_BOSCH(ICP_RIE):
             'hide': [
                 'duration',
                 'tag',
+                'operator'
             ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
                     'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'wafer_side',
                     'starting_date',

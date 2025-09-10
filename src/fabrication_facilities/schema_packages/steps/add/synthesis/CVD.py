@@ -219,16 +219,19 @@ class LPCVD(FabricationProcessStep):
             'hide': [
                 'tag',
                 'duration',
+                'operator'
             ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
                     'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'starting_date',
                     'ending_date',
@@ -303,16 +306,19 @@ class PECVD(LPCVD):
             'hide': [
                 'tag',
                 'duration',
+                'operator'
             ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
                     'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'wafer_side',
                     'starting_date',
@@ -362,16 +368,19 @@ class ICP_CVD(PECVD):
             'hide': [
                 'tag',
                 'duration',
+                'operator'
             ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
                     'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'starting_date',
                     'ending_date',

@@ -41,7 +41,7 @@ from nomad.metainfo import (
 )
 from schema_packages.Items import (
     Item,
-    ItemsPermitted,
+    ItemsPermitted
 )
 from schema_packages.utils import parse_chemical_formula
 
@@ -258,7 +258,6 @@ class FabricationProcessStepBase(ArchiveSection):
         a_eln={
             'properties': {
                 'order': [
-                    'job_number',
                     'name',
                     'tag',
                     'id_item_processed',
@@ -271,12 +270,16 @@ class FabricationProcessStepBase(ArchiveSection):
             },
         },
     )
-
-    job_number = Quantity(
-        type=int,
-        a_eln={'component': 'NumberEditQuantity'},
-    )
     name = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    tag = Quantity(
+        type=str,
+        description='Role of the step in fabrication (effective, conditioning, etc.)',
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    id_item_processed = Quantity(
         type=str,
         a_eln={'component': 'StringEditQuantity'},
     )
@@ -297,15 +300,6 @@ class FabricationProcessStepBase(ArchiveSection):
         description='Time used in this single atomic step',
         a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         unit='minute',
-    )
-    id_item_processed = Quantity(
-        type=str,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-    tag = Quantity(
-        type=str,
-        description='Role of the step in fabrication (effective, conditioning, etc.)',
-        a_eln={'component': 'StringEditQuantity'},
     )
     notes = Quantity(
         type=str,
@@ -473,22 +467,89 @@ class EquipmentReference(Link, ArchiveSection):
                 raise e
 
 
+class User(ArchiveSection):
+    m_def = Section()
+
+    name = Quantity(
+        type=str,
+        description='Name of one of the user involved',
+        a_eln={'component':'StringEditQuantity'}
+    )
+
+    role = Quantity(
+        type=str,
+        description='Role of the user in the lab or for the experiment',
+        a_eln={'component':'StringEditQuantity'}
+    )
+
+    affiliation = Quantity(
+        type=str,
+        description='Affiliation of the user',
+        a_eln={'component':'StringEditQuantity'}
+    )
+
+    address = Quantity(
+        type=str,
+        description='Address of the office for the user',
+        a_eln={'component':'StringEditQuantity'}
+    )
+
+    telephone_number = Quantity(
+        type=str,
+        description='Telephone number to contact the user',
+        a_eln={'component':'StringEditQuantity'}
+    )
+
+    fax_number = Quantity(
+        type=str,
+        description='Fax number to contact the user',
+        a_eln={'component':'StringEditQuantity'}
+    )
+
+    email = Quantity(
+        type=str,
+        description='Email address to contact the user',
+        a_eln={'component': 'StringEditQuantity'}
+    )
+
+    ORCID = Quantity(
+        type=str,
+        description="""
+            an author code, Open Researcher and Contributor ID, defined by
+            https://orcid.org and expressed as a URI
+        """,
+        a_eln={'component': 'StringEditQuantity'}
+    )
+
+    facility_user_id = Quantity(
+        type=str,
+        description = """
+            facility based unique identifier for this person e.g. the identification
+            code on the facility address/contact database
+        """,
+        a_eln={'component': 'StringEditQuantity'}
+    )
+
+
 class FabricationProcessStep(FabricationProcessStepBase, EntryData):
     m_def = Section(
         a_eln={
             'hide': [
                 'tag',
-                'duaration',
+                'duration',
+                'operator'
             ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
                     'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'starting_date',
                     'ending_date',
@@ -504,8 +565,21 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
         },
     )
 
+    job_number = Quantity(
+        type=int,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+    step_id = Quantity(
+        type= str,
+        description = """
+            Unique identifier for the experiment, defined by the facility, possibly
+            linked to the proposals.
+        """,
+        a_eln={'component': 'StringEditQuantity'}
+    )
     description = Quantity(
         type=str,
+        description= 'Brief summary of the experiment, including key objectives',
         a_eln={'component': 'RichTextEditQuantity'},
     )
     affiliation = Quantity(
@@ -514,11 +588,23 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
     )
     location = Quantity(
         type=str,
+        description='City and country where the experiment took place',
         a_eln={'component': 'StringEditQuantity'},
     )
-    room = Quantity(
+    institution = Quantity(
         type=str,
+        description='Name of the institution hosting the facility',
         a_eln={'component': 'StringEditQuantity'},
+    )
+    facility = Quantity(
+        type=str,
+        description='Name of the experimental facility',
+        a_eln={'component': 'StringEditQuantity'}
+    )
+    laboratory = Quantity(
+        type=str,
+        description='Name of the laboratory or beamline',
+        a_eln={'component': 'StringEditQuantity'}
     )
     step_type = Quantity(
         type=str,
@@ -548,6 +634,12 @@ class FabricationProcessStep(FabricationProcessStepBase, EntryData):
     instruments = SubSection(
         section_def=EquipmentReference,
         repeats=True,
+    )
+
+    users = SubSection(
+        section_def = User,
+        description='List of users involved in the step',
+        repeats = True
     )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:

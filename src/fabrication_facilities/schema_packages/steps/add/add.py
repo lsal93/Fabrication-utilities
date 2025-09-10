@@ -34,22 +34,21 @@ class ElectronGun(FabricationProcessStep):
     m_def = Section(
         a_eln={
             'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
+                'tag',
                 'duration',
-                'end_time',
-                'start_time',
+                'operator'
             ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
+                    'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'starting_date',
                     'ending_date',
@@ -138,15 +137,20 @@ class Sputtering(Chemical, FabricationProcessStep):
                 'duration',
                 'end_time',
                 'start_time',
+                'tag',
+                'operator'
             ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
+                    'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'starting_date',
                     'ending_date',
@@ -285,23 +289,21 @@ class Bonding(FabricationProcessStep):
     m_def = Section(
         a_eln={
             'hide': [
-                'description',
-                'lab_id',
-                'datetime',
-                'comment',
+                'tag',
                 'duration',
-                'end_time',
-                'start_time',
+                'operator'
             ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
                     'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'starting_date',
                     'ending_date',
@@ -377,15 +379,19 @@ class SOG(Chemical, FabricationProcessStep):
                 'duration',
                 'end_time',
                 'start_time',
+                'operator',
             ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
+                    'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'starting_date',
                     'ending_date',

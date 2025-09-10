@@ -13,6 +13,10 @@ from nomad.datamodel.metainfo.basesections import ElementalComposition
 from nomad.datamodel.metainfo.eln import Chemical
 from nomad.datamodel.metainfo.plot import PlotlyFigure, PlotSection
 from nomad.metainfo import Quantity, Section, SubSection
+from nomad.datamodel.metainfo.basesections import (
+    Process,
+    Activity
+)
 
 if TYPE_CHECKING:
     from nomad.datamodel.datamodel import (
@@ -455,3 +459,14 @@ def double_list_reading(list1, list2, archive, logger):
             chemical.normalize(archive, logger)
             reactives.append(chemical)
     return reactives
+
+
+class ActivityProva(Activity, EntryData):
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None :
+        super().normalize(archive, logger)
+
+class ProcessProva(Process, EntryData):
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None :
+        super().normalize(archive, logger)

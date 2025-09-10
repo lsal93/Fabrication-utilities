@@ -115,15 +115,18 @@ class ThermalOxidationbase(FabricationProcessStepBase):
 class ThermalOxidation(FabricationProcessStep):
     m_def = Section(
         a_eln={
-            'hide': ['tag', 'duration'],
+            'hide': ['tag', 'duration', 'operator'],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
+                    'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'starting_date',
                     'ending_date',
@@ -221,16 +224,19 @@ class Baking(FabricationProcessStep):
             'hide': [
                 'tag',
                 'duration',
+                'operator',
             ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
                     'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'starting_date',
                     'ending_date',
@@ -331,16 +337,19 @@ class EBL(FabricationProcessStep):
             'hide': [
                 'duration',
                 'tag',
+                'operator'
             ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
                     'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'wafer_side',
                     'starting_date',
@@ -437,19 +446,21 @@ class FIBbase(FabricationProcessStepBase):
 class FIB(FabricationProcessStep):
     m_def = Section(
         a_eln={
+            'hide':['tag', 'operator', 'duration'],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
                     'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'starting_date',
                     'ending_date',
-                    'duration',
                     'step_type',
                     'definition_of_process_step',
                     'keywords',

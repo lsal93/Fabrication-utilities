@@ -116,16 +116,19 @@ class Spin_Coating(FabricationProcessStep):
             'hide': [
                 'duration',
                 'tag',
+                'operator'
             ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
+                    'step_id',
                     'description',
                     'affiliation',
                     'location',
-                    'operator',
-                    'room',
+                    'institution',
+                    'facility',
+                    'laboratory',
                     'id_item_processed',
                     'wafer_side',
                     'starting_date',
