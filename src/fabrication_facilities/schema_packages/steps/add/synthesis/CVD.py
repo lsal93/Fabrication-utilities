@@ -209,6 +209,44 @@ class ICP_CVDbase(PECVDbase):
         super().normalize(archive, logger)
 
 
+class ICP_CVDbase_nested(ICP_CVDbase):
+    # self-containing customization of ICP_CVDbase
+    m_def = Section(
+        description='Atomistic component of an ICP CVD step, nesting version',
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'tag',
+                    'id_item_processed',
+                    'operator',
+                    'starting_date',
+                    'ending_date',
+                    'duration',
+                    'chamber_temperature',
+                    'chamber_pressure',
+                    'number_of_loops',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    icp_column = SubSection(
+        section_def=ICP_Column,
+        repeats=False,
+    )
+
+    ICP_CVDbase_nested = SubSection(
+        section_def='ICP_CVDbase_nested',
+        repeats=True,
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
+
 class LPCVD(FabricationProcessStep):
     m_def = Section(
         description="""
@@ -216,11 +254,7 @@ class LPCVD(FabricationProcessStep):
         a gaseous precursor or mixture of precursors, commonly initiated by heat.
         """,
         a_eln={
-            'hide': [
-                'tag',
-                'duration',
-                'operator'
-            ],
+            'hide': ['tag', 'duration', 'operator'],
             'properties': {
                 'order': [
                     'job_number',
@@ -303,11 +337,7 @@ class PECVD(LPCVD):
         electrode system on the sample.
         """,
         a_eln={
-            'hide': [
-                'tag',
-                'duration',
-                'operator'
-            ],
+            'hide': ['tag', 'duration', 'operator'],
             'properties': {
                 'order': [
                     'job_number',
@@ -365,11 +395,7 @@ class ICP_CVD(PECVD):
         addition to the lower electrodes to enanche by magnetic field the generation.
         """,
         a_eln={
-            'hide': [
-                'tag',
-                'duration',
-                'operator'
-            ],
+            'hide': ['tag', 'duration', 'operator'],
             'properties': {
                 'order': [
                     'job_number',
@@ -401,6 +427,159 @@ class ICP_CVD(PECVD):
 
     synthesis_steps = SubSection(
         section_def=ICP_CVDbase,
+        repeats=True,
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
+
+class ICP_CVD_Catania(ICP_CVD):
+    m_def = Section(
+        # Adaptation of the ICP_CVD class for processes performed at IMM Catania
+        description="""
+        Deposition of a solid material onto a substrate by chemical reaction of a
+        gaseous precursor or mixture of precursors, commonly initiated by heat to create
+        a plasma. To generate the plasma the ICP CVD procedure uses a current in
+        addition to the lower electrodes to enanche by magnetic field the generation.
+
+        This schema also supports description of single-process multilayer depositions.
+        """,
+        a_eln={
+            'hide': ['tag', 'duration', 'operator'],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'step_id',
+                    'process_id',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'institution',
+                    'facility',
+                    'laboratory',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'thickness_target',
+                    'duration_target',
+                    'deposition_rate_target',
+                    'is_multilayer',
+                    'multilayer_repetitions',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    process_id = Quantity(
+        type=str,
+        description="""
+        Unique identifier for CVD processes perfomed in the same location,
+        usually of the form YYMMDD_n.
+        """,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+
+    is_multilayer = Quantity(
+        type=bool,
+        description="""
+        Describes wether the deposition is for a multilayer or for a single
+        material.
+        For a multilayer, it is likely that the synthesis steps are nested and loop.
+        """,
+        a_eln={'component': 'BoolEditQuantity'},
+    )
+
+    synthesis_steps = SubSection(
+        section_def=ICP_CVDbase_nested,
+        repeats=True,
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
+
+class ICP_CVD_Catania_testhidden(ICP_CVD):
+    m_def = Section(
+        # this is to test what happens when properties from parent class are not explicitly declared
+        description="""
+        Deposition of a solid material onto a substrate by chemical reaction of a
+        gaseous precursor or mixture of precursors, commonly initiated by heat to create
+        a plasma. To generate the plasma the ICP CVD procedure uses a current in
+        addition to the lower electrodes to enanche by magnetic field the generation.
+
+        This schema also supports description of single-process multilayer depositions.
+        """,
+        a_eln={
+            'hide': ['tag', 'duration', 'operator'],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'step_id',
+                    'process_id',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'institution',
+                    'facility',
+                    'laboratory',
+                    'id_item_processed',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_file',
+                    'recipe_preview',
+                    'thickness_target',
+                    'duration_target',
+                    'deposition_rate_target',
+                    'is_multilayer',
+                    'multilayer_repetitions',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    process_id = Quantity(
+        type=str,
+        description="""
+        Unique identifier for CVD processes perfomed in the same location,
+        usually of the form YYMMDD_n.
+        """,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+
+    is_multilayer = Quantity(
+        type=bool,
+        description="""
+        Describes wether the deposition is for a multilayer or for a single
+        material.
+        """,
+        a_eln={'component': 'BoolEditQuantity'},
+    )
+
+    multilayer_repetitions = Quantity(
+        type=int,
+        description="""
+        Describes the number of repetitions in the multilayer.
+        """,
+        a_eln={'component': 'NumberEditQuantity'},
+    )
+
+    synthesis_steps = SubSection(
+        section_def=ICP_CVDbase_nested,
         repeats=True,
     )
 
