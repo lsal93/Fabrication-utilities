@@ -238,7 +238,7 @@ class ICP_CVDbase_nested(ICP_CVDbase):
         repeats=False,
     )
 
-    ICP_CVDbase_nested = SubSection(
+    substeps = SubSection(
         section_def='ICP_CVDbase_nested',
         repeats=True,
     )
@@ -472,7 +472,6 @@ class ICP_CVD_Catania(ICP_CVD):
                     'duration_target',
                     'deposition_rate_target',
                     'is_multilayer',
-                    'multilayer_repetitions',
                     'notes',
                 ]
             },
@@ -519,20 +518,27 @@ class ICP_CVD_Catania_testhidden(ICP_CVD):
         This schema also supports description of single-process multilayer depositions.
         """,
         a_eln={
-            'hide': ['tag', 'duration', 'operator'],
+            'hide': [
+                'tag',
+                'duration',
+                'operator',
+                'job_number',
+                'affiliation',
+                'location',
+                'institution',
+                'facility',
+                'laboratory',
+                'id_item_processed',
+                'duration_target',
+                'deposition_rate_target',
+                'wafer_side',
+            ],
             'properties': {
                 'order': [
-                    'job_number',
                     'name',
                     'step_id',
                     'process_id',
                     'description',
-                    'affiliation',
-                    'location',
-                    'institution',
-                    'facility',
-                    'laboratory',
-                    'id_item_processed',
                     'starting_date',
                     'ending_date',
                     'step_type',
@@ -542,10 +548,7 @@ class ICP_CVD_Catania_testhidden(ICP_CVD):
                     'recipe_file',
                     'recipe_preview',
                     'thickness_target',
-                    'duration_target',
-                    'deposition_rate_target',
                     'is_multilayer',
-                    'multilayer_repetitions',
                     'notes',
                 ]
             },
@@ -568,14 +571,6 @@ class ICP_CVD_Catania_testhidden(ICP_CVD):
         material.
         """,
         a_eln={'component': 'BoolEditQuantity'},
-    )
-
-    multilayer_repetitions = Quantity(
-        type=int,
-        description="""
-        Describes the number of repetitions in the multilayer.
-        """,
-        a_eln={'component': 'NumberEditQuantity'},
     )
 
     synthesis_steps = SubSection(
