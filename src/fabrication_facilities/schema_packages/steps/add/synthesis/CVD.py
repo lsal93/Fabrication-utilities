@@ -518,7 +518,7 @@ class ICP_CVD_Catania_testhidden(ICP_CVD):
         This schema also supports description of single-process multilayer depositions.
         """,
         a_eln={
-            'hide': [
+            'hide': [  # hide nearly everything
                 'tag',
                 'duration',
                 'operator',
@@ -532,24 +532,24 @@ class ICP_CVD_Catania_testhidden(ICP_CVD):
                 'duration_target',
                 'deposition_rate_target',
                 'wafer_side',
+                'process_id',
+                'description',
+                'starting_date',
+                'ending_date',
+                'step_type',
+                'definition_of_process_step',
+                'keywords',
+                'recipe_name',
+                'recipe_file',
+                'recipe_preview',
+                'thickness_target',
+                'is_multilayer',
+                'notes',
             ],
             'properties': {
                 'order': [
+                    'step_id',  # step_id and name were in the opposite order originally, so this tests the ordering
                     'name',
-                    'step_id',
-                    'process_id',
-                    'description',
-                    'starting_date',
-                    'ending_date',
-                    'step_type',
-                    'definition_of_process_step',
-                    'keywords',
-                    'recipe_name',
-                    'recipe_file',
-                    'recipe_preview',
-                    'thickness_target',
-                    'is_multilayer',
-                    'notes',
                 ]
             },
         },
