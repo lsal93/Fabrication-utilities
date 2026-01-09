@@ -580,3 +580,209 @@ class ICP_CVD_Catania_testhidden(ICP_CVD):
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
+
+
+# Current tentative sputtering_catania process class is in CVD.py
+# Because:
+# -the sputtering class in the main repository of fabrication-utilities does NOT fit
+# our needs
+# -the CVD classes fit our needs and are used as a template
+# -I don't want to deal with how to make NOMAD access this new file right now
+
+
+class sputtering_catania_base(FabricationProcessStepBase):
+    m_def = Section(
+        description='Atomistic component of a general sputtering step',
+        a_eln={
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'tag',
+                    'id_item_processed',
+                    'operator',
+                    'starting_date',
+                    'ending_date',
+                    'duration',
+                    'chamber_temperature',
+                    'starting_pressure',
+                    'deposition_pressure',
+                    'movimentation_frequency',
+                    'power',
+                    'voltage',
+                    'current',
+                    'sample_height',
+                    'cathode_position',
+                    'notes',
+                ],
+            },
+        },
+    )
+
+    starting_pressure = Quantity(
+        type=np.float64,
+        description='Pressure in the chamber for starting process',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
+        unit='mbar',
+    )
+
+    deposition_pressure = Quantity(
+        type=np.float64,
+        description='Pressure in the chamber during the deposition',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'mbar'},
+        unit='mbar',
+    )
+
+    chamber_temperature = Quantity(
+        type=np.float64,
+        description='Temperature of the chamber',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'celsius'},
+        unit='celsius',
+    )
+
+    movimentation_frequency = Quantity(
+        type=np.float64,
+        # description='',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'rpm'},
+        unit='rpm',
+    )
+
+    power = Quantity(
+        type=np.float64,
+        # description='',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'W'},
+        unit='W',
+    )
+
+    voltage = Quantity(
+        type=np.float64,
+        # description='',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'V'},
+        unit='V',
+    )
+
+    current = Quantity(
+        type=np.float64,
+        # description='',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'A'},
+        unit='A',
+    )
+
+    sample_height = Quantity(
+        type=np.float64,
+        # description='',
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'cm'},
+        unit='cm',
+    )
+
+    cathode_position = Quantity(
+        type=MEnum(
+            'confocal',
+            'grazing',
+        ),
+        # description='',
+        a_eln={'component': 'EnumEditQuantity'},
+    )
+
+    material_deposited = SubSection(section_def=FabricationChemical, repeats=True)
+
+    fluximeters = SubSection(
+        section_def=Massflow_controller,
+        repeats=True,
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
+
+class sputtering_catania(FabricationProcessStep):
+    m_def = Section(
+        description="""
+        A synthesis technique where a solid target is bombarded with electrons or
+        energetic ions (e.g. Ar+) causing atoms to be ejected ('sputtering').
+        The ejected atoms then deposit, as a thin-film, on a substrate.
+        http://purl.obolibrary.org/obo/CHMO_0001364
+
+        This schema describes sputtering processes performed at CNR-IMM Catania
+        as a unit of NFFA-DI; https://nffa-di.it/en/
+        """,
+        a_eln={
+            'hide': [
+                'tag',
+                'duration',
+                'operator',
+                'step_id',
+                'affiliation',
+                'id_item_processed',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'process_id',
+                    'description',
+                    'location',
+                    'institution',
+                    'facility',
+                    'laboratory',
+                    'starting_date',
+                    'ending_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_preview',
+                    'thickness_target',
+                    'duration_target',
+                    'deposition_rate_target',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    process_id = Quantity(
+        type=str,
+        description="""
+        Unique identifier for CVD processes perfomed in the same location,
+        usually of the form YYMMDD_n.
+        """,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+
+    thickness_target = Quantity(
+        type=np.float64,
+        description='Amount of material to be deposited',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm',
+        },
+        unit='nm',
+    )
+
+    duration_target = Quantity(
+        type=np.float64,
+        description='Duration required of the process',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'minute',
+        },
+        unit='minute',
+    )
+
+    deposition_rate_target = Quantity(
+        type=np.float64,
+        description='Deposition rate desired',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'nm/minute',
+        },
+        unit='nm/minute',
+    )
+
+    synthesis_steps = SubSection(
+        section_def=sputtering_catania_base,
+        repeats=True,
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)

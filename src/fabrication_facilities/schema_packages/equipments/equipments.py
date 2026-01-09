@@ -953,6 +953,87 @@ class ICP_CVD_System(PECVD_System):
     icp_parameters = SubSection(section_def=ICP_ColumnCapabilities, repeats=False)
 
 
+# Sputter_catania instrument class based on CVD instruments classes as a template
+# the _catania suffix is to immediately show that this is NOT from the main
+# fabrication-utilities repository, without comparing commits et cetera.
+
+
+class sputtering_catania_System(Equipment):
+    m_def = Section(
+        a_eln={
+            'hide': [
+                'datetime',
+                'lab_id',
+                'affiliation',
+                'inventary_code',
+                'is_bookable',
+                'automatic_loading',
+                'contamination_class',
+            ],
+            'properties': {
+                'order': [
+                    'name',
+                    'description',
+                    'institution',
+                    'product_model',
+                    'manufacturer_name',
+                    'min_chamber_pressure',
+                    'max_chamber_pressure',
+                    'min_chamber_temperature',
+                    'max_chamber_temperature',
+                    'notes',
+                ],
+            },
+        },
+        description='Instrument used to perform sputtering steps',
+    )
+
+    min_chamber_pressure = Quantity(
+        type=np.float64,
+        description='Minimal pressure available',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
+
+    max_chamber_pressure = Quantity(
+        type=np.float64,
+        description='Maximal pressure available',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'mbar',
+        },
+        unit='mbar',
+    )
+
+    min_chamber_temperature = Quantity(
+        type=np.float64,
+        description='Minimal temperature at disposal for the wall',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    max_chamber_temperature = Quantity(
+        type=np.float64,
+        description='Maximal temperature of the wall',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'celsius',
+        },
+        unit='celsius',
+    )
+
+    gases = SubSection(
+        section_def=Massflow_parameter,
+        repeats=True,
+    )
+
+
 #######################################################################################
 ################################ LITHOGRAPHY EQUIPMENTS ###############################
 #######################################################################################
