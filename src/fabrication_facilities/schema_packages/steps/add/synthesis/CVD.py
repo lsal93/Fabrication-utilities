@@ -177,6 +177,41 @@ class PECVDbase(FabricationProcessStepBase):
         super().normalize(archive, logger)
 
 
+class PECVDbase_nested(PECVDbase):
+    # self-containing customization of PECVDbase
+    m_def = Section(
+        description='Atomistic component of a PECVD step, nesting version',
+        a_eln={
+            'hide': [
+                'id_item_processed',
+                'starting_date',
+                'ending_date',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'tag',
+                    'operator',
+                    'duration',
+                    'chamber_temperature',
+                    'chamber_pressure',
+                    'number_of_loops',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    substeps = SubSection(
+        section_def='PECVDbase_nested',
+        repeats=True,
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
+
 class ICP_CVDbase(PECVDbase):
     m_def = Section(
         description='Atomistic component of an ICP CVD step',
@@ -214,15 +249,17 @@ class ICP_CVDbase_nested(ICP_CVDbase):
     m_def = Section(
         description='Atomistic component of an ICP CVD step, nesting version',
         a_eln={
+            'hide': [
+                'id_item_processed',
+                'starting_date',
+                'ending_date',
+            ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
                     'tag',
-                    'id_item_processed',
                     'operator',
-                    'starting_date',
-                    'ending_date',
                     'duration',
                     'chamber_temperature',
                     'chamber_pressure',
@@ -231,11 +268,6 @@ class ICP_CVDbase_nested(ICP_CVDbase):
                 ]
             },
         },
-    )
-
-    icp_column = SubSection(
-        section_def=ICP_Column,
-        repeats=False,
     )
 
     substeps = SubSection(
@@ -386,6 +418,82 @@ class PECVD(LPCVD):
         super().normalize(archive, logger)
 
 
+class PECVD_Catania(PECVD):
+    m_def = Section(
+        # Adaptation of the PECVD class for processes performed at IMM Catania
+        description="""
+        Deposition of a solid material onto a substrate by chemical reaction of a
+        gaseous precursor or mixture of precursors, commonly initiated by heat to create
+        a plasma. PECVD uses temperature tipically lower of LPCVD but relyies on an
+        electrode system on the sample.
+
+        This schema also supports description of single-process multilayer depositions.
+        """,
+        a_eln={
+            'hide': [
+                'tag',
+                'duration',
+                'operator',
+                'step_id',
+                'facility',
+                'laboratory',
+                'ending_date',
+                'recipe_file',
+            ],
+            'properties': {
+                'order': [
+                    'job_number',
+                    'name',
+                    'process_id',
+                    'description',
+                    'affiliation',
+                    'location',
+                    'institution',
+                    'id_item_processed',
+                    'starting_date',
+                    'step_type',
+                    'definition_of_process_step',
+                    'keywords',
+                    'recipe_name',
+                    'recipe_preview',
+                    'thickness_target',
+                    'duration_target',
+                    'deposition_rate_target',
+                    'is_multilayer',
+                    'notes',
+                ]
+            },
+        },
+    )
+
+    process_id = Quantity(
+        type=str,
+        description="""
+        Unique identifier for CVD processes perfomed in the same location,
+        usually of the form YYMMDD_n.
+        """,
+        a_eln={'component': 'StringEditQuantity'},
+    )
+
+    is_multilayer = Quantity(
+        type=bool,
+        description="""
+        Describes wether the deposition is for a multilayer or for a single
+        material.
+        For a multilayer, it is likely that the synthesis steps are nested and loop.
+        """,
+        a_eln={'component': 'BoolEditQuantity'},
+    )
+
+    synthesis_steps = SubSection(
+        section_def=PECVDbase_nested,
+        repeats=True,
+    )
+
+    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
+        super().normalize(archive, logger)
+
+
 class ICP_CVD(PECVD):
     m_def = Section(
         description="""
@@ -446,27 +554,31 @@ class ICP_CVD_Catania(ICP_CVD):
         This schema also supports description of single-process multilayer depositions.
         """,
         a_eln={
-            'hide': ['tag', 'duration', 'operator'],
+            'hide': [
+                'tag',
+                'duration',
+                'operator',
+                'step_id',
+                'facility',
+                'laboratory',
+                'ending_date',
+                'recipe_file',
+            ],
             'properties': {
                 'order': [
                     'job_number',
                     'name',
-                    'step_id',
                     'process_id',
                     'description',
                     'affiliation',
                     'location',
                     'institution',
-                    'facility',
-                    'laboratory',
                     'id_item_processed',
                     'starting_date',
-                    'ending_date',
                     'step_type',
                     'definition_of_process_step',
                     'keywords',
                     'recipe_name',
-                    'recipe_file',
                     'recipe_preview',
                     'thickness_target',
                     'duration_target',
@@ -506,88 +618,12 @@ class ICP_CVD_Catania(ICP_CVD):
         super().normalize(archive, logger)
 
 
-class ICP_CVD_Catania_testhidden(ICP_CVD):
-    m_def = Section(
-        # this is to test what happens when properties from parent class are not explicitly declared
-        description="""
-        Deposition of a solid material onto a substrate by chemical reaction of a
-        gaseous precursor or mixture of precursors, commonly initiated by heat to create
-        a plasma. To generate the plasma the ICP CVD procedure uses a current in
-        addition to the lower electrodes to enanche by magnetic field the generation.
-
-        This schema also supports description of single-process multilayer depositions.
-        """,
-        a_eln={
-            'hide': [  # hide nearly everything
-                'tag',
-                'duration',
-                'operator',
-                'job_number',
-                'affiliation',
-                'location',
-                'institution',
-                'facility',
-                'laboratory',
-                'id_item_processed',
-                'duration_target',
-                'deposition_rate_target',
-                'wafer_side',
-                'process_id',
-                'description',
-                'starting_date',
-                'ending_date',
-                'step_type',
-                'definition_of_process_step',
-                'keywords',
-                'recipe_name',
-                'recipe_file',
-                'recipe_preview',
-                'thickness_target',
-                'is_multilayer',
-                'notes',
-            ],
-            'properties': {
-                'order': [
-                    'step_id',  # step_id and name were in the opposite order originally, so this tests the ordering
-                    'name',
-                ]
-            },
-        },
-    )
-
-    process_id = Quantity(
-        type=str,
-        description="""
-        Unique identifier for CVD processes perfomed in the same location,
-        usually of the form YYMMDD_n.
-        """,
-        a_eln={'component': 'StringEditQuantity'},
-    )
-
-    is_multilayer = Quantity(
-        type=bool,
-        description="""
-        Describes wether the deposition is for a multilayer or for a single
-        material.
-        """,
-        a_eln={'component': 'BoolEditQuantity'},
-    )
-
-    synthesis_steps = SubSection(
-        section_def=ICP_CVDbase_nested,
-        repeats=True,
-    )
-
-    def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
-        super().normalize(archive, logger)
-
-
-# Current tentative sputtering_catania process class is in CVD.py
+# Currently, sputtering_catania process class is in CVD.py
 # Because:
 # -the sputtering class in the main repository of fabrication-utilities does NOT fit
 # our needs
 # -the CVD classes fit our needs and are used as a template
-# -I don't want to deal with how to make NOMAD access this new file right now
+# -I don't want to deal with how to make NOMAD access the new file right now
 
 
 class sputtering_catania_base(FabricationProcessStepBase):
@@ -609,7 +645,7 @@ class sputtering_catania_base(FabricationProcessStepBase):
                     'deposition_pressure',
                     'movimentation_frequency',
                     'power',
-                    'voltage',
+                    'source_target_materialvoltage',
                     'current',
                     'sample_height',
                     'cathode_position',
@@ -647,6 +683,10 @@ class sputtering_catania_base(FabricationProcessStepBase):
         unit='rpm',
     )
 
+    source_target_material = Quantity(
+        type=str,
+        a_eln={'component': 'StringEditQuantity'},
+    )
     power = Quantity(
         type=np.float64,
         # description='',
@@ -714,6 +754,10 @@ class sputtering_catania(FabricationProcessStep):
                 'step_id',
                 'affiliation',
                 'id_item_processed',
+                'facility',
+                'laboratory',
+                'ending_date',
+                'recipe_file',
             ],
             'properties': {
                 'order': [
@@ -722,10 +766,7 @@ class sputtering_catania(FabricationProcessStep):
                     'description',
                     'location',
                     'institution',
-                    'facility',
-                    'laboratory',
                     'starting_date',
-                    'ending_date',
                     'step_type',
                     'definition_of_process_step',
                     'keywords',

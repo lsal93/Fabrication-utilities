@@ -42,6 +42,7 @@ from schema_packages.equipments.utils import (
     WritingCapabilities,
 )
 from schema_packages.fabrication_utilities import Equipment
+from schema_packages.Items import ItemsPermitted
 from schema_packages.utils import FabricationChemical
 
 if TYPE_CHECKING:
@@ -1030,6 +1031,11 @@ class sputtering_catania_System(Equipment):
 
     gases = SubSection(
         section_def=Massflow_parameter,
+        repeats=True,
+    )
+
+    SputteringSourceTargets = SubSection(
+        section_def=ItemsPermitted,
         repeats=True,
     )
 
