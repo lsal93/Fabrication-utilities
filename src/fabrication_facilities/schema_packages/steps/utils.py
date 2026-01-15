@@ -74,10 +74,37 @@ class Carrier(ArchiveSection):
 #######################################################################################
 
 
+class PE_electrodes(ArchiveSection):
+    m_def = Section(
+        description="""
+        Section used to describe RF power and RF frequency in PECVD or in lower chamber of ICPCVD
+        """
+    )
+
+    RF_power = Quantity(
+        type=np.float64,
+        description='Power erogated by the electrodes',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+    RF_frequency = Quantity(
+        type=np.float64,
+        description='Frequency of current on electrodes',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+
+
 class ICP_Column(ArchiveSection):
     m_def = Section(
         description="""
-        Section used to describe component to obtaine inductively coupled plasma
+        Section used to describe component to obtain inductively coupled plasma
         """
     )
 

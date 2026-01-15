@@ -36,6 +36,7 @@ from schema_packages.equipments.utils import (
     DryerGasParameter,
     ICP_ColumnCapabilities,
     Massflow_parameter,
+    PECapabilities,
     ResistivityControlSystem,
     SpinnerSpinParameters,
     WetSolutionComponents,
@@ -918,6 +919,8 @@ class PECVD_System(Equipment):
         section_def=ChuckCapabilities,
         repeats=False,
     )
+
+    pe_parameters = SubSection(section_def=PECapabilities, repeats=False)
 
 
 class ICP_CVD_System(PECVD_System):

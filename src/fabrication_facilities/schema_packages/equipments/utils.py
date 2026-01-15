@@ -196,6 +196,54 @@ class ChuckCapabilities(ArchiveSection):
     clamping = SubSection(section_def=Clamping_Capabilities, repeats=False)
 
 
+class PECapabilities(ArchiveSection):
+    m_def = Section(
+        description="""
+        Section used to describe available parameters in PECVD or in lower chamber of ICPCVD
+        """
+    )
+
+    min_RF_power = Quantity(
+        type=np.float64,
+        description='Minimal power erogated in lower chamber',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    max_RF_power = Quantity(
+        type=np.float64,
+        description='Maximal power erogated in lower chamber',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'watt',
+        },
+        unit='watt',
+    )
+
+    min_RF_frequency = Quantity(
+        type=np.float64,
+        description='Minimal frequency of current in lower chamber',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+
+    max_RF_frequency = Quantity(
+        type=np.float64,
+        description='Maximal frequency of current in lower chamber',
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'MHz',
+        },
+        unit='MHz',
+    )
+
+
 class ICP_ColumnCapabilities(ArchiveSection):
     m_def = Section(
         description="""
@@ -205,7 +253,7 @@ class ICP_ColumnCapabilities(ArchiveSection):
 
     min_icp_power = Quantity(
         type=np.float64,
-        description='Minimal power erogated in the region of the plasma',
+        description='Minimal power erogated in the icp region',
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'watt',
@@ -215,7 +263,7 @@ class ICP_ColumnCapabilities(ArchiveSection):
 
     max_icp_power = Quantity(
         type=np.float64,
-        description='Maximal power erogated in the region of the plasma',
+        description='Maximal power erogated in the icp region',
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'watt',
@@ -225,7 +273,7 @@ class ICP_ColumnCapabilities(ArchiveSection):
 
     min_icp_frequency = Quantity(
         type=np.float64,
-        description='Minimal frequency of current on the gases area',
+        description='Minimal frequency of current in the icp region',
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'MHz',
@@ -235,7 +283,7 @@ class ICP_ColumnCapabilities(ArchiveSection):
 
     max_icp_frequency = Quantity(
         type=np.float64,
-        description='Maximal frequency of current on the gases area',
+        description='Maximal frequency of current in the icp region',
         a_eln={
             'component': 'NumberEditQuantity',
             'defaultDisplayUnit': 'MHz',

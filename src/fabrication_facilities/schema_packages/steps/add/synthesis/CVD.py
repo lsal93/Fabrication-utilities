@@ -26,6 +26,7 @@ from schema_packages.steps.utils import (
     Chuck,
     ICP_Column,
     Massflow_controller,
+    PE_electrodes,
     SynthesisOutputs,
 )
 from schema_packages.utils import (
@@ -172,6 +173,11 @@ class PECVDbase(FabricationProcessStepBase):
     )
 
     chuck = SubSection(section_def=Chuck, repeats=False)
+
+    RF = SubSection(
+        section_def=PE_electrodes,
+        repeats=False,
+    )
 
     def normalize(self, archive: 'EntryArchive', logger: 'BoundLogger') -> None:
         super().normalize(archive, logger)
